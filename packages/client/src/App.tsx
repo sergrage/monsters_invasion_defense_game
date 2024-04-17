@@ -1,27 +1,26 @@
-import { useEffect } from "react";
+import React, { FC } from "react";
 
 import { routes } from "@/pages/routes";
-import Title from "@/ui/title";
-import Header from "@/components/header";
+import Layout from "@/components/Layout";
+import Login from "@/pages/login";
+import Signup from "@/pages/signup";
+import { Navigate, Route, Routes } from "react-router";
+import Forum from "@/pages/forum";
+import Game from "@/pages/game";
 
-function App() {
-  useEffect(() => {
-    const fetchServerData = async () => {
-      const url = `http://localhost:${__SERVER_PORT__}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data);
-    };
-
-    fetchServerData();
-  }, []);
+const App: FC = () => {
   return (
-    <div className="App">
-      <Header>
-        <Title.H2 title={"hello world"} />
-      </Header>
-    </div>
+    <Layout.Main>
+      <Routes>
+        <Route path={routes.login} element={<Login />} />
+        <Route path={routes.signup} element={<Signup />} />
+        <Route path={routes.game} element={<Game />} />
+        <Route path={routes.forum} element={<Forum />} />
+
+        <Route path="*" element={<Navigate to={routes.login} replace />} />
+      </Routes>
+    </Layout.Main>
   );
-}
+};
 
 export default App;
