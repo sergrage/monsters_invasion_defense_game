@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "lint:styles": "stylelint . --fix",
     "format": "prettier --write . ",
-    "test": "jest ./"
+    "test": "jest ./ --passWithNoTests"
   },
   "dependencies": {
     "dotenv": "^16.0.2",
