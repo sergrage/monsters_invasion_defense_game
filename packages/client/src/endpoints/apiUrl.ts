@@ -1,1 +1,1 @@
-// export const loginUrl: string = 'path/to/api'
+export const loginUrl: string = "path/to/api";
