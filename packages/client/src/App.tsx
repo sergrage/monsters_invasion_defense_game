@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
 import { routes } from "@/pages/routes";
-import Header from "@/components/header";
 import Title from "@/ui/title";
+import Header from "@/components/header";
 
 function App() {
   useEffect(() => {

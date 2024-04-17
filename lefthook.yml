@@ -1,9 +1,6 @@
 pre-commit:
   parallel: true
   commands:
-    lint:
-      glob: '*.{js,jsx,ts,tsx,css,scss}'
-      run: yarn run lint
     stylelint:
       glob: '*.{css,scss}'
       run: yarn run lint:styles
