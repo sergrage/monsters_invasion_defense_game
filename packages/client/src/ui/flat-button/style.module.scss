@@ -1,0 +1,32 @@
+.button {
+  position: relative;
+  width: 280px;
+  height: 37px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: #fbb040;
+  transition: box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+
+  &--transparent {
+    background-color: transparent;
+    color: #fbb040;
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.48);
+
+    &.button--transparent {
+      background-color: transparent;
+      color: #fbb040;
+    }
+  }
+
+  &:active {
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.48);
+
+    &--transparent {
+      background-color: #fbb040;
+      color: #fff;
+    }
+  }
+}
