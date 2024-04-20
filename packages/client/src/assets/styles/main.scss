@@ -62,8 +62,11 @@ table {
   border-spacing: 0;
 }
 
-button,
-input {
+button {
   border: none;
   cursor: pointer;
+}
+
+input {
+  border: none;
 }
