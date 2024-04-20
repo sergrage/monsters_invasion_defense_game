@@ -48,20 +48,15 @@ function LoginPage() {
     );
   }
 
-  function applyData(data?: any) {
-    if (data) {
-      console.log(data);
-    }
-
+  // запросить данные пользователя с дальнейшим редиректом
+  function applyData() {
     sendRequest({ url: `${authUrl}/user` });
     // navigate(routes.game) или navigate(routes.forum) ???
   }
 
   return (
-    // убрал layout.page т.к. с ним аполучается 3 х вложенность
-    // main->page->container, оно нам необходимо?
     <form className={style.form} onSubmit={onSubmitHandler}>
-      <h1>Please auth</h1>
+      <h1 className={style["form__title"]}>Please log in</h1>
 
       <div className={style["form__inputs-wrapper"]}>
         <ExoticInput

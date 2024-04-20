@@ -58,7 +58,7 @@ function ExoticInput(props: inputType) {
     }, 2000);
   }
 
-  // check inputs immidiately after losing focus
+  // проверяет инпуты после потери фокуса
   function blurHandler(event: React.FocusEvent<HTMLInputElement>) {
     if (!props.required) return;
 
@@ -70,6 +70,7 @@ function ExoticInput(props: inputType) {
       <label className={style["input-el__label"]} htmlFor={`input-${id}`}>
         {props.label}
       </label>
+
       <input
         className={style["input-el__input"]}
         id={`input-${id}`}
