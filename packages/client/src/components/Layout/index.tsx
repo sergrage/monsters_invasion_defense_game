@@ -10,7 +10,8 @@ export type TProps = {
 const Main: FC<TProps> = ({ children }) => {
   return (
     <>
-      <Header>Some Header</Header>
+      {/* Предлагаю вручную создать хедер */}
+      {/* <Header>Some Header</Header> */}{" "}
       <main className={style.main}>{children}</main>
     </>
   );
