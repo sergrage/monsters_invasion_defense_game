@@ -82,7 +82,7 @@ function LoginPage() {
       </div>
 
       <div className={style["form__btns-wrapper"]}>
-        <FlatButton name="Login" type="submit" />
+        <FlatButton name="Login" type="submit" disabled={hasError} />
         <FlatButton name="Signup" onClick={onClickHandler} transparent={true} />
       </div>
     </form>
