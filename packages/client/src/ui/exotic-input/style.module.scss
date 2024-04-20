@@ -1,0 +1,39 @@
+.input-el {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  width: 280px;
+  padding: 20px 15px 15px;
+  border: 2px solid #f0f0f0;
+  border-radius: 5px;
+  transition: border-color 0.2s ease-in-out;
+
+  &__label {
+    position: absolute;
+    top: -12px;
+    left: 25px;
+    padding: 0px 5px;
+    font-family: Squada;
+    font-size: 20px;
+    color: #fbb040;
+    background-color: rgb(255, 255, 255);
+  }
+
+  &__input {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: Squada;
+    color: #707070;
+    background-color: rgb(243 243 244);
+  }
+
+  &__input::placeholder {
+    color: rgb(196, 196, 196);
+  }
+
+  &.error {
+    border-color: red;
+  }
+}
