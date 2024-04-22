@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  gap: 30px;
+}
+
+.image {
+  --size: min(65vh, 65vw);
+  width: var(--size);
+  height: var(--size);
+
+  @media (max-width: 768px) {
+    --size: min(65vh, 100vw);
+  }
+}
+
+.title {
+  text-align: center;
+  font-family: "Spinnaker", sans-serif;
+}

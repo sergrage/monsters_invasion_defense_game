@@ -4,7 +4,7 @@ import style from "./style.module.scss";
 import Title from "@/ui/title";
 import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout";
 
 const LoginPage: FC = () => {
   const navigate = useNavigate();
