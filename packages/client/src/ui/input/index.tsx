@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
+
+import ZombieError from "../zombie_error";
 import style from "./style.module.scss";
-import ExoticError from "../zombie_error";
 
 type inputType = {
   name: string;
@@ -13,16 +14,14 @@ type inputType = {
   onError?: (val: boolean) => void;
 };
 
-let timer: ReturnType<typeof setTimeout>;
-
-function Input(props: inputType) {
+const Input = (props: inputType) => {
   const id = useId();
-  const ref = useRef<HTMLDivElement | null>(null);
+  const conatinerRef = useRef<HTMLDivElement | null>(null);
 
   const [error, setError] = useState(false);
 
-  // проверяет есть ли пустые поля, или неверные значения в инпуте
-  function checkValue(value: string | number) {
+  // проверяет пустое ли поле, или отрицательное число в инпуте
+  const checkValue = (value: string | number) => {
     if (
       (props.required &&
         props.type !== "number" &&
@@ -33,33 +32,33 @@ function Input(props: inputType) {
     }
 
     return true;
-  }
+  };
 
   // если ошибка переключаем класс error
   useEffect(() => {
-    if (!props.required || ref.current === null) return;
+    if (!props.required || conatinerRef.current === null) return;
 
-    ref.current.classList.toggle(style.error, error);
+    conatinerRef.current.classList.toggle(style.error, error);
     if (props.onError) props.onError(error);
   }, [error]);
 
-  function changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.onChange(event);
 
     if (!props.required) return;
 
     setError(false);
-  }
+  };
 
   // проверяет инпуты после потери фокуса
-  function blurHandler(event: React.FocusEvent<HTMLInputElement>) {
+  const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!props.required) return;
 
     if (!checkValue(event.target.value)) setError(true);
-  }
+  };
 
   return (
-    <div ref={ref} className={style["input-el"]}>
+    <div ref={conatinerRef} className={style["input-el"]}>
       <label className={style["input-el__label"]} htmlFor={`input-${id}`}>
         {props.label}
       </label>
@@ -74,9 +73,9 @@ function Input(props: inputType) {
         onBlur={blurHandler}
       ></input>
 
-      {error && <ExoticError />}
+      {error && <ZombieError />}
     </div>
   );
-}
+};
 
 export default Input;

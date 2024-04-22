@@ -9,7 +9,7 @@ type buttonType = {
   onClick?: (event: React.MouseEvent) => void;
 };
 
-function RoundButton(props: buttonType) {
+const RoundButton = (props: buttonType) => {
   return (
     <div className={style["button-el"]}>
       <button
@@ -24,6 +24,6 @@ function RoundButton(props: buttonType) {
       <div className={style["button-el__back2"]}></div>
     </div>
   );
-}
+};
 
 export default RoundButton;

@@ -8,13 +8,13 @@ type responseType = {
   [key: string]: Record<string, string | { [key: string]: string } | number>;
 };
 
-function useFetch() {
+const useFetch = () => {
   // const dispatch = useDispatch();
 
-  function sendRequest(
+  const sendRequest = (
     config: configType,
     applyData?: (data: responseType) => void,
-  ) {
+  ) => {
     // включить индикатор загрузки
     // dispatch(notifyActions.applyLoading());
 
@@ -51,8 +51,8 @@ function useFetch() {
         // выключить индикатор загрузки
         // dispatch(notifyActions.clearLoading());
       });
-  }
+  };
   return sendRequest;
-}
+};
 
 export default useFetch;

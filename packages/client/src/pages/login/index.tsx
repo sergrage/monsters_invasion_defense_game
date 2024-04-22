@@ -11,7 +11,7 @@ import Input from "@/ui/input";
 
 import style from "./style.module.scss";
 
-function LoginPage() {
+const LoginPage = () => {
   const navigate = useNavigate();
   const sendRequest = useFetch();
 
@@ -23,16 +23,16 @@ function LoginPage() {
     applyData();
   }, []);
 
-  function onClickHandler() {
+  const onClickHandler = () => {
     navigate(routes.signup);
-  }
+  };
 
   // обновляем стэйт формы при изменении инпутов
-  function formChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
+  const formChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormVal({ ...formVal, [event.target.name]: event.target.value });
-  }
+  };
 
-  function onSubmitHandler(event: React.FormEvent) {
+  const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
     if (hasError) return;
@@ -46,13 +46,13 @@ function LoginPage() {
       },
       applyData,
     );
-  }
+  };
 
   // запросить данные пользователя с дальнейшим редиректом
-  function applyData() {
+  const applyData = () => {
     sendRequest({ url: `${authUrl}/user` });
     // navigate(routes.game) или navigate(routes.forum) ???
-  }
+  };
 
   return (
     <Layout.Page className={style["login-page"]}>
@@ -86,6 +86,6 @@ function LoginPage() {
       </form>
     </Layout.Page>
   );
-}
+};
 
 export default LoginPage;

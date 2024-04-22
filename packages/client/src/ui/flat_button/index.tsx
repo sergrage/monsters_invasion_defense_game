@@ -9,7 +9,7 @@ type buttonType = {
   onClick?: (event: React.MouseEvent) => void;
 };
 
-function FlatButton(props: buttonType) {
+const FlatButton = (props: buttonType) => {
   return (
     <button
       className={`${style["button"]} ${props.transparent ? style["button--transparent"] : props.dangerous ? style["button--dangerous"] : ""}`}
@@ -21,6 +21,6 @@ function FlatButton(props: buttonType) {
       {props.name}
     </button>
   );
-}
+};
 
 export default FlatButton;
