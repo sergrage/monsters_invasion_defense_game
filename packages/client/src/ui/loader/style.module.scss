@@ -16,8 +16,6 @@
       width: 100%;
       height: 100%;
     }
-    color: #e1e1e1;
-    background-color: #ecebeb;
   }
 }
 .lds {
@@ -31,7 +29,7 @@
   margin: 8px;
   border-radius: 50%;
   border: 6px solid;
-  border-color: var(--green) transparent var(--green) transparent;
+  border-color: var(--primary) transparent var(--primary) transparent;
   animation: lds 1.2s linear infinite;
 }
 
