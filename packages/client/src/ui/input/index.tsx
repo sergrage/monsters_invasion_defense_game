@@ -14,7 +14,16 @@ type inputType = {
   onError?: (val: boolean) => void;
 };
 
-const Input = (props: inputType) => {
+const Input = ({
+  name,
+  label,
+  placeholder,
+  type = "text",
+  required,
+  onChange,
+  onBlur,
+  onError,
+}: inputType) => {
   const id = useId();
   const conatinerRef = useRef<HTMLDivElement | null>(null);
 
@@ -23,10 +32,8 @@ const Input = (props: inputType) => {
   // проверяет пустое ли поле, или отрицательное число в инпуте
   const checkValue = (value: string | number) => {
     if (
-      (props.required &&
-        props.type !== "number" &&
-        !(value as string).trim()) ||
-      (props.type === "number" && (value as number) < 1)
+      (required && type !== "number" && !(value as string).trim()) ||
+      (type === "number" && (value as number) < 1)
     ) {
       return false;
     }
@@ -36,24 +43,24 @@ const Input = (props: inputType) => {
 
   // если ошибка переключаем класс error
   useEffect(() => {
-    if (!props.required || conatinerRef.current === null) return;
+    if (!required || conatinerRef.current === null) return;
 
     conatinerRef.current.classList.toggle(style.error, error);
-    if (props.onError) props.onError(error);
+    if (onError) onError(error);
   }, [error]);
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChange(event);
+    onChange(event);
 
-    if (!props.required) return;
+    if (!required) return;
 
     setError(false);
   };
 
   // проверяет инпуты после потери фокуса
   const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-    props.onBlur?.(event);
-    if (!props.required) return;
+    onBlur?.(event);
+    if (!required) return;
 
     if (!checkValue(event.target.value)) setError(true);
   };
@@ -61,15 +68,15 @@ const Input = (props: inputType) => {
   return (
     <div ref={conatinerRef} className={style["input-el"]}>
       <label className={style["input-el__label"]} htmlFor={`input-${id}`}>
-        {props.label}
+        {label}
       </label>
 
       <input
         className={style["input-el__input"]}
         id={`input-${id}`}
-        name={props.name}
-        placeholder={props.placeholder}
-        type={`${props.type ? props.type : "text"}`}
+        name={name}
+        placeholder={placeholder}
+        type={type}
         onChange={changeHandler}
         onBlur={blurHandler}
       ></input>

@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react";
+import cn from "classnames";
 
 import style from "./style.module.scss";
 
@@ -11,17 +12,13 @@ const Main: FC<TProps> = ({ children }) => {
   return <main className={style.main}>{children}</main>;
 };
 
-const Container: FC<TProps> = ({ children, className }) => {
-  return (
-    <div className={`${style.container} ${className ? className : ""}`}>
-      {children}
-    </div>
-  );
+const Container: FC<TProps> = ({ children, className = "" }) => {
+  return <div className={cn(style.container, className)}>{children}</div>;
 };
 
 const Page: FC<TProps> = ({ children, className }) => {
   return (
-    <div className={`${style.page} ${className ? className : ""}`}>
+    <div className={cn(style.container, className)}>
       <Container>{children}</Container>
     </div>
   );

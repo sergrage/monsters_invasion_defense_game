@@ -1,23 +1,34 @@
+import cn from "classnames";
 import style from "./style.module.scss";
 
 type buttonType = {
   name: string;
-  type?: "submit" | "reset";
+  type?: "submit" | "reset" | "button";
   disabled?: boolean;
   transparent?: boolean;
   dangerous?: boolean;
   onClick?: (event: React.MouseEvent) => void;
 };
 
-const FlatButton = (props: buttonType) => {
+const FlatButton = ({
+  name,
+  type = "button",
+  disabled,
+  transparent,
+  dangerous,
+  onClick,
+}: buttonType) => {
   return (
     <button
-      className={`${style["button"]} ${props.transparent ? style["button--transparent"] : props.dangerous ? style["button--dangerous"] : ""}`}
-      type={props.type ? props.type : "button"}
-      disabled={props.disabled}
-      onClick={props.onClick}
+      className={cn(style.button, {
+        [style["button--transparent"]]: transparent,
+        [style["button--dangerous"]]: dangerous,
+      })}
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
     >
-      {props.name}
+      {name}
     </button>
   );
 };
