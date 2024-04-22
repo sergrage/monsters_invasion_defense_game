@@ -19,13 +19,16 @@ const RoundButton = ({
   onClick,
 }: buttonType) => {
   return (
-    <div className={style["button-el"]}>
+    <div
+      className={style["button-el"]}
+      aria-label={`${name} button`}
+      title={name}
+    >
       <button
         className={cn(style["button-el__btn"], {
           [style["button-el__btn--red"]]: red,
           [style["button-el__btn--yellow"]]: yellow,
         })}
-        name={name}
         type={type}
         disabled={disabled}
         onClick={onClick}
