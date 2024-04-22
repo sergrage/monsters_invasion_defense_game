@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import cn from "classnames";
 
 import ZombieError from "../zombie_error";
@@ -26,8 +26,6 @@ const Input = ({
   onError,
 }: inputType) => {
   const id = useId();
-  const conatinerRef = useRef<HTMLDivElement | null>(null);
-
   const [isInvalid, setIsInvalid] = useState(false);
 
   // проверяет пустое ли поле, или отрицательное число в инпуте
@@ -63,16 +61,13 @@ const Input = ({
   };
 
   return (
-    <div
-      ref={conatinerRef}
-      className={cn(style["input-el"], { [style.error]: isInvalid })}
-    >
-      <label className={style["input-el__label"]} htmlFor={`input-${id}`}>
+    <div className={cn(style.wrapper, { [style.error]: isInvalid })}>
+      <label className={style.label} htmlFor={`input-${id}`}>
         {label}
       </label>
 
       <input
-        className={style["input-el__input"]}
+        className={style.input}
         id={`input-${id}`}
         name={name}
         type={type}

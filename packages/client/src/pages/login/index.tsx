@@ -55,10 +55,10 @@ const LoginPage = () => {
   };
 
   return (
-    <Layout.Page className={style["login-page"]}>
+    <Layout.Page className={style.wrapper}>
       <form className={style.form} onSubmit={onSubmitHandler}>
-        <h1 className={style["form__title"]}>Please log in</h1>
-        <div className={style["form__inputs-wrapper"]}>
+        <h1 className={style.title}>Please log in</h1>
+        <div className={style["inputs-wrapper"]}>
           <Input
             name="login"
             label="Login"
@@ -75,7 +75,7 @@ const LoginPage = () => {
             onError={val => setHasError(val)}
           />
         </div>
-        <div className={style["form__btns-wrapper"]}>
+        <div className={style["btns-wrapper"]}>
           <FlatButton name="Login" type="submit" disabled={hasError} />
           <FlatButton
             name="Signup"

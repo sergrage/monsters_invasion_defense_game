@@ -21,8 +21,8 @@ const FlatButton = ({
   return (
     <button
       className={cn(style.button, {
-        [style["button--transparent"]]: transparent,
-        [style["button--dangerous"]]: dangerous,
+        [style.transparent]: transparent,
+        [style.dangerous]: dangerous,
       })}
       type={type}
       disabled={disabled}

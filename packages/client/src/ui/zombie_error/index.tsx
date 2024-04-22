@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import cn from "classnames";
 
 import style from "./style.module.scss";
@@ -48,21 +48,21 @@ const ZombieError = ({ text }: zombieProps) => {
 
   return (
     <div
-      className={cn(style["error-el"], {
-        [style["move"]]: isMoving,
+      className={cn(style.error, {
+        [style.move]: isMoving,
       })}
     >
       <img
-        className={cn(style["error-el__img"], {
-          [style["shake"]]: isShaking,
+        className={cn(style.img, {
+          [style.shake]: isShaking,
         })}
         src={zombie}
         alt="Zombie image"
       />
 
       <div
-        className={cn(style["error-el__text-wrapper"], {
-          [style["show"]]: isTexting,
+        className={cn(style["text-wrapper"], {
+          [style.show]: isTexting,
         })}
       >
         {text ? (

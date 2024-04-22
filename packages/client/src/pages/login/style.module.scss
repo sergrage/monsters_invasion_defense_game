@@ -1,4 +1,4 @@
-.login-page {
+.wrapper {
   margin-top: 8%;
   display: flex;
 }
@@ -14,21 +14,21 @@
   padding: 30px;
   border-radius: 5px;
   box-shadow: 0px 0px 6px 0px var(--shadow-light);
+}
 
-  &__title {
-    color: var(--primary);
-    font-size: 24px;
-    user-select: none;
-  }
+.title {
+  color: var(--primary);
+  font-size: 24px;
+  user-select: none;
+}
 
-  &__inputs-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
+.inputs-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
 
-  &__btns-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
+.btns-wrapper {
+  display: flex;
+  flex-direction: column;
 }

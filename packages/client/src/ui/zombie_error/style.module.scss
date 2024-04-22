@@ -1,4 +1,4 @@
-.error-el {
+.error {
   position: absolute;
   width: 300px;
   top: -43px;
@@ -7,28 +7,28 @@
   transform: translate(-41px, 47px);
   transition: transform 150ms var(--transition-bezier);
   user-select: none;
+}
 
-  &__img {
-    position: relative;
-    transform: rotateZ(45deg);
-    transition: transform 150ms linear;
-  }
+.img {
+  position: relative;
+  transform: rotateZ(45deg);
+  transition: transform 150ms linear;
+}
 
-  &__text-wrapper {
-    position: absolute;
-    left: 70px;
-    top: -10px;
-    padding: 10px 15px;
-    border-radius: 2px;
-    background-color: #d1d3d4;
-    box-shadow:
-      0px -3px 0px 0px #e5e8e9,
-      0px 3px 0px 0px #c5c5c5;
-    opacity: 0;
-    transition: opacity 50ms linear;
-  }
+.text-wrapper {
+  position: absolute;
+  left: 70px;
+  top: -10px;
+  padding: 10px 15px;
+  border-radius: 2px;
+  background-color: #d1d3d4;
+  box-shadow:
+    0px -3px 0px 0px #e5e8e9,
+    0px 3px 0px 0px #c5c5c5;
+  opacity: 0;
+  transition: opacity 50ms linear;
 
-  &__text-wrapper::before {
+  ::before {
     display: block;
     position: absolute;
     content: "";
@@ -39,10 +39,10 @@
     transform: rotateZ(45deg);
     background-color: #d1d3d4;
   }
+}
 
-  &__text {
-    color: var(--text);
-  }
+.text {
+  color: var(--text);
 }
 
 .move {

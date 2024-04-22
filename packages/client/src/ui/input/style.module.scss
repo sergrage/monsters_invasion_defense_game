@@ -1,4 +1,4 @@
-.input-el {
+.wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -6,35 +6,35 @@
   gap: 10px;
   width: 280px;
   padding: 20px 15px 15px;
-  border: 2px solid #f0f0f0;
+  border: 2px solid var(--shadow-light);
   border-radius: 5px;
   background-color: var(--white);
   transition: border-color 0.2s ease-in-out;
 
-  &__label {
-    position: absolute;
-    top: -12px;
-    left: 25px;
-    padding: 0px 5px;
-    font-family: "Squada One";
-    font-size: 20px;
-    color: var(--primary);
-    background-color: var(--white);
-    user-select: none;
-  }
-
-  &__input {
-    padding: 10px 15px;
-    border-radius: 5px;
-    color: var(--text);
-    background-color: #f3f3f4;
-  }
-
-  &__input::placeholder {
-    color: #c4c4c4;
-  }
-
   &.error {
     border-color: var(--danger);
+  }
+}
+
+.label {
+  position: absolute;
+  top: -12px;
+  left: 25px;
+  padding: 0px 5px;
+  font-family: "Squada One";
+  font-size: 20px;
+  color: var(--primary);
+  background-color: var(--white);
+  user-select: none;
+}
+
+.input {
+  padding: 10px 15px;
+  border-radius: 5px;
+  color: var(--text);
+  background-color: var(--input-field);
+
+  &::placeholder {
+    color: var(--border);
   }
 }
