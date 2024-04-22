@@ -16,7 +16,7 @@ const LoginPage = () => {
   const sendRequest = useFetch();
 
   const [formVal, setFormVal] = useState({ login: "", password: "" });
-  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState({ login: false, password: false });
 
   // при первой отрисовке если позволяют куки то получаем данные юзера с дальнейшим редиректом
   useEffect(() => {
@@ -32,11 +32,15 @@ const LoginPage = () => {
     setFormVal({ ...formVal, [event.target.name]: event.target.value });
   };
 
+  const errorHandler = (type: string, value: boolean) => {
+    setError({ ...error, [type]: value });
+  };
+
   const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (hasError) return;
     if (!formVal.login || !formVal.password) return;
+    if (error.login || error.password) return;
 
     sendRequest(
       {
@@ -64,7 +68,7 @@ const LoginPage = () => {
             label="Login"
             required={true}
             onChange={formChangeHandler}
-            onError={val => setHasError(val)}
+            onError={val => errorHandler("login", val)}
           />
           <Input
             name="password"
@@ -72,11 +76,15 @@ const LoginPage = () => {
             type="password"
             required={true}
             onChange={formChangeHandler}
-            onError={val => setHasError(val)}
+            onError={val => errorHandler("password", val)}
           />
         </div>
         <div className={style["btns-wrapper"]}>
-          <FlatButton name="Login" type="submit" disabled={hasError} />
+          <FlatButton
+            name="Login"
+            type="submit"
+            disabled={error.login || error.password}
+          />
           <FlatButton
             name="Signup"
             onClick={onClickHandler}
