@@ -1,22 +1,32 @@
-import React, { FC } from "react";
-
-import style from "./style.module.scss";
-import Title from "@/ui/title";
+import React, { FC, useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 
 const GamePage: FC = () => {
-  return (
-    <Layout.Page>
-      <Title.H2 title={"Страница игры"} />
+  const [coins, setCoins] = useState(100);
+  const [hearts, setHearts] = useState(3);
 
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci,
-        architecto consectetur culpa dicta dignissimos dolorem eius eos fugiat
-        harum libero natus numquam quae, sapiente tempora, ut vel velit vitae
-        voluptates.
-      </p>
-    </Layout.Page>
-  );
+  function handleCoinsChangedEvent(coins) {
+    setCoins(coins);
+  }
+
+  function handleHeartsChangedEvent(hearts) {
+    setHearts(hearts);
+  }
+
+  useEffect(() => {
+    const game = new Game(coins, hearts);
+
+    const coinsChangedObserver = new EventObserver(handleCoinsChangedEvent);
+    const heartsChangedObserver = new EventObserver(handleHeartsChangedEvent);
+
+    game.eventSubject.attach("coinsChanged", coinsChangedObserver);
+    game.eventSubject.attach("heartsChanged", heartsChangedObserver);
+
+    game.initialize();
+    game.initGame();
+  }, []);
+
+  return <Layout.Page></Layout.Page>;
 };
 
 export default GamePage;
