@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
+import cn from "classnames";
 
 import ZombieError from "../zombie_error";
 import style from "./style.module.scss";
@@ -27,7 +28,7 @@ const Input = ({
   const id = useId();
   const conatinerRef = useRef<HTMLDivElement | null>(null);
 
-  const [error, setError] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(false);
 
   // проверяет пустое ли поле, или отрицательное число в инпуте
   const checkValue = (value: string | number) => {
@@ -41,32 +42,31 @@ const Input = ({
     return true;
   };
 
-  // если ошибка переключаем класс error
   useEffect(() => {
-    if (!required || conatinerRef.current === null) return;
-
-    conatinerRef.current.classList.toggle(style.error, error);
-    if (onError) onError(error);
-  }, [error]);
+    if (!required) return;
+    if (onError) onError(isInvalid);
+  }, [isInvalid]);
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event);
 
     if (!required) return;
-
-    setError(false);
+    setIsInvalid(false);
   };
 
   // проверяет инпуты после потери фокуса
   const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     onBlur?.(event);
-    if (!required) return;
 
-    if (!checkValue(event.target.value)) setError(true);
+    if (!required) return;
+    if (!checkValue(event.target.value)) setIsInvalid(true);
   };
 
   return (
-    <div ref={conatinerRef} className={style["input-el"]}>
+    <div
+      ref={conatinerRef}
+      className={cn(style["input-el"], { [style.error]: isInvalid })}
+    >
       <label className={style["input-el__label"]} htmlFor={`input-${id}`}>
         {label}
       </label>
@@ -75,13 +75,13 @@ const Input = ({
         className={style["input-el__input"]}
         id={`input-${id}`}
         name={name}
-        placeholder={placeholder}
         type={type}
+        placeholder={placeholder}
         onChange={changeHandler}
         onBlur={blurHandler}
       ></input>
 
-      {error && <ZombieError />}
+      {isInvalid && <ZombieError />}
     </div>
   );
 };

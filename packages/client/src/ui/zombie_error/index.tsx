@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import cn from "classnames";
 
 import style from "./style.module.scss";
 import zombies from "../../assets/img/errorZombies/index";
@@ -12,51 +13,58 @@ function randomizeZombies() {
 }
 
 const ZombieError = ({ text }: zombieProps) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const textRef = useRef<HTMLDivElement | null>(null);
-
   // получить рандомное изображение до рендера компонента
   // в противном случае появляется один и тот же зомби
   const [zombie] = useState(() => randomizeZombies());
+  const [isMoving, setIsMoving] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
+  const [isTexting, setIsTexting] = useState(false);
 
   // показывает текст ошибки и анимирует зомби через заданное время
   useEffect(() => {
     let shakeTimer: ReturnType<typeof setTimeout>;
     let textTimer: ReturnType<typeof setTimeout>;
 
-    const moveTimer = setTimeout(() => {
+    setTimeout(() => {
       // выезжает зомби
-      containerRef.current?.classList.add(style["move"]);
+      setIsMoving(true);
 
       shakeTimer = setTimeout(() => {
         // зомби трясет
-        imageRef.current?.classList.add(style["shake"]);
+        setIsShaking(true);
 
         textTimer = setTimeout(() => {
           // появляется текст
-          textRef.current?.classList.add(style["show"]);
+          setIsTexting(true);
         }, 100);
       }, 500);
     }, 0);
 
     return () => {
-      clearTimeout(moveTimer);
       clearTimeout(shakeTimer);
       clearTimeout(textTimer);
     };
   }, []);
 
   return (
-    <div ref={containerRef} className={style["error-el"]}>
+    <div
+      className={cn(style["error-el"], {
+        [style["move"]]: isMoving,
+      })}
+    >
       <img
-        ref={imageRef}
-        className={style["error-el__img"]}
+        className={cn(style["error-el__img"], {
+          [style["shake"]]: isShaking,
+        })}
         src={zombie}
         alt="Zombie image"
       />
 
-      <div ref={textRef} className={style["error-el__text-wrapper"]}>
+      <div
+        className={cn(style["error-el__text-wrapper"], {
+          [style["show"]]: isTexting,
+        })}
+      >
         {text ? (
           <p>{text}</p>
         ) : (
