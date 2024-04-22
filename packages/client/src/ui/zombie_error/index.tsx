@@ -8,7 +8,7 @@ type zombieProps = {
 };
 
 function randomizeZombies() {
-  return zombies[Math.floor(Math.random() * 4)];
+  return zombies[Math.round(Math.random() * (zombies.length - 1))];
 }
 
 const ZombieError = ({ text }: zombieProps) => {
@@ -36,7 +36,7 @@ const ZombieError = ({ text }: zombieProps) => {
         textTimer = setTimeout(() => {
           // появляется текст
           textRef.current?.classList.add(style["show"]);
-        }, 150);
+        }, 100);
       }, 500);
     }, 0);
 
