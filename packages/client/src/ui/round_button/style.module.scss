@@ -5,7 +5,7 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.48);
+  background-color: var(--shadow-strong);
   transition: box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
   cursor: pointer;
 
@@ -62,7 +62,7 @@
     position: relative;
     width: 60px;
     height: 60px;
-    top: -11px;
+    top: -9px;
     border-radius: 50%;
     color: aliceblue;
     background-color: #39b54a;
@@ -111,7 +111,7 @@
   }
 
   &:active {
-    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.48);
+    box-shadow: 0px 0px 1px 1px var(--shadow-strong);
   }
 
   &:active .button-el__btn {

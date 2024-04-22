@@ -27,11 +27,11 @@
     padding: 10px 15px;
     border-radius: 5px;
     color: var(--text);
-    background-color: rgb(243 243 244);
+    background-color: #f3f3f4;
   }
 
   &__input::placeholder {
-    color: rgb(196, 196, 196);
+    color: #c4c4c4;
   }
 
   &.error {
