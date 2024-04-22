@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import style from "./style.module.scss";
+import ExoticError from "../zombie_error";
 
 type inputType = {
   name: string;
@@ -14,7 +15,7 @@ type inputType = {
 
 let timer: ReturnType<typeof setTimeout>;
 
-function ExoticInput(props: inputType) {
+function Input(props: inputType) {
   const id = useId();
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -47,15 +48,7 @@ function ExoticInput(props: inputType) {
 
     if (!props.required) return;
 
-    // проверяет есть ли пустые поля, или неверные значения в инпуте через 2 сек после его изменения
-    clearTimeout(timer);
     setError(false);
-
-    timer = setTimeout(() => {
-      if (!checkValue(event.target.value)) {
-        setError(true);
-      }
-    }, 2000);
   }
 
   // проверяет инпуты после потери фокуса
@@ -80,8 +73,10 @@ function ExoticInput(props: inputType) {
         onChange={changeHandler}
         onBlur={blurHandler}
       ></input>
+
+      {error && <ExoticError />}
     </div>
   );
 }
 
-export default ExoticInput;
+export default Input;
