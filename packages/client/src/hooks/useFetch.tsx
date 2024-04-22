@@ -26,7 +26,7 @@ const useFetch = () => {
       headers: {
         "Content-type": "application/json",
       },
-      body: config.body ? JSON.stringify(config.body) : null,
+      body: config.body && JSON.stringify(config.body),
     })
       .then(async response => {
         console.log(response);
