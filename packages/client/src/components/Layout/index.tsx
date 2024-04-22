@@ -1,29 +1,27 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 
 import style from "./style.module.scss";
-import Header from "@/components/header";
 
 export type TProps = {
   children: ReactNode | ReactNode[];
+  className?: string;
 };
 
 const Main: FC<TProps> = ({ children }) => {
+  return <main className={style.main}>{children}</main>;
+};
+
+const Container: FC<TProps> = ({ children, className }) => {
   return (
-    <>
-      {/* Предлагаю вручную создать хедер */}
-      {/* <Header>Some Header</Header> */}{" "}
-      <main className={style.main}>{children}</main>
-    </>
+    <div className={`${style.container} ${className ? className : ""}`}>
+      {children}
+    </div>
   );
 };
 
-const Container: FC<TProps> = ({ children }) => {
-  return <div className={style.container}>{children}</div>;
-};
-
-const Page: FC<TProps> = ({ children }) => {
+const Page: FC<TProps> = ({ children, className }) => {
   return (
-    <div className={style.page}>
+    <div className={`${style.page} ${className ? className : ""}`}>
       <Container>{children}</Container>
     </div>
   );
