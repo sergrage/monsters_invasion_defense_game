@@ -1,13 +1,13 @@
-import { FC, useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+
 import { routes } from "@/pages/routes";
 import { authUrl } from "@/endpoints/apiUrl";
-
 import useFetch from "@/hooks/useFetch";
 
-import FlatButton from "@/ui/flat-button";
-import ExoticInput from "@/ui/exotic-input";
+import Layout from "@/components/Layout";
+import FlatButton from "@/ui/flat_button";
+import Input from "@/ui/input";
 
 import style from "./style.module.scss";
 
@@ -55,32 +55,36 @@ function LoginPage() {
   }
 
   return (
-    <form className={style.form} onSubmit={onSubmitHandler}>
-      <h1 className={style["form__title"]}>Please log in</h1>
-
-      <div className={style["form__inputs-wrapper"]}>
-        <ExoticInput
-          name="login"
-          label="Login"
-          required={true}
-          onChange={formChangeHandler}
-          onError={val => setHasError(val)}
-        />
-        <ExoticInput
-          name="password"
-          label="Password"
-          type="password"
-          required={true}
-          onChange={formChangeHandler}
-          onError={val => setHasError(val)}
-        />
-      </div>
-
-      <div className={style["form__btns-wrapper"]}>
-        <FlatButton name="Login" type="submit" disabled={hasError} />
-        <FlatButton name="Signup" onClick={onClickHandler} transparent={true} />
-      </div>
-    </form>
+    <Layout.Page className={style["login-page"]}>
+      <form className={style.form} onSubmit={onSubmitHandler}>
+        <h1 className={style["form__title"]}>Please log in</h1>
+        <div className={style["form__inputs-wrapper"]}>
+          <Input
+            name="login"
+            label="Login"
+            required={true}
+            onChange={formChangeHandler}
+            onError={val => setHasError(val)}
+          />
+          <Input
+            name="password"
+            label="Password"
+            type="password"
+            required={true}
+            onChange={formChangeHandler}
+            onError={val => setHasError(val)}
+          />
+        </div>
+        <div className={style["form__btns-wrapper"]}>
+          <FlatButton name="Login" type="submit" disabled={hasError} />
+          <FlatButton
+            name="Signup"
+            onClick={onClickHandler}
+            transparent={true}
+          />
+        </div>
+      </form>
+    </Layout.Page>
   );
 }
 
