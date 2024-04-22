@@ -13,7 +13,6 @@ const FlatButton = (props: buttonType) => {
   return (
     <button
       className={`${style["button"]} ${props.transparent ? style["button--transparent"] : props.dangerous ? style["button--dangerous"] : ""}`}
-      name={props.name}
       type={props.type ? props.type : "button"}
       disabled={props.disabled}
       onClick={props.onClick}

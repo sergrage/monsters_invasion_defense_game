@@ -13,10 +13,10 @@
   height: 460px;
   padding: 30px;
   border-radius: 5px;
-  box-shadow: 0px 0px 6px 0px var(--shadow-color-light);
+  box-shadow: 0px 0px 6px 0px var(--shadow-light);
 
   &__title {
-    color: var(--primary-color);
+    color: var(--primary);
     font-size: 24px;
     font-family: Squada;
     user-select: none;

@@ -6,7 +6,7 @@ import { authUrl } from "@/endpoints/apiUrl";
 import useFetch from "@/hooks/useFetch";
 
 import Layout from "@/components/Layout";
-import FlatButton from "@/ui/flat_button";
+import FlatButton from "@/ui/flatButton";
 import Input from "@/ui/input";
 
 import style from "./style.module.scss";

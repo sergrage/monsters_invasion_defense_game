@@ -10,7 +10,7 @@ type inputType = {
   type?: string;
   required?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick?: (event: React.MouseEvent) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onError?: (val: boolean) => void;
 };
 
@@ -52,6 +52,7 @@ const Input = (props: inputType) => {
 
   // проверяет инпуты после потери фокуса
   const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+    props.onBlur?.(event);
     if (!props.required) return;
 
     if (!checkValue(event.target.value)) setError(true);

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import style from "./style.module.scss";
-import zombies from "../../assets/images/error-zombies/index";
+import zombies from "../../assets/img/errorZombies/index";
 
 type zombieProps = {
   text?: string;

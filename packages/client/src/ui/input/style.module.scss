@@ -8,7 +8,7 @@
   padding: 20px 15px 15px;
   border: 2px solid #f0f0f0;
   border-radius: 5px;
-  background-color: var(--white-color);
+  background-color: var(--white);
   transition: border-color 0.2s ease-in-out;
 
   &__label {
@@ -18,8 +18,8 @@
     padding: 0px 5px;
     font-family: Squada;
     font-size: 20px;
-    color: var(--primary-color);
-    background-color: var(--white-color);
+    color: var(--primary);
+    background-color: var(--white);
     user-select: none;
   }
 
@@ -27,7 +27,7 @@
     padding: 10px 15px;
     border-radius: 5px;
     font-family: Squada;
-    color: var(--text-color);
+    color: var(--text);
     background-color: rgb(243 243 244);
   }
 
@@ -36,6 +36,6 @@
   }
 
   &.error {
-    border-color: var(--danger-color);
+    border-color: var(--danger);
   }
 }
