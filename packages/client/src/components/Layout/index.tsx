@@ -11,18 +11,24 @@ const Main: FC<TProps> = ({ children }) => {
   return (
     <>
       <Header>Some Header</Header>
-      <main className={style.main}>{children}</main>
+      <main className={style.main} id="main">
+        {children}
+      </main>
     </>
   );
 };
 
 const Container: FC<TProps> = ({ children }) => {
-  return <div className={style.container}>{children}</div>;
+  return (
+    <div className={style.container} id="container">
+      {children}
+    </div>
+  );
 };
 
 const Page: FC<TProps> = ({ children }) => {
   return (
-    <div className={style.page}>
+    <div className={style.page} id="page">
       <Container>{children}</Container>
     </div>
   );

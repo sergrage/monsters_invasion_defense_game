@@ -7,7 +7,7 @@ export type TProps = {
   children: ReactNode | ReactNode[];
 };
 
-const Header: FC<TProps> = ({ children }) => {
+const ForumBtn: FC<TProps> = ({ children }) => {
   return (
     <div className={style.header} id="header">
       <Layout.Container>{children}</Layout.Container>
@@ -15,4 +15,4 @@ const Header: FC<TProps> = ({ children }) => {
   );
 };
 
-export default Header;
+export default ForumBtn;

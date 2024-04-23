@@ -3,4 +3,6 @@ export enum routes {
   signup = "/signup",
   game = "/play",
   forum = "/forum",
+  forumTopics = "/forum/:topicId",
+  gameOver = "/gameover",
 }
