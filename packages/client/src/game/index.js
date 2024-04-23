@@ -1,19 +1,18 @@
-import MapGenerator from "./mapGenerator";
-import enemiesGenerator from "./EnemiesGenerator";
-import TilesGenerator from "./tilesGenerator";
-import Enemy from "../Enemy";
-import waypoints from "../../mocks/waypoints";
-import myImage from "../../img/gameMap.png";
-import placementTilesData from "../../mocks/placementTilesData";
-import PlacementTile from "../PlacementTile";
-import Building from "../Building";
-import EnemiesGenerator from "./EnemiesGenerator";
-import Sprite from "../Sprite";
-import myImageExplosion from "../../img/explosion.png";
-import { EventSubject } from "../observer";
+import MapGenerator from "./classes/creational/mapGenerator.js";
+import TilesGenerator from "./classes/creational/tilesGenerator.js";
+import Enemy from "./classes/gameEntities/Enemy.js";
+import PlacementTile from "./classes/gameEntities/PlacementTile.js";
+import Building from "./classes/gameEntities/Building.js";
+import EnemiesGenerator from "./classes/creational/EnemiesGenerator.js";
+import Sprite from "./classes/gameEntities/Sprite.js";
+import { EventSubject } from "./classes/behavioral/observer/index.js";
+import waypoints from "./mocks/waypoints.js";
+import placementTilesData from "./mocks/placementTilesData.js";
+import myImageExplosion from "./img/explosion.png";
+import myImage from "./img/gameMap.png";
 
 class Game {
-  constructor(coins, hearts) {
+  constructor(coins, hearts, mapGenerator, enemiesGenerator, tilesGenerator) {
     this.hearts = hearts;
     this.coins = coins;
     this.enemyCount = 3;
@@ -28,6 +27,11 @@ class Game {
     this.activeTile = null;
     this.explosions = [];
     this.eventSubject = new EventSubject();
+
+    // Injected dependencies
+    this.mapGenerator = mapGenerator;
+    this.enemiesGenerator = enemiesGenerator;
+    this.tilesGenerator = tilesGenerator;
   }
 
   // Метод для изменения количества монет
@@ -101,7 +105,6 @@ class Game {
       const enemy = this.enemies[i];
       enemy.update();
       if (enemy.position.x > this.canvas.width) {
-        // this.hearts--
         this.setHearts(-1);
         this.enemies.splice(i, 1);
         if (this.hearts <= 0) {
@@ -162,7 +165,7 @@ class Game {
     for (let i = building.projectiles.length - 1; i >= 0; i--) {
       const projectile = building.projectiles[i];
       this.updateProjectile(projectile);
-      this.handleProjectileCollision(projectile, building, i); // pass 'i' to handleProjectileCollision
+      this.handleProjectileCollision(projectile, building, i);
     }
   }
 
@@ -188,7 +191,6 @@ class Game {
       if (enemyIndex > -1) {
         this.enemies.splice(enemyIndex, 1);
         this.setCoins(25);
-        // document.querySelector('#coins').innerHTML = this.coins;
       }
     }
   }
@@ -219,7 +221,6 @@ class Game {
       this.coins - 50 >= 0
     ) {
       this.setCoins(-50);
-      // document.querySelector('#coins').innerHTML = this.coins;
       this.buildings.push(
         new Building({
           position: {

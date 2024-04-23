@@ -10,16 +10,16 @@ import Game from "@/pages/game";
 
 const App: FC = () => {
   return (
-    <Layout.Main>
-      <Routes>
-        <Route path={routes.login} element={<Login />} />
-        <Route path={routes.signup} element={<Signup />} />
-        <Route path={routes.game} element={<Game />} />
-        <Route path={routes.forum} element={<Forum />} />
+    // <Layout.Main>
+    <Routes>
+      <Route path={routes.login} element={<Login />} />
+      <Route path={routes.signup} element={<Signup />} />
+      <Route path={routes.game} element={<Game />} />
+      <Route path={routes.forum} element={<Forum />} />
 
-        <Route path="*" element={<Navigate to={routes.login} replace />} />
-      </Routes>
-    </Layout.Main>
+      <Route path="*" element={<Navigate to={routes.login} replace />} />
+    </Routes>
+    // </Layout.Main>
   );
 };
 

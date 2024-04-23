@@ -1,6 +1,6 @@
 import Sprite from "./Sprite";
-import Projectile from "./Projectile";
-import myImage from "../img/tower.png";
+import Projectile from "./Projectile.js";
+import myImage from "../../img/tower.png";
 
 class Building extends Sprite {
   constructor({ position = { x: 0, y: 0 }, c }) {
