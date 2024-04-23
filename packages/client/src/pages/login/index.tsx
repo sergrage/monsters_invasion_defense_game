@@ -6,7 +6,7 @@ import { authUrl } from "@/endpoints/apiUrl";
 import useFetch from "@/hooks/useFetch";
 
 import Layout from "@/components/Layout";
-import FlatButton from "@/ui/flatButton";
+import Button from "@/ui/button";
 import Input from "@/ui/input";
 
 import style from "./style.module.scss";
@@ -80,12 +80,12 @@ const LoginPage = () => {
           />
         </div>
         <div className={style["btns-wrapper"]}>
-          <FlatButton
+          <Button.Flat
             name="Login"
             type="submit"
             disabled={error.login || error.password}
           />
-          <FlatButton
+          <Button.Flat
             name="Signup"
             onClick={onClickHandler}
             transparent={true}
