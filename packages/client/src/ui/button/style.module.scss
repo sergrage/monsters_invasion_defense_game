@@ -4,14 +4,14 @@
   height: 37px;
   border-radius: 8px;
   color: var(--white);
-  background-color: var(--primary);
+  background-color: var(--primary-light);
   transition:
     box-shadow var(--transition-bezier),
     background-color var(--transition-bezier);
 
   &.transparent {
     background-color: transparent;
-    color: var(--primary);
+    color: var(--primary-light);
     transition: text-shadow var(--transition-bezier);
   }
 
