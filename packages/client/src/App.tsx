@@ -1,10 +1,11 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 import { routes } from "@/pages/routes";
+import { Navigate, Route, Routes } from "react-router";
+
 import Layout from "@/components/Layout";
 import Login from "@/pages/login";
 import Signup from "@/pages/signup";
-import { Navigate, Route, Routes } from "react-router";
 import Forum from "@/pages/forum";
 import Game from "@/pages/game";
 
