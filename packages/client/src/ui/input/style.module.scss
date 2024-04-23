@@ -14,6 +14,10 @@
   &.error {
     border-color: var(--danger);
   }
+
+  &:hover .label {
+    letter-spacing: 3px;
+  }
 }
 
 .label {
@@ -23,8 +27,10 @@
   padding: 0px 5px;
   font-family: "Squada One";
   font-size: 20px;
-  color: var(--primary-light);
+  color: var(--primary-strong);
+  text-align: center;
   background-color: var(--white);
+  transition: letter-spacing 200ms ease-in-out;
   user-select: none;
 }
 

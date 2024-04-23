@@ -4,15 +4,41 @@
   height: 37px;
   border-radius: 8px;
   color: var(--white);
-  background-color: var(--primary-light);
+  background-color: var(--positive);
   transition:
     box-shadow var(--transition-bezier),
-    background-color var(--transition-bezier);
+    background-color var(--transition-bezier),
+    letter-spacing 200ms ease-in-out;
 
   &.transparent {
     background-color: transparent;
-    color: var(--primary-light);
-    transition: text-shadow var(--transition-bezier);
+    color: var(--primary-strong);
+    transition:
+      letter-spacing 200ms ease-in-out,
+      color 200ms ease-in-out;
+
+    &:before,
+    &:after {
+      display: block;
+      position: absolute;
+      content: " ";
+      width: 0%;
+      height: 2px;
+      transition:
+        width 200ms ease-in-out,
+        background-color 200ms ease-in-out;
+      background-color: #ff990000;
+    }
+
+    &:before {
+      right: 68%;
+      bottom: calc(50% - 1px);
+    }
+
+    &:after {
+      left: 68%;
+      bottom: calc(50% - 1px);
+    }
   }
 
   &.dangerous {
@@ -21,10 +47,19 @@
 
   &:hover {
     box-shadow: 0px 0px 5px 0px var(--shadow-strong);
+    letter-spacing: 3px;
 
     &.transparent {
       box-shadow: 0px 0px 0px 0px var(--black);
-      text-shadow: 0px 0px 0.7px var(--shadow-strong);
+      letter-spacing: 3px;
+      color: #ff9900;
+
+      &:hover:after,
+      &:hover:before {
+        transition: width 250ms ease-in-out;
+        background-color: #ff9900;
+        width: 30%;
+      }
     }
   }
 
@@ -33,7 +68,8 @@
 
     &.transparent {
       box-shadow: 0px 0px 0px 0px var(--black);
-      text-shadow: 0px 0px 0.2px var(--shadow-strong);
+      letter-spacing: 5px;
+      color: rgb(180, 211, 43);
     }
   }
 
