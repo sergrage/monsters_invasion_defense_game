@@ -1,5 +1,6 @@
 import cn from "classnames";
 import style from "./style.module.scss";
+import classNames from "classnames";
 
 type TProps = {
   name: string;
@@ -9,6 +10,7 @@ type TProps = {
   dangerous?: boolean;
   red?: boolean;
   yellow?: boolean;
+  className?: string;
   onClick?: (event: React.MouseEvent) => void;
 };
 
@@ -18,11 +20,12 @@ const FlatButton = ({
   disabled,
   transparent,
   dangerous,
+  className,
   onClick,
 }: TProps) => {
   return (
     <button
-      className={cn(style.button, {
+      className={cn(style.button, className, {
         [style.transparent]: transparent,
         [style.dangerous]: dangerous,
       })}
@@ -41,11 +44,12 @@ const RoundButton = ({
   disabled,
   red,
   yellow,
+  className,
   onClick,
 }: TProps) => {
   return (
     <div
-      className={style["button-el"]}
+      className={cn(style["button-el"], className)}
       aria-label={`${name} button`}
       title={name}
     >
