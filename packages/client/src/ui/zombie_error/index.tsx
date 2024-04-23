@@ -4,7 +4,7 @@ import cn from "classnames";
 import style from "./style.module.scss";
 import zombies from "../../assets/img/errorZombies/index";
 
-type zombieProps = {
+type TProps = {
   text?: string;
 };
 
@@ -12,7 +12,7 @@ function randomizeZombies() {
   return zombies[Math.round(Math.random() * (zombies.length - 1))];
 }
 
-const ZombieError = ({ text }: zombieProps) => {
+const ZombieError = ({ text }: TProps) => {
   // получить рандомное изображение до рендера компонента
   // в противном случае появляется один и тот же зомби
   const [zombie] = useState(() => randomizeZombies());

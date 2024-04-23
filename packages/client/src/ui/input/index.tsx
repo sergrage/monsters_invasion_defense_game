@@ -4,7 +4,7 @@ import cn from "classnames";
 import ZombieError from "../zombie_error";
 import style from "./style.module.scss";
 
-type inputType = {
+type TProps = {
   name: string;
   label?: string;
   placeholder?: string;
@@ -24,7 +24,7 @@ const Input = ({
   onChange,
   onBlur,
   onError,
-}: inputType) => {
+}: TProps) => {
   const id = useId();
   const [isInvalid, setIsInvalid] = useState(false);
 
