@@ -1,6 +1,5 @@
 import cn from "classnames";
 import style from "./style.module.scss";
-import classNames from "classnames";
 
 type TProps = {
   name: string;
@@ -8,6 +7,7 @@ type TProps = {
   disabled?: boolean;
   transparent?: boolean;
   dangerous?: boolean;
+  positive?: boolean;
   red?: boolean;
   yellow?: boolean;
   className?: string;
@@ -20,6 +20,7 @@ const FlatButton = ({
   disabled,
   transparent,
   dangerous,
+  positive,
   className,
   onClick,
 }: TProps) => {
@@ -28,6 +29,7 @@ const FlatButton = ({
       className={cn(style.button, className, {
         [style.transparent]: transparent,
         [style.dangerous]: dangerous,
+        [style.positive]: positive,
       })}
       type={type}
       disabled={disabled}

@@ -4,7 +4,7 @@
   height: 37px;
   border-radius: 8px;
   color: var(--white);
-  background-color: var(--positive);
+  background-color: var(--primary-strong);
   transition:
     box-shadow var(--transition-bezier),
     background-color var(--transition-bezier),
@@ -43,6 +43,10 @@
 
   &.dangerous {
     background-color: var(--danger);
+  }
+
+  &.positive {
+    background-color: var(--positive);
   }
 
   &:hover {
