@@ -6,6 +6,7 @@ import Title from "@/ui/title";
 import Button from "@/ui/button";
 import ProfileField from "@/ui/profileField";
 import AvatarImg from "@/ui/avatarImg";
+import Modal from "@/ui/modal";
 
 import style from "./style.module.scss";
 
@@ -16,7 +17,6 @@ const userDummy = {
   display_name: "Petya Pupkin",
   phone: "+79001001100",
   login: "userLogin",
-  avatar: "/path/to/avatar.jpg",
   email: "string@ya.ru",
 };
 
@@ -49,14 +49,14 @@ const Profile = () => {
 
       <Button.Flat name="Change password" onClick={togglePassModal} />
 
-      {showPassModal &&
-        createPortal(
-          <div className={style["modal-wrapper"]} />,
-          document.getElementById("modal-root")!,
-        )}
       {showAvatarModal &&
         createPortal(
-          <div className={style["modal-wrapper"]} />,
+          <Modal.File closeModal={toggleAvatarModal} />,
+          document.getElementById("modal-root")!,
+        )}
+      {showPassModal &&
+        createPortal(
+          <Modal.Password closeModal={togglePassModal} />,
           document.getElementById("modal-root")!,
         )}
     </Layout.Page>
