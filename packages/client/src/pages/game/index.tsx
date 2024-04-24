@@ -1,9 +1,19 @@
 import React, { FC, useState, useEffect } from "react";
 import Layout from "@/components/Layout";
-import Game from "@/game";
-import EventObserver from "@/game/classes/behavioral/observer";
+
+import Game from "@/game/game";
 import Coins from "@/components/game/coins";
 import Hearts from "@/components/game/hearts";
+import EventObserver from "@/game/classes/behavioral/observer";
+import EventSubject from "@/game/classes/behavioral/eventSubject";
+import MapGenerator from "@/game/classes/creational/mapGenerator";
+import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
+import TilesGenerator from "@/game/classes/creational/tilesGenerator";
+import placementTilesData from "@/game/mocks/placementTilesData";
+import placementTile from "@/game/classes/gameEntities/PlacementTile";
+import waypoints from "@/game/mocks/waypoints";
+import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
+import myImage from "../../game/img/gameMap.png";
 
 const GamePage: FC = () => {
   const [coins, setCoins] = useState<number>(100);
@@ -18,7 +28,24 @@ const GamePage: FC = () => {
   }
 
   useEffect(() => {
-    const game = new Game(coins, hearts);
+    // // Create instances of dependencies
+    const mapGenerator = new MapGenerator(1280, 768, "gameCanvas", myImage);
+    const enemiesGenerator = new EnemiesGenerator(mapGenerator.ctx, waypoints);
+    const tilesGenerator = new TilesGenerator(
+      mapGenerator.ctx,
+      placementTilesData,
+      PlacementTile,
+    );
+    const eventSubject = new EventSubject();
+
+    const game = new Game(
+      coins,
+      hearts,
+      mapGenerator,
+      enemiesGenerator,
+      tilesGenerator,
+      eventSubject,
+    );
 
     const coinsChangedObserver = new EventObserver(handleCoinsChangedEvent);
     const heartsChangedObserver = new EventObserver(handleHeartsChangedEvent);

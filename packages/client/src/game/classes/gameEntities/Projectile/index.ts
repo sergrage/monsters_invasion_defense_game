@@ -1,5 +1,5 @@
-import Sprite from "./Sprite";
-import myImage from "../../img/projectile.png";
+import Sprite from "@/game/classes/gameEntities/Sprite";
+import myImage from "../../../img/projectile.png";
 
 class Projectile extends Sprite {
   constructor({ position = { x: 0, y: 0 }, enemy, c }) {

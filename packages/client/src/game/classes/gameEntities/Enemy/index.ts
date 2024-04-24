@@ -1,6 +1,8 @@
-import Sprite from "./Sprite";
-import waypoints from "../../mocks/waypoints.js";
-import orcImage from "../../img/orc.png";
+// import Sprite from "../Sprite.js";
+// import waypoints from "../../../mocks/waypoints/waypoints.js";
+import waypoints from "@/game/mocks/waypoints";
+import orcImage from "../../../img/orc.png";
+import Sprite from "@/game/classes/gameEntities/Sprite";
 
 class Enemy extends Sprite {
   constructor({ position = { x: 0, y: 0 }, c }) {

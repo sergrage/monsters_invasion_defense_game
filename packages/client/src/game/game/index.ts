@@ -1,20 +1,38 @@
-import MapGenerator from "./classes/creational/mapGenerator.js";
-import TilesGenerator from "./classes/creational/tilesGenerator.js";
-import Enemy from "./classes/gameEntities/Enemy.js";
-import PlacementTile from "./classes/gameEntities/PlacementTile.js";
-import Building from "./classes/gameEntities/Building.js";
-import EnemiesGenerator from "./classes/creational/EnemiesGenerator.js";
-import Sprite from "./classes/gameEntities/Sprite.js";
-import { EventSubject } from "./classes/behavioral/observer/index.js";
-import waypoints from "./mocks/waypoints.js";
-import placementTilesData from "./mocks/placementTilesData.js";
-import myImageExplosion from "./img/explosion.png";
-import myImage from "./img/gameMap.png";
+import Sprite from "@/game/classes/gameEntities/Sprite";
+import myImageExplosion from "../img/explosion.png";
+import Enemy from "@/game/classes/gameEntities/Enemy";
+import Building from "@/game/classes/gameEntities/building";
+import coins from "@/components/game/coins";
 
 class Game {
-  constructor(coins, hearts, mapGenerator, enemiesGenerator, tilesGenerator) {
-    this.hearts = hearts;
+  coins: number;
+  hearts: number;
+  enemyCount: number;
+  enemies: Enemy[];
+  buildings: Building[];
+  canvas: HTMLCanvasElement | null;
+  ctx: CanvasRenderingContext2D | null;
+  image: HTMLImageElement | null;
+  placementTiles: any[] | null;
+  mouse: { x: number | undefined; y: number | undefined };
+  animate: () => void;
+  activeTile: any;
+  explosions: Sprite[];
+  eventSubject: any;
+  mapGenerator: any;
+  enemiesGenerator: any;
+  tilesGenerator: any;
+
+  constructor(
+    coins: number,
+    hearts: number,
+    mapGenerator: any,
+    enemiesGenerator: any,
+    tilesGenerator: any,
+    eventSubject: any,
+  ) {
     this.coins = coins;
+    this.hearts = hearts;
     this.enemyCount = 3;
     this.enemies = [];
     this.buildings = [];
@@ -26,7 +44,7 @@ class Game {
     this.animate = this.animate.bind(this);
     this.activeTile = null;
     this.explosions = [];
-    this.eventSubject = new EventSubject();
+    this.eventSubject = eventSubject;
 
     // Injected dependencies
     this.mapGenerator = mapGenerator;
@@ -35,7 +53,7 @@ class Game {
   }
 
   // Метод для изменения количества монет
-  setCoins(newCoins) {
+  setCoins(newCoins: number) {
     this.coins += newCoins;
     this.triggerCoinsChangeEvent();
   }
@@ -63,9 +81,7 @@ class Game {
   }
 
   initializeMap() {
-    const myMapGenerator = new MapGenerator(1280, 768, "gameCanvas", myImage);
-    const { image, canvas, ctx } = myMapGenerator;
-
+    const { image, canvas, ctx } = this.mapGenerator;
     this.canvas = canvas;
     this.ctx = ctx;
     this.image = image;
@@ -75,19 +91,11 @@ class Game {
   }
 
   initializeEnemies() {
-    const enemiesGenerator = new EnemiesGenerator(this.ctx, waypoints);
-
-    this.enemies = enemiesGenerator.generate(this.enemyCount, Enemy);
+    this.enemies = this.enemiesGenerator.generate(this.enemyCount, Enemy);
   }
 
   initializeTiles() {
-    const tilesGenerator = new TilesGenerator(
-      this.ctx,
-      placementTilesData,
-      PlacementTile,
-    );
-
-    this.placementTiles = tilesGenerator.generatePlacementTiles();
+    this.placementTiles = this.tilesGenerator.generatePlacementTiles();
   }
 
   initGame() {
@@ -123,9 +131,10 @@ class Game {
 
   handleSpawnMoreEnemies(count) {
     this.enemyCount += count;
-    const enemiesGenerator = new EnemiesGenerator(this.ctx, waypoints);
-
-    this.enemies = enemiesGenerator.generate(this.enemyCount + count, Enemy);
+    this.enemies = this.enemiesGenerator.generate(
+      this.enemyCount + count,
+      Enemy,
+    );
   }
 
   animate() {
