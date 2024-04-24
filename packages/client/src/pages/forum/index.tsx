@@ -6,6 +6,8 @@ import Layout from "@/components/Layout";
 
 import TopicsTable from "./components/topicsTable";
 import AddTopicModal from "./components/addTopicModal";
+import Button from "@/ui/button";
+import cn from "classnames";
 
 const ForumPage: FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -21,35 +23,31 @@ const ForumPage: FC = () => {
   return (
     <Layout.Page>
       <div
-        className={style.forum__add_threat}
-        style={{
-          opacity: !showModal ? "0" : "1",
-          transition: "all .5s",
-          visibility: !showModal ? "hidden" : "visible",
-        }}
+        className={cn(
+          style.addTopicModal,
+          !showModal ? style.hide : style.show,
+        )}
       >
         <AddTopicModal hideModalClick={hideModalClick}></AddTopicModal>
       </div>
 
-      <div className={style.forum__hero}>
-        <div className={style.forum__hero__wrapper}>
-          <h2 className={style.forum__hero__title}>Game Forum</h2>
-          <h3 className={style.forum__hero__gametitle}>
+      <div className={style.hero}>
+        <div className={cn(style.wrapper)}>
+          <h2 className={cn(style.title)}>Game Forum</h2>
+          <h3 className={cn(style.gametitle)}>
             Monsters Invasion Defense Game
           </h3>
-          <button
-            className={
-              style.forum__hero__btn + " " + style.forum__hero__btn_red
-            }
+          <Button.Flat
+            name="Ask question"
             onClick={showModalClick}
-          >
-            Ask question
-          </button>
+            formBtn={true}
+            formBtnRed={true}
+          />
 
           <img
-            className={style.forum__hero__zombyAlarm}
+            className={cn(style.zombyAlarm)}
             src="/src/assets/img/zombyAlarm.png"
-            alt="gear"
+            alt="zombyAlarm"
           />
         </div>
       </div>

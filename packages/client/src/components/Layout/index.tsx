@@ -1,34 +1,28 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
+import cn from "classnames";
 
 import style from "./style.module.scss";
-import Header from "@/components/header";
 
 export type TProps = {
   children: ReactNode | ReactNode[];
+  className?: string;
 };
 
 const Main: FC<TProps> = ({ children }) => {
-  return (
-    <>
-      <Header>Some Header</Header>
-      <main className={style.main} id="main">
-        {children}
-      </main>
-    </>
-  );
+  return <main className={style.main}>{children}</main>;
 };
 
-const Container: FC<TProps> = ({ children }) => {
+const Container: FC<TProps> = ({ children, className = "" }) => {
   return (
-    <div className={style.container} id="container">
+    <div className={cn(style.container, className)} id="container">
       {children}
     </div>
   );
 };
 
-const Page: FC<TProps> = ({ children }) => {
+const Page: FC<TProps> = ({ children, className }) => {
   return (
-    <div className={style.page} id="page">
+    <div className={cn(style.container, className)} id="container">
       <Container>{children}</Container>
     </div>
   );

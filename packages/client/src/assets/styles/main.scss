@@ -14,14 +14,14 @@ body,
 *::before,
 *::after {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  padding: 0px;
+  margin: 0px;
   outline: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "Roboto", "Arial", sans-serif;
+  font-family: "Spinnaker", "Roboto", "Arial", sans-serif;
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: #00000000;
 }
 
 h1,
@@ -30,6 +30,8 @@ h3,
 h4,
 h5,
 h6 {
+  margin: 0px;
+  font-family: "Squada One", sans-serif;
   font-weight: normal;
 }
 
@@ -50,4 +52,20 @@ iframe {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  border: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px #c4c4c4 inset !important;
 }
