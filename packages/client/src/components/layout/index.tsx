@@ -5,7 +5,7 @@ import Header from "@/components/header";
 import cn from "classnames";
 
 export type TProps = {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 };
 
