@@ -4,4 +4,6 @@ export enum routes {
   profile = "/profile",
   game = "/play",
   forum = "/forum",
+  error404 = "/404",
+  error500 = "/500",
 }
