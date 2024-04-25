@@ -5,9 +5,9 @@ export interface Position {
 
 export interface Frames {
   max: number;
-  current: number;
-  elapsed: number;
-  hold: number;
+  current?: number;
+  elapsed?: number;
+  hold?: number;
 }
 
 export interface Offset {

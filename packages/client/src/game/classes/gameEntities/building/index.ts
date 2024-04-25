@@ -8,17 +8,20 @@ class Building extends Sprite {
   center: { x: number; y: number };
   projectiles: Projectile[];
   radius: number;
-  target: any; // Здесь нужно указать тип цели, если это возможно
+  target: any;
 
   constructor({
     position = { x: 0, y: 0 },
+    canvas,
     c,
   }: {
     position?: { x: number; y: number };
-    c: any;
+    canvas: HTMLCanvasElement;
+    c: CanvasRenderingContext2D;
   }) {
     super({
       position,
+      canvas,
       imageSrc: myImage,
       frames: {
         max: 19,
@@ -42,11 +45,6 @@ class Building extends Sprite {
 
   draw(): void {
     super.draw();
-
-    // c.beginPath()
-    // c.arc(this.center.x, this.center.y, this.radius, 0, Math.PI * 2)
-    // c.fillStyle = 'rgba(0, 0, 255, 0.2)'
-    // c.fill()
   }
 
   update(): void {
@@ -71,6 +69,7 @@ class Building extends Sprite {
         },
         enemy: this.target,
         c: this.c,
+        canvas: this.canvas,
       }),
     );
   }

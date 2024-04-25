@@ -2,20 +2,22 @@ import Sprite from "@/game/classes/gameEntities/Sprite";
 import myImage from "../../../img/projectile.png";
 
 class Projectile extends Sprite {
-  private velocity: { x: number; y: number };
-  private enemy: { center: { x: number; y: number } };
-  private radius: number;
+  velocity: { x: number; y: number };
+  enemy: { center: { x: number; y: number } };
+  radius: number;
 
   constructor({
     position = { x: 0, y: 0 },
     enemy,
     c,
+    canvas,
   }: {
-    position?: { x: number; y: number };
+    position: { x: number; y: number };
     enemy: { center: { x: number; y: number } };
-    c: any;
+    c: CanvasRenderingContext2D;
+    canvas: HTMLCanvasElement;
   }) {
-    super({ position, imageSrc: myImage, c });
+    super({ position, c, imageSrc: myImage, canvas }); // Pass canvas to super()
     this.velocity = {
       x: 0,
       y: 0,

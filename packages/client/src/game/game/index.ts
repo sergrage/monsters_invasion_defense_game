@@ -2,7 +2,6 @@ import Sprite from "@/game/classes/gameEntities/Sprite";
 import myImageExplosion from "../img/explosion.png";
 import Enemy from "@/game/classes/gameEntities/Enemy";
 import Building from "@/game/classes/gameEntities/building";
-import coins from "@/components/game/coins";
 
 class Game {
   coins: number;
@@ -15,7 +14,6 @@ class Game {
   image: HTMLImageElement | null;
   placementTiles: any[] | null;
   mouse: { x: number | undefined; y: number | undefined };
-  // animate: any;
   activeTile: any;
   explosions: Sprite[];
   eventSubject: any;
@@ -227,7 +225,7 @@ class Game {
     return Math.hypot(xDifference, yDifference);
   }
 
-  handleCanvasClick(event) {
+  handleCanvasClick() {
     if (
       this.activeTile &&
       !this.activeTile.isOccupied &&
@@ -248,7 +246,7 @@ class Game {
     }
   }
 
-  handleMouseMove(event) {
+  handleMouseMove(event: MouseEvent): void {
     this.mouse.x = event.clientX;
     this.mouse.y = event.clientY;
 

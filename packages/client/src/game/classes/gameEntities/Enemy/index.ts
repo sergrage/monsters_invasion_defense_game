@@ -1,6 +1,7 @@
 import Sprite from "../Sprite";
 import waypoints from "@/game/mocks/waypoints";
 import orcImage from "../../../img/orc.png";
+import { Frames } from "@/game/interfaces";
 
 interface Position {
   x: number;
@@ -8,29 +9,32 @@ interface Position {
 }
 
 class Enemy extends Sprite {
-  private position: Position;
-  private width: number = 100;
-  private height: number = 100;
-  private waypointIndex: number = 0;
-  private center: Position;
-  private radius: number = 50;
-  private health: number = 100;
-  private velocity: Position = { x: 0, y: 0 };
-  private c: CanvasRenderingContext2D;
+  position: Position;
+  width: number = 100;
+  height: number = 100;
+  waypointIndex: number = 0;
+  center: Position;
+  radius: number = 50;
+  health: number = 100;
+  velocity: Position = { x: 0, y: 0 };
+  c: CanvasRenderingContext2D;
 
   constructor({
     position = { x: 0, y: 0 },
+    canvas,
     c,
   }: {
     position?: Position;
+    canvas: HTMLCanvasElement;
     c: CanvasRenderingContext2D;
   }) {
+    const frames: Frames = { max: 7 };
     super({
       position,
+      canvas,
       imageSrc: orcImage,
-      frames: {
-        max: 7,
-      },
+      frames,
+      c,
     });
     this.position = position;
     this.center = {
