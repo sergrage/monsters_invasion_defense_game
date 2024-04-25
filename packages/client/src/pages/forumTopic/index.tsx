@@ -16,7 +16,6 @@ const ForumTopics: FC = () => {
     const form = event.currentTarget;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
   };
 
   return (
