@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import style from "./style.module.scss";
 import Title from "@/ui/title";
-import Layout from "@/components/layout";
+import Layout from "@/components/Layout";
 
 const SignupPage: FC = () => {
   return (

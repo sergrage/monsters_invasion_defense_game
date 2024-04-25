@@ -1,1 +1,1 @@
-export const loginUrl: string = "path/to/api";
+export const authUrl: string = "https://ya-praktikum.tech/api/v2/auth";

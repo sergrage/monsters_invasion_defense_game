@@ -1,11 +1,10 @@
-import React, { FC, ReactNode } from "react";
-
-import style from "./style.module.scss";
-import Header from "@/components/header";
+import { FC, ReactNode } from "react";
 import cn from "classnames";
 
+import style from "./style.module.scss";
+
 export type TProps = {
-  children?: ReactNode;
+  children: ReactNode | ReactNode[];
   className?: string;
 };
 
@@ -13,14 +12,14 @@ const Main: FC<TProps> = ({ children }) => {
   return <main className={style.main}>{children}</main>;
 };
 
-const Container: FC<TProps> = ({ children, className }) => {
+const Container: FC<TProps> = ({ children, className = "" }) => {
   return <div className={cn(style.container, className)}>{children}</div>;
 };
 
 const Page: FC<TProps> = ({ children, className }) => {
   return (
-    <div className={style.page}>
-      <Container className={className}>{children}</Container>
+    <div className={cn(style.page, className)}>
+      <Container>{children}</Container>
     </div>
   );
 };
