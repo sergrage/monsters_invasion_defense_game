@@ -19,7 +19,7 @@ const AddTopicModal: FC<TProps> = ({ hideModalClick }) => {
   };
 
   return (
-    <form method="post" onSubmit={onSubmitHandler}>
+    <form onSubmit={onSubmitHandler}>
       <div className={style.addTopic}>
         <label
           className={cn(style.addTopic, style.label)}

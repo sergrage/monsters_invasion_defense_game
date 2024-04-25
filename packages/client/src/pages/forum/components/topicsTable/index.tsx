@@ -58,7 +58,3 @@ const TopicsTable: FC = () => {
 };
 
 export default TopicsTable;
-
-{
-  /*  */
-}

@@ -9,7 +9,7 @@ export type TProps = {
 
 const Header: FC<TProps> = ({ children }) => {
   return (
-    <div className={style.header} id="header">
+    <div className={style.header}>
       <Layout.Container>{children}</Layout.Container>
     </div>
   );
