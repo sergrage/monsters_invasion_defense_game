@@ -2,11 +2,12 @@ import React, { FC, useState } from "react";
 
 import style from "./style.module.scss";
 import Title from "@/ui/title";
+import Image from "@/ui/image";
 import Layout from "@/components/layout";
-
+import Button from "@/ui/button";
+import zombieAlarm from "@/assets/img/zombieAlarm.png";
 import TopicsTable from "./components/topicsTable";
 import AddTopicModal from "./components/addTopicModal";
-import Button from "@/ui/button";
 import cn from "classnames";
 
 const ForumPage: FC = () => {
@@ -43,12 +44,11 @@ const ForumPage: FC = () => {
             formBtn={true}
             formBtnRed={true}
           />
-
-          <img
-            className={cn(style.zombyAlarm)}
-            src="/src/assets/img/zombyAlarm.png"
-            alt="zombyAlarm"
-          />
+          <Image
+            className={style.zombieAlarm}
+            src={zombieAlarm}
+            alt="zombieAlarm"
+          ></Image>
         </div>
       </div>
       <TopicsTable></TopicsTable>
