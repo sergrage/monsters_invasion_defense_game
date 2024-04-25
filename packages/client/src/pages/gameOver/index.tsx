@@ -8,7 +8,7 @@ const GameOverPage: FC = () => {
   return (
     <Layout.Page>
       <div className={style.wrapper}>
-        <h1 className={style.gameOver}>GAME OVER</h1>
+        <h1 className={style.title}>GAME OVER</h1>
         <p className={style.score}>SCORE: 500</p>
         <button>Start Again?</button>
       </div>

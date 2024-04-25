@@ -2,6 +2,8 @@ import React, { FC } from "react";
 
 import style from "./style.module.scss";
 import Layout from "@/components/Layout";
+import Title from "@/ui/title";
+
 import { useParams } from "react-router";
 
 import temp_data from "@/pages/forumTopic/temp_data";
@@ -21,9 +23,10 @@ const ForumTopics: FC = () => {
   return (
     <Layout.Page>
       <div className={style.titleBox}>
-        <h2 className={style.topic}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        </h2>
+        <Title.H2
+          title={"Lorem ipsum dolor sit amet, consectetur adipisicing elit"}
+          className={style.topic}
+        />
       </div>
 
       {temp_data.map(item => (
@@ -36,7 +39,7 @@ const ForumTopics: FC = () => {
             <div className={style.user}>
               <div className={style.name}>{item.user.name}</div>
               <div className={style.avatar}>
-                <img src={item.user.avatar} alt="" />
+                <img src={item.user.avatar} alt="avatar" />
               </div>
             </div>
             <div className={style.text}>
@@ -46,7 +49,7 @@ const ForumTopics: FC = () => {
         </div>
       ))}
 
-      <form method="post" onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler}>
         <div className={style.footer}>
           <textarea
             className={style.textarea}

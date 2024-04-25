@@ -10,7 +10,7 @@
   }
 }
 .addTopicModal {
-  box-shadow: inset -1px -4px 3px 0px rgba(105, 136, 147, 0.5);
+  box-shadow: var(--modalShadow);
   text-align: center;
   position: absolute;
   top: 50%;

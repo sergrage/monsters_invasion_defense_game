@@ -13,11 +13,7 @@ const Main: FC<TProps> = ({ children }) => {
 };
 
 const Container: FC<TProps> = ({ children, className = "" }) => {
-  return (
-    <div className={cn(style.container, className)} id="container">
-      {children}
-    </div>
-  );
+  return <div className={cn(style.container, className)}>{children}</div>;
 };
 
 const Page: FC<TProps> = ({ children, className }) => {
