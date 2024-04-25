@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { routes } from "@/pages/routes";
 import { authUrl } from "@/endpoints/apiUrl";
 import useFetch from "@/hooks/useFetch";
 
-import Layout from "@/components/Layout";
 import Button from "@/ui/button";
 import Input from "@/ui/input";
 
 import style from "./style.module.scss";
+import Layout from "@/components/layout";
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
   const navigate = useNavigate();
   const sendRequest = useFetch();
 
@@ -83,6 +83,7 @@ const LoginPage = () => {
           <Button.Flat
             name="Login"
             type="submit"
+            positive={true}
             disabled={error.login || error.password}
           />
           <Button.Flat

@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 
 import style from "./style.module.scss";
-
-import Layout from "@/components/Layout";
+import Title from "@/ui/title";
+import Layout from "@/components/layout";
 
 import TopicsTable from "./components/topicsTable";
 import AddTopicModal from "./components/addTopicModal";

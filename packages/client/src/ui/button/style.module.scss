@@ -4,7 +4,7 @@
   height: 37px;
   border-radius: 8px;
   color: var(--white);
-  background-color: var(--positive);
+  background-color: var(--primary-strong);
   transition:
     box-shadow var(--transition-bezier),
     background-color var(--transition-bezier),
@@ -104,6 +104,9 @@
     &:hover {
       background: var(--deepRedHover);
     }
+  }
+  &.positive {
+    background-color: var(--positive);
   }
 
   &:hover {

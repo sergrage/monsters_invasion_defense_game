@@ -1,6 +1,5 @@
 import cn from "classnames";
 import style from "./style.module.scss";
-import classNames from "classnames";
 
 type TProps = {
   name: string;
@@ -12,6 +11,7 @@ type TProps = {
   formBtn?: boolean;
   formBtnRed?: boolean;
   formBtnBlue?: boolean;
+  positive?: boolean;
   red?: boolean;
   yellow?: boolean;
   className?: string;
@@ -28,6 +28,7 @@ const FlatButton = ({
   formBtn,
   formBtnRed,
   formBtnBlue,
+  positive,
   className,
   onClick,
 }: TProps) => {
@@ -40,6 +41,7 @@ const FlatButton = ({
         [style.formBtn]: formBtn,
         [style.formBtnRed]: formBtnRed,
         [style.formBtnBlue]: formBtnBlue,
+        [style.positive]: positive,
       })}
       type={type}
       disabled={disabled}
