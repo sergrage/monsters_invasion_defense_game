@@ -8,9 +8,10 @@ import Loader from "@/ui/loader";
 export type TProps = {
   className?: string;
   src: string | null | undefined;
+  alt?: string;
 };
 
-const Image: FC<TProps> = ({ className, src }) => {
+const Image: FC<TProps> = ({ className, src, alt }) => {
   const [imageLoading, setImageLoading] = useState(true);
 
   const handleImageLoad = () => {
@@ -24,7 +25,7 @@ const Image: FC<TProps> = ({ className, src }) => {
       {src && (
         <img
           src={src}
-          alt=""
+          alt={alt}
           style={{ display: imageLoading ? "none" : "block" }}
           onLoad={handleImageLoad}
         />
