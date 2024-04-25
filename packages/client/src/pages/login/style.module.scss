@@ -12,7 +12,6 @@
   justify-content: space-between;
   align-items: center;
   width: 340px;
-  height: 460px;
   padding: 30px;
   border-radius: 5px;
   box-shadow: 0px 0px 6px 0px var(--shadow-light);
@@ -29,6 +28,8 @@
   flex-direction: column;
   gap: 30px;
   width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .btns-wrapper {
