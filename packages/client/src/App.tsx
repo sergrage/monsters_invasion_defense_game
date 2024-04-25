@@ -8,7 +8,7 @@ import Signup from "@/pages/signup";
 import Forum from "@/pages/forum";
 import Game from "@/pages/game";
 import ErrorPage from "@/pages/error";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout";
 
 const App: FC = () => {
   return (

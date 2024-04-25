@@ -18,8 +18,8 @@ const Container: FC<TProps> = ({ children, className = "" }) => {
 
 const Page: FC<TProps> = ({ children, className }) => {
   return (
-    <div className={cn(style.page, className)}>
-      <Container>{children}</Container>
+    <div className={style.page}>
+      <Container className={className}>{children}</Container>
     </div>
   );
 };
