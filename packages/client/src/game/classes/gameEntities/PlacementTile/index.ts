@@ -1,5 +1,17 @@
 class PlacementTile {
-  constructor({ position = { x: 0, y: 0 }, c }) {
+  position: { x: number; y: number };
+  size: number;
+  color: string;
+  occupied: boolean;
+  c: CanvasRenderingContext2D;
+
+  constructor({
+    position = { x: 0, y: 0 },
+    c,
+  }: {
+    position?: { x: number; y: number };
+    c: CanvasRenderingContext2D;
+  }) {
     this.position = position;
     this.size = 64;
     this.color = "rgba(255, 255, 255, 0.15)";
@@ -12,7 +24,7 @@ class PlacementTile {
     this.c.fillRect(this.position.x, this.position.y, this.size, this.size);
   }
 
-  update(mouse) {
+  update(mouse: { x: number; y: number }) {
     this.draw();
     if (
       mouse.x > this.position.x &&

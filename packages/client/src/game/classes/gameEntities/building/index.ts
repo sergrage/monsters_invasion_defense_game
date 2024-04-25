@@ -3,7 +3,20 @@ import Projectile from "@/game/classes/gameEntities/Projectile";
 import myImage from "../../../img/tower.png";
 
 class Building extends Sprite {
-  constructor({ position = { x: 0, y: 0 }, c }) {
+  width: number;
+  height: number;
+  center: { x: number; y: number };
+  projectiles: Projectile[];
+  radius: number;
+  target: any; // Здесь нужно указать тип цели, если это возможно
+
+  constructor({
+    position = { x: 0, y: 0 },
+    c,
+  }: {
+    position?: { x: number; y: number };
+    c: any;
+  }) {
     super({
       position,
       imageSrc: myImage,
@@ -27,7 +40,7 @@ class Building extends Sprite {
     this.radius = 250;
   }
 
-  draw() {
+  draw(): void {
     super.draw();
 
     // c.beginPath()
@@ -36,7 +49,7 @@ class Building extends Sprite {
     // c.fill()
   }
 
-  update() {
+  update(): void {
     this.draw();
     if (this.target || (!this.target && this.frames.current !== 0))
       super.update();
@@ -49,7 +62,7 @@ class Building extends Sprite {
       this.shoot();
   }
 
-  shoot() {
+  shoot(): void {
     this.projectiles.push(
       new Projectile({
         position: {

@@ -1,11 +1,32 @@
+import { Position, Frames, Offset } from "@/game/interfaces";
+
 class Sprite {
+  position: Position;
+  canvas: HTMLCanvasElement;
+  image: HTMLImageElement;
+  frames: Frames;
+  offset: Offset;
+  c: CanvasRenderingContext2D;
+
   constructor({
     position = { x: 0, y: 0 },
     canvas,
     imageSrc,
-    frames = { max: 1 },
+    frames = {
+      max: 1,
+      current: 0,
+      elapsed: 0,
+      hold: 0,
+    },
     offset = { x: 0, y: 0 },
     c,
+  }: {
+    position?: Position;
+    canvas: HTMLCanvasElement;
+    imageSrc: string;
+    frames?: Frames;
+    offset?: Offset;
+    c: CanvasRenderingContext2D;
   }) {
     this.position = position;
     this.canvas = canvas;
@@ -21,7 +42,7 @@ class Sprite {
     this.c = c;
   }
 
-  draw() {
+  draw(): void {
     const cropWidth = this.image.width / this.frames.max;
     const crop = {
       position: {
@@ -44,7 +65,7 @@ class Sprite {
     );
   }
 
-  update() {
+  update(): void {
     // responsible for animation
     this.frames.elapsed++;
     if (this.frames.elapsed % this.frames.hold === 0) {

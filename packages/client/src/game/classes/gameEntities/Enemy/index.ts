@@ -1,11 +1,30 @@
-// import Sprite from "../Sprite.js";
-// import waypoints from "../../../mocks/waypoints/waypoints.js";
+import Sprite from "../Sprite";
 import waypoints from "@/game/mocks/waypoints";
 import orcImage from "../../../img/orc.png";
-import Sprite from "@/game/classes/gameEntities/Sprite";
+
+interface Position {
+  x: number;
+  y: number;
+}
 
 class Enemy extends Sprite {
-  constructor({ position = { x: 0, y: 0 }, c }) {
+  private position: Position;
+  private width: number = 100;
+  private height: number = 100;
+  private waypointIndex: number = 0;
+  private center: Position;
+  private radius: number = 50;
+  private health: number = 100;
+  private velocity: Position = { x: 0, y: 0 };
+  private c: CanvasRenderingContext2D;
+
+  constructor({
+    position = { x: 0, y: 0 },
+    c,
+  }: {
+    position?: Position;
+    c: CanvasRenderingContext2D;
+  }) {
     super({
       position,
       imageSrc: orcImage,
@@ -14,23 +33,14 @@ class Enemy extends Sprite {
       },
     });
     this.position = position;
-    this.width = 100;
-    this.height = 100;
-    this.waypointIndex = 0;
     this.center = {
       x: this.position.x + this.width / 2,
       y: this.position.y + this.height / 2,
     };
-    this.radius = 50;
-    this.health = 100;
-    this.velocity = {
-      x: 0,
-      y: 0,
-    };
     this.c = c;
   }
 
-  draw() {
+  public draw(): void {
     super.draw();
 
     // health bar
@@ -46,7 +56,7 @@ class Enemy extends Sprite {
     );
   }
 
-  update() {
+  public update(): void {
     this.draw();
     super.update();
 

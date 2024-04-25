@@ -2,7 +2,19 @@ import Sprite from "@/game/classes/gameEntities/Sprite";
 import myImage from "../../../img/projectile.png";
 
 class Projectile extends Sprite {
-  constructor({ position = { x: 0, y: 0 }, enemy, c }) {
+  private velocity: { x: number; y: number };
+  private enemy: { center: { x: number; y: number } };
+  private radius: number;
+
+  constructor({
+    position = { x: 0, y: 0 },
+    enemy,
+    c,
+  }: {
+    position?: { x: number; y: number };
+    enemy: { center: { x: number; y: number } };
+    c: any;
+  }) {
     super({ position, imageSrc: myImage, c });
     this.velocity = {
       x: 0,
@@ -12,7 +24,7 @@ class Projectile extends Sprite {
     this.radius = 10;
   }
 
-  update() {
+  update(): void {
     this.draw();
 
     const angle = Math.atan2(

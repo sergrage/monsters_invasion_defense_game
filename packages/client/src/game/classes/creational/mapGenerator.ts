@@ -1,15 +1,27 @@
 class MapGenerator {
-  constructor(width, height, canvasId, imageUrl) {
+  width: number;
+  height: number;
+  canvas: HTMLCanvasElement;
+  ctx: CanvasRenderingContext2D;
+  imageUrl: string;
+  image: HTMLImageElement;
+
+  constructor(
+    width: number,
+    height: number,
+    canvasId: string,
+    imageUrl: string,
+  ) {
     this.width = width;
     this.height = height;
-    this.canvas = document.getElementById(canvasId);
-    this.ctx = this.canvas.getContext("2d");
+    this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+    this.ctx = this.canvas.getContext("2d")!;
     this.imageUrl = imageUrl;
     this.image = new Image();
     this.initialize();
   }
 
-  initialize() {
+  initialize(): void {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.ctx.fillStyle = "white";

@@ -15,7 +15,7 @@ class Game {
   image: HTMLImageElement | null;
   placementTiles: any[] | null;
   mouse: { x: number | undefined; y: number | undefined };
-  animate: () => void;
+  // animate: any;
   activeTile: any;
   explosions: Sprite[];
   eventSubject: any;
@@ -63,7 +63,7 @@ class Game {
     this.eventSubject.notify("coinsChanged", this.coins);
   }
 
-  setHearts(newHearts) {
+  setHearts(newHearts: number) {
     this.hearts += newHearts;
     // Вызываем событие о изменении количества монет
     this.triggerHeartsChangeEvent();
@@ -81,7 +81,11 @@ class Game {
   }
 
   initializeMap() {
-    const { image, canvas, ctx } = this.mapGenerator;
+    const { image, canvas, ctx } = this.mapGenerator as {
+      image: HTMLImageElement;
+      canvas: HTMLCanvasElement;
+      ctx: CanvasRenderingContext2D;
+    };
     this.canvas = canvas;
     this.ctx = ctx;
     this.image = image;
@@ -129,7 +133,7 @@ class Game {
     });
   }
 
-  handleSpawnMoreEnemies(count) {
+  handleSpawnMoreEnemies(count: number) {
     this.enemyCount += count;
     this.enemies = this.enemiesGenerator.generate(
       this.enemyCount + count,
