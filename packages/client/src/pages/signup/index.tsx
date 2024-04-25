@@ -11,7 +11,7 @@ import Input from "@/ui/input";
 import style from "../login/style.module.scss";
 import Layout from "@/components/layout";
 
-const LoginPage: FC = () => {
+const RegisterPage: FC = () => {
   const navigate = useNavigate();
   const sendRequest = useFetch();
 
@@ -126,4 +126,4 @@ const LoginPage: FC = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
