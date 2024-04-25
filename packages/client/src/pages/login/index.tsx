@@ -83,6 +83,7 @@ const LoginPage = () => {
           <Button.Flat
             name="Login"
             type="submit"
+            positive={true}
             disabled={error.login || error.password}
           />
           <Button.Flat
