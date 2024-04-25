@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 
 import style from "./style.module.scss";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout";
 
 export type TProps = {
   children: ReactNode | ReactNode[];

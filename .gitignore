@@ -4,3 +4,6 @@ node_modules/
 .vscode
 dist
 tmp
+
+.DS_Store
+packages/.DS_Store
