@@ -14,10 +14,6 @@ type TProps = {
   closeModal: () => void;
 };
 
-const FileModal = ({ closeModal }: TProps) => {
-  return <section className={style.backdrop}></section>;
-};
-
 const PasswordModal = ({ closeModal }: TProps) => {
   const wrapperRef: React.MutableRefObject<HTMLFormElement | null> =
     useRef(null);
@@ -110,9 +106,4 @@ const PasswordModal = ({ closeModal }: TProps) => {
   );
 };
 
-const Modal = {
-  File: FileModal,
-  Password: PasswordModal,
-};
-
-export default Modal;
+export default PasswordModal;
