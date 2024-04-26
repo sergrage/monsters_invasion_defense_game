@@ -13,7 +13,7 @@ import Layout from "@/components/layout";
 const RegisterPage: FC = () => {
   const navigate = useNavigate();
 
-  const { values, errors, handleChange } = useValidate({
+  const { values, errors, errorMessages, handleChange } = useValidate({
     email: "",
     login: "",
     firstName: "",
@@ -42,6 +42,7 @@ const RegisterPage: FC = () => {
             value={values.email}
             onChange={handleChange}
             onError={errors.email}
+            onErrorMessage={errorMessages.email}
             required={true}
           />
           <Input
@@ -50,6 +51,7 @@ const RegisterPage: FC = () => {
             value={values.login}
             onChange={handleChange}
             onError={errors.login}
+            onErrorMessage={errorMessages.login}
             required={true}
           />
           <Input
@@ -58,6 +60,7 @@ const RegisterPage: FC = () => {
             value={values.firstName}
             onChange={handleChange}
             onError={errors.firstName}
+            onErrorMessage={errorMessages.firstName}
             required={true}
           />
           <Input
@@ -73,6 +76,7 @@ const RegisterPage: FC = () => {
             value={values.password}
             onChange={handleChange}
             onError={errors.password}
+            onErrorMessage={errorMessages.password}
             required={true}
           />
           <Input
@@ -82,6 +86,7 @@ const RegisterPage: FC = () => {
             value={values.confirmPassword}
             onChange={handleChange}
             onError={errors.confirmPassword}
+            onErrorMessage={errorMessages.password}
             required={true}
           />
         </div>

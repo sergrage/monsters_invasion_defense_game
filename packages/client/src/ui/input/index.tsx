@@ -14,6 +14,7 @@ type TProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onError?: boolean;
+  onErrorMessage?: string;
 };
 
 const Input = ({
@@ -25,6 +26,7 @@ const Input = ({
   required,
   onChange,
   onError,
+  onErrorMessage,
 }: TProps) => {
   const id = useId();
 
@@ -45,7 +47,7 @@ const Input = ({
         required={required}
       ></input>
 
-      {onError && <ZombieError />}
+      {onError && <ZombieError text={onErrorMessage} />}
     </div>
   );
 };
