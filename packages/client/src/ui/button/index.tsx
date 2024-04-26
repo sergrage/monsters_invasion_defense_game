@@ -7,6 +7,10 @@ type TProps = {
   disabled?: boolean;
   transparent?: boolean;
   dangerous?: boolean;
+  deepRed?: boolean;
+  formBtn?: boolean;
+  formBtnRed?: boolean;
+  formBtnBlue?: boolean;
   positive?: boolean;
   red?: boolean;
   yellow?: boolean;
@@ -20,6 +24,10 @@ const FlatButton = ({
   disabled,
   transparent,
   dangerous,
+  deepRed,
+  formBtn,
+  formBtnRed,
+  formBtnBlue,
   positive,
   className,
   onClick,
@@ -29,6 +37,10 @@ const FlatButton = ({
       className={cn(style.button, className, {
         [style.transparent]: transparent,
         [style.dangerous]: dangerous,
+        [style.deepRed]: deepRed,
+        [style.formBtn]: formBtn,
+        [style.formBtnRed]: formBtnRed,
+        [style.formBtnBlue]: formBtnBlue,
         [style.positive]: positive,
       })}
       type={type}
