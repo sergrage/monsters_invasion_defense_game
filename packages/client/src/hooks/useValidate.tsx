@@ -29,8 +29,11 @@ export function useValidate(inputValues: IValues = {}) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setValues({ ...values, [name]: value });
-    if (validationRules.hasOwnProperty(name)) {
-      setErrors({ ...errors, [name]: !value });
+    if (name in validationRules) {
+      setErrors({
+        ...errors,
+        [name]: !validationRules[name as keyof typeof validationRules](value),
+      });
     }
   };
 
