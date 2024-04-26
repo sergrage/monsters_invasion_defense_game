@@ -51,9 +51,7 @@ const validationMessages = {
 
 export function useValidate(inputValues: IValues = {}) {
   const [values, setValues] = useState<IValues>(inputValues);
-  //console.log("🚀 ~ useValidate ~ values:", values);
   const [errors, setErrors] = useState<IErrors>({});
-  //console.log("🚀 ~ useValidate ~ errors:", errors);
   const [errorMessages, setErrorMessages] = useState<IMessages>({});
   console.log("🚀 ~ useValidate ~ errorMessages:", errorMessages);
 
