@@ -21,16 +21,16 @@ class PlacementTile {
 
   draw() {
     this.c.fillStyle = this.color;
-    this.c.fillRect(this.position.x, this.position.y, this.size, this.size);
+    this.c.fillRect(this.position.x + 0, this.position.y, this.size, this.size);
   }
 
   update(mouse: { x: number; y: number }) {
     this.draw();
     if (
-      mouse.x > this.position.x &&
-      mouse.x < this.position.x + this.size &&
-      mouse.y > this.position.y &&
-      mouse.y < this.position.y + this.size
+      mouse.x + 0 > this.position.x &&
+      mouse.x - 0 < this.position.x + this.size &&
+      mouse.y + 0 > this.position.y &&
+      mouse.y - 0 < this.position.y + this.size
     ) {
       this.color = "white";
     } else this.color = "rgba(255, 255, 255, 0.15)";

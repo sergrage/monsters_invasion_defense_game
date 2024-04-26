@@ -30,7 +30,7 @@ class TilesGenerator {
                 x: x * 64,
                 y: y * 64,
               },
-              c: this.ctx, // Pass the canvas context here
+              c: this.ctx,
             }),
           );
         }

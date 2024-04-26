@@ -14,11 +14,11 @@ interface EnemyOptions {
 }
 
 interface EnemyType {
-  new (options: EnemyOptions): any; // тип EnemyType здесь нужно указать, если он известен
+  new (options: EnemyOptions): any;
 }
 
 class EnemiesGenerator {
-  private c: CanvasRenderingContext2D; // тип c здесь нужно указать, если он известен
+  private c: CanvasRenderingContext2D;
   private waypoints: Waypoint[];
 
   constructor(c: any, waypoints: Waypoint[]) {

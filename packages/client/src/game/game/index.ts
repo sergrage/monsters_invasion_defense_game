@@ -67,9 +67,17 @@ class Game {
     this.triggerHeartsChangeEvent();
   }
 
+  setGameOver() {
+    this.triggerGameOverEvent();
+  }
+
   // Метод для вызова события об изменении количества монет
   triggerHeartsChangeEvent() {
     this.eventSubject.notify("heartsChanged", this.hearts);
+  }
+
+  triggerGameOverEvent() {
+    this.eventSubject.notify("gameOver");
   }
 
   initialize() {
@@ -119,7 +127,8 @@ class Game {
         this.enemies.splice(i, 1);
         if (this.hearts <= 0) {
           cancelAnimationFrame(animationId);
-          document.querySelector("#gameOver").style.display = "flex";
+          this.setGameOver();
+          // document.querySelector("#gameOver").style.display = "flex";
         }
       }
     }
@@ -254,10 +263,10 @@ class Game {
     for (let i = 0; i < this.placementTiles.length; i++) {
       const tile = this.placementTiles[i];
       if (
-        this.mouse.x > tile.position.x &&
-        this.mouse.x < tile.position.x + tile.size &&
-        this.mouse.y > tile.position.y &&
-        this.mouse.y < tile.position.y + tile.size
+        this.mouse.x + 160 > tile.position.x &&
+        this.mouse.x - 160 < tile.position.x + tile.size &&
+        this.mouse.y + 160 > tile.position.y &&
+        this.mouse.y - 160 < tile.position.y + tile.size
       ) {
         this.activeTile = tile;
         break;
