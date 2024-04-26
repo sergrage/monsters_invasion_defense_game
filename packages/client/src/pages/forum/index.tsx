@@ -1,20 +1,57 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import style from "./style.module.scss";
 import Title from "@/ui/title";
-import Layout from "@/components/Layout";
+import Image from "@/ui/image";
+import Layout from "@/components/layout";
+import Button from "@/ui/button";
+import zombieAlarm from "@/assets/img/zombieAlarm.png";
+import TopicsTable from "./components/topicsTable";
+import AddTopicModal from "./components/addTopicModal";
+import cn from "classnames";
 
 const ForumPage: FC = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const showModalClick = () => {
+    setShowModal(true);
+  };
+
+  const hideModalClick = () => {
+    setShowModal(false);
+  };
+
   return (
     <Layout.Page>
-      <Title.H2 title={"Страница Форума"} />
+      <div
+        className={cn(
+          style.addTopicModal,
+          !showModal ? style.hide : style.show,
+        )}
+      >
+        <AddTopicModal hideModalClick={hideModalClick}></AddTopicModal>
+      </div>
 
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci,
-        architecto consectetur culpa dicta dignissimos dolorem eius eos fugiat
-        harum libero natus numquam quae, sapiente tempora, ut vel velit vitae
-        voluptates.
-      </p>
+      <div className={style.hero}>
+        <div className={cn(style.wrapper)}>
+          <h2 className={cn(style.title)}>Game Forum</h2>
+          <h3 className={cn(style.gametitle)}>
+            Monsters Invasion Defense Game
+          </h3>
+          <Button.Flat
+            name="Ask question"
+            onClick={showModalClick}
+            formBtn={true}
+            formBtnRed={true}
+          />
+          <Image
+            className={style.zombieAlarm}
+            src={zombieAlarm}
+            alt="zombieAlarm"
+          ></Image>
+        </div>
+      </div>
+      <TopicsTable></TopicsTable>
     </Layout.Page>
   );
 };
