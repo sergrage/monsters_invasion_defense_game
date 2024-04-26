@@ -1,0 +1,39 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+
+  transition: border-color 0.2s ease-in-out;
+
+  &.error {
+    border-color: var(--danger);
+  }
+
+  &:hover .label {
+    letter-spacing: 2px;
+  }
+}
+
+.label {
+  position: relative;
+
+  padding: 0px 5px;
+  font-family: "Squada One";
+  font-size: 20px;
+  color: var(--primary-strong);
+  text-align: center;
+  background-color: var(--white);
+  transition: letter-spacing 200ms ease-in-out;
+  user-select: none;
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  z-index: -1;
+}
