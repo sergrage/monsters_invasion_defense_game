@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: #f0f8ff;
 
   align-items: center;
   width: 100%;
@@ -11,6 +12,7 @@
     font-family: "Squada One", sans-serif;
     font-weight: bold;
     font-size: 70px;
+    color: var(--gray);
   }
 
   .score {
