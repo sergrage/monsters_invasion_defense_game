@@ -53,7 +53,6 @@ export function useValidate(inputValues: IValues = {}) {
   const [values, setValues] = useState<IValues>(inputValues);
   const [errors, setErrors] = useState<IErrors>({});
   const [errorMessages, setErrorMessages] = useState<IMessages>({});
-  console.log("🚀 ~ useValidate ~ errorMessages:", errorMessages);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
