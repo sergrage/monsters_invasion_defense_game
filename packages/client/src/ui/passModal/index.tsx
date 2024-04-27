@@ -73,7 +73,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
       <form ref={wrapperRef} className={style.modal} onSubmit={onSubmitHandler}>
         <Title.H2 className={style.title} title="Change password" />
 
-        <div className={style["fields-wrapper"]}>
+        <div className={style["input-wrapper"]}>
           <Input
             name="oldPassword"
             label="Old password"
