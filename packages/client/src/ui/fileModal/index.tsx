@@ -21,7 +21,8 @@ const FileModal = ({ closeModal }: TProps) => {
   const sendRequest = useFetch();
 
   const [formVal, setFormVal] = useState({});
-  const [error, setError] = useState(false);
+  const [headerText, setHeaderText] = useState("Upload a file");
+  const [isInvalid, setIsInvalid] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,20 +32,19 @@ const FileModal = ({ closeModal }: TProps) => {
   }, []);
 
   const formChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files![0].name) {
+      setIsInvalid(true);
+      setHeaderText("Wrong file");
+      return;
+    }
+
     setFormVal(event.target.files![0]);
+    setIsInvalid(false);
+    setHeaderText("File has been successfully selected");
   };
 
   const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-
-    if (formVal === {} || !formVal.name) {
-      setError(true);
-      return;
-    }
-
-    setError(false);
-
-    if (error) return;
 
     const formData = new FormData();
     formData.append("avatar", formVal as Blob);
@@ -66,13 +66,14 @@ const FileModal = ({ closeModal }: TProps) => {
   return (
     <section className={style.backdrop}>
       <form ref={wrapperRef} className={style.modal} onSubmit={onSubmitHandler}>
-        <Title.H2 className={style.title} title="Upload file" />
-        <FileInput
-          name="file"
-          label="Upload file"
-          onChange={formChangeHandler}
+        <Title.H2 className={style.title} title={headerText} />
+        <FileInput name="file" onChange={formChangeHandler} />
+        <Button.Flat
+          name="Continue upload"
+          type="submit"
+          positive={true}
+          disabled={isInvalid}
         />
-        <Button.Flat name="Upload" type="submit" />
       </form>
     </section>
   );

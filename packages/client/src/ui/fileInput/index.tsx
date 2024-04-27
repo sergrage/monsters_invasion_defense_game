@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import cn from "classnames";
 
 import ZombieError from "../zombie_error";
@@ -6,17 +6,17 @@ import style from "./style.module.scss";
 
 type TProps = {
   name: string;
-  label?: string;
   isInvalid?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const FileInput = ({ name, label, isInvalid, onChange }: TProps) => {
+const FileInput = ({ name, isInvalid, onChange }: TProps) => {
   const id = useId();
   const inputRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
 
   const [isUploaded, setIsUploaded] = useState(false);
+  const [labelText, setLabelText] = useState("Select file");
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.value) {
@@ -25,6 +25,7 @@ const FileInput = ({ name, label, isInvalid, onChange }: TProps) => {
     }
 
     setIsUploaded(true);
+    setLabelText(event.target.files![0].name);
     onChange(event);
   };
 
@@ -35,7 +36,7 @@ const FileInput = ({ name, label, isInvalid, onChange }: TProps) => {
         htmlFor={`input-${id}`}
         onClick={inputRef.current?.click}
       >
-        {label}
+        {labelText}
       </label>
 
       <input
