@@ -55,6 +55,8 @@ class Building extends Sprite {
     if (
       this.target &&
       this.frames.current === 6 &&
+      this.frames.elapsed &&
+      this.frames.hold &&
       this.frames.elapsed % this.frames.hold === 0
     )
       this.shoot();

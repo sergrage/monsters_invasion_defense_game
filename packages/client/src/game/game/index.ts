@@ -109,12 +109,13 @@ class Game {
   }
 
   initGame() {
-    this.image.onload = () => {
-      this.animate();
-    };
+    if (this.image)
+      this.image.onload = () => {
+        this.animate();
+      };
   }
 
-  handleEnemyLogic(animationId) {
+  handleEnemyLogic(animationId: number) {
     if (this.enemies.length === 0) {
       this.handleSpawnMoreEnemies(2);
     }
@@ -122,22 +123,22 @@ class Game {
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const enemy = this.enemies[i];
       enemy.update();
-      if (enemy.position.x > this.canvas.width) {
+      if (this.canvas && enemy.position.x > this.canvas.width) {
         this.setHearts(-1);
         this.enemies.splice(i, 1);
         if (this.hearts <= 0) {
           cancelAnimationFrame(animationId);
           this.setGameOver();
-          // document.querySelector("#gameOver").style.display = "flex";
         }
       }
     }
   }
 
   handleTilesLogic() {
-    this.placementTiles.forEach(tile => {
-      tile.update(this.mouse);
-    });
+    if (Array.isArray(this.placementTiles))
+      this.placementTiles.forEach(tile => {
+        tile.update(this.mouse);
+      });
   }
 
   handleSpawnMoreEnemies(count: number) {
@@ -150,11 +151,13 @@ class Game {
 
   animate() {
     const animationId = requestAnimationFrame(this.animate);
-    this.ctx.drawImage(this.image, 0, 0);
-    console.log("animate!");
-    this.handleEnemyLogic(animationId);
-    this.handleTilesLogic();
-    this.handleBuildingsLogic();
+    if (this.ctx) {
+      this.ctx.drawImage(this.image!, 0, 0);
+      console.log("animate!");
+      this.handleEnemyLogic(animationId);
+      this.handleTilesLogic();
+      this.handleBuildingsLogic();
+    }
   }
 
   handleBuildingsLogic() {
@@ -193,7 +196,7 @@ class Game {
     projectile.update();
   }
 
-  handleProjectileCollision(projectile, building, i) {
+  handleProjectileCollision(projectile, building, i: number) {
     const distance = this.calculateDistance(
       projectile.enemy.center,
       projectile.position,
@@ -215,7 +218,7 @@ class Game {
     }
   }
 
-  handleProjectileHit(projectile, building, i) {
+  handleProjectileHit(projectile, building, i: number) {
     this.explosions.push(
       new Sprite({
         position: { x: projectile.position.x, y: projectile.position.y },
@@ -260,18 +263,19 @@ class Game {
     this.mouse.y = event.clientY;
 
     this.activeTile = null;
-    for (let i = 0; i < this.placementTiles.length; i++) {
-      const tile = this.placementTiles[i];
-      if (
-        this.mouse.x + 160 > tile.position.x &&
-        this.mouse.x - 160 < tile.position.x + tile.size &&
-        this.mouse.y + 160 > tile.position.y &&
-        this.mouse.y - 160 < tile.position.y + tile.size
-      ) {
-        this.activeTile = tile;
-        break;
+    if (Array.isArray(this.placementTiles))
+      for (let i = 0; i < this.placementTiles.length; i++) {
+        const tile = this.placementTiles[i];
+        if (
+          this.mouse.x > tile.position.x &&
+          this.mouse.x < tile.position.x + tile.size &&
+          this.mouse.y > tile.position.y &&
+          this.mouse.y < tile.position.y + tile.size
+        ) {
+          this.activeTile = tile;
+          break;
+        }
       }
-    }
   }
 }
 

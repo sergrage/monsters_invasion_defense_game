@@ -1,6 +1,5 @@
-import React, { FC, useState, useEffect } from "react";
-import Layout from "@/components/Layout";
-
+import React, { FC, useState, useEffect, useRef } from "react";
+// import Layout from "@/components/Layout";
 import Game from "@/game/game";
 import Coins from "@/components/game/coins";
 import Hearts from "@/components/game/hearts";
@@ -18,14 +17,21 @@ const GamePage: FC = () => {
   const [coins, setCoins] = useState<number>(100);
   const [hearts, setHearts] = useState<number>(3);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const canvasRef = useRef(null);
 
   const handleCoinsChangedEvent = (coins: number) => setCoins(coins);
   const handleHeartsChangedEvent = (hearts: number) => setHearts(hearts);
   const handleGameOverEvent = () => setIsGameOver(true);
 
   useEffect(() => {
+    if (!canvasRef.current) return; // Check if canvasRef.current is null
     // // Create instances of dependencies
-    const mapGenerator = new MapGenerator(1280, 768, "gameCanvas", myImage);
+    const mapGenerator = new MapGenerator(
+      1280,
+      768,
+      canvasRef.current,
+      myImage,
+    );
     const enemiesGenerator = new EnemiesGenerator(mapGenerator.ctx, waypoints);
     const tilesGenerator = new TilesGenerator(
       mapGenerator.ctx,
@@ -56,9 +62,9 @@ const GamePage: FC = () => {
   }, []);
 
   return (
-    <Layout.Page>
+    <>
       <div style={{ position: "relative", display: "inline-block" }}>
-        <canvas id="gameCanvas"></canvas>
+        <canvas ref={canvasRef} id="gameCanvas"></canvas>
         {isGameOver && (
           <div
             id="gameOver"
@@ -106,7 +112,7 @@ const GamePage: FC = () => {
           <Hearts heartsDisplayCount={hearts} />
         </div>
       </div>
-    </Layout.Page>
+    </>
   );
 };
 

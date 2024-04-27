@@ -9,12 +9,12 @@ class MapGenerator {
   constructor(
     width: number,
     height: number,
-    canvasId: string,
+    canvas: HTMLCanvasElement,
     imageUrl: string,
   ) {
     this.width = width;
     this.height = height;
-    this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+    this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d")!;
     this.imageUrl = imageUrl;
     this.image = new Image();
