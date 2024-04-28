@@ -4,12 +4,14 @@ export enum Messages {
 
 //Валидация
 export const LOGIN_VALIDATION_MESSAGE =
-  "от 3 до 20 символов, латиница, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов (допустимы дефис и нижнее подчёркивание)";
+  "Grr... from 3 to 20 characters... grr... Latin alphabet... mmm... numbers... but not only them... without spaces, without... mmm... special characters. Dash and... and underscore... are allowed... Grr...";
 export const PASSWORD_VALIDATION_MESSAGE =
-  "от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра";
+  "Mmm... from 8 to 40 characters... brains... at least one uppercase letter... and a digit... required... without spaces... grr...";
 export const PHONE_VALIDATION_MESSAGE =
-  "Tелефон в формате 8(ХХХ)ХХХ-ХХХХ. от 10 до 15 символов, состоит из цифр, может начинается с плюса";
+  "Grr... phone in format 8(XXX)XXX-XXXX... from 10 to 15 characters... only numbers... can start with a plus... grr...";
 export const NAME_VALIDATION_MESSAGE =
-  "латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис)";
-export const MAIL_VALIDATION_MESSAGE = "EMail в формате user@usermail.ru";
-export const EMPTY_VALIDATION_MESSAGE = "Поле не может быть пустым";
+  "Grr... Latin or Cyrillic... first letter must be uppercase... no spaces or numbers... no special characters... maybe some dash... brains... grr...";
+export const MAIL_VALIDATION_MESSAGE =
+  "Grr... Email in format user@usermail.ru... grr...";
+export const EMPTY_VALIDATION_MESSAGE =
+  "Grr... Field cannot be empty... grr... braaaains...";
