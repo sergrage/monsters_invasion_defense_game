@@ -6,8 +6,7 @@ import Title from "@/ui/title";
 import Button from "@/ui/button";
 import ProfileField from "@/ui/profileField";
 import AvatarEl from "@/ui/avatarEl";
-import PassModal from "@/ui/passModal";
-import FileModal from "@/ui/fileModal";
+import Modal from "@/ui//modals";
 
 import style from "./style.module.scss";
 
@@ -53,12 +52,12 @@ const Profile = () => {
 
         {showAvatarModal &&
           createPortal(
-            <FileModal closeModal={toggleAvatarModal} />,
+            <Modal.File closeModal={toggleAvatarModal} />,
             document.getElementById("modal-root")!,
           )}
         {showPassModal &&
           createPortal(
-            <PassModal closeModal={togglePassModal} />,
+            <Modal.Password closeModal={togglePassModal} />,
             document.getElementById("modal-root")!,
           )}
       </section>

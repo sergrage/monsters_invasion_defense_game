@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { useOutside } from "@/hooks/useOutside";
+import { useValidate } from "@/hooks/useValidate";
 import useFetch from "@/hooks/useFetch";
+
 import { userUrl } from "@/endpoints/apiUrl";
 
 import Title from "@/ui/title";
@@ -20,15 +22,10 @@ const PasswordModal = ({ closeModal }: TProps) => {
   useOutside({ ref: wrapperRef, outsideClick: closeModal });
   const sendRequest = useFetch();
 
-  const [formVal, setFormVal] = useState({
+  const { values, errors, errorMessages, handleChange } = useValidate({
     oldPassword: "",
     newPassword: "",
     confirmPassword: "",
-  });
-  const [error, setError] = useState({
-    oldPassword: false,
-    newPassword: false,
-    confirmPassword: false,
   });
 
   useEffect(() => {
@@ -38,26 +35,25 @@ const PasswordModal = ({ closeModal }: TProps) => {
     }, 0);
   }, []);
 
-  const formChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormVal({ ...formVal, [event.target.name]: event.target.value });
-  };
-
-  const errorHandler = (type: string, value: boolean) => {
-    setError({ ...error, [type]: value });
-  };
-
   const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (error.oldPassword || error.newPassword || error.confirmPassword) return;
+    if (
+      Object.values(errors).some(error => !!error) ||
+      Object.values(values).some(value => !value)
+    ) {
+      return;
+    }
+
+    console.log(values);
 
     sendRequest(
       {
         url: `${userUrl}/password`,
         method: "PUT",
         body: {
-          oldPassword: formVal.oldPassword,
-          newPassword: formVal.newPassword,
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
         },
       },
       applyData,
@@ -79,28 +75,41 @@ const PasswordModal = ({ closeModal }: TProps) => {
             label="Old password"
             type="password"
             required={true}
-            onChange={formChangeHandler}
-            onError={val => errorHandler("oldPassword", val)}
+            value={values.oldPassword}
+            onChange={handleChange}
+            onError={errors.oldPassword}
+            onErrorMessage={errorMessages.old}
           />
           <Input
             name="newPassword"
             label="New password"
             type="password"
             required={true}
-            onChange={formChangeHandler}
-            onError={val => errorHandler("newPassword", val)}
+            value={values.newPassword}
+            onChange={handleChange}
+            onError={errors.newPassword}
+            onErrorMessage={errorMessages.password}
           />
           <Input
             name="confirmPassword"
             label="Confirm new password"
             type="password"
             required={true}
-            onChange={formChangeHandler}
-            onError={val => errorHandler("confirmPassword", val)}
+            value={values.confirmPassword}
+            onChange={handleChange}
+            onError={errors.confirmPassword}
+            onErrorMessage={errorMessages.password}
           />
         </div>
 
-        <Button.Flat name="Change" type="submit" />
+        <Button.Flat
+          name="Change"
+          type="submit"
+          disabled={
+            Object.values(errors).some(error => error) ||
+            Object.values(values).some(value => !value)
+          }
+        />
       </form>
     </section>
   );
