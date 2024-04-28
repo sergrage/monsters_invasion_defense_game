@@ -51,7 +51,7 @@ const FileModal = ({ closeModal }: TProps) => {
 
     sendRequest(
       {
-        url: `${userUrl}/password`,
+        url: `${userUrl}/profile/avatar`,
         method: "PUT",
         body: formData,
       },
