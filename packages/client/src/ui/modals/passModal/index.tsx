@@ -161,6 +161,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
         <Button.Flat
           name="Change"
           type="submit"
+          positive={true}
           disabled={
             Object.values(errors).some(error => error) ||
             Object.values(values).some(value => !value)
