@@ -27,15 +27,16 @@ interface IMessages {
   [key: string]: string;
 }
 
-// Временное решение, пока не закончен ValidateHook
+// Временное решение, пока не закончен ValidationHook
 import {
   EMPTY_VALIDATION_MESSAGE,
   PASSWORD_VALIDATION_MESSAGE,
 } from "@/constants";
 
 const validationMessages = {
-  emptyRow: EMPTY_VALIDATION_MESSAGE,
-  password: PASSWORD_VALIDATION_MESSAGE,
+  oldPassword: EMPTY_VALIDATION_MESSAGE,
+  newPassword: PASSWORD_VALIDATION_MESSAGE,
+  confirmPassword: PASSWORD_VALIDATION_MESSAGE,
 };
 const passwordValidator = new RegExp(/^(?=.*[A-Z])(?=.*\d).{8,40}$/);
 const validationRules = {
@@ -52,7 +53,11 @@ const PasswordModal = ({ closeModal }: TProps) => {
   useOutside({ ref: wrapperRef, outsideClick: closeModal });
   const sendRequest = useFetch();
 
-  const [values, setValues] = useState<IValues>({});
+  const [values, setValues] = useState<IValues>({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   const [errors, setErrors] = useState<IErrors>({});
   const [errorMessages, setErrorMessages] = useState<IMessages>({});
 
@@ -64,7 +69,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
     }, 0);
   }, []);
 
-  // временное решение пока не закончен ValidateHook
+  // временное решение пока не закончен ValidationHook
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
 
@@ -79,7 +84,6 @@ const PasswordModal = ({ closeModal }: TProps) => {
       };
       setErrors(newErrors);
 
-      // Создаем новый объект сообщений об ошибках
       const newErrorMessages: IMessages = {
         ...errorMessages,
         [name]: validationMessages[name as keyof typeof validationMessages],
@@ -91,7 +95,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
   const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Если есть хотя бы одна ошибка валидации или пустые значения - выходимуем сразу
+    // Если есть ошибка валидации или пустые значения - выход
     if (
       Object.values(errors).some(error => !!error) ||
       Object.values(values).some(value => !value)
@@ -130,7 +134,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
             value={values.oldPassword}
             onChange={handleChange}
             onError={errors.oldPassword}
-            onErrorMessage={errorMessages.old}
+            onErrorMessage={errorMessages.oldPassword}
           />
           <Input
             name="newPassword"
@@ -140,7 +144,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
             value={values.newPassword}
             onChange={handleChange}
             onError={errors.newPassword}
-            onErrorMessage={errorMessages.password}
+            onErrorMessage={errorMessages.newPassword}
           />
           <Input
             name="confirmPassword"
@@ -150,7 +154,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
             value={values.confirmPassword}
             onChange={handleChange}
             onError={errors.confirmPassword}
-            onErrorMessage={errorMessages.password}
+            onErrorMessage={errorMessages.confirmPassword}
           />
         </div>
 
