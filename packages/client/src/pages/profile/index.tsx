@@ -5,7 +5,7 @@ import Layout from "@/components/layout";
 import Title from "@/ui/title";
 import Button from "@/ui/button";
 import ProfileField from "@/ui/profileField";
-import AvatarImg from "@/ui/avatarImg";
+import AvatarEl from "@/ui/avatarEl";
 import PassModal from "@/ui/passModal";
 import FileModal from "@/ui/fileModal";
 
@@ -38,7 +38,7 @@ const Profile = () => {
       <section className={style.profile}>
         <Title.H1 className={style.title} title="Profile" />
 
-        <AvatarImg onClick={toggleAvatarModal} />
+        <AvatarEl onClick={toggleAvatarModal} />
 
         <div className={style["fields-wrapper"]}>
           <ProfileField label="First name" value={userDummy.first_name} />
