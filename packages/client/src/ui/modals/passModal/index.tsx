@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { useOutside } from "@/hooks/useOutside";
-import { useValidate } from "@/hooks/useValidate";
 import useFetch from "@/hooks/useFetch";
 
 import { userUrl } from "@/endpoints/apiUrl";
@@ -16,18 +15,48 @@ type TProps = {
   closeModal: () => void;
 };
 
+interface IValues {
+  [value: string]: string;
+}
+
+interface IErrors {
+  [key: string]: boolean;
+}
+
+interface IMessages {
+  [key: string]: string;
+}
+
+// Временное решение, пока не закончен ValidateHook
+import {
+  EMPTY_VALIDATION_MESSAGE,
+  PASSWORD_VALIDATION_MESSAGE,
+} from "@/constants";
+
+const validationMessages = {
+  emptyRow: EMPTY_VALIDATION_MESSAGE,
+  password: PASSWORD_VALIDATION_MESSAGE,
+};
+const passwordValidator = new RegExp(/^(?=.*[A-Z])(?=.*\d).{8,40}$/);
+const validationRules = {
+  oldPassword: (value: string) => !!value.trim(),
+  newPassword: (value: string) =>
+    !!value.trim() && passwordValidator.test(value),
+  confirmPassword: (value: string) =>
+    !!value.trim() && passwordValidator.test(value),
+};
+
 const PasswordModal = ({ closeModal }: TProps) => {
   const wrapperRef: React.MutableRefObject<HTMLFormElement | null> =
     useRef(null);
   useOutside({ ref: wrapperRef, outsideClick: closeModal });
   const sendRequest = useFetch();
 
-  const { values, errors, errorMessages, handleChange } = useValidate({
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  const [values, setValues] = useState<IValues>({});
+  const [errors, setErrors] = useState<IErrors>({});
+  const [errorMessages, setErrorMessages] = useState<IMessages>({});
 
+  // transition effect при открытии модального окна
   useEffect(() => {
     setTimeout(() => {
       wrapperRef.current!.closest("section")!.classList.add(style.show);
@@ -35,17 +64,40 @@ const PasswordModal = ({ closeModal }: TProps) => {
     }, 0);
   }, []);
 
+  // временное решение пока не закончен ValidateHook
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+
+    setValues({ ...values, [name]: value });
+
+    // Если имя поля есть в объекте валидации - то выполняем валидацию
+    // и обновляем стэйт ошибок и стэйт сообщений об ошибках
+    if (name in validationRules) {
+      const newErrors: IErrors = {
+        ...errors,
+        [name]: !validationRules[name as keyof typeof validationRules](value),
+      };
+      setErrors(newErrors);
+
+      // Создаем новый объект сообщений об ошибках
+      const newErrorMessages: IMessages = {
+        ...errorMessages,
+        [name]: validationMessages[name as keyof typeof validationMessages],
+      };
+      setErrorMessages(newErrorMessages);
+    }
+  };
+
   const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
+    // Если есть хотя бы одна ошибка валидации или пустые значения - выходимуем сразу
     if (
       Object.values(errors).some(error => !!error) ||
       Object.values(values).some(value => !value)
     ) {
       return;
     }
-
-    console.log(values);
 
     sendRequest(
       {
