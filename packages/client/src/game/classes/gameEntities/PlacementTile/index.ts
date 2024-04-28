@@ -1,5 +1,7 @@
+import { Position } from "@/game/interfaces";
+
 class PlacementTile {
-  position: { x: number; y: number };
+  position: Position;
   size: number;
   color: string;
   occupied: boolean;
@@ -9,7 +11,7 @@ class PlacementTile {
     position = { x: 0, y: 0 },
     c,
   }: {
-    position?: { x: number; y: number };
+    position?: Position;
     c: CanvasRenderingContext2D;
   }) {
     this.position = position;
@@ -24,7 +26,12 @@ class PlacementTile {
     this.c.fillRect(this.position.x + 0, this.position.y, this.size, this.size);
   }
 
-  update(mouse: { x: number; y: number }) {
+  update(mouse: { x: number | undefined; y: number | undefined }) {
+    // case for mouse from game class (can be undefined)
+    if (mouse.x === undefined || mouse.y === undefined) {
+      return;
+    }
+
     this.draw();
     if (
       mouse.x + 0 > this.position.x &&

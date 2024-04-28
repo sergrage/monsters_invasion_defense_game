@@ -1,6 +1,7 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import Projectile from "@/game/classes/gameEntities/Projectile";
-import myImage from "../../../img/tower.png";
+import myImage from "@/game/img/tower.png";
+import Enemy from "../Enemy";
 
 class Building extends Sprite {
   width: number;
@@ -8,7 +9,7 @@ class Building extends Sprite {
   center: { x: number; y: number };
   projectiles: Projectile[];
   radius: number;
-  target: any;
+  target: Enemy | null = null;
 
   constructor({
     position = { x: 0, y: 0 },
@@ -69,7 +70,8 @@ class Building extends Sprite {
           x: this.center.x - 20,
           y: this.center.y - 110,
         },
-        enemy: this.target,
+        // mb add typeguard?
+        enemy: this.target!,
         c: this.c,
         canvas: this.canvas,
       }),

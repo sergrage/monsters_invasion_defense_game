@@ -1,9 +1,7 @@
-interface Waypoint {
-  x: number;
-  y: number;
-}
+import { Position } from "@/game/interfaces";
+import Enemy from "@/game/classes/gameEntities/Enemy";
 
-interface Position {
+interface Waypoint {
   x: number;
   y: number;
 }
@@ -13,22 +11,22 @@ interface EnemyOptions {
   c: CanvasRenderingContext2D;
 }
 
-interface EnemyType {
-  new (options: EnemyOptions): any;
+export interface EnemyType {
+  new (options: EnemyOptions): Enemy;
 }
 
 class EnemiesGenerator {
   private c: CanvasRenderingContext2D;
   private waypoints: Waypoint[];
 
-  constructor(c: any, waypoints: Waypoint[]) {
+  constructor(c: CanvasRenderingContext2D, waypoints: Waypoint[]) {
     this.c = c;
     this.waypoints = waypoints;
   }
 
-  generate(amount: number, EnemyType: EnemyType): any[] {
+  generate(amount: number, EnemyType: EnemyType): Enemy[] {
     // тип EnemyType здесь нужно указать, если он известен
-    const enemies: any[] = [];
+    const enemies: Enemy[] = [];
 
     for (let i = 1; i < amount + 1; i++) {
       const xOffset = i * 150;

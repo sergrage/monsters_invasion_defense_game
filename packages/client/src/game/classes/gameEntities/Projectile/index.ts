@@ -1,19 +1,22 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
-import myImage from "../../../img/projectile.png";
+import myImage from "@/game/img/projectile.png";
+import Enemy from "@/game/classes/gameEntities/Enemy";
+
+import { Position } from "@/game/interfaces";
 
 class Projectile extends Sprite {
-  velocity: { x: number; y: number };
-  enemy: { center: { x: number; y: number } };
-  radius: number;
+  velocity;
+  enemy;
+  radius;
 
   constructor({
-    position = { x: 0, y: 0 },
+    position,
     enemy,
     c,
     canvas,
   }: {
-    position: { x: number; y: number };
-    enemy: { center: { x: number; y: number } };
+    position: Position;
+    enemy: Enemy;
     c: CanvasRenderingContext2D;
     canvas: HTMLCanvasElement;
   }) {

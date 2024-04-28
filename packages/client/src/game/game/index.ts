@@ -1,7 +1,14 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
-import myImageExplosion from "../img/explosion.png";
+import myImageExplosion from "@/game/img/explosion.png";
 import Enemy from "@/game/classes/gameEntities/Enemy";
 import Building from "@/game/classes/gameEntities/building";
+import Projectile from "@/game/classes/gameEntities/Projectile";
+import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
+import EventSubject from "@/game/classes/behavioral/eventSubject";
+import MapGenerator from "@/game/classes/creational/mapGenerator";
+import TilesGenerator from "@/game/classes/creational/tilesGenerator";
+
+import { Position } from "@/game/interfaces";
 
 class Game {
   coins: number;
@@ -12,19 +19,23 @@ class Game {
   canvas: HTMLCanvasElement | null;
   ctx: CanvasRenderingContext2D | null;
   image: HTMLImageElement | null;
-  placementTiles: any[] | null;
+  placementTiles: PlacementTile[] | null;
   mouse: { x: number | undefined; y: number | undefined };
-  activeTile: any;
+  activeTile: PlacementTile | null;
   explosions: Sprite[];
-  eventSubject: any;
-  mapGenerator: any;
+  eventSubject: EventSubject;
+  mapGenerator: MapGenerator;
+  // initializeEnemies call generate method which generates enemies without canvas attr
+  // though enemy class constructor needs canvas attr and send it to sprite class
+  // if we put EnemiesGenerator type here we'll get error "missing canvas"
+  // need to do smth with a canvas... do we need it in enemy class?
   enemiesGenerator: any;
-  tilesGenerator: any;
+  tilesGenerator: TilesGenerator;
 
   constructor(
     coins: number,
     hearts: number,
-    mapGenerator: any,
+    mapGenerator: MapGenerator,
     enemiesGenerator: any,
     tilesGenerator: any,
     eventSubject: any,
@@ -168,23 +179,23 @@ class Game {
     });
   }
 
-  updateBuilding(building) {
+  updateBuilding(building: Building) {
     building.update();
   }
 
-  handleBuildingTarget(building) {
+  handleBuildingTarget(building: Building) {
     const validEnemies = this.findValidEnemies(building);
     building.target = validEnemies[0];
   }
 
-  findValidEnemies(building) {
+  findValidEnemies(building: Building) {
     return this.enemies.filter(enemy => {
       const distance = this.calculateDistance(enemy.center, building.center);
       return distance < enemy.radius + building.radius;
     });
   }
 
-  handleBuildingProjectiles(building) {
+  handleBuildingProjectiles(building: Building) {
     for (let i = building.projectiles.length - 1; i >= 0; i--) {
       const projectile = building.projectiles[i];
       this.updateProjectile(projectile);
@@ -192,22 +203,26 @@ class Game {
     }
   }
 
-  updateProjectile(projectile) {
+  updateProjectile(projectile: Projectile) {
     projectile.update();
   }
 
-  handleProjectileCollision(projectile, building, i: number) {
+  handleProjectileCollision(
+    projectile: Projectile,
+    building: Building,
+    i: number,
+  ) {
     const distance = this.calculateDistance(
       projectile.enemy.center,
       projectile.position,
     );
-    if (distance < projectile.enemy.radius + projectile.radius) {
+    if (distance < projectile.radius + projectile.radius) {
       this.handleEnemyHit(projectile.enemy);
       this.handleProjectileHit(projectile, building, i);
     }
   }
 
-  handleEnemyHit(enemy) {
+  handleEnemyHit(enemy: Enemy) {
     enemy.health -= 20;
     if (enemy.health <= 0) {
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
@@ -218,42 +233,49 @@ class Game {
     }
   }
 
-  handleProjectileHit(projectile, building, i: number) {
-    this.explosions.push(
-      new Sprite({
-        position: { x: projectile.position.x, y: projectile.position.y },
-        imageSrc: myImageExplosion,
-        frames: { max: 4 },
-        offset: { x: 0, y: 0 },
-        c: this.ctx,
-      }),
-    );
-    building.projectiles.splice(i, 1);
+  handleProjectileHit(projectile: Projectile, building: Building, i: number) {
+    // this.ctx && this.canvas type guard + добавил canvas т.к. его ожидает sprite
+    if (this.ctx && this.canvas) {
+      this.explosions.push(
+        new Sprite({
+          position: { x: projectile.position.x, y: projectile.position.y },
+          canvas: this.canvas,
+          imageSrc: myImageExplosion,
+          frames: { max: 4 },
+          offset: { x: 0, y: 0 },
+          c: this.ctx,
+        }),
+      );
+      building.projectiles.splice(i, 1);
+    }
   }
 
-  calculateDistance(point1, point2) {
+  calculateDistance(point1: Position, point2: Position) {
     const xDifference = point1.x - point2.x;
     const yDifference = point1.y - point2.y;
     return Math.hypot(xDifference, yDifference);
   }
 
   handleCanvasClick() {
-    if (
-      this.activeTile &&
-      !this.activeTile.isOccupied &&
-      this.coins - 50 >= 0
-    ) {
+    // change isOccupied to occupied. Bug?
+    if (this.activeTile && !this.activeTile.occupied && this.coins - 50 >= 0) {
       this.setCoins(-50);
-      this.buildings.push(
-        new Building({
-          position: {
-            x: this.activeTile.position.x,
-            y: this.activeTile.position.y,
-          },
-          c: this.ctx,
-        }),
-      );
-      this.activeTile.isOccupied = true;
+
+      // this.ctx && this.canvas type guard + добавил canvas т.к. его ожидает building
+      if (this.ctx && this.canvas) {
+        this.buildings.push(
+          new Building({
+            position: {
+              x: this.activeTile.position.x,
+              y: this.activeTile.position.y,
+            },
+            canvas: this.canvas,
+            c: this.ctx,
+          }),
+        );
+      }
+
+      this.activeTile.occupied = true;
       this.buildings.sort((a, b) => a.position.y - b.position.y);
     }
   }

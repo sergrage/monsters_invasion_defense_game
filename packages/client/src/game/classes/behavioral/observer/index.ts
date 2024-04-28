@@ -1,15 +1,17 @@
+// пока оставил event как string
+
 interface Observer {
-  update(event: any): void;
+  update(event: string): void;
 }
 
 class EventObserver implements Observer {
-  private callback: (event: any) => void;
+  private callback: (event: string) => void;
 
-  constructor(callback: (event: any) => void) {
+  constructor(callback: (event: string) => void) {
     this.callback = callback;
   }
 
-  update(event: any): void {
+  update(event: string): void {
     this.callback(event);
   }
 }

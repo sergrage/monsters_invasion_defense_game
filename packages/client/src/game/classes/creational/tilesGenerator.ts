@@ -1,26 +1,37 @@
+import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
+import { Position } from "@/game/interfaces";
+
+interface TileOptions {
+  position: Position;
+  c: CanvasRenderingContext2D;
+}
+
+interface TileType {
+  new (options: TileOptions): PlacementTile;
+}
+
 class TilesGenerator {
   ctx: CanvasRenderingContext2D;
   placementTilesData: number[];
-  PlacementTile: any; // Change `any` to the actual type of PlacementTile if possible
+  PlacementTile: TileType;
 
   constructor(
     ctx: CanvasRenderingContext2D,
     placementTilesData: number[],
-    PlacementTile: any,
+    PlacementTile: TileType,
   ) {
     this.ctx = ctx;
     this.placementTilesData = placementTilesData;
     this.PlacementTile = PlacementTile;
   }
 
-  generatePlacementTiles(): any[] {
-    // Change `any` to the actual type of PlacementTile if possible
+  generatePlacementTiles(): PlacementTile[] {
     const placementTilesData2D: number[][] = [];
     for (let i = 0; i < this.placementTilesData.length; i += 20) {
       placementTilesData2D.push(this.placementTilesData.slice(i, i + 20));
     }
 
-    const placementTiles: any[] = []; // Change `any` to the actual type of PlacementTile if possible
+    const placementTiles: PlacementTile[] = [];
     placementTilesData2D.forEach((row, y) => {
       row.forEach((symbol, x) => {
         if (symbol === 14) {

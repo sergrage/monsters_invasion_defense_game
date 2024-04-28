@@ -1,12 +1,9 @@
-import Sprite from "../Sprite";
+import Sprite from "@/game/classes/gameEntities/Sprite";
 import waypoints from "@/game/mocks/waypoints";
-import orcImage from "../../../img/orc.png";
-import { Frames } from "@/game/interfaces";
+import orcImage from "@/game/img/orc.png";
 
-interface Position {
-  x: number;
-  y: number;
-}
+import { Frames } from "@/game/interfaces";
+import { Position } from "@/game/interfaces";
 
 class Enemy extends Sprite {
   position: Position;
