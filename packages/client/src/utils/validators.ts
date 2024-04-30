@@ -16,7 +16,7 @@ const mailValidator = new RegExp(
 );
 
 export const validationRules = {
-  emrtyRow: {
+  emptyRow: {
     validator: (value: string) => !!value.trim(),
     errorMessage: EMPTY_VALIDATION_MESSAGE,
   },
