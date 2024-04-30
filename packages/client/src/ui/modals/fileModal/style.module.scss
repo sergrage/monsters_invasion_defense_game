@@ -47,9 +47,9 @@
   user-select: none;
 }
 
-.fields-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
+.img {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 }

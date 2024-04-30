@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import cn from "classnames";
 
 import ZombieError from "../zombie_error";
@@ -15,22 +15,22 @@ const FileInput = ({ name, isInvalid, onChange }: TProps) => {
   const inputRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
 
-  const [isUploaded, setIsUploaded] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const [labelText, setLabelText] = useState("Select file");
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.value) {
-      setIsUploaded(false);
+      setIsSelected(false);
       return;
     }
 
-    setIsUploaded(true);
+    setIsSelected(true);
     setLabelText(event.target.files![0].name);
     onChange(event);
   };
 
   return (
-    <div className={cn(style.wrapper, { [style.uploaded]: isUploaded })}>
+    <div className={cn(style.wrapper, { [style.uploaded]: isSelected })}>
       <label
         className={style.label}
         htmlFor={`input-${id}`}

@@ -23,6 +23,7 @@ const FileModal = ({ closeModal }: TProps) => {
   const [formVal, setFormVal] = useState({});
   const [headerText, setHeaderText] = useState("Upload a file");
   const [isInvalid, setIsInvalid] = useState(true);
+  const [previewImg, setPreviewImg] = useState("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -37,6 +38,8 @@ const FileModal = ({ closeModal }: TProps) => {
       setHeaderText("Wrong file");
       return;
     }
+
+    setPreviewImg(URL.createObjectURL(event.target.files![0]));
 
     setFormVal(event.target.files![0]);
     setIsInvalid(false);
@@ -67,7 +70,13 @@ const FileModal = ({ closeModal }: TProps) => {
     <section className={style.backdrop}>
       <form ref={wrapperRef} className={style.modal} onSubmit={onSubmitHandler}>
         <Title.H2 className={style.title} title={headerText} />
+
+        {!isInvalid && previewImg && (
+          <img className={style.img} src={previewImg} alt="Preview image" />
+        )}
+
         <FileInput name="file" onChange={formChangeHandler} />
+
         <Button.Flat
           name="Continue upload"
           type="submit"
