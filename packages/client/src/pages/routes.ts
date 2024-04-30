@@ -6,6 +6,7 @@ export enum routes {
   forum = "/forum",
   forumTopics = "/forum/:topicId",
   gameOver = "/gameover",
+  leaderboard = "/leaderboard",
   error404 = "/404",
   error500 = "/500",
 }
