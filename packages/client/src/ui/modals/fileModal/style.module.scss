@@ -31,8 +31,8 @@
   z-index: 9000;
   opacity: 0;
   transition:
-    opacity 300ms ease,
-    transform 300ms ease;
+    opacity 200ms ease,
+    transform 200ms ease;
 
   &.show {
     opacity: 1;
