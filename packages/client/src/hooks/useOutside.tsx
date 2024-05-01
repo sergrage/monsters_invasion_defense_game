@@ -7,13 +7,15 @@ export function useOutside(
   const [isClose, setIsClose] = useState(false);
 
   useEffect(() => {
-    const handleClickOutside = (
-      e: React.BaseSyntheticEvent | MouseEvent,
-    ): void => {
+    const handleClickOutside = (e: MouseEvent | KeyboardEvent): void => {
       if (ref?.current) {
         // trigger outside click if the clicked element is not the ref element
         // and it is not a child of the ref element
-        if (!ref.current.contains(e.target)) {
+        if (
+          (e instanceof MouseEvent &&
+            !ref.current.contains(e.target as Node)) ||
+          (e instanceof KeyboardEvent && e.key === "Escape")
+        ) {
           // trigger transition effect on closing
           setIsClose(true);
 
@@ -24,9 +26,11 @@ export function useOutside(
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleClickOutside);
 
     return (): void => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleClickOutside);
     };
   }, [ref]);
 
