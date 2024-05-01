@@ -25,7 +25,9 @@ const Page: FC<TProps> = ({ children, className }) => {
 };
 
 const Backdrop: FC<TProps> = ({ children, className }) => {
-  return <div className={cn(style.backdrop, className)}>{children}</div>;
+  return (
+    <section className={cn(style.backdrop, className)}>{children}</section>
+  );
 };
 
 const Layout = {

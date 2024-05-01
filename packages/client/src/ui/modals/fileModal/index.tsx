@@ -1,13 +1,10 @@
-import { useRef, useState } from "react";
-import cn from "classnames";
+import { useState } from "react";
 
-import { useOutside } from "@/hooks/useOutside";
-import { useModal } from "@/hooks/useModal";
 import useFetch from "@/hooks/useFetch";
 
 import { userUrl } from "@/endpoints/apiUrl";
 
-import Layout from "@/components/layout";
+import FormModal from "../formModal";
 import Title from "@/ui/title";
 import Button from "@/ui/button";
 import FileInput from "@/ui/fileInput";
@@ -19,19 +16,14 @@ type TProps = {
 };
 
 const FileModal = ({ closeModal }: TProps) => {
-  const modalRef: React.MutableRefObject<HTMLFormElement | null> = useRef(null);
-
-  const isClose = useOutside(modalRef, closeModal);
-  const { render, isOpen } = useModal();
-
   const sendRequest = useFetch();
 
   const [formVal, setFormVal] = useState({});
   const [headerText, setHeaderText] = useState("Upload a file");
-  const [isInvalid, setIsInvalid] = useState(true);
   const [previewImg, setPreviewImg] = useState("");
+  const [isInvalid, setIsInvalid] = useState(true);
 
-  const formChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files![0].name) {
       setIsInvalid(true);
       setHeaderText("Wrong file");
@@ -45,9 +37,7 @@ const FileModal = ({ closeModal }: TProps) => {
     setHeaderText("File has been successfully selected");
   };
 
-  const onSubmitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-
+  const handleSubmit = () => {
     const formData = new FormData();
     formData.append("avatar", formVal as Blob);
 
@@ -65,29 +55,20 @@ const FileModal = ({ closeModal }: TProps) => {
     closeModal();
   };
 
-  return render(
-    <Layout.Backdrop className={cn({ [style.show]: isOpen && !isClose })}>
-      <form
-        ref={modalRef}
-        className={cn(style.modal, { [style.show]: isOpen && !isClose })}
-        onSubmit={onSubmitHandler}
-      >
-        <Title.H2 className={style.title} title={headerText} />
-
-        {!isInvalid && previewImg && (
-          <img className={style.img} src={previewImg} alt="Preview image" />
-        )}
-
-        <FileInput name="file" onChange={formChangeHandler} />
-
-        <Button.Flat
-          name="Continue upload"
-          type="submit"
-          positive={true}
-          disabled={isInvalid}
-        />
-      </form>
-    </Layout.Backdrop>,
+  return (
+    <FormModal onSubmit={handleSubmit} onClose={closeModal}>
+      <Title.H2 className={style.title} title={headerText} />
+      {!isInvalid && previewImg && (
+        <img className={style.img} src={previewImg} alt="Preview image" />
+      )}
+      <FileInput name="file" onChange={handleInputChange} />
+      <Button.Flat
+        name="Continue upload"
+        type="submit"
+        positive={true}
+        disabled={isInvalid}
+      />
+    </FormModal>
   );
 };
 

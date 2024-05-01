@@ -1,13 +1,10 @@
-import { ChangeEvent, useRef, useState } from "react";
-import cn from "classnames";
+import { ChangeEvent, useState } from "react";
 
-import { useOutside } from "@/hooks/useOutside";
-import { useModal } from "@/hooks/useModal";
 import useFetch from "@/hooks/useFetch";
 
 import { userUrl } from "@/endpoints/apiUrl";
 
-import Layout from "@/components/layout";
+import FormModal from "../formModal";
 import Title from "@/ui/title";
 import Button from "@/ui/button";
 import Input from "@/ui/input";
@@ -51,11 +48,6 @@ const validationRules = {
 };
 
 const PasswordModal = ({ closeModal }: TProps) => {
-  const modalRef: React.MutableRefObject<HTMLFormElement | null> = useRef(null);
-
-  const isClose = useOutside(modalRef, closeModal);
-  const { render, isOpen } = useModal();
-
   const sendRequest = useFetch();
 
   const [values, setValues] = useState<IValues>({
@@ -89,9 +81,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
     }
   };
 
-  const onSubmitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-
+  const handleSubmit = () => {
     // Если есть ошибка валидации или пустые значения - выход
     if (
       Object.values(errors).some(error => !!error) ||
@@ -117,59 +107,57 @@ const PasswordModal = ({ closeModal }: TProps) => {
     closeModal();
   };
 
-  return render(
-    <Layout.Backdrop className={cn({ [style.show]: isOpen && !isClose })}>
-      <form
-        ref={modalRef}
-        className={cn(style.modal, { [style.show]: isOpen && !isClose })}
-        onSubmit={onSubmitHandler}
-      >
-        <Title.H2 className={style.title} title="Change password" />
+  return (
+    <FormModal
+      modalClassName={style.modal}
+      onSubmit={handleSubmit}
+      onClose={closeModal}
+    >
+      <Title.H2 className={style.title} title="Change password" />
 
-        <div className={style["input-wrapper"]}>
-          <Input
-            name="oldPassword"
-            label="Old password"
-            type="password"
-            required={true}
-            value={values.oldPassword}
-            onChange={handleChange}
-            onError={errors.oldPassword}
-            onErrorMessage={errorMessages.oldPassword}
-          />
-          <Input
-            name="newPassword"
-            label="New password"
-            type="password"
-            required={true}
-            value={values.newPassword}
-            onChange={handleChange}
-            onError={errors.newPassword}
-            onErrorMessage={errorMessages.newPassword}
-          />
-          <Input
-            name="confirmPassword"
-            label="Confirm new password"
-            type="password"
-            required={true}
-            value={values.confirmPassword}
-            onChange={handleChange}
-            onError={errors.confirmPassword}
-            onErrorMessage={errorMessages.confirmPassword}
-          />
-        </div>
-
-        <Button.Flat
-          name="Change"
-          type="submit"
-          positive={true}
-          disabled={
-            Object.values(errors).some(error => error) ||
-            Object.values(values).some(value => !value)
-          }
+      <div className={style["input-wrapper"]}>
+        <Input
+          name="oldPassword"
+          label="Old password"
+          type="password"
+          required={true}
+          value={values.oldPassword}
+          onChange={handleChange}
+          onError={errors.oldPassword}
+          onErrorMessage={errorMessages.oldPassword}
         />
-      </form>
-    </Layout.Backdrop>,
+        <Input
+          name="newPassword"
+          label="New password"
+          type="password"
+          required={true}
+          value={values.newPassword}
+          onChange={handleChange}
+          onError={errors.newPassword}
+          onErrorMessage={errorMessages.newPassword}
+        />
+        <Input
+          name="confirmPassword"
+          label="Confirm new password"
+          type="password"
+          required={true}
+          value={values.confirmPassword}
+          onChange={handleChange}
+          onError={errors.confirmPassword}
+          onErrorMessage={errorMessages.confirmPassword}
+        />
+      </div>
+
+      <Button.Flat
+        name="Change"
+        type="submit"
+        positive={true}
+        disabled={
+          Object.values(errors).some(error => error) ||
+          Object.values(values).some(value => !value)
+        }
+      />
+    </FormModal>
   );
 };
 
