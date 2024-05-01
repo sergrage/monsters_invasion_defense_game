@@ -16,15 +16,21 @@ type TProps = {
 };
 
 interface IValues {
-  [value: string]: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 interface IErrors {
-  [key: string]: boolean;
+  oldPassword: boolean;
+  newPassword: boolean;
+  confirmPassword: boolean;
 }
 
 interface IMessages {
-  [key: string]: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 // Временное решение, пока не закончен ValidationHook
@@ -55,8 +61,16 @@ const PasswordModal = ({ closeModal }: TProps) => {
     newPassword: "",
     confirmPassword: "",
   });
-  const [errors, setErrors] = useState<IErrors>({});
-  const [errorMessages, setErrorMessages] = useState<IMessages>({});
+  const [errors, setErrors] = useState<IErrors>({
+    oldPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  });
+  const [errorMessages, setErrorMessages] = useState<IMessages>({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
   // временное решение пока не закончен ValidationHook
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
