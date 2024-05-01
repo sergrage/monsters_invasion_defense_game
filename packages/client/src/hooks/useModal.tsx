@@ -11,7 +11,6 @@ const useModal = () => {
   const rootEl = useMemo(() => document.createElement("div"), []);
 
   useEffect(() => {
-    // adds root to body
     document.body.prepend(rootEl);
 
     // trigger transition effect on opening
