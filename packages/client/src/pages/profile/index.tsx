@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
 
 import Layout from "@/components/layout";
 import Title from "@/ui/title";
@@ -50,16 +49,8 @@ const Profile = () => {
 
         <Button.Flat name="Change password" onClick={togglePassModal} />
 
-        {showAvatarModal &&
-          createPortal(
-            <Modal.File closeModal={toggleAvatarModal} />,
-            document.getElementById("modal-root")!,
-          )}
-        {showPassModal &&
-          createPortal(
-            <Modal.Password closeModal={togglePassModal} />,
-            document.getElementById("modal-root")!,
-          )}
+        {showAvatarModal && <Modal.File closeModal={toggleAvatarModal} />}
+        {showPassModal && <Modal.Password closeModal={togglePassModal} />}
       </section>
     </Layout.Page>
   );

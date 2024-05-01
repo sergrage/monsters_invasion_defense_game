@@ -1,6 +1,8 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
+import cn from "classnames";
 
 import { useOutside } from "@/hooks/useOutside";
+import { useModal } from "@/hooks/useModal";
 import useFetch from "@/hooks/useFetch";
 
 import { userUrl } from "@/endpoints/apiUrl";
@@ -48,9 +50,11 @@ const validationRules = {
 };
 
 const PasswordModal = ({ closeModal }: TProps) => {
-  const wrapperRef: React.MutableRefObject<HTMLFormElement | null> =
-    useRef(null);
-  useOutside({ ref: wrapperRef, outsideClick: closeModal });
+  const modalRef: React.MutableRefObject<HTMLFormElement | null> = useRef(null);
+
+  const isClose = useOutside(modalRef, closeModal);
+  const { render, isOpen } = useModal();
+
   const sendRequest = useFetch();
 
   const [values, setValues] = useState<IValues>({
@@ -60,14 +64,6 @@ const PasswordModal = ({ closeModal }: TProps) => {
   });
   const [errors, setErrors] = useState<IErrors>({});
   const [errorMessages, setErrorMessages] = useState<IMessages>({});
-
-  // transition effect при открытии модального окна
-  useEffect(() => {
-    setTimeout(() => {
-      wrapperRef.current!.closest("section")!.classList.add(style.show);
-      wrapperRef.current!.classList.add(style.show);
-    }, 0);
-  }, []);
 
   // временное решение пока не закончен ValidationHook
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -120,9 +116,15 @@ const PasswordModal = ({ closeModal }: TProps) => {
     closeModal();
   };
 
-  return (
-    <section className={style.backdrop}>
-      <form ref={wrapperRef} className={style.modal} onSubmit={onSubmitHandler}>
+  return render(
+    <section
+      className={cn(style.backdrop, { [style.show]: isOpen && !isClose })}
+    >
+      <form
+        ref={modalRef}
+        className={cn(style.modal, { [style.show]: isOpen && !isClose })}
+        onSubmit={onSubmitHandler}
+      >
         <Title.H2 className={style.title} title="Change password" />
 
         <div className={style["input-wrapper"]}>
@@ -168,7 +170,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
           }
         />
       </form>
-    </section>
+    </section>,
   );
 };
 

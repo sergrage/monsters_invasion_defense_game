@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import cn from "classnames";
 
 import { useOutside } from "@/hooks/useOutside";
+import { useModal } from "@/hooks/useModal";
 import useFetch from "@/hooks/useFetch";
+
 import { userUrl } from "@/endpoints/apiUrl";
 
 import Title from "@/ui/title";
@@ -15,22 +18,17 @@ type TProps = {
 };
 
 const FileModal = ({ closeModal }: TProps) => {
-  const wrapperRef: React.MutableRefObject<HTMLFormElement | null> =
-    useRef(null);
-  useOutside({ ref: wrapperRef, outsideClick: closeModal });
+  const modalRef: React.MutableRefObject<HTMLFormElement | null> = useRef(null);
+
+  const isClose = useOutside(modalRef, closeModal);
+  const { render, isOpen } = useModal();
+
   const sendRequest = useFetch();
 
   const [formVal, setFormVal] = useState({});
   const [headerText, setHeaderText] = useState("Upload a file");
   const [isInvalid, setIsInvalid] = useState(true);
   const [previewImg, setPreviewImg] = useState("");
-
-  useEffect(() => {
-    setTimeout(() => {
-      wrapperRef.current!.closest("section")!.classList.add(style.show);
-      wrapperRef.current!.classList.add(style.show);
-    }, 0);
-  }, []);
 
   const formChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files![0].name) {
@@ -66,9 +64,15 @@ const FileModal = ({ closeModal }: TProps) => {
     closeModal();
   };
 
-  return (
-    <section className={style.backdrop}>
-      <form ref={wrapperRef} className={style.modal} onSubmit={onSubmitHandler}>
+  return render(
+    <section
+      className={cn(style.backdrop, { [style.show]: isOpen && !isClose })}
+    >
+      <form
+        ref={modalRef}
+        className={cn(style.modal, { [style.show]: isOpen && !isClose })}
+        onSubmit={onSubmitHandler}
+      >
         <Title.H2 className={style.title} title={headerText} />
 
         {!isInvalid && previewImg && (
@@ -84,7 +88,7 @@ const FileModal = ({ closeModal }: TProps) => {
           disabled={isInvalid}
         />
       </form>
-    </section>
+    </section>,
   );
 };
 
