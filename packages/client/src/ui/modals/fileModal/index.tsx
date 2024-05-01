@@ -7,6 +7,7 @@ import useFetch from "@/hooks/useFetch";
 
 import { userUrl } from "@/endpoints/apiUrl";
 
+import Layout from "@/components/layout";
 import Title from "@/ui/title";
 import Button from "@/ui/button";
 import FileInput from "@/ui/fileInput";
@@ -65,9 +66,7 @@ const FileModal = ({ closeModal }: TProps) => {
   };
 
   return render(
-    <section
-      className={cn(style.backdrop, { [style.show]: isOpen && !isClose })}
-    >
+    <Layout.Backdrop className={cn({ [style.show]: isOpen && !isClose })}>
       <form
         ref={modalRef}
         className={cn(style.modal, { [style.show]: isOpen && !isClose })}
@@ -88,7 +87,7 @@ const FileModal = ({ closeModal }: TProps) => {
           disabled={isInvalid}
         />
       </form>
-    </section>,
+    </Layout.Backdrop>,
   );
 };
 

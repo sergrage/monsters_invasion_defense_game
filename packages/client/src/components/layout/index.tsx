@@ -24,10 +24,15 @@ const Page: FC<TProps> = ({ children, className }) => {
   );
 };
 
+const Backdrop: FC<TProps> = ({ children, className }) => {
+  return <div className={cn(style.backdrop, className)}>{children}</div>;
+};
+
 const Layout = {
   Main: Main,
   Container: Container,
   Page: Page,
+  Backdrop: Backdrop,
 };
 
 export default Layout;
