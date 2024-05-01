@@ -1,18 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-interface Props {
-  ref: React.MutableRefObject<Node | null>;
-  outsideClick: () => void;
-}
+export function useOutside(
+  ref: React.MutableRefObject<Node | null>,
+  outsideClick: () => void,
+): boolean {
+  const [isClose, setIsClose] = useState(false);
 
-export function useOutside(props: Props): void {
   useEffect(() => {
     const handleClickOutside = (
       e: React.BaseSyntheticEvent | MouseEvent,
     ): void => {
-      if (props.ref?.current) {
-        if (!props.ref.current.contains(e.target)) {
-          props.outsideClick();
+      if (ref?.current) {
+        // trigger outside click if the clicked element is not the ref element
+        // and it is not a child of the ref element
+        if (!ref.current.contains(e.target)) {
+          // trigger transition effect on closing
+          setIsClose(true);
+
+          // give time for the transition
+          setTimeout(() => outsideClick(), 200);
         }
       }
     };
@@ -22,5 +28,7 @@ export function useOutside(props: Props): void {
     return (): void => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [props.ref]);
+  }, [ref]);
+
+  return isClose;
 }
