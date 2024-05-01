@@ -9,6 +9,7 @@ interface Waypoint {
 interface EnemyOptions {
   position: Position;
   c: CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement;
 }
 
 export interface EnemyType {
@@ -24,8 +25,11 @@ class EnemiesGenerator {
     this.waypoints = waypoints;
   }
 
-  generate(amount: number, EnemyType: EnemyType): Enemy[] {
-    // тип EnemyType здесь нужно указать, если он известен
+  generate(
+    amount: number,
+    EnemyType: EnemyType,
+    canvas: HTMLCanvasElement,
+  ): Enemy[] {
     const enemies: Enemy[] = [];
 
     for (let i = 1; i < amount + 1; i++) {
@@ -37,6 +41,7 @@ class EnemiesGenerator {
             y: this.waypoints[0].y,
           },
           c: this.c,
+          canvas,
         }),
       );
     }

@@ -109,7 +109,16 @@ class Game {
   }
 
   initializeEnemies() {
-    this.enemies = this.enemiesGenerator.generate(this.enemyCount, Enemy);
+    if (this.canvas) {
+      this.enemies = this.enemiesGenerator.generate(
+        this.enemyCount,
+        Enemy,
+        this.canvas,
+      );
+    } else {
+      // Handle the case where canvas is null
+      console.error("Canvas is null. Cannot initialize enemies.");
+    }
   }
 
   initializeTiles() {
@@ -150,11 +159,17 @@ class Game {
   }
 
   handleSpawnMoreEnemies(count: number) {
-    this.enemyCount += count;
-    this.enemies = this.enemiesGenerator.generate(
-      this.enemyCount + count,
-      Enemy,
-    );
+    if (this.canvas) {
+      this.enemyCount += count;
+      this.enemies = this.enemiesGenerator.generate(
+        this.enemyCount + count,
+        Enemy,
+        this.canvas,
+      );
+    } else {
+      // Handle the case where canvas is null
+      console.error("Canvas is null. Cannot spawn more enemies.");
+    }
   }
 
   animate() {
