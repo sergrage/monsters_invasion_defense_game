@@ -1,17 +1,17 @@
-// пока оставил event как string
-
 interface Observer {
-  update(event: string): void;
+  update(event: number): void; // Change the parameter type to number
 }
 
 class EventObserver implements Observer {
-  private callback: (event: string) => void;
+  private callback: (event: number) => void; // Change the parameter type to number
 
-  constructor(callback: (event: string) => void) {
+  constructor(callback: (event: number) => void) {
+    // Change the parameter type to number
     this.callback = callback;
   }
 
-  update(event: string): void {
+  update(event: number): void {
+    // Change the parameter type to number
     this.callback(event);
   }
 }

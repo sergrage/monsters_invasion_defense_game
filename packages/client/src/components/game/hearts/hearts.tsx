@@ -1,15 +1,16 @@
 import React, { FC } from "react";
+import style from "./style.module.scss";
 
 interface HeartsProps {
-  heartsDisplayCount: number;
+  hearts: number;
 }
 
-const Hearts: FC<HeartsProps> = ({ heartsDisplayCount }) => {
+const Hearts: FC<HeartsProps> = ({ hearts }) => {
   return (
     <>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div className={style.hearts}>
         <svg
-          style={{ width: "35px", color: "red", marginRight: "5px" }}
+          className={style.svg}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
@@ -20,7 +21,7 @@ const Hearts: FC<HeartsProps> = ({ heartsDisplayCount }) => {
             clipRule="evenodd"
           />
         </svg>
-        <div id="hearts">{heartsDisplayCount}</div>
+        <div id="hearts">{hearts}</div>
       </div>
     </>
   );

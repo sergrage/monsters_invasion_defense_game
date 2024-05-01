@@ -1,8 +1,8 @@
 import React, { FC, useState, useEffect, useRef } from "react";
 // import Layout from "@/components/Layout";
 import Game from "@/game/game";
-import Coins from "@/components/game/coins";
-import Hearts from "@/components/game/hearts";
+import Coins from "@/components/game/coins/coins";
+import Hearts from "@/components/game/hearts/hearts";
 import EventObserver from "@/game/classes/behavioral/observer";
 import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
@@ -12,6 +12,7 @@ import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import myImage from "../../game/img/gameMap.png";
+import style from "./style.module.scss";
 
 const GamePage: FC = () => {
   const [coins, setCoins] = useState<number>(100);
@@ -24,7 +25,7 @@ const GamePage: FC = () => {
   const handleGameOverEvent = () => setIsGameOver(true);
 
   useEffect(() => {
-    if (!canvasRef.current) return; // Check if canvasRef.current is null
+    if (!canvasRef.current) return;
     // // Create instances of dependencies
     const mapGenerator = new MapGenerator(
       1280,
@@ -66,50 +67,14 @@ const GamePage: FC = () => {
       <div style={{ position: "relative", display: "inline-block" }}>
         <canvas ref={canvasRef} id="gameCanvas"></canvas>
         {isGameOver && (
-          <div
-            id="gameOver"
-            style={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "72px",
-              color: "white",
-              WebkitTextStroke: "3px black",
-            }}
-          >
+          <div id="gameOver" className={style.gameOver}>
             GAME OVER
           </div>
         )}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "400px",
-            height: "80px",
-            background:
-              "linear-gradient(to left bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0))",
-          }}
-        ></div>
-        <div
-          style={{
-            position: "absolute",
-            top: "4px",
-            right: "8px",
-            fontSize: "36px",
-            color: "white",
-            WebkitTextStroke: "2px black",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Coins coinsDisplayCount={coins} />
-          <Hearts heartsDisplayCount={hearts} />
+        <div className={style.gameStats}></div>
+        <div className={style.gameStatsContainer}>
+          <Coins coins={coins} />
+          <Hearts hearts={hearts} />
         </div>
       </div>
     </>

@@ -7,6 +7,7 @@ import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
+import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 
 import { Position } from "@/game/interfaces";
 
@@ -25,20 +26,16 @@ class Game {
   explosions: Sprite[];
   eventSubject: EventSubject;
   mapGenerator: MapGenerator;
-  // initializeEnemies call generate method which generates enemies without canvas attr
-  // though enemy class constructor needs canvas attr and send it to sprite class
-  // if we put EnemiesGenerator type here we'll get error "missing canvas"
-  // need to do smth with a canvas... do we need it in enemy class?
-  enemiesGenerator: any;
+  enemiesGenerator: EnemiesGenerator;
   tilesGenerator: TilesGenerator;
 
   constructor(
     coins: number,
     hearts: number,
     mapGenerator: MapGenerator,
-    enemiesGenerator: any,
-    tilesGenerator: any,
-    eventSubject: any,
+    enemiesGenerator: EnemiesGenerator,
+    tilesGenerator: TilesGenerator,
+    eventSubject: EventSubject,
   ) {
     this.coins = coins;
     this.hearts = hearts;
