@@ -1,0 +1,25 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  border-bottom: 2px solid var(--shadow-light);
+}
+
+.label {
+  position: relative;
+  top: -12px;
+  left: 0px;
+  font-family: "Squada One";
+  font-size: 20px;
+  color: var(--primary-strong);
+  text-align: center;
+  background-color: var(--white);
+  user-select: none;
+}
+
+.field {
+  color: var(--text);
+  cursor: default;
+}

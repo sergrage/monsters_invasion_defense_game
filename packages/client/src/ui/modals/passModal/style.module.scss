@@ -1,0 +1,20 @@
+.modal {
+  height: 600px;
+}
+
+.title {
+  color: var(--primary-strong);
+  font-size: 24px;
+  user-select: none;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.show {
+  opacity: 1;
+}

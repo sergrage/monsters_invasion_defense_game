@@ -5,10 +5,7 @@
   justify-content: space-between;
   gap: 10px;
   width: 100%;
-  padding: 20px 15px 15px;
-  border: 2px solid var(--shadow-light);
-  border-radius: 5px;
-  background-color: var(--white);
+
   transition: border-color 0.2s ease-in-out;
 
   &.error {
@@ -21,9 +18,8 @@
 }
 
 .label {
-  position: absolute;
-  top: -12px;
-  left: 25px;
+  position: relative;
+
   padding: 0px 5px;
   font-family: "Squada One";
   font-size: 20px;
@@ -35,12 +31,9 @@
 }
 
 .input {
-  padding: 10px 15px;
-  border-radius: 5px;
-  color: var(--text);
-  background-color: var(--input-field);
-
-  &::placeholder {
-    color: var(--border);
-  }
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  z-index: -1;
 }

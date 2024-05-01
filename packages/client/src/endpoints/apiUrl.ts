@@ -1,1 +1,3 @@
-export const authUrl: string = "https://ya-praktikum.tech/api/v2/auth";
+const baseYandexUrl: string = "https://ya-praktikum.tech/api/v2";
+export const authUrl: string = `${baseYandexUrl}/auth`;
+export const userUrl: string = `${baseYandexUrl}/user`;

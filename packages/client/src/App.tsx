@@ -5,6 +5,7 @@ import { Navigate, Route, Routes } from "react-router";
 
 import Login from "@/pages/login";
 import Signup from "@/pages/signup";
+import Profile from "@/pages/profile";
 import Forum from "@/pages/forum";
 import ForumTopic from "@/pages/forumTopic";
 import Game from "@/pages/game";
@@ -18,6 +19,7 @@ const App: FC = () => {
       <Routes>
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.signup} element={<Signup />} />
+        <Route path={routes.profile} element={<Profile />} />
         <Route path={routes.game} element={<Game />} />
         <Route path={routes.forum} element={<Forum />} />
         <Route path={routes.forumTopics} element={<ForumTopic />} />
