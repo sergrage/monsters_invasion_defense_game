@@ -9,6 +9,7 @@ import Profile from "@/pages/profile";
 import Forum from "@/pages/forum";
 import ForumTopic from "@/pages/forumTopic";
 import Game from "@/pages/game";
+import GameStartPage from "@/pages/gameStart";
 import GameOverPage from "@/pages/gameOver";
 import Leaderboard from "@/pages/leaderBoard";
 import ErrorPage from "@/pages/error";
@@ -24,6 +25,7 @@ const App: FC = () => {
         <Route path={routes.game} element={<Game />} />
         <Route path={routes.forum} element={<Forum />} />
         <Route path={routes.forumTopics} element={<ForumTopic />} />
+        <Route path={routes.gameStart} element={<GameStartPage />} />
         <Route path={routes.gameOver} element={<GameOverPage />} />
         <Route path={routes.leaderboard} element={<Leaderboard />} />
         <Route path={routes.error404} element={<ErrorPage.error404 />} />
