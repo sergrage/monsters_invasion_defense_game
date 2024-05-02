@@ -1,21 +1,83 @@
-import React, { FC } from "react";
-
+import React, { FC, useState, useEffect, useRef } from "react";
+// import Layout from "@/components/Layout";
+import Game from "@/game/game";
+import Coins from "@/components/game/coins/coins";
+import Hearts from "@/components/game/hearts/hearts";
+import EventObserver from "@/game/classes/behavioral/observer";
+import EventSubject from "@/game/classes/behavioral/eventSubject";
+import MapGenerator from "@/game/classes/creational/mapGenerator";
+import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
+import TilesGenerator from "@/game/classes/creational/tilesGenerator";
+import placementTilesData from "@/game/mocks/placementTilesData";
+import waypoints from "@/game/mocks/waypoints";
+import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
+import myImage from "../../game/img/gameMap.png";
 import style from "./style.module.scss";
-import Title from "@/ui/title";
-import Layout from "@/components/layout";
 
 const GamePage: FC = () => {
-  return (
-    <Layout.Page>
-      <Title.H2 title={"Страница игры"} />
+  const [coins, setCoins] = useState<number>(100);
+  const [hearts, setHearts] = useState<number>(3);
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const canvasRef = useRef(null);
 
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci,
-        architecto consectetur culpa dicta dignissimos dolorem eius eos fugiat
-        harum libero natus numquam quae, sapiente tempora, ut vel velit vitae
-        voluptates.
-      </p>
-    </Layout.Page>
+  const handleCoinsChangedEvent = (coins: number) => setCoins(coins);
+  const handleHeartsChangedEvent = (hearts: number) => setHearts(hearts);
+  const handleGameOverEvent = () => setIsGameOver(true);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    // // Create instances of dependencies
+    const mapGenerator = new MapGenerator(
+      1280,
+      768,
+      canvasRef.current,
+      myImage,
+    );
+    const enemiesGenerator = new EnemiesGenerator(mapGenerator.ctx, waypoints);
+    const tilesGenerator = new TilesGenerator(
+      mapGenerator.ctx,
+      placementTilesData,
+      PlacementTile,
+    );
+    const eventSubject = new EventSubject();
+
+    const game = new Game(
+      coins,
+      hearts,
+      mapGenerator,
+      enemiesGenerator,
+      tilesGenerator,
+      eventSubject,
+    );
+
+    const coinsChangedObserver = new EventObserver(handleCoinsChangedEvent);
+    const heartsChangedObserver = new EventObserver(handleHeartsChangedEvent);
+    const gameOverObserver = new EventObserver(handleGameOverEvent);
+
+    game.eventSubject.attach("coinsChanged", coinsChangedObserver);
+    game.eventSubject.attach("heartsChanged", heartsChangedObserver);
+    game.eventSubject.attach("gameOver", gameOverObserver);
+
+    game.initialize();
+    game.initGame();
+  }, []);
+
+  return (
+    <>
+      <div style={{ position: "relative", display: "inline-block" }}>
+        <canvas ref={canvasRef} id="gameCanvas"></canvas>
+        {isGameOver && (
+          <div id="gameOver" className={style.gameOver}>
+            GAME OVER
+          </div>
+        )}
+        <div className={style.gameStats}></div>
+        <div className={style.gameStatsContainer}>
+          <Coins coins={coins} />
+          <Hearts hearts={hearts} />
+        </div>
+      </div>
+    </>
   );
 };
 
