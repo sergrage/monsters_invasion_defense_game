@@ -1,8 +1,8 @@
 import { validationRules } from "@/utils/validators";
 import { ChangeEvent, useState } from "react";
 
-interface IValues {
-  [value: string]: string;
+interface IValues<T> {
+  [value: string]: T;
 }
 
 interface IErrors {
@@ -13,8 +13,8 @@ interface IMessages {
   [key: string]: string;
 }
 
-export function useValidate(inputValues: IValues = {}) {
-  const [values, setValues] = useState<IValues>(inputValues);
+export function useValidate(inputValues: IValues<string> = {}) {
+  const [values, setValues] = useState<IValues<string>>(inputValues);
   const [errors, setErrors] = useState<IErrors>({});
   const [errorMessages, setErrorMessages] = useState<IMessages>({});
 
