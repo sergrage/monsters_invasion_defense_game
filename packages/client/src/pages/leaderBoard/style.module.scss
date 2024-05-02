@@ -1,32 +1,32 @@
-.addTopicModal {
-  box-shadow: var(--modalShadow);
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  width: 600px;
-  height: auto;
-  background: var(--white);
-  border-radius: 10px;
-}
+// .addTopicModal {
+//   box-shadow: var(--modalShadow);
+//   text-align: center;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   z-index: 9999;
+//   width: 600px;
+//   height: auto;
+//   background: var(--white);
+//   border-radius: 10px;
+// }
 
-.hide {
-  opacity: 0;
-  transition: all 0.5s;
-  visibility: hidden;
-}
+// .hide {
+//   opacity: 0;
+//   transition: all 0.5s;
+//   visibility: hidden;
+// }
 
-.show {
-  opacity: 1;
-  transition: all 0.5s;
-  visibility: visible;
-}
+// .show {
+//   opacity: 1;
+//   transition: all 0.5s;
+//   visibility: visible;
+// }
 
-.forum {
-  position: relative;
-}
+// .forum {
+//   position: relative;
+// }
 
 .hero {
   width: 100%;
@@ -39,7 +39,6 @@
   background-position: center -16px;
 
   justify-content: center;
-  align-items: center;
 
   .zombieAlarm {
     width: 100px;
@@ -69,17 +68,10 @@
     .title {
       font-family: "Squada One", sans-serif;
       font-weight: bold;
-      font-size: 22px;
+      font-size: 102px;
       font-style: normal;
       color: var(--yellow);
-    }
-
-    .gametitle {
-      display: flex;
-      font-family: "Squada One", sans-serif;
-      font-weight: bold;
-      font-size: 42px;
-      color: var(--yellow);
+      text-align: center;
     }
   }
 }
