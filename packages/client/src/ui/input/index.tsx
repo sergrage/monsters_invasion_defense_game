@@ -15,6 +15,7 @@ type TProps = {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onError?: boolean;
   onErrorMessage?: string;
+  autocomplete?: string;
 };
 
 const Input = ({
@@ -27,6 +28,7 @@ const Input = ({
   onChange,
   onError,
   onErrorMessage,
+  autocomplete,
 }: TProps) => {
   const id = useId();
 
@@ -45,6 +47,7 @@ const Input = ({
         value={value}
         onChange={onChange}
         required={required}
+        autoComplete={autocomplete}
       ></input>
 
       {onError && <ZombieError text={onErrorMessage} />}

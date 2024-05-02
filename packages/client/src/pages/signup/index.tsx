@@ -44,6 +44,7 @@ const RegisterPage: FC = () => {
             onError={errors.email}
             onErrorMessage={errorMessages.email}
             required={true}
+            autocomplete="email"
           />
           <Input
             name="login"
@@ -53,6 +54,7 @@ const RegisterPage: FC = () => {
             onError={errors.login}
             onErrorMessage={errorMessages.login}
             required={true}
+            autocomplete="nickname"
           />
           <Input
             name="firstName"
@@ -62,12 +64,14 @@ const RegisterPage: FC = () => {
             onError={errors.firstName}
             onErrorMessage={errorMessages.firstName}
             required={true}
+            autocomplete="given-name"
           />
           <Input
             name="lastName"
             label="Last Name"
             value={values.lastName}
             onChange={handleChange}
+            autocomplete="family-name"
           />
           <Input
             name="password"
@@ -78,6 +82,7 @@ const RegisterPage: FC = () => {
             onError={errors.password}
             onErrorMessage={errorMessages.password}
             required={true}
+            autocomplete="new-password"
           />
           <Input
             name="confirmPassword"
