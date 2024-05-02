@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import { FC } from "react";
+import cn from "classnames";
 
 import style from "./style.module.scss";
-import cn from "classnames";
 
 export type TProps = {
   title: string;

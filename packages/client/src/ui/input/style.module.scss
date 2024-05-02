@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
-  width: 280px;
+  width: 100%;
   padding: 20px 15px 15px;
   border: 2px solid var(--shadow-light);
   border-radius: 5px;
@@ -16,7 +16,7 @@
   }
 
   &:hover .label {
-    letter-spacing: 3px;
+    letter-spacing: 2px;
   }
 }
 

@@ -1,7 +1,8 @@
-import { useEffect, useId, useState } from "react";
+import { useId } from "react";
 import cn from "classnames";
 
 import ZombieError from "../zombie_error";
+
 import style from "./style.module.scss";
 
 type TProps = {
