@@ -1,9 +1,10 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 import { routes } from "@/pages/routes";
-import { authUrl } from "@/endpoints/apiUrl";
+import { useValidate } from "@/hooks/useValidate";
 import useFetch from "@/hooks/useFetch";
+import { authUrl } from "@/endpoints/apiUrl";
 
 import Button from "@/ui/button";
 import Input from "@/ui/input";
@@ -11,36 +12,14 @@ import Input from "@/ui/input";
 import style from "./style.module.scss";
 import Layout from "@/components/layout";
 
-interface IValues {
-  [value: string]: string;
-}
-
-interface IErrors {
-  [key: string]: boolean;
-}
-
-interface IMessages {
-  [key: string]: string;
-}
-
-// Временное решение, пока не закончен ValidationHook
-import { EMPTY_VALIDATION_MESSAGE } from "@/constants";
-
-const validationMessages = {
-  emptyInput: EMPTY_VALIDATION_MESSAGE,
-};
-
-const validationRules = {
-  emptyInput: (value: string) => !!value.trim(),
-};
-
 const LoginPage: FC = () => {
   const navigate = useNavigate();
   const sendRequest = useFetch();
 
-  const [values, setValues] = useState<IValues>({ login: "", password: "" });
-  const [errors, setErrors] = useState<IErrors>({});
-  const [errorMessages, setErrorMessages] = useState<IMessages>({});
+  const { values, errors, errorMessages, handleChange } = useValidate({
+    login: "",
+    password: "",
+  });
 
   // при первой отрисовке если позволяют куки то получаем данные юзера с дальнейшим редиректом
   useEffect(() => {
@@ -51,27 +30,7 @@ const LoginPage: FC = () => {
     navigate(routes.signup);
   };
 
-  // временное решение пока не закончен ValidationHook
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-
-    setValues({ ...values, [name]: value });
-
-    // выполняем валидацию и обновляем стэйт ошибок и стэйт сообщений об ошибках
-    const newErrors: IErrors = {
-      ...errors,
-      [name]: !validationRules.emptyInput(value),
-    };
-    setErrors(newErrors);
-
-    const newErrorMessages: IMessages = {
-      ...errorMessages,
-      [name]: validationMessages.emptyInput,
-    };
-    setErrorMessages(newErrorMessages);
-  };
-
-  const onSubmitHandler = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
     // Если есть ошибка валидации или пустые значения - выход
@@ -103,7 +62,7 @@ const LoginPage: FC = () => {
 
   return (
     <Layout.Page className={style.wrapper}>
-      <form className={style.form} onSubmit={onSubmitHandler}>
+      <form className={style.form} onSubmit={handleSubmit}>
         <h1 className={style.title}>Please log in</h1>
         <div className={style["inputs-wrapper"]}>
           <Input
