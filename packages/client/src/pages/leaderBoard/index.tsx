@@ -14,14 +14,13 @@ const LeaderBoardPage: FC = () => {
       <section className={style.leaderboard}>
         <div className={cn(style.wrapper)}>
           <h2 className={cn(style.title)}>Leaderboard</h2>
-          <h2 className={cn(style.title)}>Leaderboard</h2>
           <Image
             className={style.zombieAlarm}
             src={zombieAlarm}
             alt="zombieAlarm"
           />
         </div>
-        <div className={style.tableWrapper}>
+        <div className={cn(style.tableWrapper, style.masked)}>
           <table className={style.table}>
             <thead>
               <tr>
@@ -36,7 +35,7 @@ const LeaderBoardPage: FC = () => {
               {tempData
                 .sort((a, b) => a.rank - b.rank)
                 .map(item => (
-                  <tr onClick={() => console.log("jmi")} key={item.id}>
+                  <tr key={item.id}>
                     <td className={style.boldText}>{item.rank}</td>
                     <td>{item.zombieKills}</td>
                     <td>

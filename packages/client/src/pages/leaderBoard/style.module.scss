@@ -3,6 +3,15 @@ td {
   border: 1px solid var(--border);
   padding: 10px;
   text-align: center;
+  cursor: default;
+}
+
+.toasty {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  height: 250px;
 }
 
 .leaderboard {
@@ -15,8 +24,6 @@ td {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center -16px;
-
-  justify-content: center;
   align-items: center;
 
   .zombieAlarm {
@@ -59,9 +66,52 @@ td {
   width: 80%;
 }
 
+.masked {
+  --scrollbar-width: 8px;
+  --mask-height: 32px;
+  overflow-y: auto;
+  padding-bottom: var(--mask-height);
+  padding-right: 20px;
+  --mask-image-content: linear-gradient(
+    to bottom,
+    transparent,
+    black var(--mask-height),
+    black calc(100% - var(--mask-height)),
+    transparent
+  );
+  --mask-size-content: calc(100% - var(--scrollbar-width)) 100%;
+  --mask-image-scrollbar: linear-gradient(black, black);
+  --mask-size-scrollbar: var(--scrollbar-width) 100%;
+  mask-image: var(--mask-image-content), var(--mask-image-scrollbar);
+  mask-size: var(--mask-size-content), var(--mask-size-scrollbar);
+  mask-position:
+    0 0,
+    100% 0;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+.masked {
+  scrollbar-width: thin;
+  scrollbar-color: (--background-extra) transparent;
+}
+
+.masked::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+.masked::-webkit-scrollbar-thumb {
+  background-color: currentColor;
+  border-radius: 9999px;
+}
+
+.masked::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 .table {
   width: 100%;
   background-color: var(--background-extra);
+  margin-top: 20px;
 }
 
 .boldText {
