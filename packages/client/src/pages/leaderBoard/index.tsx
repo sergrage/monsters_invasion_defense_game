@@ -14,6 +14,7 @@ const LeaderBoardPage: FC = () => {
       <section className={style.leaderboard}>
         <div className={cn(style.wrapper)}>
           <h2 className={cn(style.title)}>Leaderboard</h2>
+          <h2 className={cn(style.title)}>Leaderboard</h2>
           <Image
             className={style.zombieAlarm}
             src={zombieAlarm}
