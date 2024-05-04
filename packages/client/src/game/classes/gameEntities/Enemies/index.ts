@@ -1,7 +1,7 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import waypoints from "@/game/mocks/waypoints";
 
-import { Position, IEntityEnemySprite, IEnemyImg } from "@/game/interfaces";
+import { Position, IEnemySprite, IEnemyImg } from "@/game/interfaces";
 
 class Enemy extends Sprite {
   position: Position;
@@ -10,11 +10,11 @@ class Enemy extends Sprite {
   width: number;
   height: number;
   radius: number;
-  velocity: Position;
   waypointIndex: number;
   health: number;
   maxHealth: number; // for health bar calculating
   imageSrc: IEnemyImg;
+  speed: number;
 
   constructor({
     position,
@@ -22,8 +22,8 @@ class Enemy extends Sprite {
     imageSrc,
     frames,
     c,
-    entityParams,
-  }: IEntityEnemySprite) {
+    enemyParams,
+  }: IEnemySprite) {
     super({
       position,
       canvas,
@@ -32,20 +32,20 @@ class Enemy extends Sprite {
       c,
     });
     this.position = position;
-    this.width = entityParams.width;
-    this.height = entityParams.height;
-    this.radius = entityParams.radius;
-    this.velocity = entityParams.velocity;
-    this.waypointIndex = entityParams.waypointIndex;
-    this.health = entityParams.health;
-    this.maxHealth = entityParams.health;
+    this.width = enemyParams.width;
+    this.height = enemyParams.height;
+    this.radius = enemyParams.radius;
+    this.waypointIndex = enemyParams.waypointIndex;
+    this.health = enemyParams.health;
+    this.maxHealth = enemyParams.health;
+    this.speed = enemyParams.speed;
 
+    this.c = c;
     this.imageSrc = imageSrc;
     this.center = {
       x: this.position.x + this.width / 2,
       y: this.position.y + this.height / 2,
     };
-    this.c = c;
   }
 
   // render health bar
@@ -82,14 +82,13 @@ class Enemy extends Sprite {
     const yDistance = waypoint.y - this.center.y;
     const xDistance = waypoint.x - this.center.x;
     const angle = Math.atan2(yDistance, xDistance);
+    const velocity = { x: 0, y: 0 };
 
-    const speed = 2;
+    velocity.x = Math.cos(angle) * this.speed;
+    velocity.y = Math.sin(angle) * this.speed;
 
-    this.velocity.x = Math.cos(angle) * speed;
-    this.velocity.y = Math.sin(angle) * speed;
-
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
+    this.position.x += velocity.x;
+    this.position.y += velocity.y;
 
     this.center = {
       x: this.position.x + this.width / 2,
@@ -100,15 +99,16 @@ class Enemy extends Sprite {
 
     if (
       Math.abs(Math.round(this.center.x) - Math.round(waypoint.x)) <
-        Math.abs(this.velocity.x) &&
+        Math.abs(velocity.x) &&
       Math.abs(Math.round(this.center.y) - Math.round(waypoint.y)) <
-        Math.abs(this.velocity.y) &&
+        Math.abs(velocity.y) &&
       this.waypointIndex < waypoints.length - 1
     ) {
       this.waypointIndex++;
     }
   }
 
+  // change enemy view depending on its direction
   private setPointOfView(waypoint: Position) {
     if (
       this.waypointIndex === 0 ||

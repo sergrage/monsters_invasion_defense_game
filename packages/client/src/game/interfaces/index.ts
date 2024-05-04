@@ -21,11 +21,6 @@ export interface IContext {
   c: CanvasRenderingContext2D;
 }
 
-export interface IFrame {
-  imageSrc: string;
-  frames: Frames;
-}
-
 export interface IEnemyImg {
   right: string;
   left: string;
@@ -33,25 +28,29 @@ export interface IEnemyImg {
   front: string;
 }
 
-export interface IEntityParams {
+export interface IEnemyParams {
   width: number;
   height: number;
   waypointIndex: number;
   radius: number;
   health: number;
-  velocity: Position;
+  speed: number;
 }
 
-export interface IEntitySprite extends IContext, IFrame {
-  entityParams: IEntityParams;
+export interface IEntitySprite extends IContext {
+  imageSrc: string;
+  frames: Frames;
+  enemyParams: IEnemyParams;
 }
 
-export interface IEntityEnemySprite extends IContext {
+export interface IEnemySprite extends IContext {
   frames: Frames;
   imageSrc: IEnemyImg;
-  entityParams: IEntityParams;
+  enemyParams: IEnemyParams;
 }
 
-export interface ISprite extends IContext, IFrame {
+export interface ISprite extends IContext {
+  imageSrc: string;
+  frames: Frames;
   offset?: Offset;
 }

@@ -1,17 +1,17 @@
 import Enemy from "@/game/classes/gameEntities/Enemies";
 
 import orcImage from "@/game/img/orc.png";
-import { Frames, IContext, IEntityParams } from "@/game/interfaces";
+import { Frames, IContext, IEnemyImg, IEnemyParams } from "@/game/interfaces";
 
 class Orc extends Enemy {
-  constructor({ position = { x: 0, y: 0 }, canvas, c }: IContext) {
-    const entityParams: IEntityParams = {
+  constructor({ position, canvas, c }: IContext) {
+    const enemyParams: IEnemyParams = {
       width: 100,
       height: 100,
       waypointIndex: 0,
       radius: 50,
       health: 100,
-      velocity: { x: 0, y: 0 },
+      speed: 3,
     };
 
     const frames: Frames = {
@@ -20,7 +20,13 @@ class Orc extends Enemy {
       elapsed: 0, // no elapsed frames initially
       hold: 3, // number of frames to skip before the next animation frame
     };
-    const imageSrc: string = orcImage;
+
+    const imageSrc: IEnemyImg = {
+      right: orcImage,
+      left: orcImage,
+      back: orcImage,
+      front: orcImage,
+    };
 
     super({
       position,
@@ -28,7 +34,7 @@ class Orc extends Enemy {
       c,
       frames,
       imageSrc,
-      entityParams,
+      enemyParams,
     });
   }
 }

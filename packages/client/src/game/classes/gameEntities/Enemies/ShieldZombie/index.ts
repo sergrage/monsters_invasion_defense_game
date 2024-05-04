@@ -4,17 +4,17 @@ import rightImg from "@/assets/img/enemies/shieldZombie/right.png";
 import leftImg from "@/assets/img/enemies/shieldZombie/left.png";
 import frontImg from "@/assets/img/enemies/shieldZombie/front.png";
 import backImg from "@/assets/img/enemies/shieldZombie/back.png";
-import { Frames, IContext, IEntityParams, IEnemyImg } from "@/game/interfaces";
+import { Frames, IContext, IEnemyParams, IEnemyImg } from "@/game/interfaces";
 
 class ShieldZombie extends Enemy {
-  constructor({ position = { x: 0, y: 0 }, canvas, c }: IContext) {
-    const entityParams: IEntityParams = {
+  constructor({ position, canvas, c }: IContext) {
+    const enemyParams: IEnemyParams = {
       width: 160,
       height: 162,
       waypointIndex: 0,
       radius: 50,
       health: 150,
-      velocity: { x: 0, y: 0 },
+      speed: 2,
     };
 
     const frames: Frames = {
@@ -36,7 +36,7 @@ class ShieldZombie extends Enemy {
       c,
       frames,
       imageSrc,
-      entityParams,
+      enemyParams,
     });
   }
 }
