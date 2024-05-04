@@ -1,5 +1,5 @@
 import { Position } from "@/game/interfaces";
-import Enemy from "@/game/classes/gameEntities/Enemy";
+import Orc from "@/game/classes/gameEntities/Enemies/DemoOrc";
 
 interface Waypoint {
   x: number;
@@ -13,7 +13,7 @@ interface EnemyOptions {
 }
 
 export interface EnemyType {
-  new (options: EnemyOptions): Enemy;
+  new (options: EnemyOptions): Orc;
 }
 
 class EnemiesGenerator {
@@ -29,10 +29,11 @@ class EnemiesGenerator {
     amount: number,
     EnemyType: EnemyType,
     canvas: HTMLCanvasElement,
-  ): Enemy[] {
-    const enemies: Enemy[] = [];
+  ): Orc[] {
+    const enemies: Orc[] = [];
 
     for (let i = 1; i < amount + 1; i++) {
+      // enemy size offset
       const xOffset = i * 150;
       enemies.push(
         new EnemyType({

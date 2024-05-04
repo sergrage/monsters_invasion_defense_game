@@ -1,7 +1,7 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import Projectile from "@/game/classes/gameEntities/Projectile";
 import myImage from "@/game/img/tower.png";
-import Enemy from "../Enemy";
+import Enemy from "../Enemies";
 
 class Building extends Sprite {
   width: number;
@@ -49,10 +49,16 @@ class Building extends Sprite {
   }
 
   update(): void {
+    // update the visual representation
     this.draw();
+
+    // update if has a target
+    // or if it current frame is not the initial frame
     if (this.target || (!this.target && this.frames.current !== 0))
       super.update();
 
+    // shoot if has a target and the current frame is 6,
+    //the elapsed time is not zero, and the hold time has been reached
     if (
       this.target &&
       this.frames.current === 6 &&
@@ -70,7 +76,6 @@ class Building extends Sprite {
           x: this.center.x - 20,
           y: this.center.y - 110,
         },
-        // mb add typeguard?
         enemy: this.target!,
         c: this.c,
         canvas: this.canvas,

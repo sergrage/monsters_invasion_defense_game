@@ -1,39 +1,42 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import waypoints from "@/game/mocks/waypoints";
-import orcImage from "@/game/img/orc.png";
 
-import { Frames } from "@/game/interfaces";
-import { Position } from "@/game/interfaces";
+import { Position, IEntitySprite } from "@/game/interfaces";
 
 class Enemy extends Sprite {
   position: Position;
-  width: number = 100;
-  height: number = 100;
-  waypointIndex: number = 0;
   center: Position;
-  radius: number = 50;
-  health: number = 100;
-  velocity: Position = { x: 0, y: 0 };
   c: CanvasRenderingContext2D;
+  width: number;
+  height: number;
+  radius: number;
+  velocity: Position;
+  waypointIndex: number;
+  health: number;
 
   constructor({
-    position = { x: 0, y: 0 },
+    position,
     canvas,
+    imageSrc,
+    frames,
     c,
-  }: {
-    position?: Position;
-    canvas: HTMLCanvasElement;
-    c: CanvasRenderingContext2D;
-  }) {
-    const frames: Frames = { max: 7 };
+    entityParams,
+  }: IEntitySprite) {
     super({
       position,
       canvas,
-      imageSrc: orcImage,
+      imageSrc,
       frames,
       c,
     });
     this.position = position;
+    this.width = entityParams.width;
+    this.height = entityParams.height;
+    this.radius = entityParams.radius;
+    this.velocity = entityParams.velocity;
+    this.waypointIndex = entityParams.waypointIndex;
+    this.health = entityParams.health;
+
     this.center = {
       x: this.position.x + this.width / 2,
       y: this.position.y + this.height / 2,
@@ -66,7 +69,7 @@ class Enemy extends Sprite {
     const xDistance = waypoint.x - this.center.x;
     const angle = Math.atan2(yDistance, xDistance);
 
-    const speed = 3;
+    const speed = 2;
 
     this.velocity.x = Math.cos(angle) * speed;
     this.velocity.y = Math.sin(angle) * speed;

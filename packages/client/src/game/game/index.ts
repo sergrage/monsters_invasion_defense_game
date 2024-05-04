@@ -1,6 +1,6 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
-import myImageExplosion from "@/game/img/explosion.png";
-import Enemy from "@/game/classes/gameEntities/Enemy";
+import Enemy from "@/game/classes/gameEntities/Enemies";
+import Orc from "../classes/gameEntities/Enemies/DemoOrc";
 import Building from "@/game/classes/gameEntities/building";
 import Projectile from "@/game/classes/gameEntities/Projectile";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
@@ -9,6 +9,7 @@ import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 
+import myImageExplosion from "@/game/img/explosion.png";
 import { Position } from "@/game/interfaces";
 
 class Game {
@@ -112,7 +113,7 @@ class Game {
     if (this.canvas) {
       this.enemies = this.enemiesGenerator.generate(
         this.enemyCount,
-        Enemy,
+        Orc,
         this.canvas,
       );
     } else {
@@ -163,7 +164,7 @@ class Game {
       this.enemyCount += count;
       this.enemies = this.enemiesGenerator.generate(
         this.enemyCount + count,
-        Enemy,
+        Orc,
         this.canvas,
       );
     } else {
