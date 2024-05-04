@@ -13,6 +13,7 @@ class Enemy extends Sprite {
   velocity: Position;
   waypointIndex: number;
   health: number;
+  maxHealth: number; // for health bar calculating
 
   constructor({
     position,
@@ -36,6 +37,7 @@ class Enemy extends Sprite {
     this.velocity = entityParams.velocity;
     this.waypointIndex = entityParams.waypointIndex;
     this.health = entityParams.health;
+    this.maxHealth = entityParams.health;
 
     this.center = {
       x: this.position.x + this.width / 2,
@@ -44,20 +46,30 @@ class Enemy extends Sprite {
     this.c = c;
   }
 
+  // render health bar
   public draw(): void {
     super.draw();
 
-    // health bar
-    this.c.fillStyle = "red";
-    this.c.fillRect(this.position.x, this.position.y - 15, this.width, 10);
+    const redBarWidth = 100;
+    // calculate health bar proportionally to health loss
+    const greenBarWidth = redBarWidth * (this.health / this.maxHealth);
+    // center health bar
+    const posX = this.position.x + this.width / 2 - redBarWidth / 2;
+    const posY = this.position.y - 15;
 
+    this.c.strokeStyle = "red";
+    this.c.fillStyle = "red";
+    this.c.beginPath();
+    this.c.roundRect(posX, posY, redBarWidth, 10, [5]);
+    this.c.stroke();
+    this.c.fill();
+
+    this.c.strokeStyle = "green";
     this.c.fillStyle = "green";
-    this.c.fillRect(
-      this.position.x,
-      this.position.y - 15,
-      (this.width * this.health) / 100,
-      10,
-    );
+    this.c.beginPath();
+    this.c.roundRect(posX, posY, greenBarWidth, 10, [5]);
+    this.c.stroke();
+    this.c.fill();
   }
 
   public update(): void {
