@@ -10,6 +10,7 @@ import Forum from "@/pages/forum";
 import ForumTopic from "@/pages/forumTopic";
 import Game from "@/pages/game";
 import GameOverPage from "@/pages/gameOver";
+import Leaderboard from "@/pages/leaderBoard";
 import ErrorPage from "@/pages/error";
 import Layout from "@/components/layout";
 
@@ -24,6 +25,7 @@ const App: FC = () => {
         <Route path={routes.forum} element={<Forum />} />
         <Route path={routes.forumTopics} element={<ForumTopic />} />
         <Route path={routes.gameOver} element={<GameOverPage />} />
+        <Route path={routes.leaderboard} element={<Leaderboard />} />
         <Route path={routes.error404} element={<ErrorPage.error404 />} />
         <Route path={routes.error500} element={<ErrorPage.error500 />} />
         <Route path="*" element={<Navigate to={routes.login} replace />} />
