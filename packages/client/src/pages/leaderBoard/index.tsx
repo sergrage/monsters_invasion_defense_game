@@ -59,20 +59,15 @@ const LeaderBoardPage: FC = () => {
           <Title.H2
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={style.title}
-            extraClass={style.bloody}
-            state={showBlood}
-            title={
-              <>
-                Leaderboard
-                <div className={style.drop} />
-                <div className={style.drop} />
-                <div className={style.drop} />
-                <div className={style.drop} />
-                <div className={style.drop} />
-              </>
-            }
-          />
+            className={cn(style.title, showBlood && style.bloody)}
+          >
+            Leaderboard
+            <div className={style.drop} />
+            <div className={style.drop} />
+            <div className={style.drop} />
+            <div className={style.drop} />
+            <div className={style.drop} />
+          </Title.H2>
           <Image
             className={style.zombieAlarm}
             src={zombieAlarm}
