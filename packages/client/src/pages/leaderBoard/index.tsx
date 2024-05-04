@@ -10,6 +10,7 @@ import toasty_sound from "@/assets/sound/toasty.mp3";
 import tempData from "./temp_data";
 
 import cn from "classnames";
+import Title from "@/ui/title";
 
 const LeaderBoardPage: FC = () => {
   const [showToasty, setShowToasty] = useState(false);
@@ -55,18 +56,23 @@ const LeaderBoardPage: FC = () => {
           Разрешите звук
         </audio>
         <div className={cn(style.wrapper)}>
-          <h2
+          <Title.H2
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={cn(style.title, { [style.bloody]: showBlood })}
-          >
-            Leaderboard
-            <div className={style.drop} />
-            <div className={style.drop} />
-            <div className={style.drop} />
-            <div className={style.drop} />
-            <div className={style.drop} />
-          </h2>
+            className={style.title}
+            extraClass={style.bloody}
+            state={showBlood}
+            title={
+              <>
+                Leaderboard
+                <div className={style.drop} />
+                <div className={style.drop} />
+                <div className={style.drop} />
+                <div className={style.drop} />
+                <div className={style.drop} />
+              </>
+            }
+          />
           <Image
             className={style.zombieAlarm}
             src={zombieAlarm}
