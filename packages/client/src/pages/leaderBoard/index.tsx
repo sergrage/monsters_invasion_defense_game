@@ -1,19 +1,75 @@
-import { FC } from "react";
+import { FC, useRef, useState } from "react";
 
 import style from "./style.module.scss";
 import Image from "@/ui/image";
 import Layout from "@/components/layout";
 import zombieAlarm from "@/assets/img/zombieAlarm.png";
+import toasty from "@/assets/img/leaderborad/toasty.png";
+import toasty_sound from "@/assets/sound/toasty.mp3";
+
 import tempData from "./temp_data";
 
 import cn from "classnames";
 
 const LeaderBoardPage: FC = () => {
+  const [showToasty, setShowToasty] = useState(false);
+  const [showBlood, setShowBlood] = useState(false);
+
+  const bloodRef = useRef<HTMLHeadingElement>(null);
+
+  const handleClick = () => {
+    setShowToasty(true);
+    handleSound();
+    setTimeout(() => {
+      setShowToasty(false);
+    }, 1000);
+  };
+
+  const handleSound = () => {
+    const toastySound = document.getElementById(
+      "toastySound",
+    ) as HTMLAudioElement;
+    toastySound.play();
+  };
+
+  const handleMouseEnter = () => {
+    setShowBlood(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowBlood(false);
+  };
+
   return (
     <Layout.Page>
       <section className={style.leaderboard}>
+        {showToasty && (
+          <Image
+            className={cn(style.toasty, {
+              [style.show]: showToasty,
+            })}
+            src={toasty}
+            alt="Dan Forden"
+          />
+        )}
+        <audio id="toastySound">
+          <source src={toasty_sound} type="audio/mpeg" />
+          Разрешите звук
+        </audio>
         <div className={cn(style.wrapper)}>
-          <h2 className={cn(style.title)}>Leaderboard</h2>
+          <h2
+            ref={bloodRef}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className={cn(style.title, { [style.bloody]: showBlood })}
+          >
+            Leaderboard
+            <div className={style.drop} />
+            <div className={style.drop} />
+            <div className={style.drop} />
+            <div className={style.drop} />
+            <div className={style.drop} />
+          </h2>
           <Image
             className={style.zombieAlarm}
             src={zombieAlarm}
@@ -34,15 +90,24 @@ const LeaderBoardPage: FC = () => {
             <tbody>
               {tempData
                 .sort((a, b) => a.rank - b.rank)
-                .map(item => (
+                .map((item, index) => (
                   <tr key={item.id}>
-                    <td className={style.boldText}>{item.rank}</td>
+                    {index === 0 ? (
+                      <td
+                        className={cn(style.boldText, style.twinkling)}
+                        onClick={handleClick}
+                      >
+                        {item.rank}
+                      </td>
+                    ) : (
+                      <td className={style.boldText}>{item.rank}</td>
+                    )}
                     <td>{item.zombieKills}</td>
                     <td>
                       <div className={style.user}>
-                        <img
-                          src={item.user.avatar}
+                        <Image
                           className={style.avatar}
+                          src={item.user.avatar}
                           alt="RRR! AVATAR!"
                         />
                         <p>{item.user.login}</p>
