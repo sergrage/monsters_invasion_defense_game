@@ -1,6 +1,5 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import Enemy from "@/game/classes/gameEntities/Enemies";
-import Orc from "../classes/gameEntities/Enemies/DemoOrc";
 import Building from "@/game/classes/gameEntities/building";
 import Projectile from "@/game/classes/gameEntities/Projectile";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
@@ -8,6 +7,7 @@ import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
+import ShieldZombie from "../classes/gameEntities/Enemies/ShieldZombie";
 
 import myImageExplosion from "@/game/img/explosion.png";
 import { Position } from "@/game/interfaces";
@@ -113,7 +113,7 @@ class Game {
     if (this.canvas) {
       this.enemies = this.enemiesGenerator.generate(
         this.enemyCount,
-        Orc,
+        ShieldZombie,
         this.canvas,
       );
     } else {
@@ -164,7 +164,7 @@ class Game {
       this.enemyCount += count;
       this.enemies = this.enemiesGenerator.generate(
         this.enemyCount + count,
-        Orc,
+        ShieldZombie,
         this.canvas,
       );
     } else {
@@ -177,7 +177,7 @@ class Game {
     const animationId = requestAnimationFrame(this.animate);
     if (this.ctx) {
       this.ctx.drawImage(this.image!, 0, 0);
-      console.log("animate!");
+      // console.log("animate!");
       this.handleEnemyLogic(animationId);
       this.handleTilesLogic();
       this.handleBuildingsLogic();
