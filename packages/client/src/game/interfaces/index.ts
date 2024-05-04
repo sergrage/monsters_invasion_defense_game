@@ -54,3 +54,10 @@ export interface ISprite extends IContext {
   frames: Frames;
   offset?: Offset;
 }
+
+export interface ILevel {
+  coins: number;
+  hearts: number;
+  numWaves: number;
+  waves: { numEnemies: { [key: string]: number } }[];
+}

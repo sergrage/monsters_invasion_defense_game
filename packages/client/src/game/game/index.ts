@@ -10,7 +10,7 @@ import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 import ShieldZombie from "../classes/gameEntities/Enemies/ShieldZombie";
 
 import myImageExplosion from "@/game/img/explosion.png";
-import { Position } from "@/game/interfaces";
+import { ILevel, Position } from "@/game/interfaces";
 
 class Game {
   coins: number;
@@ -29,6 +29,7 @@ class Game {
   mapGenerator: MapGenerator;
   enemiesGenerator: EnemiesGenerator;
   tilesGenerator: TilesGenerator;
+  level: ILevel;
 
   constructor(
     coins: number,
@@ -37,6 +38,7 @@ class Game {
     enemiesGenerator: EnemiesGenerator,
     tilesGenerator: TilesGenerator,
     eventSubject: EventSubject,
+    level: ILevel,
   ) {
     this.coins = coins;
     this.hearts = hearts;
@@ -52,6 +54,7 @@ class Game {
     this.activeTile = null;
     this.explosions = [];
     this.eventSubject = eventSubject;
+    this.level = level;
 
     // Injected dependencies
     this.mapGenerator = mapGenerator;

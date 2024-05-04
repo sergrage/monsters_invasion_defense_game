@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 // import Layout from "@/components/Layout";
 import Game from "@/game/game";
 import Coins from "@/components/game/coins/coins";
@@ -8,15 +8,18 @@ import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
+import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
+
 import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
-import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
+import level from "@/game/mocks/level/index";
+
 import myImage from "../../game/img/gameMap.png";
 import style from "./style.module.scss";
 
 const GamePage: FC = () => {
-  const [coins, setCoins] = useState<number>(100);
-  const [hearts, setHearts] = useState<number>(3);
+  const [coins, setCoins] = useState<number>(level.coins);
+  const [hearts, setHearts] = useState<number>(level.hearts);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const canvasRef = useRef(null);
 
@@ -48,6 +51,7 @@ const GamePage: FC = () => {
       enemiesGenerator,
       tilesGenerator,
       eventSubject,
+      level,
     );
 
     const coinsChangedObserver = new EventObserver(handleCoinsChangedEvent);
