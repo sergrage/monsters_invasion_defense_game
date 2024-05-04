@@ -44,9 +44,7 @@ const LeaderBoardPage: FC = () => {
       <section className={style.leaderboard}>
         {showToasty && (
           <Image
-            className={cn(style.toasty, {
-              [style.show]: showToasty,
-            })}
+            className={cn(style.toasty, showToasty && style.show)}
             src={toasty}
             alt="Dan Forden"
           />
