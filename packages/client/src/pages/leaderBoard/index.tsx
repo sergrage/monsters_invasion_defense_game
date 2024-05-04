@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
 
 import style from "./style.module.scss";
 import Image from "@/ui/image";
@@ -14,8 +14,6 @@ import cn from "classnames";
 const LeaderBoardPage: FC = () => {
   const [showToasty, setShowToasty] = useState(false);
   const [showBlood, setShowBlood] = useState(false);
-
-  const bloodRef = useRef<HTMLHeadingElement>(null);
 
   const handleClick = () => {
     setShowToasty(true);
@@ -58,7 +56,6 @@ const LeaderBoardPage: FC = () => {
         </audio>
         <div className={cn(style.wrapper)}>
           <h2
-            ref={bloodRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             className={cn(style.title, { [style.bloody]: showBlood })}
