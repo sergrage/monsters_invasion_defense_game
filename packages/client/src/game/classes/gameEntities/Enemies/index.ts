@@ -1,7 +1,7 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import waypoints from "@/game/mocks/waypoints";
 
-import { Position, IEntitySprite } from "@/game/interfaces";
+import { Position, IEntityEnemySprite, IEnemyImg } from "@/game/interfaces";
 
 class Enemy extends Sprite {
   position: Position;
@@ -14,6 +14,7 @@ class Enemy extends Sprite {
   waypointIndex: number;
   health: number;
   maxHealth: number; // for health bar calculating
+  imageSrc: IEnemyImg;
 
   constructor({
     position,
@@ -22,11 +23,11 @@ class Enemy extends Sprite {
     frames,
     c,
     entityParams,
-  }: IEntitySprite) {
+  }: IEntityEnemySprite) {
     super({
       position,
       canvas,
-      imageSrc,
+      imageSrc: imageSrc.right,
       frames,
       c,
     });
@@ -39,6 +40,7 @@ class Enemy extends Sprite {
     this.health = entityParams.health;
     this.maxHealth = entityParams.health;
 
+    this.imageSrc = imageSrc;
     this.center = {
       x: this.position.x + this.width / 2,
       y: this.position.y + this.height / 2,
@@ -94,6 +96,8 @@ class Enemy extends Sprite {
       y: this.position.y + this.height / 2,
     };
 
+    this.setPointOfView(waypoint);
+
     if (
       Math.abs(Math.round(this.center.x) - Math.round(waypoint.x)) <
         Math.abs(this.velocity.x) &&
@@ -103,6 +107,28 @@ class Enemy extends Sprite {
     ) {
       this.waypointIndex++;
     }
+  }
+
+  private setPointOfView(waypoint: Position) {
+    if (
+      this.waypointIndex === 0 ||
+      waypoint.x > waypoints[this.waypointIndex - 1].x
+    ) {
+      this.changeImageView(this.imageSrc.right);
+      return;
+    }
+
+    if (waypoint.x < waypoints[this.waypointIndex - 1].x) {
+      this.changeImageView(this.imageSrc.left);
+      return;
+    }
+
+    if (waypoint.y > waypoints[this.waypointIndex - 1].y) {
+      this.changeImageView(this.imageSrc.front);
+      return;
+    }
+
+    this.changeImageView(this.imageSrc.back);
   }
 }
 

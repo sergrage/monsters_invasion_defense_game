@@ -24,7 +24,13 @@ export interface IContext {
 export interface IFrame {
   imageSrc: string;
   frames: Frames;
-  c: CanvasRenderingContext2D;
+}
+
+export interface IEnemyImg {
+  right: string;
+  left: string;
+  back: string;
+  front: string;
 }
 
 export interface IEntityParams {
@@ -37,6 +43,12 @@ export interface IEntityParams {
 }
 
 export interface IEntitySprite extends IContext, IFrame {
+  entityParams: IEntityParams;
+}
+
+export interface IEntityEnemySprite extends IContext {
+  frames: Frames;
+  imageSrc: IEnemyImg;
   entityParams: IEntityParams;
 }
 

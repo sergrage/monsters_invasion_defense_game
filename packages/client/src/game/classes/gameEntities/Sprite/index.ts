@@ -32,7 +32,7 @@ class Sprite {
     this.c = c;
   }
 
-  draw(): void {
+  public draw(): void {
     // calculate the width of a single frame
     const cropWidth = this.image.width / this.frames.max;
 
@@ -60,7 +60,7 @@ class Sprite {
   }
 
   // update the animation frame
-  update(): void {
+  public update(): void {
     // возможно прописать условие на случай отсутсвия свойств или изменит интерфейс...
     this.frames.elapsed!++;
 
@@ -73,6 +73,10 @@ class Sprite {
         this.frames.current = 0;
       }
     }
+  }
+
+  protected changeImageView(newSrc: string): void {
+    this.image.src = newSrc;
   }
 }
 
