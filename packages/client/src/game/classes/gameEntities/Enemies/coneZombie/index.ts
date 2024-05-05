@@ -1,4 +1,4 @@
-import Enemy from "@/game/classes/gameEntities/Enemies";
+import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 
 import rightImg from "@/assets/img/enemies/coneZombie/right.png";
 import leftImg from "@/assets/img/enemies/coneZombie/left.png";

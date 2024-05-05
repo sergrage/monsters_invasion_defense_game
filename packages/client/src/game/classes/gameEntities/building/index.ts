@@ -1,7 +1,7 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import Projectile from "@/game/classes/gameEntities/Projectile";
 import myImage from "@/game/img/tower.png";
-import Enemy from "../Enemies";
+import Enemy from "../Enemies/Enemy";
 
 class Building extends Sprite {
   width: number;

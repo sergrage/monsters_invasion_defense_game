@@ -1,6 +1,6 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import myImage from "@/game/img/projectile.png";
-import Enemy from "@/game/classes/gameEntities/Enemies";
+import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 
 import { Position } from "@/game/interfaces";
 

@@ -1,4 +1,4 @@
-import Enemy from "@/game/classes/gameEntities/Enemies";
+import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 
 import orcImage from "@/game/img/orc.png";
 import { Frames, IContext, IEnemyImg, IEnemyParams } from "@/game/interfaces";
