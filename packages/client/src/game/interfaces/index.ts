@@ -58,6 +58,5 @@ export interface ISprite extends IContext {
 export interface ILevel {
   coins: number;
   hearts: number;
-  numWaves: number;
-  waves: { numEnemies: { [key: string]: number } }[];
+  waves: { [key: string]: number }[];
 }
