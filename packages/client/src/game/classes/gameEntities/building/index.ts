@@ -82,6 +82,10 @@ class Building extends Sprite {
       }),
     );
   }
+
+  public clearProjectiles(): void {
+    this.projectiles = [];
+  }
 }
 
 export default Building;

@@ -113,12 +113,15 @@ class Game {
     this.placementTiles = this.tilesGenerator.generatePlacementTiles();
   }
 
+  // generate next wave
   spawnEnemies() {
     if (this.canvas) {
       this.enemies = this.enemiesGenerator.generate(
         this.level.waves[0],
         this.canvas,
       );
+
+      // remove generated wave
       this.level.waves.splice(0, 1);
     } else {
       console.error("Canvas is null. Cannot spawn more enemies.");
@@ -133,12 +136,28 @@ class Game {
   }
 
   handleEnemyLogic(animationId: number) {
+    // id for stopping the animation
+    let id = animationId;
+
+    // fire next wave
     if (this.enemies.length === 0 && this.level.waves.length > 0) {
-      // add new wave approaching alert message
-      console.log("new wave!");
-      this.spawnEnemies();
+      // need to add new wave approaching alert message
+      console.log("new wave is approaching");
+      // stop animation before new wave starts
+      cancelAnimationFrame(animationId);
+      this.buildings.forEach(building => building.clearProjectiles());
+
+      // pause the game before new wave starts
+      setTimeout(() => {
+        console.log("new wave!");
+
+        // resume the animation
+        id = requestAnimationFrame(this.animate);
+        this.spawnEnemies();
+      }, 3000);
     }
 
+    // no enemies & no waves left -> level completed logic
     if (this.enemies.length === 0 && this.level.waves.length === 0) {
       console.log("you won!");
       return;
@@ -147,11 +166,13 @@ class Game {
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const enemy = this.enemies[i];
       enemy.update();
+
       if (this.canvas && enemy.position.x > this.canvas.width) {
         this.setHearts(-1);
         this.enemies.splice(i, 1);
+
         if (this.hearts <= 0) {
-          cancelAnimationFrame(animationId);
+          cancelAnimationFrame(id);
           this.setGameOver();
         }
       }
