@@ -137,24 +137,24 @@ class Game {
 
   handleEnemyLogic(animationId: number) {
     // id for stopping the animation
-    let id = animationId;
+    // let id = animationId;
 
     // fire next wave
     if (this.enemies.length === 0 && this.level.waves.length > 0) {
       // need to add new wave approaching alert message
       console.log("new wave is approaching");
       // stop animation before new wave starts
-      cancelAnimationFrame(animationId);
-      this.buildings.forEach(building => building.clearProjectiles());
+      // cancelAnimationFrame(animationId);
+      // this.buildings.forEach(building => building.clearProjectiles());
 
       // pause the game before new wave starts
-      setTimeout(() => {
-        console.log("new wave!");
+      // setTimeout(() => {
+      console.log("new wave!");
 
-        // resume the animation
-        id = requestAnimationFrame(this.animate);
-        this.spawnEnemies();
-      }, 3000);
+      // resume the animation
+      // id = requestAnimationFrame(this.animate);
+      this.spawnEnemies();
+      // }, 3000);
     }
 
     // no enemies & no waves left -> level completed logic
@@ -172,7 +172,7 @@ class Game {
         this.enemies.splice(i, 1);
 
         if (this.hearts <= 0) {
-          cancelAnimationFrame(id);
+          cancelAnimationFrame(animationId);
           this.setGameOver();
         }
       }
