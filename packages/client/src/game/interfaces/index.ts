@@ -1,3 +1,5 @@
+import Enemy from "../classes/gameEntities/Enemies/Enemy";
+
 export interface Position {
   x: number;
   y: number;
@@ -21,11 +23,23 @@ export interface IContext {
   c: CanvasRenderingContext2D;
 }
 
+export interface IProjectileContext extends IContext {
+  enemy: Enemy;
+}
+
 export interface IEnemyImg {
   right: string;
   left: string;
   back: string;
   front: string;
+}
+
+export interface ITowerImg {
+  1: string;
+  2: string;
+  3: string;
+  4: string;
+  5: string;
 }
 
 export interface IEnemyParams {
@@ -37,16 +51,30 @@ export interface IEnemyParams {
   speed: number;
 }
 
-export interface IEntitySprite extends IContext {
-  imageSrc: string;
-  frames: Frames;
-  enemyParams: IEnemyParams;
+export interface ITowerParams {
+  width: number;
+  height: number;
+  radius: number;
+  speed: number;
+  price: number;
+  upgradePrice: number;
 }
 
-export interface IEnemySprite extends IContext {
+export interface IEnemyConstructor extends IContext {
   frames: Frames;
   imageSrc: IEnemyImg;
   enemyParams: IEnemyParams;
+}
+
+export interface ITowerConstructor extends IContext {
+  frames: Frames;
+  imageSrc: ITowerImg;
+  offset: Offset;
+  towerParams: ITowerParams;
+}
+
+export interface IProjectileConstructor extends IProjectileContext {
+  imageSrc: string;
 }
 
 export interface ISprite extends IContext {

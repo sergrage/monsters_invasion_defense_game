@@ -1,7 +1,7 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import waypoints from "@/game/mocks/waypoints";
 
-import { Position, IEnemySprite, IEnemyImg } from "@/game/interfaces";
+import { Position, IEnemyConstructor, IEnemyImg } from "@/game/interfaces";
 
 class Enemy extends Sprite {
   position: Position;
@@ -23,7 +23,7 @@ class Enemy extends Sprite {
     frames,
     c,
     enemyParams,
-  }: IEnemySprite) {
+  }: IEnemyConstructor) {
     super({
       position,
       canvas,
