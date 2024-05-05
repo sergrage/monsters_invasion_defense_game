@@ -1,5 +1,5 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
-import Enemy from "@/game/classes/gameEntities/Enemies";
+import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 import Building from "@/game/classes/gameEntities/building";
 import Projectile from "@/game/classes/gameEntities/Projectile";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
@@ -7,7 +7,6 @@ import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
-import ShieldZombie from "../classes/gameEntities/Enemies/ShieldZombie";
 
 import myImageExplosion from "@/game/img/explosion.png";
 import { ILevel, Position } from "@/game/interfaces";
@@ -15,7 +14,6 @@ import { ILevel, Position } from "@/game/interfaces";
 class Game {
   coins: number;
   hearts: number;
-  enemyCount: number;
   enemies: Enemy[];
   buildings: Building[];
   canvas: HTMLCanvasElement | null;
@@ -42,7 +40,6 @@ class Game {
   ) {
     this.coins = coins;
     this.hearts = hearts;
-    this.enemyCount = 3;
     this.enemies = [];
     this.buildings = [];
     this.canvas = null;
@@ -94,8 +91,8 @@ class Game {
 
   initialize() {
     this.initializeMap();
-    this.initializeEnemies();
     this.initializeTiles();
+    this.spawnEnemies();
   }
 
   initializeMap() {
@@ -112,21 +109,20 @@ class Game {
     window.addEventListener("mousemove", this.handleMouseMove.bind(this));
   }
 
-  initializeEnemies() {
-    if (this.canvas) {
-      this.enemies = this.enemiesGenerator.generate(
-        this.enemyCount,
-        ShieldZombie,
-        this.canvas,
-      );
-    } else {
-      // Handle the case where canvas is null
-      console.error("Canvas is null. Cannot initialize enemies.");
-    }
-  }
-
   initializeTiles() {
     this.placementTiles = this.tilesGenerator.generatePlacementTiles();
+  }
+
+  spawnEnemies() {
+    if (this.canvas) {
+      this.enemies = this.enemiesGenerator.generate(
+        this.level.waves[0],
+        this.canvas,
+      );
+      this.level.waves.splice(0, 1);
+    } else {
+      console.error("Canvas is null. Cannot spawn more enemies.");
+    }
   }
 
   initGame() {
@@ -137,8 +133,15 @@ class Game {
   }
 
   handleEnemyLogic(animationId: number) {
-    if (this.enemies.length === 0) {
-      this.handleSpawnMoreEnemies(2);
+    if (this.enemies.length === 0 && this.level.waves.length > 0) {
+      // add new wave approaching alert message
+      console.log("new wave!");
+      this.spawnEnemies();
+    }
+
+    if (this.enemies.length === 0 && this.level.waves.length === 0) {
+      console.log("you won!");
+      return;
     }
 
     for (let i = this.enemies.length - 1; i >= 0; i--) {
@@ -160,20 +163,6 @@ class Game {
       this.placementTiles.forEach(tile => {
         tile.update(this.mouse);
       });
-  }
-
-  handleSpawnMoreEnemies(count: number) {
-    if (this.canvas) {
-      this.enemyCount += count;
-      this.enemies = this.enemiesGenerator.generate(
-        this.enemyCount + count,
-        ShieldZombie,
-        this.canvas,
-      );
-    } else {
-      // Handle the case where canvas is null
-      console.error("Canvas is null. Cannot spawn more enemies.");
-    }
   }
 
   animate() {
