@@ -1,47 +1,44 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
-import Projectile from "@/game/classes/gameEntities/Projectile";
-import myImage from "@/game/img/tower.png";
-import Enemy from "../Enemies/Enemy";
+import Projectile from "@/game/classes/gameEntities/Projectiles/Projectile";
+import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
+
+import { ITowerConstructor } from "@/game/interfaces";
+import Lighter from "../../Projectiles/Lighter";
 
 class Building extends Sprite {
   width: number;
   height: number;
   center: { x: number; y: number };
-  projectiles: Projectile[];
   radius: number;
+  projectiles: Projectile[];
   target: Enemy | null = null;
 
   constructor({
-    position = { x: 0, y: 0 },
+    position,
     canvas,
     c,
-  }: {
-    position?: { x: number; y: number };
-    canvas: HTMLCanvasElement;
-    c: CanvasRenderingContext2D;
-  }) {
+    offset,
+    imageSrc,
+    frames,
+    towerParams,
+  }: ITowerConstructor) {
     super({
       position,
       canvas,
-      imageSrc: myImage,
-      frames: {
-        max: 19,
-      },
-      offset: {
-        x: 0,
-        y: -80,
-      },
+      imageSrc: imageSrc[1],
+      frames,
+      offset,
       c: c,
     });
 
-    this.width = 64 * 2;
-    this.height = 64;
+    this.width = towerParams.width;
+    this.height = towerParams.height;
     this.center = {
       x: this.position.x + this.width / 2,
       y: this.position.y + this.height / 2,
     };
+    this.radius = towerParams.radius;
     this.projectiles = [];
-    this.radius = 250;
   }
 
   draw(): void {
@@ -71,10 +68,10 @@ class Building extends Sprite {
 
   shoot(): void {
     this.projectiles.push(
-      new Projectile({
+      new Lighter({
         position: {
-          x: this.center.x - 20,
-          y: this.center.y - 110,
+          x: this.center.x - 23,
+          y: this.center.y - 100,
         },
         enemy: this.target!,
         c: this.c,

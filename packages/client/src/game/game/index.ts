@@ -1,12 +1,13 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
-import Building from "@/game/classes/gameEntities/building";
-import Projectile from "@/game/classes/gameEntities/Projectile";
+import Building from "@/game/classes/gameEntities/Buildings/Building";
+import Projectile from "@/game/classes/gameEntities/Projectiles/Projectile";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
+import ElectroTower from "@/game/classes/gameEntities/Buildings/ElectroTower";
 
 import myImageExplosion from "@/game/img/explosion.png";
 import { ILevel, Position } from "@/game/interfaces";
@@ -160,6 +161,7 @@ class Game {
     // no enemies & no waves left -> level completed logic
     if (this.enemies.length === 0 && this.level.waves.length === 0) {
       console.log("you won!");
+      cancelAnimationFrame(animationId);
       return;
     }
 
@@ -290,10 +292,10 @@ class Game {
       // this.ctx && this.canvas type guard + добавил canvas т.к. его ожидает building
       if (this.ctx && this.canvas) {
         this.buildings.push(
-          new Building({
+          new ElectroTower({
             position: {
-              x: this.activeTile.position.x,
-              y: this.activeTile.position.y,
+              x: this.activeTile.position.x - 80,
+              y: this.activeTile.position.y - 220,
             },
             canvas: this.canvas,
             c: this.ctx,
