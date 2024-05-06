@@ -15,6 +15,7 @@ class ConeZombie extends Enemy {
       radius: 50,
       health: 100,
       speed: 3,
+      reward: 50,
     };
 
     const frames: Frames = {

@@ -15,6 +15,7 @@ class Enemy extends Sprite {
   maxHealth: number; // for health bar calculating
   imageSrc: IEnemyImg;
   speed: number;
+  reward: number;
 
   constructor({
     position,
@@ -39,6 +40,7 @@ class Enemy extends Sprite {
     this.health = enemyParams.health;
     this.maxHealth = enemyParams.health;
     this.speed = enemyParams.speed;
+    this.reward = enemyParams.reward;
 
     this.c = c;
     this.imageSrc = imageSrc;

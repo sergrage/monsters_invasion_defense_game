@@ -217,10 +217,19 @@ class Game {
   }
 
   findValidEnemies(building: Building) {
-    return this.enemies.filter(enemy => {
+    const validEnemies = this.enemies.filter(enemy => {
       const distance = this.calculateDistance(enemy.center, building.center);
       return distance < enemy.radius + building.radius;
     });
+
+    // // sort by distance - mb don't need
+    // validEnemies.sort(
+    //   (a, b) =>
+    //     this.calculateDistance(a.center, building.center) -
+    //     this.calculateDistance(b.center, building.center),
+    // );
+
+    return validEnemies;
   }
 
   handleBuildingProjectiles(building: Building) {
@@ -255,8 +264,10 @@ class Game {
     if (enemy.health <= 0) {
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
       if (enemyIndex > -1) {
-        this.enemies.splice(enemyIndex, 1);
-        this.setCoins(25);
+        const deadEnemy = this.enemies.splice(enemyIndex, 1);
+        const reward = deadEnemy[0].reward;
+
+        this.setCoins(reward);
       }
     }
   }
@@ -294,8 +305,8 @@ class Game {
         this.buildings.push(
           new ElectroTower({
             position: {
-              x: this.activeTile.position.x - 80,
-              y: this.activeTile.position.y - 220,
+              x: this.activeTile.position.x,
+              y: this.activeTile.position.y,
             },
             canvas: this.canvas,
             c: this.ctx,

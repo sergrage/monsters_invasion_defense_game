@@ -49,6 +49,7 @@ export interface IEnemyParams {
   radius: number;
   health: number;
   speed: number;
+  reward: number;
 }
 
 export interface ITowerParams {

@@ -15,6 +15,7 @@ class ShieldZombie extends Enemy {
       radius: 50,
       health: 150,
       speed: 2,
+      reward: 75,
     };
 
     const frames: Frames = {
