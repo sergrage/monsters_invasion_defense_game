@@ -21,7 +21,6 @@
   background-position: center;
   align-items: center;
   justify-content: center;
-
   margin-top: 50px;
 }
 
@@ -34,6 +33,7 @@
   font-weight: bold;
   font-size: 90px;
   color: #f7941d;
+  cursor: default;
 }
 
 .subtitle {
@@ -42,6 +42,7 @@
   font-weight: bold;
   font-size: 40px;
   color: var(--gray);
+  cursor: default;
 }
 
 .wrapper {
