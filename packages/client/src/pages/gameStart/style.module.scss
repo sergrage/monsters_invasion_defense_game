@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+  background-image: url(./../../assets/img/hero-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center -16px;
+}
+.titleWrapp {
+  width: 100%;
+  height: 200px;
+  background-image: url(/src/assets/img/titleBox.png);
+  background-size: 800px;
+  background-repeat: no-repeat;
+  background-attachment: local;
+  background-position: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.contentWrapp {
+  height: 400px;
+}
+
+.title {
+  font-family: "Arco", sans-serif;
+  -webkit-text-stroke: 2px black;
+  font-weight: bold;
+  font-size: 90px;
+  color: #f7941d;
+  user-select: none;
+  cursor: default;
+}
+
+.subtitle {
+  display: block;
+  font-family: "Arco", sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  color: var(--gray);
+  user-select: none;
+  cursor: default;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  border: 1px solid var(--gray);
+  border-radius: 10px;
+  box-shadow: var(--modalShadow);
+  text-align: center;
+}
+
+.counter {
+  font-family: "Squada One", sans-serif;
+  font-weight: bold;
+  font-size: 150px;
+  color: #e6e7e8;
+}
