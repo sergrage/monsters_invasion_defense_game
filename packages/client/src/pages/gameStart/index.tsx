@@ -7,14 +7,14 @@ import GameMenu from "@/components/gameMenu";
 
 import { routes } from "@/pages/routes";
 
-let interval: NodeJS.Timer | undefined;
-
 const GameOverPage: FC = () => {
   const gameMenu = [
     { title: "Start Game", route: routes.game },
     { title: "Leader Board", route: routes.forum },
     { title: "Game Forum", route: routes.forum },
   ];
+
+  let interval: NodeJS.Timer | undefined;
 
   const navigate = useNavigate();
 

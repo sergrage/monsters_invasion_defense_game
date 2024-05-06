@@ -29,19 +29,22 @@
 }
 
 .title {
-  font-family: "Squada One", sans-serif;
+  font-family: "Arco", sans-serif;
+  -webkit-text-stroke: 2px black;
   font-weight: bold;
   font-size: 90px;
   color: #f7941d;
+  user-select: none;
   cursor: default;
 }
 
 .subtitle {
   display: block;
-  font-family: "Squada One", sans-serif;
+  font-family: "Arco", sans-serif;
   font-weight: bold;
   font-size: 40px;
   color: var(--gray);
+  user-select: none;
   cursor: default;
 }
 
