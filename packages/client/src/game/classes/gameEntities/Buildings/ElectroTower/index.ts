@@ -1,11 +1,12 @@
 import Building from "@/game/classes/gameEntities/Buildings/Building";
+import Lighter from "../../Projectiles/Lighter";
 
 import img1 from "@/assets/img/towers/electroTower/1.png";
-import { Frames, IContext, ITowerImg, ITowerParams } from "@/game/interfaces";
+import { IContext } from "@/game/interfaces";
 
 class ElectroTower extends Building {
   constructor({ position, canvas, c }: IContext) {
-    const towerParams: ITowerParams = {
+    const towerParams = {
       width: 236,
       height: 335,
       radius: 250,
@@ -14,7 +15,12 @@ class ElectroTower extends Building {
       upgradePrice: 25,
     };
 
-    const towerImgs: ITowerImg = {
+    const towerPosition = {
+      x: position.x,
+      y: position.y,
+    };
+
+    const towerImgs = {
       1: img1,
       2: img1,
       3: img1,
@@ -22,7 +28,7 @@ class ElectroTower extends Building {
       5: img1,
     };
 
-    const frames: Frames = {
+    const frames = {
       max: 10, // total number of animation frames
       current: 0, // starting at the first frame
       elapsed: 0, // no elapsed frames initially
@@ -30,19 +36,33 @@ class ElectroTower extends Building {
     };
 
     const offset = {
-      x: 0,
-      y: 0,
+      x: -80,
+      y: -220,
     };
 
     super({
-      position,
+      position: towerPosition,
       canvas,
-      offset: offset,
       c: c,
       imageSrc: towerImgs,
+      offset: offset,
       frames: frames,
       towerParams,
     });
+  }
+
+  shoot(): void {
+    this.projectiles.push(
+      new Lighter({
+        position: {
+          x: this.center.x - 23,
+          y: this.center.y - 100,
+        },
+        enemy: this.target!,
+        c: this.c,
+        canvas: this.canvas,
+      }),
+    );
   }
 }
 
