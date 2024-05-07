@@ -6,6 +6,7 @@ class Projectile extends Sprite {
   velocity;
   enemy;
   radius;
+  angle: number | null = null;
 
   constructor({
     position,
@@ -39,17 +40,31 @@ class Projectile extends Sprite {
     this.draw();
 
     // calculates the angle between the projectile and the enemy
-    const angle = Math.atan2(
+    // Formula: tan(θ) = Opposite / Adjacent
+    // where θ is the angle between the projectile and the enemy
+    // Opposite is the vertical distance between the projectile and the enemy
+    // Adjacent is the horizontal distance between the projectile and the enemy
+    this.angle = Math.atan2(
+      // Opposite
       this.enemy.center.y - this.position.y,
+      // Adjacent
       this.enemy.center.x - this.position.x,
     );
 
     // projectile's velocity
     const power = 5;
 
-    this.velocity.x = Math.cos(angle) * power;
-    this.velocity.y = Math.sin(angle) * power;
+    // The horizontal component of the projectile's velocity
+    // Formula: xVelocity = cos(angle) * power
+    this.velocity.x = Math.cos(this.angle) * power;
 
+    // The vertical component of the projectile's velocity
+    // Formula: yVelocity = sin(angle) * power
+    this.velocity.y = Math.sin(this.angle) * power;
+
+    // Updates the projectile's position
+    // Formula: xPosition = xPosition + xVelocity
+    //          yPosition = yPosition + yVelocity
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
   }
