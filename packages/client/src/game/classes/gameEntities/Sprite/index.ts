@@ -1,4 +1,4 @@
-import { ISprite } from "@/game/interfaces";
+import { ISprite, ITowerExtraParams } from "@/game/interfaces";
 
 class Sprite {
   position; // stores the x and y coordinates of the sprite on the canvas
@@ -7,14 +7,16 @@ class Sprite {
   frames; // information about the animation frames
   offset; // offset for the sprite's position
   c; // canvas rendering context used for drawing
+  angle: number | null = null;
+  extraImg: HTMLImageElement | null = null;
+  towerExtraParams: ITowerExtraParams | null = null;
 
   constructor({
     position,
     canvas,
     imageSrc,
-    // set in each entity
+    towerExtraParams,
     frames,
-    // set in each entity
     offset = { x: 0, y: 0 },
     c,
   }: ISprite) {
@@ -30,6 +32,12 @@ class Sprite {
     };
     this.offset = offset;
     this.c = c;
+
+    if (towerExtraParams) {
+      this.extraImg = new Image();
+      this.extraImg.src = towerExtraParams.towerImg[1];
+      this.towerExtraParams = towerExtraParams;
+    }
   }
 
   public draw(): void {
@@ -46,17 +54,40 @@ class Sprite {
       width: cropWidth, // width of a single frame
       height: this.image.height, // full height of the image
     };
-    this.c.drawImage(
-      this.image,
-      crop.position.x, // source x-coordinate within the image
-      crop.position.y, // source y-coordinate within the image
-      crop.width,
-      crop.height,
-      this.position.x + this.offset.x, // destination x-coordinate on the canvas with offset
-      this.position.y + this.offset.y, // destination y-coordinate on the canvas with offset
-      crop.width,
-      crop.height,
-    );
+
+    // if an angle is specified, rotate the sprite around its center
+    // before drawing it on the canvas
+    if (this.angle) {
+      // save the current canvas state so that we can restore it after
+      // to ensure that rotation do not affect other drawings on the canvas
+      this.c.save();
+
+      // move the canvas origin to the center of the sprite
+      // to make the rotation occurs around the center of the sprite
+      this.c.translate(
+        this.position.x + this.offset.x + crop.width / 2,
+        this.position.y + this.offset.y + crop.height / 2,
+      );
+
+      // rotate the canvas around the center of the sprite
+      this.c.rotate(this.angle + Math.PI / 2);
+
+      // move the origin back to the top left corner of the sprite
+      this.c.translate(
+        -this.position.x - this.offset.x - crop.width / 2,
+        -this.position.y - this.offset.y - crop.height / 2,
+      );
+
+      // draw the sprite on the canvas
+      this.drawImage(crop);
+
+      // restore the canvas state to the state before the rotation
+      this.c.restore();
+      return;
+    }
+
+    // if no angle is specified, draw the sprite normally
+    this.drawImage(crop);
   }
 
   // update the animation frame
@@ -77,6 +108,39 @@ class Sprite {
 
   protected changeImageView(newSrc: string): void {
     this.image.src = newSrc;
+  }
+
+  protected drawImage(crop: {
+    position: {
+      x: number;
+      y: number;
+    };
+    width: number;
+    height: number;
+  }): void {
+    // draw the background extra image on the canvas
+    if (this.extraImg) {
+      this.c.drawImage(
+        this.extraImg,
+        this.position.x + this.towerExtraParams!.offset.x,
+        this.position.y + this.towerExtraParams!.offset.y,
+        this.towerExtraParams!.width,
+        this.towerExtraParams!.height,
+      );
+    }
+
+    // draw the sprite on the canvas
+    this.c.drawImage(
+      this.image,
+      crop.position.x,
+      crop.position.y,
+      crop.width,
+      crop.height,
+      this.position.x + this.offset.x,
+      this.position.y + this.offset.y,
+      crop.width,
+      crop.height,
+    );
   }
 }
 
