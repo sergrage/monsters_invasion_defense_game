@@ -1,7 +1,7 @@
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 import monsters from "@/game/classes/gameEntities/Enemies";
 
-import { Position } from "@/game/interfaces";
+import { IPosition } from "@/game/interfaces";
 
 interface Waypoint {
   x: number;
@@ -9,7 +9,7 @@ interface Waypoint {
 }
 
 interface EnemyOptions {
-  position: Position;
+  position: IPosition;
   c: CanvasRenderingContext2D;
   canvas: HTMLCanvasElement;
 }

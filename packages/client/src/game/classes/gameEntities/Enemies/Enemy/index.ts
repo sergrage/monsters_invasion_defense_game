@@ -1,11 +1,11 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import waypoints from "@/game/mocks/waypoints";
 
-import { Position, IEnemyConstructor, IEnemyImg } from "@/game/interfaces";
+import { IPosition, IEnemyConstructor, IEnemyImg } from "@/game/interfaces";
 
 class Enemy extends Sprite {
-  position: Position;
-  center: Position;
+  position: IPosition;
+  center: IPosition;
   c: CanvasRenderingContext2D;
   width: number;
   height: number;
@@ -111,7 +111,7 @@ class Enemy extends Sprite {
   }
 
   // change enemy view depending on its direction
-  private setPointOfView(waypoint: Position) {
+  private setPointOfView(waypoint: IPosition) {
     if (
       this.waypointIndex === 0 ||
       waypoint.x > waypoints[this.waypointIndex - 1].x

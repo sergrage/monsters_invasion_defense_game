@@ -4,7 +4,7 @@ import rightImg from "@/assets/img/enemies/shieldZombie/right.png";
 import leftImg from "@/assets/img/enemies/shieldZombie/left.png";
 import frontImg from "@/assets/img/enemies/shieldZombie/front.png";
 import backImg from "@/assets/img/enemies/shieldZombie/back.png";
-import { Frames, IContext, IEnemyParams, IEnemyImg } from "@/game/interfaces";
+import { IFrames, IContext, IEnemyParams, IEnemyImg } from "@/game/interfaces";
 
 class ShieldZombie extends Enemy {
   constructor({ position, canvas, c }: IContext) {
@@ -18,7 +18,7 @@ class ShieldZombie extends Enemy {
       reward: 75,
     };
 
-    const frames: Frames = {
+    const frames: IFrames = {
       max: 20, // total number of animation frames
       current: 0, // starting at the first frame
       elapsed: 0, // no elapsed frames initially

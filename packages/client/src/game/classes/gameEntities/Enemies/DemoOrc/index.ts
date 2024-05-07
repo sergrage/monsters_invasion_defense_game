@@ -1,7 +1,7 @@
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 
 import orcImage from "@/game/img/orc.png";
-import { Frames, IContext, IEnemyImg, IEnemyParams } from "@/game/interfaces";
+import { IFrames, IContext, IEnemyImg, IEnemyParams } from "@/game/interfaces";
 
 class Orc extends Enemy {
   constructor({ position, canvas, c }: IContext) {
@@ -14,7 +14,7 @@ class Orc extends Enemy {
       speed: 3,
     };
 
-    const frames: Frames = {
+    const frames: IFrames = {
       max: 7, // total number of animation frames
       current: 0, // starting at the first frame
       elapsed: 0, // no elapsed frames initially

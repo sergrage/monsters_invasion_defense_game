@@ -10,7 +10,8 @@ import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 import ElectroTower from "@/game/classes/gameEntities/Buildings/ElectroTower";
 
 import myImageExplosion from "@/game/img/explosion.png";
-import { ILevel, Position } from "@/game/interfaces";
+import { ILevel, IPosition } from "@/game/interfaces";
+import ArcherTower from "../classes/gameEntities/Buildings/archerTower";
 
 class Game {
   coins: number;
@@ -289,7 +290,7 @@ class Game {
     }
   }
 
-  calculateDistance(point1: Position, point2: Position) {
+  calculateDistance(point1: IPosition, point2: IPosition) {
     const xDifference = point1.x - point2.x;
     const yDifference = point1.y - point2.y;
     return Math.hypot(xDifference, yDifference);
@@ -303,7 +304,7 @@ class Game {
       // this.ctx && this.canvas type guard + добавил canvas т.к. его ожидает building
       if (this.ctx && this.canvas) {
         this.buildings.push(
-          new ElectroTower({
+          new ArcherTower({
             position: {
               x: this.activeTile.position.x,
               y: this.activeTile.position.y,

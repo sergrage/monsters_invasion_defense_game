@@ -1,7 +1,7 @@
-import { Position } from "@/game/interfaces";
+import { IPosition } from "@/game/interfaces";
 
 class PlacementTile {
-  position: Position;
+  position: IPosition;
   size: number;
   color: string;
   occupied: boolean;
@@ -11,7 +11,7 @@ class PlacementTile {
     position = { x: 0, y: 0 },
     c,
   }: {
-    position?: Position;
+    position?: IPosition;
     c: CanvasRenderingContext2D;
   }) {
     this.position = position;

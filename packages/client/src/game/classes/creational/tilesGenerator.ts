@@ -1,8 +1,8 @@
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
-import { Position } from "@/game/interfaces";
+import { IPosition } from "@/game/interfaces";
 
 interface TileOptions {
-  position: Position;
+  position: IPosition;
   c: CanvasRenderingContext2D;
 }
 

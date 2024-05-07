@@ -1,24 +1,19 @@
 import Enemy from "../classes/gameEntities/Enemies/Enemy";
 
-export interface Position {
+export interface IPosition {
   x: number;
   y: number;
 }
 
-export interface Frames {
+export interface IFrames {
   max: number;
   current?: number;
   elapsed?: number;
   hold?: number;
 }
 
-export interface Offset {
-  x: number;
-  y: number;
-}
-
 export interface IContext {
-  position: Position;
+  position: IPosition;
   canvas: HTMLCanvasElement;
   c: CanvasRenderingContext2D;
 }
@@ -35,11 +30,7 @@ export interface IEnemyImg {
 }
 
 export interface ITowerImg {
-  1: string;
-  2: string;
-  3: string;
-  4: string;
-  5: string;
+  [key: number | string]: string;
 }
 
 export interface IEnemyParams {
@@ -61,16 +52,24 @@ export interface ITowerParams {
   upgradePrice: number;
 }
 
+export interface ITowerExtraParams {
+  width: number;
+  height: number;
+  towerImg: ITowerImg;
+  offset: IPosition;
+}
+
 export interface IEnemyConstructor extends IContext {
-  frames: Frames;
+  frames: IFrames;
   imageSrc: IEnemyImg;
   enemyParams: IEnemyParams;
 }
 
 export interface ITowerConstructor extends IContext {
-  frames: Frames;
+  frames: IFrames;
   imageSrc: ITowerImg;
-  offset: Offset;
+  towerExtraParams?: ITowerExtraParams;
+  offset: IPosition;
   towerParams: ITowerParams;
 }
 
@@ -80,8 +79,9 @@ export interface IProjectileConstructor extends IProjectileContext {
 
 export interface ISprite extends IContext {
   imageSrc: string;
-  frames: Frames;
-  offset?: Offset;
+  towerExtraParams?: ITowerExtraParams;
+  frames: IFrames;
+  offset?: IPosition;
 }
 
 export interface ILevel {

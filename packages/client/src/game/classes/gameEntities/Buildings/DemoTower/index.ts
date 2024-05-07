@@ -1,7 +1,7 @@
 import Building from "@/game/classes/gameEntities/Buildings/Building";
 
 import myImage from "@/game/img/tower.png";
-import { Frames, IContext, ITowerImg, ITowerParams } from "@/game/interfaces";
+import { IFrames, IContext, ITowerImg, ITowerParams } from "@/game/interfaces";
 
 class DemoTower extends Building {
   constructor({ position, canvas, c }: IContext) {
@@ -22,7 +22,7 @@ class DemoTower extends Building {
       5: myImage,
     };
 
-    const frames: Frames = {
+    const frames: IFrames = {
       max: 19, // total number of animation frames
       current: 0, // starting at the first frame
       elapsed: 0, // no elapsed frames initially
