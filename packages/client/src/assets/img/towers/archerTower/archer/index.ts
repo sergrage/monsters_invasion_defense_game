@@ -7,4 +7,4 @@ import img225 from "./225.png";
 import img270 from "./270.png";
 import img315 from "./315.png";
 
-export default { img0, img45, img90, img135, img180, img225, img270, img315 };
+export default [img0, img45, img90, img135, img180, img225, img270, img315];

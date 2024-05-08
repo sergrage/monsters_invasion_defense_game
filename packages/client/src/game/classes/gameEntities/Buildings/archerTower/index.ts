@@ -8,7 +8,7 @@ import { IContext } from "@/game/interfaces";
 class ArcherTower extends Building {
   towerAngle: number | undefined;
 
-  constructor({ position, canvas, c }: IContext) {
+  constructor({ position, canvas, ctx }: IContext) {
     const towerParams = {
       width: 144,
       height: 144,
@@ -21,13 +21,7 @@ class ArcherTower extends Building {
     const towerExtraParams = {
       width: 131,
       height: 153,
-      towerImg: {
-        1: towerImg,
-        2: towerImg,
-        3: towerImg,
-        4: towerImg,
-        5: towerImg,
-      },
+      towerImg: towerImg,
       offset: {
         x: -33,
         y: -68,
@@ -49,8 +43,8 @@ class ArcherTower extends Building {
     super({
       position,
       canvas,
-      c: c,
-      imageSrc: archerImgs,
+      ctx: ctx,
+      imageSrc: archerImgs[0],
       frames,
       offset,
       towerParams,
@@ -66,7 +60,7 @@ class ArcherTower extends Building {
           y: this.center.y - 100,
         },
         enemy: this.target!,
-        c: this.c,
+        ctx: this.ctx,
         canvas: this.canvas,
       }),
     );
@@ -75,44 +69,59 @@ class ArcherTower extends Building {
   }
 
   getShootAngle(): void {
+    // calculate the angle between the tower and the target
     const angle = Math.atan2(
       this.target!.center.y - this.position.y,
       this.target!.center.x - this.position.x,
     );
 
-    let towerAngle = (angle * 360) / Math.PI;
-
+    // convert the angle from radians to degrees
+    let towerAngle = (angle * 180) / Math.PI;
     if (towerAngle < 0) {
-      towerAngle = -towerAngle;
+      towerAngle += 360;
     }
 
     this.updateTowerView(towerAngle);
   }
 
   updateTowerView(towerAngle: number): void {
-    console.log(towerAngle);
+    const numImages = archerImgs.length;
+    // get the angle range for each image
+    const imageRange = 360 / numImages;
 
-    let newSrc = "";
+    // сalculate the index of the image corresponding to the angle
+    let imageIndex = Math.round(towerAngle / imageRange);
 
-    if (337.5 < towerAngle || towerAngle <= 22.5) {
-      newSrc = archerImgs.img0;
-    } else if (22.5 < towerAngle && towerAngle <= 67.5) {
-      newSrc = archerImgs.img45;
-    } else if (67.5 < towerAngle && towerAngle <= 112.5) {
-      newSrc = archerImgs.img90;
-    } else if (112.5 < towerAngle && towerAngle <= 157.5) {
-      newSrc = archerImgs.img135;
-    } else if (157.5 < towerAngle && towerAngle <= 202.5) {
-      newSrc = archerImgs.img180;
-    } else if (202.5 < towerAngle && towerAngle <= 247.5) {
-      newSrc = archerImgs.img225;
-    } else if (247.5 < towerAngle && towerAngle <= 292.5) {
-      newSrc = archerImgs.img270;
-    } else if (292.5 < towerAngle && towerAngle <= 337.5) {
-      newSrc = archerImgs.img315;
+    // handle the case where the angle is close to 360 degrees
+    if (imageIndex === numImages) {
+      imageIndex = 0;
     }
 
-    this.image.src = newSrc;
+    // update the image source using the calculated index
+    this.image.src = archerImgs[imageIndex];
+
+    // alt version, mb more accurate?
+    // let newSrc = "";
+
+    // if (337.5 < towerAngle || towerAngle <= 22.5) {
+    //   newSrc = archerImgs[0];
+    // } else if (22.5 < towerAngle && towerAngle <= 67.5) {
+    //   newSrc = archerImgs[1];
+    // } else if (67.5 < towerAngle && towerAngle <= 112.5) {
+    //   newSrc = archerImgs[2];
+    // } else if (112.5 < towerAngle && towerAngle <= 157.5) {
+    //   newSrc = archerImgs[3];
+    // } else if (157.5 < towerAngle && towerAngle <= 202.5) {
+    //   newSrc = archerImgs[4];
+    // } else if (202.5 < towerAngle && towerAngle <= 247.5) {
+    //   newSrc = archerImgs[5];
+    // } else if (247.5 < towerAngle && towerAngle <= 292.5) {
+    //   newSrc = archerImgs[6];
+    // } else if (292.5 < towerAngle && towerAngle <= 337.5) {
+    //   newSrc = archerImgs[7];
+    // }
+
+    // this.image.src = newSrc;
   }
 }
 
