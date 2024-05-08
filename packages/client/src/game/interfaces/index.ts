@@ -1,4 +1,4 @@
-import Enemy from "../classes/gameEntities/Enemies/Enemy";
+import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 
 export interface IPosition {
   x: number;
@@ -15,7 +15,7 @@ export interface IFrames {
 export interface IContext {
   position: IPosition;
   canvas: HTMLCanvasElement;
-  c: CanvasRenderingContext2D;
+  ctx: CanvasRenderingContext2D;
 }
 
 export interface IProjectileContext extends IContext {
@@ -27,10 +27,6 @@ export interface IEnemyImg {
   left: string;
   back: string;
   front: string;
-}
-
-export interface ITowerImg {
-  [key: number | string]: string;
 }
 
 export interface IEnemyParams {
@@ -55,7 +51,7 @@ export interface ITowerParams {
 export interface ITowerExtraParams {
   width: number;
   height: number;
-  towerImg: ITowerImg;
+  towerImg: string;
   offset: IPosition;
 }
 
@@ -67,7 +63,7 @@ export interface IEnemyConstructor extends IContext {
 
 export interface ITowerConstructor extends IContext {
   frames: IFrames;
-  imageSrc: ITowerImg;
+  imageSrc: string;
   towerExtraParams?: ITowerExtraParams;
   offset: IPosition;
   towerParams: ITowerParams;
