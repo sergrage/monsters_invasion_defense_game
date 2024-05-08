@@ -3,7 +3,7 @@ import { IPosition } from "@/game/interfaces";
 
 interface TileOptions {
   position: IPosition;
-  c: CanvasRenderingContext2D;
+  ctx: CanvasRenderingContext2D;
 }
 
 interface TileType {
@@ -46,7 +46,7 @@ class TilesGenerator {
                 x: x * 64,
                 y: y * 64,
               },
-              c: this.ctx,
+              ctx: this.ctx,
             }),
           );
         }

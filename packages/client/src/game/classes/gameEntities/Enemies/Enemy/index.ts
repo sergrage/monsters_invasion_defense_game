@@ -6,7 +6,7 @@ import { IPosition, IEnemyConstructor, IEnemyImg } from "@/game/interfaces";
 class Enemy extends Sprite {
   position: IPosition;
   center: IPosition;
-  c: CanvasRenderingContext2D;
+  ctx: CanvasRenderingContext2D;
   width: number;
   height: number;
   radius: number;
@@ -22,7 +22,7 @@ class Enemy extends Sprite {
     canvas,
     imageSrc,
     frames,
-    c,
+    ctx,
     enemyParams,
   }: IEnemyConstructor) {
     super({
@@ -30,7 +30,7 @@ class Enemy extends Sprite {
       canvas,
       imageSrc: imageSrc.right,
       frames,
-      c,
+      ctx,
     });
     this.position = position;
     this.width = enemyParams.width;
@@ -42,7 +42,7 @@ class Enemy extends Sprite {
     this.speed = enemyParams.speed;
     this.reward = enemyParams.reward;
 
-    this.c = c;
+    this.ctx = ctx;
     this.imageSrc = imageSrc;
     this.center = {
       x: this.position.x + this.width / 2,
@@ -61,19 +61,19 @@ class Enemy extends Sprite {
     const posX = this.position.x + this.width / 2 - redBarWidth / 2;
     const posY = this.position.y - 15;
 
-    this.c.strokeStyle = "red";
-    this.c.fillStyle = "red";
-    this.c.beginPath();
-    this.c.roundRect(posX, posY, redBarWidth, 10, [5]);
-    this.c.stroke();
-    this.c.fill();
+    this.ctx.strokeStyle = "red";
+    this.ctx.fillStyle = "red";
+    this.ctx.beginPath();
+    this.ctx.roundRect(posX, posY, redBarWidth, 10, [5]);
+    this.ctx.stroke();
+    this.ctx.fill();
 
-    this.c.strokeStyle = "green";
-    this.c.fillStyle = "green";
-    this.c.beginPath();
-    this.c.roundRect(posX, posY, greenBarWidth, 10, [5]);
-    this.c.stroke();
-    this.c.fill();
+    this.ctx.strokeStyle = "green";
+    this.ctx.fillStyle = "green";
+    this.ctx.beginPath();
+    this.ctx.roundRect(posX, posY, greenBarWidth, 10, [5]);
+    this.ctx.stroke();
+    this.ctx.fill();
   }
 
   public update(): void {

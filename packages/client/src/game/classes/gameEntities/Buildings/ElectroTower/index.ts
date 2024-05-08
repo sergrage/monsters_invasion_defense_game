@@ -5,7 +5,7 @@ import img1 from "@/assets/img/towers/electroTower/1.png";
 import { IContext } from "@/game/interfaces";
 
 class ElectroTower extends Building {
-  constructor({ position, canvas, c }: IContext) {
+  constructor({ position, canvas, ctx }: IContext) {
     const towerParams = {
       width: 236,
       height: 335,
@@ -18,14 +18,6 @@ class ElectroTower extends Building {
     const towerPosition = {
       x: position.x,
       y: position.y,
-    };
-
-    const towerImgs = {
-      1: img1,
-      2: img1,
-      3: img1,
-      4: img1,
-      5: img1,
     };
 
     const frames = {
@@ -43,8 +35,8 @@ class ElectroTower extends Building {
     super({
       position: towerPosition,
       canvas,
-      c: c,
-      imageSrc: towerImgs,
+      ctx: ctx,
+      imageSrc: img1,
       offset: offset,
       frames: frames,
       towerParams,
@@ -59,7 +51,7 @@ class ElectroTower extends Building {
           y: this.center.y - 100,
         },
         enemy: this.target!,
-        c: this.c,
+        ctx: this.ctx,
         canvas: this.canvas,
       }),
     );

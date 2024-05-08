@@ -4,7 +4,7 @@ import orcImage from "@/game/img/orc.png";
 import { IFrames, IContext, IEnemyImg, IEnemyParams } from "@/game/interfaces";
 
 class Orc extends Enemy {
-  constructor({ position, canvas, c }: IContext) {
+  constructor({ position, canvas, ctx }: IContext) {
     const enemyParams: IEnemyParams = {
       width: 100,
       height: 100,
@@ -12,6 +12,7 @@ class Orc extends Enemy {
       radius: 50,
       health: 100,
       speed: 3,
+      reward: 50,
     };
 
     const frames: IFrames = {
@@ -31,7 +32,7 @@ class Orc extends Enemy {
     super({
       position,
       canvas,
-      c,
+      ctx,
       frames,
       imageSrc,
       enemyParams,

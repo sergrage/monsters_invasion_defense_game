@@ -1,10 +1,10 @@
 import Building from "@/game/classes/gameEntities/Buildings/Building";
 
 import myImage from "@/game/img/tower.png";
-import { IFrames, IContext, ITowerImg, ITowerParams } from "@/game/interfaces";
+import { IFrames, IContext, ITowerParams } from "@/game/interfaces";
 
 class DemoTower extends Building {
-  constructor({ position, canvas, c }: IContext) {
+  constructor({ position, canvas, ctx }: IContext) {
     const towerParams: ITowerParams = {
       width: 64 * 2,
       height: 64,
@@ -12,14 +12,6 @@ class DemoTower extends Building {
       speed: 3,
       price: 50,
       upgradePrice: 25,
-    };
-
-    const towerImgs: ITowerImg = {
-      1: myImage,
-      2: myImage,
-      3: myImage,
-      4: myImage,
-      5: myImage,
     };
 
     const frames: IFrames = {
@@ -38,8 +30,8 @@ class DemoTower extends Building {
       position,
       canvas,
       offset: offset,
-      c: c,
-      imageSrc: towerImgs,
+      ctx: ctx,
+      imageSrc: myImage,
       frames: frames,
       towerParams,
     });

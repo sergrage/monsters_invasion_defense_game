@@ -10,7 +10,7 @@ interface Waypoint {
 
 interface EnemyOptions {
   position: IPosition;
-  c: CanvasRenderingContext2D;
+  ctx: CanvasRenderingContext2D;
   canvas: HTMLCanvasElement;
 }
 
@@ -19,11 +19,11 @@ export interface EnemyType {
 }
 
 class EnemiesGenerator {
-  private c: CanvasRenderingContext2D;
+  private ctx: CanvasRenderingContext2D;
   private waypoints: Waypoint[];
 
-  constructor(c: CanvasRenderingContext2D, waypoints: Waypoint[]) {
-    this.c = c;
+  constructor(ctx: CanvasRenderingContext2D, waypoints: Waypoint[]) {
+    this.ctx = ctx;
     this.waypoints = waypoints;
   }
 
@@ -48,7 +48,7 @@ class EnemiesGenerator {
               x: this.waypoints[0].x - xOffset,
               y: this.waypoints[0].y,
             },
-            c: this.c,
+            ctx: this.ctx,
             canvas,
           }),
         );

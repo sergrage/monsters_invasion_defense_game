@@ -8,10 +8,10 @@ import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 import ElectroTower from "@/game/classes/gameEntities/Buildings/ElectroTower";
+import ArcherTower from "@/game/classes/gameEntities/Buildings/archerTower";
 
 import myImageExplosion from "@/game/img/explosion.png";
 import { ILevel, IPosition } from "@/game/interfaces";
-import ArcherTower from "../classes/gameEntities/Buildings/archerTower";
 
 class Game {
   coins: number;
@@ -283,7 +283,7 @@ class Game {
           imageSrc: myImageExplosion,
           frames: { max: 4 },
           offset: { x: 0, y: 0 },
-          c: this.ctx,
+          ctx: this.ctx,
         }),
       );
       building.projectiles.splice(i, 1);
@@ -310,7 +310,7 @@ class Game {
               y: this.activeTile.position.y,
             },
             canvas: this.canvas,
-            c: this.ctx,
+            ctx: this.ctx,
           }),
         );
       }

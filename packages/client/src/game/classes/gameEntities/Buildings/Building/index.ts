@@ -13,7 +13,7 @@ class Building extends Sprite {
   constructor({
     position,
     canvas,
-    c,
+    ctx,
     offset,
     imageSrc,
     frames,
@@ -23,8 +23,8 @@ class Building extends Sprite {
     super({
       position,
       canvas,
-      c,
-      imageSrc: imageSrc.img0,
+      ctx,
+      imageSrc,
       frames,
       offset,
       towerExtraParams,

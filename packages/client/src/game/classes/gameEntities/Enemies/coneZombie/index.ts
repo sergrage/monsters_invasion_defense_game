@@ -7,7 +7,7 @@ import backImg from "@/assets/img/enemies/coneZombie/back.png";
 import { IFrames, IContext, IEnemyParams, IEnemyImg } from "@/game/interfaces";
 
 class ConeZombie extends Enemy {
-  constructor({ position, canvas, c }: IContext) {
+  constructor({ position, canvas, ctx }: IContext) {
     const enemyParams: IEnemyParams = {
       width: 160,
       height: 162,
@@ -34,7 +34,7 @@ class ConeZombie extends Enemy {
     super({
       position,
       canvas,
-      c,
+      ctx,
       frames,
       imageSrc,
       enemyParams,

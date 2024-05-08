@@ -1,4 +1,4 @@
-import { ISprite, ITowerExtraParams } from "@/game/interfaces";
+import { IPosition, ISprite, ITowerExtraParams } from "@/game/interfaces";
 
 class Sprite {
   position; // stores the x and y coordinates of the sprite on the canvas
@@ -6,7 +6,7 @@ class Sprite {
   image; // an Image object holding the sprite's image data
   frames; // information about the animation frames
   offset; // offset for the sprite's position
-  c; // canvas rendering context used for drawing
+  ctx; // canvas rendering context used for drawing
   angle: number | null = null;
   extraImg: HTMLImageElement | null = null;
   towerExtraParams: ITowerExtraParams | null = null;
@@ -18,7 +18,7 @@ class Sprite {
     towerExtraParams,
     frames,
     offset = { x: 0, y: 0 },
-    c,
+    ctx,
   }: ISprite) {
     this.position = position;
     this.canvas = canvas;
@@ -31,11 +31,11 @@ class Sprite {
       hold: 3,
     };
     this.offset = offset;
-    this.c = c;
+    this.ctx = ctx;
 
     if (towerExtraParams) {
       this.extraImg = new Image();
-      this.extraImg.src = towerExtraParams.towerImg[1];
+      this.extraImg.src = towerExtraParams.towerImg;
       this.towerExtraParams = towerExtraParams;
     }
   }
@@ -58,31 +58,7 @@ class Sprite {
     // if an angle is specified, rotate the sprite around its center
     // before drawing it on the canvas
     if (this.angle) {
-      // save the current canvas state so that we can restore it after
-      // to ensure that rotation do not affect other drawings on the canvas
-      this.c.save();
-
-      // move the canvas origin to the center of the sprite
-      // to make the rotation occurs around the center of the sprite
-      this.c.translate(
-        this.position.x + this.offset.x + crop.width / 2,
-        this.position.y + this.offset.y + crop.height / 2,
-      );
-
-      // rotate the canvas around the center of the sprite
-      this.c.rotate(this.angle + Math.PI / 2);
-
-      // move the origin back to the top left corner of the sprite
-      this.c.translate(
-        -this.position.x - this.offset.x - crop.width / 2,
-        -this.position.y - this.offset.y - crop.height / 2,
-      );
-
-      // draw the sprite on the canvas
-      this.drawImage(crop);
-
-      // restore the canvas state to the state before the rotation
-      this.c.restore();
+      this.rotateImage(crop);
       return;
     }
 
@@ -110,6 +86,38 @@ class Sprite {
     this.image.src = newSrc;
   }
 
+  protected rotateImage(crop: {
+    position: IPosition;
+    width: number;
+    height: number;
+  }): void {
+    // save the current canvas state so that we can restore it after
+    // to ensure that rotation do not affect other drawings on the canvas
+    this.ctx.save();
+
+    // move the canvas origin to the center of the sprite
+    // to make the rotation occurs around the center of the sprite
+    this.ctx.translate(
+      this.position.x + this.offset.x + crop.width / 2,
+      this.position.y + this.offset.y + crop.height / 2,
+    );
+
+    // rotate the canvas around the center of the sprite
+    this.ctx.rotate(this.angle! + Math.PI / 2);
+
+    // move the origin back to the top left corner of the sprite
+    this.ctx.translate(
+      -this.position.x - this.offset.x - crop.width / 2,
+      -this.position.y - this.offset.y - crop.height / 2,
+    );
+
+    // draw the sprite on the canvas
+    this.drawImage(crop);
+
+    // restore the canvas state to the state before the rotation
+    this.ctx.restore();
+  }
+
   protected drawImage(crop: {
     position: {
       x: number;
@@ -118,9 +126,8 @@ class Sprite {
     width: number;
     height: number;
   }): void {
-    // draw the background extra image on the canvas
     if (this.extraImg) {
-      this.c.drawImage(
+      this.ctx.drawImage(
         this.extraImg,
         this.position.x + this.towerExtraParams!.offset.x,
         this.position.y + this.towerExtraParams!.offset.y,
@@ -130,7 +137,7 @@ class Sprite {
     }
 
     // draw the sprite on the canvas
-    this.c.drawImage(
+    this.ctx.drawImage(
       this.image,
       crop.position.x,
       crop.position.y,

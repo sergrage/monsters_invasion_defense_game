@@ -7,7 +7,7 @@ import backImg from "@/assets/img/enemies/shieldZombie/back.png";
 import { IFrames, IContext, IEnemyParams, IEnemyImg } from "@/game/interfaces";
 
 class ShieldZombie extends Enemy {
-  constructor({ position, canvas, c }: IContext) {
+  constructor({ position, canvas, ctx }: IContext) {
     const enemyParams: IEnemyParams = {
       width: 160,
       height: 162,
@@ -34,7 +34,7 @@ class ShieldZombie extends Enemy {
     super({
       position,
       canvas,
-      c,
+      ctx,
       frames,
       imageSrc,
       enemyParams,

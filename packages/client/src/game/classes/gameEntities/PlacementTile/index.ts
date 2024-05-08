@@ -5,25 +5,30 @@ class PlacementTile {
   size: number;
   color: string;
   occupied: boolean;
-  c: CanvasRenderingContext2D;
+  ctx: CanvasRenderingContext2D;
 
   constructor({
     position = { x: 0, y: 0 },
-    c,
+    ctx,
   }: {
     position?: IPosition;
-    c: CanvasRenderingContext2D;
+    ctx: CanvasRenderingContext2D;
   }) {
     this.position = position;
     this.size = 64;
     this.color = "rgba(255, 255, 255, 0.15)";
     this.occupied = false;
-    this.c = c; // Store the canvas context
+    this.ctx = ctx; // Store the canvas context
   }
 
   draw() {
-    this.c.fillStyle = this.color;
-    this.c.fillRect(this.position.x + 0, this.position.y, this.size, this.size);
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(
+      this.position.x + 0,
+      this.position.y,
+      this.size,
+      this.size,
+    );
   }
 
   update(mouse: { x: number | undefined; y: number | undefined }) {

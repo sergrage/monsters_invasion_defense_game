@@ -11,13 +11,13 @@ class Projectile extends Sprite {
   constructor({
     position,
     enemy,
-    c,
+    ctx,
     canvas,
     imageSrc,
   }: IProjectileConstructor) {
     super({
       position,
-      c,
+      ctx,
       canvas,
       imageSrc,
       frames: {
