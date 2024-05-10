@@ -18,10 +18,6 @@ export interface IContext {
   ctx: CanvasRenderingContext2D;
 }
 
-export interface IProjectileContext extends IContext {
-  enemy: Enemy;
-}
-
 export interface IEnemyImg {
   right: string;
   left: string;
@@ -39,20 +35,31 @@ export interface IEnemyParams {
   reward: number;
 }
 
+export interface ITowerExtraParams {
+  width: number;
+  height: number;
+  towerImg: string;
+  offset: IPosition;
+}
+
 export interface ITowerParams {
+  title: string;
+  preview: string;
   width: number;
   height: number;
   radius: number;
   speed: number;
   price: number;
   upgradePrice: number;
-}
-
-export interface ITowerExtraParams {
-  width: number;
-  height: number;
-  towerImg: string;
+  imgs: string[];
   offset: IPosition;
+  frames: IFrames;
+  extraParams?: ITowerExtraParams;
+  projectile: {
+    offset: IPosition;
+    imageSrc: string;
+    needRotation: boolean;
+  };
 }
 
 export interface IEnemyConstructor extends IContext {
@@ -62,15 +69,20 @@ export interface IEnemyConstructor extends IContext {
 }
 
 export interface ITowerConstructor extends IContext {
+  towerData: ITowerParams;
+}
+
+export interface IBuildingConstructor extends IContext {
   frames: IFrames;
   imageSrc: string;
   towerExtraParams?: ITowerExtraParams;
   offset: IPosition;
-  towerParams: ITowerParams;
 }
 
-export interface IProjectileConstructor extends IProjectileContext {
+export interface IProjectileConstructor extends IContext {
+  enemy: Enemy;
   imageSrc: string;
+  needRotation: boolean;
 }
 
 export interface ISprite extends IContext {
@@ -78,6 +90,7 @@ export interface ISprite extends IContext {
   towerExtraParams?: ITowerExtraParams;
   frames: IFrames;
   offset?: IPosition;
+  needRotation?: boolean;
 }
 
 export interface ILevel {
