@@ -15,17 +15,17 @@ class Sprite {
   constructor({
     position,
     canvas,
+    ctx,
     imageSrc,
-    towerExtraParams,
     frames,
     offset = { x: 0, y: 0 },
-    ctx,
+    towerExtraParams,
     needRotation,
   }: ISprite) {
     this.position = position;
     this.canvas = canvas;
-    this.offset = offset;
     this.ctx = ctx;
+    this.offset = offset;
 
     this.image = new Image();
     this.image.src = imageSrc;

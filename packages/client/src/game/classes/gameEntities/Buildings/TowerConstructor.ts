@@ -1,15 +1,18 @@
-import BuildingConstructor from "@/game/classes/gameEntities/Buildings/BuildingConstructor";
+import Sprite from "../Sprite";
+import Enemy from "../Enemies/Enemy";
 import ProjectileConstructor from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
 
 import towers from "@/game/mocks/towersData";
 
 import { IPosition, ITowerConstructor, ITowerParams } from "@/game/interfaces";
 
-class TowerConstructor extends BuildingConstructor {
+class TowerConstructor extends Sprite {
   towerData: ITowerParams;
   towerAngle: number | undefined;
   center: IPosition;
   radius: number;
+  projectiles: ProjectileConstructor[];
+  target: Enemy | null = null;
 
   constructor({ position, canvas, ctx, towerData }: ITowerConstructor) {
     super({
@@ -29,6 +32,33 @@ class TowerConstructor extends BuildingConstructor {
     };
 
     this.radius = towerData.radius;
+    this.projectiles = [];
+  }
+
+  draw(): void {
+    super.draw();
+  }
+
+  update(): void {
+    // update the visual representation
+    this.draw();
+
+    // update if has a target
+    // or if it current frame is not the initial frame
+    if (this.target || (!this.target && this.frames.current !== 0)) {
+      super.update();
+    }
+    // shoot if has a target and the current frame is 6,
+    //the elapsed time is not zero, and the hold time has been reached
+    if (
+      this.target &&
+      this.frames.current === 6 &&
+      this.frames.elapsed &&
+      this.frames.hold &&
+      this.frames.elapsed % this.frames.hold === 0
+    ) {
+      this.shoot();
+    }
   }
 
   public shoot(): void {
@@ -50,6 +80,10 @@ class TowerConstructor extends BuildingConstructor {
     if (this.towerData.extraParams) {
       this.getShootAngle();
     }
+  }
+
+  public clearProjectiles(): void {
+    this.projectiles = [];
   }
 
   private getShootAngle(): void {

@@ -72,13 +72,6 @@ export interface ITowerConstructor extends IContext {
   towerData: ITowerParams;
 }
 
-export interface IBuildingConstructor extends IContext {
-  frames: IFrames;
-  imageSrc: string;
-  towerExtraParams?: ITowerExtraParams;
-  offset: IPosition;
-}
-
 export interface IProjectileConstructor extends IContext {
   enemy: Enemy;
   imageSrc: string;

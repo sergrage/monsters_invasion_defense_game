@@ -4,11 +4,9 @@ import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 import TowersSelector from "../classes/gameEntities/Buildings/TowersSelector";
 import TowerConstructor from "../classes/gameEntities/Buildings/TowerConstructor";
-
+import Projectile from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
-import Building from "@/game/classes/gameEntities/Buildings/BuildingConstructor";
-import Projectile from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 
 import myImageExplosion from "@/game/img/explosion.png";
@@ -212,7 +210,7 @@ class Game {
     });
   }
 
-  updateBuilding(building: Building) {
+  updateBuilding(building: TowerConstructor) {
     building.update();
   }
 
@@ -237,7 +235,7 @@ class Game {
     return validEnemies;
   }
 
-  handleBuildingProjectiles(building: Building) {
+  handleBuildingProjectiles(building: TowerConstructor) {
     for (let i = building.projectiles.length - 1; i >= 0; i--) {
       const projectile = building.projectiles[i];
       this.updateProjectile(projectile);
@@ -251,7 +249,7 @@ class Game {
 
   handleProjectileCollision(
     projectile: Projectile,
-    building: Building,
+    building: TowerConstructor,
     i: number,
   ) {
     const distance = this.calculateDistance(
@@ -277,7 +275,11 @@ class Game {
     }
   }
 
-  handleProjectileHit(projectile: Projectile, building: Building, i: number) {
+  handleProjectileHit(
+    projectile: Projectile,
+    building: TowerConstructor,
+    i: number,
+  ) {
     // this.ctx && this.canvas type guard + добавил canvas т.к. его ожидает sprite
     if (this.ctx && this.canvas) {
       this.explosions.push(
