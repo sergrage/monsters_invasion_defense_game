@@ -1,0 +1,13 @@
+.towerPreview {
+  transition: transform 0.2s linear;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    filter: grayscale(100%);
+  }
+}

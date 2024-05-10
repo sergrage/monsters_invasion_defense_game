@@ -14,7 +14,6 @@ import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import level from "@/game/mocks/level/index";
-import towersData from "@/game/mocks/towersData";
 
 import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
@@ -45,7 +44,7 @@ const GamePage: FC = () => {
       PlacementTile,
     );
     const eventSubject = new EventSubject();
-    const towerSelector = new TowersSelector(towersData);
+    const towerSelector = new TowersSelector(coins);
 
     const game = new Game(
       coins,

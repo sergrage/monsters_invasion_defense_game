@@ -47,13 +47,4 @@
   width: 500px;
   height: 150px;
   border: 1px solid black;
-
-  img {
-    transition: transform 0.2s linear;
-    cursor: pointer;
-
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
 }

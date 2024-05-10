@@ -1,33 +1,44 @@
+import towersData from "@/game/mocks/towersData";
 import { ITowerParams } from "@/game/interfaces";
 
+import style from "./style.module.scss";
+
 export default class TowersSelector {
+  previewRoot: HTMLElement | null = null;
   towers: ITowerParams[] | null = [];
   selectedTower: number | null = null;
+  coins: number;
 
-  constructor(towersData: ITowerParams[]) {
+  constructor(coins: number) {
     // get towers form database
     this.towers = towersData || null;
+    this.coins = coins;
     this.init();
   }
 
-  private init() {
+  public init() {
     if (!this.towers) return;
 
     // select preview section
-    const previewRoot = document.getElementById("towerSelector");
+    this.previewRoot = document.getElementById("towerSelector");
 
     // add tower preview images
     this.towers.forEach((tower, index) => {
       const towerImg = document.createElement("img");
+      towerImg.classList.add(style.towerPreview);
       towerImg.setAttribute("src", tower.preview);
       towerImg.setAttribute("alt", tower.title);
       towerImg.setAttribute("title", tower.title);
       towerImg.setAttribute("data-index", index.toString());
 
-      previewRoot?.appendChild(towerImg);
+      this.previewRoot?.appendChild(towerImg);
     });
 
-    previewRoot?.addEventListener("click", this.clickTowerHandler.bind(this));
+    this.updateAvailableTowers();
+    this.previewRoot?.addEventListener(
+      "click",
+      this.clickTowerHandler.bind(this),
+    );
   }
 
   // select tower
@@ -46,5 +57,28 @@ export default class TowersSelector {
     }
 
     return this.towers[this.selectedTower];
+  }
+
+  public updateCoins(coins: number): void {
+    this.coins = coins;
+
+    this.updateAvailableTowers();
+  }
+
+  // if no coins => disable towers
+  private updateAvailableTowers() {
+    if (!this.towers) return;
+
+    this.towers.forEach(tower => {
+      const towerImg = this.previewRoot!.querySelector(
+        `img[title="${tower.title}"]`,
+      );
+
+      if (this.coins < tower.price) {
+        towerImg!.classList.add(style.disabled);
+      } else {
+        towerImg!.classList.remove(style.disabled);
+      }
+    });
   }
 }

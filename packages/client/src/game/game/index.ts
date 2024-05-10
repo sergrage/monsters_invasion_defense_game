@@ -2,8 +2,8 @@ import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
-import TowersSelector from "../classes/gameEntities/Buildings/TowersSelector";
-import TowerConstructor from "../classes/gameEntities/Buildings/TowerConstructor";
+import TowersSelector from "@/game/classes/gameEntities/Buildings/TowersSelector";
+import TowerConstructor from "@/game/classes/gameEntities/Buildings/TowerConstructor";
 import Projectile from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
@@ -55,12 +55,12 @@ class Game {
     this.explosions = [];
     this.eventSubject = eventSubject;
     this.level = level;
-    this.towersSelector = towersSelector;
 
     // Injected dependencies
     this.mapGenerator = mapGenerator;
     this.enemiesGenerator = enemiesGenerator;
     this.tilesGenerator = tilesGenerator;
+    this.towersSelector = towersSelector;
   }
 
   // Метод для изменения количества монет
@@ -266,6 +266,7 @@ class Game {
     enemy.health -= 20;
     if (enemy.health <= 0) {
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
+
       if (enemyIndex > -1) {
         const deadEnemy = this.enemies.splice(enemyIndex, 1);
         const reward = deadEnemy[0].reward;
@@ -308,11 +309,9 @@ class Game {
     if (
       this.activeTile &&
       !this.activeTile.occupied &&
-      this.coins - 50 >= 0 &&
-      selectedTower
+      selectedTower &&
+      this.coins >= selectedTower.price
     ) {
-      this.setCoins(-50);
-
       if (this.ctx && this.canvas) {
         this.buildings.push(
           new TowerConstructor({
@@ -327,8 +326,10 @@ class Game {
         );
       }
 
+      this.setCoins(-selectedTower.price);
       this.activeTile.occupied = true;
       this.buildings.sort((a, b) => a.position.y - b.position.y);
+      console.log(this.buildings);
     }
   }
 

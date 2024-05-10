@@ -58,7 +58,7 @@ const teslaTower: ITowerParams = {
   height: 335,
   radius: 250,
   speed: 3,
-  price: 50,
+  price: 60,
   upgradePrice: 25,
   imgs: teslaImgs,
 
