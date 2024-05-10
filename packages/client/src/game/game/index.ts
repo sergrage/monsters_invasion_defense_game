@@ -1,14 +1,15 @@
-import Sprite from "@/game/classes/gameEntities/Sprite";
-import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
-import Building from "@/game/classes/gameEntities/Buildings/Building";
-import Projectile from "@/game/classes/gameEntities/Projectiles/Projectile";
-import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
-import ElectroTower from "@/game/classes/gameEntities/Buildings/ElectroTower";
-import ArcherTower from "@/game/classes/gameEntities/Buildings/archerTower";
+import TowersSelector from "../classes/gameEntities/Buildings/TowersSelector";
+import TowerConstructor from "../classes/gameEntities/Buildings/TowerConstructor";
+
+import Sprite from "@/game/classes/gameEntities/Sprite";
+import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
+import Building from "@/game/classes/gameEntities/Buildings/BuildingConstructor";
+import Projectile from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
+import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 
 import myImageExplosion from "@/game/img/explosion.png";
 import { ILevel, IPosition } from "@/game/interfaces";
@@ -17,7 +18,7 @@ class Game {
   coins: number;
   hearts: number;
   enemies: Enemy[];
-  buildings: Building[];
+  buildings: TowerConstructor[];
   canvas: HTMLCanvasElement | null;
   ctx: CanvasRenderingContext2D | null;
   image: HTMLImageElement | null;
@@ -25,11 +26,12 @@ class Game {
   mouse: { x: number | undefined; y: number | undefined };
   activeTile: PlacementTile | null;
   explosions: Sprite[];
-  eventSubject: EventSubject;
-  mapGenerator: MapGenerator;
-  enemiesGenerator: EnemiesGenerator;
-  tilesGenerator: TilesGenerator;
-  level: ILevel;
+  eventSubject;
+  mapGenerator;
+  enemiesGenerator;
+  tilesGenerator;
+  level;
+  towersSelector;
 
   constructor(
     coins: number,
@@ -39,6 +41,7 @@ class Game {
     tilesGenerator: TilesGenerator,
     eventSubject: EventSubject,
     level: ILevel,
+    towersSelector: TowersSelector,
   ) {
     this.coins = coins;
     this.hearts = hearts;
@@ -54,6 +57,7 @@ class Game {
     this.explosions = [];
     this.eventSubject = eventSubject;
     this.level = level;
+    this.towersSelector = towersSelector;
 
     // Injected dependencies
     this.mapGenerator = mapGenerator;
@@ -212,18 +216,18 @@ class Game {
     building.update();
   }
 
-  handleBuildingTarget(building: Building) {
+  handleBuildingTarget(building: TowerConstructor) {
     const validEnemies = this.findValidEnemies(building);
     building.target = validEnemies[0];
   }
 
-  findValidEnemies(building: Building) {
+  findValidEnemies(building: TowerConstructor) {
     const validEnemies = this.enemies.filter(enemy => {
       const distance = this.calculateDistance(enemy.center, building.center);
       return distance < enemy.radius + building.radius;
     });
 
-    // // sort by distance - mb don't need
+    // // sort by distance - mb don't need?
     // validEnemies.sort(
     //   (a, b) =>
     //     this.calculateDistance(a.center, building.center) -
@@ -297,20 +301,26 @@ class Game {
   }
 
   handleCanvasClick() {
-    // change isOccupied to occupied. Bug?
-    if (this.activeTile && !this.activeTile.occupied && this.coins - 50 >= 0) {
+    const selectedTower = this.towersSelector.getSelectedTower();
+
+    if (
+      this.activeTile &&
+      !this.activeTile.occupied &&
+      this.coins - 50 >= 0 &&
+      selectedTower
+    ) {
       this.setCoins(-50);
 
-      // this.ctx && this.canvas type guard + добавил canvas т.к. его ожидает building
       if (this.ctx && this.canvas) {
         this.buildings.push(
-          new ArcherTower({
+          new TowerConstructor({
             position: {
               x: this.activeTile.position.x,
               y: this.activeTile.position.y,
             },
             canvas: this.canvas,
             ctx: this.ctx,
+            towerData: selectedTower,
           }),
         );
       }

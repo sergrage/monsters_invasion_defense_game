@@ -8,13 +8,15 @@ import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
+import TowersSelector from "@/game/classes/gameEntities/Buildings/TowersSelector";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 
 import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import level from "@/game/mocks/level/index";
+import towersData from "@/game/mocks/towersData";
 
-import myImage from "../../game/img/gameMap.png";
+import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
 
 const GamePage: FC = () => {
@@ -43,6 +45,7 @@ const GamePage: FC = () => {
       PlacementTile,
     );
     const eventSubject = new EventSubject();
+    const towerSelector = new TowersSelector(towersData);
 
     const game = new Game(
       coins,
@@ -52,6 +55,7 @@ const GamePage: FC = () => {
       tilesGenerator,
       eventSubject,
       level,
+      towerSelector,
     );
 
     const coinsChangedObserver = new EventObserver(handleCoinsChangedEvent);
@@ -68,7 +72,7 @@ const GamePage: FC = () => {
 
   return (
     <>
-      <div style={{ position: "relative", display: "inline-block" }}>
+      <div className={style.game}>
         <canvas ref={canvasRef} id="gameCanvas"></canvas>
         {isGameOver && (
           <div id="gameOver" className={style.gameOver}>
@@ -80,6 +84,7 @@ const GamePage: FC = () => {
           <Coins coins={coins} />
           <Hearts hearts={hearts} />
         </div>
+        <article className={style.towerSelector} id="towerSelector"></article>
       </div>
     </>
   );

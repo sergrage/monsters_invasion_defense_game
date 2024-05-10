@@ -1,12 +1,12 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 
-import { IProjectileConstructor } from "@/game/interfaces";
+import { IPosition, IProjectileConstructor } from "@/game/interfaces";
 
-class Projectile extends Sprite {
-  velocity;
+class ProjectileConstructor extends Sprite {
+  velocity: IPosition;
+  angle: number | null = null;
   enemy;
   radius;
-  angle: number | null = null;
 
   constructor({
     position,
@@ -14,6 +14,7 @@ class Projectile extends Sprite {
     ctx,
     canvas,
     imageSrc,
+    needRotation,
   }: IProjectileConstructor) {
     super({
       position,
@@ -26,6 +27,7 @@ class Projectile extends Sprite {
         elapsed: 0,
         hold: 0,
       },
+      needRotation,
     });
 
     this.velocity = {
@@ -40,34 +42,30 @@ class Projectile extends Sprite {
     this.draw();
 
     // calculates the angle between the projectile and the enemy
-    // Formula: tan(θ) = Opposite / Adjacent
+    // formula: tan(θ) = Opposite / Adjacent
     // where θ is the angle between the projectile and the enemy
-    // Opposite is the vertical distance between the projectile and the enemy
-    // Adjacent is the horizontal distance between the projectile and the enemy
+    // opposite is the vertical distance between the projectile and the enemy
+    // adjacent is the horizontal distance between the projectile and the enemy
     this.angle = Math.atan2(
-      // Opposite
+      // opposite
       this.enemy.center.y - this.position.y,
-      // Adjacent
+      // adjacent
       this.enemy.center.x - this.position.x,
     );
 
     // projectile's velocity
     const power = 5;
 
-    // The horizontal component of the projectile's velocity
-    // Formula: xVelocity = cos(angle) * power
+    // the horizontal component of the projectile's velocity
     this.velocity.x = Math.cos(this.angle) * power;
 
-    // The vertical component of the projectile's velocity
-    // Formula: yVelocity = sin(angle) * power
+    // the vertical component of the projectile's velocity
     this.velocity.y = Math.sin(this.angle) * power;
 
-    // Updates the projectile's position
-    // Formula: xPosition = xPosition + xVelocity
-    //          yPosition = yPosition + yVelocity
+    // updates the projectile's position
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
   }
 }
 
-export default Projectile;
+export default ProjectileConstructor;

@@ -1,74 +1,58 @@
-import Building from "@/game/classes/gameEntities/Buildings/Building";
-import Arrow from "@/game/classes/gameEntities/Projectiles/Arrow";
+import BuildingConstructor from "@/game/classes/gameEntities/Buildings/BuildingConstructor";
+import ProjectileConstructor from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
 
-import archerImgs from "@/assets/img/towers/archerTower/archer/index";
-import towerImg from "@/assets/img/towers/archerTower/tower.png";
-import { IContext } from "@/game/interfaces";
+import towers from "@/game/mocks/towersData";
 
-class ArcherTower extends Building {
+import { IPosition, ITowerConstructor, ITowerParams } from "@/game/interfaces";
+
+class TowerConstructor extends BuildingConstructor {
+  towerData: ITowerParams;
   towerAngle: number | undefined;
+  center: IPosition;
+  radius: number;
 
-  constructor({ position, canvas, ctx }: IContext) {
-    const towerParams = {
-      width: 144,
-      height: 144,
-      radius: 250,
-      speed: 3,
-      price: 50,
-      upgradePrice: 25,
-    };
-
-    const towerExtraParams = {
-      width: 131,
-      height: 153,
-      towerImg: towerImg,
-      offset: {
-        x: -33,
-        y: -68,
-      },
-    };
-
-    const frames = {
-      max: 15, // total number of animation frames
-      current: 0, // starting at the first frame
-      elapsed: 0, // no elapsed frames initially
-      hold: 3, // number of frames to skip before the next animation frame
-    };
-
-    const offset = {
-      x: -40,
-      y: -85,
-    };
-
+  constructor({ position, canvas, ctx, towerData }: ITowerConstructor) {
     super({
       position,
       canvas,
       ctx: ctx,
-      imageSrc: archerImgs[0],
-      frames,
-      offset,
-      towerParams,
-      towerExtraParams,
+      imageSrc: towerData.imgs[0],
+      frames: towerData.frames,
+      offset: towerData.offset,
+      towerExtraParams: towerData.extraParams,
     });
+
+    this.towerData = towerData;
+    this.center = {
+      x: this.position.x + towerData.width / 2,
+      y: this.position.y + towerData.height / 2,
+    };
+
+    this.radius = towerData.radius;
   }
 
-  shoot(): void {
+  public shoot(): void {
     this.projectiles.push(
-      new Arrow({
+      new ProjectileConstructor({
         position: {
-          x: this.center.x - 23,
-          y: this.center.y - 100,
+          x: this.center.x - this.towerData.projectile.offset.x,
+          y: this.center.y - this.towerData.projectile.offset.y,
         },
         enemy: this.target!,
         ctx: this.ctx,
         canvas: this.canvas,
+        imageSrc: this.towerData.projectile.imageSrc,
+        needRotation: this.towerData.projectile.needRotation,
       }),
     );
 
-    this.getShootAngle();
+    // combined tower case
+    if (this.towerData.extraParams) {
+      this.getShootAngle();
+    }
   }
 
-  getShootAngle(): void {
+  private getShootAngle(): void {
     // calculate the angle between the tower and the target
     const angle = Math.atan2(
       this.target!.center.y - this.position.y,
@@ -84,8 +68,8 @@ class ArcherTower extends Building {
     this.updateTowerView(towerAngle);
   }
 
-  updateTowerView(towerAngle: number): void {
-    const numImages = archerImgs.length;
+  private updateTowerView(towerAngle: number): void {
+    const numImages = towers[0].imgs.length;
     // get the angle range for each image
     const imageRange = 360 / numImages;
 
@@ -98,7 +82,7 @@ class ArcherTower extends Building {
     }
 
     // update the image source using the calculated index
-    this.image.src = archerImgs[imageIndex];
+    this.image.src = towers[0].imgs[imageIndex];
 
     // alt version, mb more accurate?
     // let newSrc = "";
@@ -125,4 +109,4 @@ class ArcherTower extends Building {
   }
 }
 
-export default ArcherTower;
+export default TowerConstructor;

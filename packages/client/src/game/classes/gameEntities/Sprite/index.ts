@@ -10,6 +10,7 @@ class Sprite {
   angle: number | null = null;
   extraImg: HTMLImageElement | null = null;
   towerExtraParams: ITowerExtraParams | null = null;
+  needRotation: boolean | undefined = undefined;
 
   constructor({
     position,
@@ -19,19 +20,24 @@ class Sprite {
     frames,
     offset = { x: 0, y: 0 },
     ctx,
+    needRotation,
   }: ISprite) {
     this.position = position;
     this.canvas = canvas;
+    this.offset = offset;
+    this.ctx = ctx;
+
     this.image = new Image();
     this.image.src = imageSrc;
+
     this.frames = {
       max: frames.max,
       current: 0,
       elapsed: 0,
       hold: 3,
     };
-    this.offset = offset;
-    this.ctx = ctx;
+
+    this.needRotation = needRotation;
 
     if (towerExtraParams) {
       this.extraImg = new Image();
@@ -57,7 +63,7 @@ class Sprite {
 
     // if an angle is specified, rotate the sprite around its center
     // before drawing it on the canvas
-    if (this.angle) {
+    if (this.needRotation && this.angle) {
       this.rotateImage(crop);
       return;
     }

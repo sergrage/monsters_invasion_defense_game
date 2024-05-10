@@ -1,12 +1,10 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
-import Projectile from "@/game/classes/gameEntities/Projectiles/Projectile";
+import Projectile from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 
-import { ITowerConstructor } from "@/game/interfaces";
+import { IBuildingConstructor } from "@/game/interfaces";
 
-class Building extends Sprite {
-  center: { x: number; y: number };
-  radius: number;
+class BuildingConstructor extends Sprite {
   projectiles: Projectile[];
   target: Enemy | null = null;
 
@@ -17,9 +15,8 @@ class Building extends Sprite {
     offset,
     imageSrc,
     frames,
-    towerParams,
     towerExtraParams,
-  }: ITowerConstructor) {
+  }: IBuildingConstructor) {
     super({
       position,
       canvas,
@@ -30,11 +27,6 @@ class Building extends Sprite {
       towerExtraParams,
     });
 
-    this.center = {
-      x: this.position.x + towerParams.width / 2,
-      y: this.position.y + towerParams.height / 2,
-    };
-    this.radius = towerParams.radius;
     this.projectiles = [];
   }
 
@@ -71,4 +63,4 @@ class Building extends Sprite {
   }
 }
 
-export default Building;
+export default BuildingConstructor;
