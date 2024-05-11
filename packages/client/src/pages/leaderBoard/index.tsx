@@ -17,7 +17,6 @@ const LeaderBoardPage: FC = () => {
   const leaderBoardUsers = useAppSelector(
     store => store.leaderboard.leaderboardUsers,
   );
-  console.log("🚀 ~ leaderBoardUsers:", leaderBoardUsers);
 
   const handleClick = () => {
     setShowToasty(true);
