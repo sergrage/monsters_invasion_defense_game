@@ -9,14 +9,13 @@ import toasty_sound from "@/assets/sound/toasty.mp3";
 import cn from "classnames";
 import Title from "@/ui/title";
 import { useAppSelector } from "@/store/hooks";
+import { getLeaderBoardState } from "@/store/leaderboard/reducer";
 
 const LeaderBoardPage: FC = () => {
   const [showToasty, setShowToasty] = useState(false);
   const [showBlood, setShowBlood] = useState(false);
 
-  const leaderBoardUsers = useAppSelector(
-    store => store.leaderboard.leaderboardUsers,
-  );
+  const leaderBoardUsers = useAppSelector(getLeaderBoardState).data;
 
   const handleClick = () => {
     setShowToasty(true);

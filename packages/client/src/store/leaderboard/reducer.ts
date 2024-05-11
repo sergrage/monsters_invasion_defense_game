@@ -1,8 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { LeaderboardState } from "./type";
+import { RootState } from "..";
 
 const initialState: LeaderboardState = {
-  leaderboardUsers: [
+  data: [
     {
       id: 1,
       user: {
@@ -172,8 +173,7 @@ const initialState: LeaderboardState = {
       date: "14.05.2024",
     },
   ],
-  status: "idle",
-  error: null,
+  loading: false,
 };
 
 export const leaderboardSlice = createSlice({
@@ -181,3 +181,8 @@ export const leaderboardSlice = createSlice({
   name: "leaderboard",
   reducers: {},
 });
+
+export const getLeaderBoardState = createSelector(
+  (state: RootState) => state.leaderboard,
+  item => item,
+);

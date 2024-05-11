@@ -1,7 +1,6 @@
 export type LeaderboardState = {
-  leaderboardUsers: LeaderboardResponse[] | null;
-  status: "idle" | "loading" | "resolved" | "rejected";
-  error: string | null;
+  data: LeaderboardResponse[] | null;
+  loading: boolean;
 };
 
 export type LeaderboardResponse = {
