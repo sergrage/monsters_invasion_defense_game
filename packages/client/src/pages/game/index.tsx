@@ -11,7 +11,7 @@ import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
-import myImage from "../../game/img/gameMap.png";
+import myImage from "@/assets/game/levels/Level-1.png";
 import style from "./style.module.scss";
 
 const GamePage: FC = () => {
