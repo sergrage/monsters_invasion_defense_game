@@ -6,15 +6,18 @@ import Layout from "@/components/layout";
 import zombieAlarm from "@/assets/img/zombieAlarm.png";
 import toasty from "@/assets/img/leaderborad/toasty.png";
 import toasty_sound from "@/assets/sound/toasty.mp3";
-
-import tempData from "./temp_data";
-
 import cn from "classnames";
 import Title from "@/ui/title";
+import { useAppSelector } from "@/store/hooks";
 
 const LeaderBoardPage: FC = () => {
   const [showToasty, setShowToasty] = useState(false);
   const [showBlood, setShowBlood] = useState(false);
+
+  const leaderBoardUsers = useAppSelector(
+    store => store.leaderboard.leaderboardUsers,
+  );
+  console.log("🚀 ~ leaderBoardUsers:", leaderBoardUsers);
 
   const handleClick = () => {
     setShowToasty(true);
@@ -84,35 +87,37 @@ const LeaderBoardPage: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {tempData
-                .sort((a, b) => a.rank - b.rank)
-                .map((item, index) => (
-                  <tr key={item.id}>
-                    {index === 0 ? (
-                      <td
-                        className={cn(style.boldText, style.twinkling)}
-                        onClick={handleClick}
-                      >
-                        {item.rank}
+              {leaderBoardUsers &&
+                leaderBoardUsers
+                  .slice()
+                  .sort((a, b) => a.rank - b.rank)
+                  .map((item, index) => (
+                    <tr key={item.id}>
+                      {index === 0 ? (
+                        <td
+                          className={cn(style.boldText, style.twinkling)}
+                          onClick={handleClick}
+                        >
+                          {item.rank}
+                        </td>
+                      ) : (
+                        <td className={style.boldText}>{item.rank}</td>
+                      )}
+                      <td>{item.zombieKills}</td>
+                      <td>
+                        <div className={style.user}>
+                          <Image
+                            className={style.avatar}
+                            src={item.user.avatar}
+                            alt="RRR! AVATAR!"
+                          />
+                          <p>{item.user.login}</p>
+                        </div>
                       </td>
-                    ) : (
-                      <td className={style.boldText}>{item.rank}</td>
-                    )}
-                    <td>{item.zombieKills}</td>
-                    <td>
-                      <div className={style.user}>
-                        <Image
-                          className={style.avatar}
-                          src={item.user.avatar}
-                          alt="RRR! AVATAR!"
-                        />
-                        <p>{item.user.login}</p>
-                      </div>
-                    </td>
-                    <td>{item.earnMoney}</td>
-                    <td>{item.date}</td>
-                  </tr>
-                ))}
+                      <td>{item.earnMoney}</td>
+                      <td>{item.date}</td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>
