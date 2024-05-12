@@ -84,6 +84,7 @@ class TowerConstructor extends Sprite {
   }
 
   public upgrade(): void {
+    // max level reached
     if (this.towerLevel === 4) {
       return;
     }
