@@ -1,12 +1,12 @@
 import towersData from "@/game/mocks/towersData";
-import { ITowerParams } from "@/game/interfaces";
 
 import style from "./style.module.scss";
+import { ITowerParams } from "@/game/interfaces";
 
 export default class TowersSelector {
   previewRoot: HTMLElement | null = null;
   towers: ITowerParams[] | null = [];
-  selectedTower: number | null = null;
+  selectedTowerIndex: number | null = null;
   coins: number;
 
   constructor(coins: number) {
@@ -44,28 +44,37 @@ export default class TowersSelector {
   // select tower
   private clickTowerHandler(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    if (target.tagName !== "IMG") return;
+    if (target.tagName !== "IMG") {
+      return;
+    }
 
-    // get tower index
-    this.selectedTower = Number(target.dataset.index);
+    const towerIndex = Number(target.dataset.index);
+
+    // if already selected => unselect
+    if (towerIndex === this.selectedTowerIndex) {
+      this.selectedTowerIndex = null;
+    } else {
+      this.selectedTowerIndex = towerIndex;
+    }
+
+    this.showSelectedTower();
   }
 
   // return selected tower data
   public getSelectedTower(): ITowerParams | null {
-    if (!this.towers || this.selectedTower === null) {
+    if (!this.towers || this.selectedTowerIndex === null) {
       return null;
     }
 
-    return this.towers[this.selectedTower];
+    return this.towers[this.selectedTowerIndex];
   }
 
   public updateCoins(coins: number): void {
     this.coins = coins;
-
     this.updateAvailableTowers();
   }
 
-  // if no coins => disable towers
+  // if not enough coins => disable towers
   private updateAvailableTowers() {
     if (!this.towers) return;
 
@@ -78,6 +87,27 @@ export default class TowersSelector {
         towerImg!.classList.add(style.disabled);
       } else {
         towerImg!.classList.remove(style.disabled);
+      }
+    });
+  }
+
+  private showSelectedTower() {
+    if (!this.towers) {
+      return;
+    }
+
+    this.towers.forEach(tower => {
+      const towerImg = this.previewRoot!.querySelector(
+        `img[title="${tower.title}"]`,
+      );
+
+      if (
+        this.selectedTowerIndex !== null &&
+        this.towers![this.selectedTowerIndex].title === tower.title
+      ) {
+        towerImg!.classList.add(style.selected);
+      } else {
+        towerImg!.classList.remove(style.selected);
       }
     });
   }

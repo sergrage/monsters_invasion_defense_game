@@ -1,6 +1,8 @@
 .towerPreview {
+  width: 67px;
   transition: transform 0.2s linear;
   cursor: pointer;
+  z-index: 1;
 
   &:hover {
     transform: scale(1.1);
@@ -9,5 +11,9 @@
   &.disabled {
     cursor: not-allowed;
     filter: grayscale(100%);
+  }
+
+  &.selected {
+    border: 3px solid red;
   }
 }
