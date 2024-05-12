@@ -1,11 +1,13 @@
+import tileImg from "@/assets/img/towers/palcementTile.png";
 import { IPosition } from "@/game/interfaces";
 
 class PlacementTile {
   position: IPosition;
-  size: number;
-  color: string;
-  occupied: boolean;
   ctx: CanvasRenderingContext2D;
+  size: number;
+  hoverColor: string;
+  occupied: boolean;
+  img: HTMLImageElement;
 
   constructor({
     position = { x: 0, y: 0 },
@@ -15,16 +17,21 @@ class PlacementTile {
     ctx: CanvasRenderingContext2D;
   }) {
     this.position = position;
+    this.ctx = ctx;
+
+    this.img = new Image();
+    this.img.src = tileImg;
     this.size = 64;
-    this.color = "rgba(255, 255, 255, 0.15)";
+    this.hoverColor = "rgba(255, 255, 255, 0.3)";
     this.occupied = false;
-    this.ctx = ctx; // Store the canvas context
+
+    this.draw();
   }
 
   draw() {
-    this.ctx.fillStyle = this.color;
-    this.ctx.fillRect(
-      this.position.x + 0,
+    this.ctx.drawImage(
+      this.img,
+      this.position.x,
       this.position.y,
       this.size,
       this.size,
@@ -44,8 +51,14 @@ class PlacementTile {
       mouse.y + 0 > this.position.y &&
       mouse.y - 0 < this.position.y + this.size
     ) {
-      this.color = "white";
-    } else this.color = "rgba(255, 255, 255, 0.15)";
+      this.ctx.fillStyle = this.hoverColor;
+      this.ctx.fillRect(
+        this.position.x + 0,
+        this.position.y,
+        this.size,
+        this.size,
+      );
+    }
   }
 }
 
