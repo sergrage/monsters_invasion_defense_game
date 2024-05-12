@@ -317,8 +317,13 @@ class Game {
       return;
     }
 
-    // if tile is occupied -> show tower menu
-    this.handleTowerMenu();
+    // if tile is occupied -> use tower menu
+
+    if (!this.towerMenu.isOpen) {
+      this.handleTowerMenu();
+    } else {
+      this.towerMenu.hide();
+    }
   }
 
   handleTowerCreation() {

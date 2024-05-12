@@ -10,6 +10,7 @@ export default class TowerMenu {
   upgradeBtn: HTMLButtonElement | null = null;
   sellBtn: HTMLButtonElement | null = null;
   coins: number;
+  isOpen: boolean = false;
   handleBuildingRemoval: (selectedTower: TowerConstructor) => void = () => {};
   triggerCoinsChangeEvent: () => void = () => {};
 
@@ -73,10 +74,15 @@ export default class TowerMenu {
     this.handleBuildingRemoval = handleBuildingRemoval;
     this.triggerCoinsChangeEvent = triggerCoinsChangeEvent;
 
-    this.menu.style.top = `${this.tileCoords!.y}px`;
-    this.menu.style.left = `${this.tileCoords!.x}px`;
+    this.menu.style.top = `${this.tileCoords!.y - 40}px`;
+    this.menu.style.left = `${this.tileCoords!.x - 40}px`;
 
     this.menu.classList.add(style.active);
+    setTimeout(() => {
+      this.menu!.classList.add(style.show);
+    }, 0);
+
+    this.isOpen = true;
   }
 
   public hide() {
@@ -84,6 +90,11 @@ export default class TowerMenu {
       return;
     }
 
-    this.menu.classList.remove(style.active);
+    setTimeout(() => {
+      this.menu!.classList.remove(style.show);
+    }, 300);
+    this.menu!.classList.remove(style.active);
+
+    this.isOpen = false;
   }
 }

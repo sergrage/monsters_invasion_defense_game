@@ -10,14 +10,15 @@ import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import TowersSelector from "@/game/classes/gameEntities/Buildings/TowerSelector";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
+import TowerMenu from "@/game/classes/gameEntities/Buildings/TowerMenu";
 
 import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import level from "@/game/mocks/level/index";
 
+import towerMenuImgs from "@/assets/img/towerMenu";
 import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
-import TowerMenu from "@/game/classes/gameEntities/Buildings/TowerMenu";
 
 const GamePage: FC = () => {
   const [coins, setCoins] = useState<number>(level.coins);
@@ -90,8 +91,12 @@ const GamePage: FC = () => {
           {/* <div className={style.selector}></div> */}
         </article>
         <article className={style.towerMenu} id="towerMenu">
-          <button title="Upgrade">Upgrade</button>
-          <button title="Sell">Sell</button>
+          <button title="Upgrade tower">
+            <img src={towerMenuImgs.upgrade} alt="Upgrade tower" />
+          </button>
+          <button title="Sell tower">
+            <img src={towerMenuImgs.sell} alt="Sell tower" />
+          </button>
         </article>
       </div>
     </>

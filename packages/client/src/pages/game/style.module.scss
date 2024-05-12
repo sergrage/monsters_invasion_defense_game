@@ -68,12 +68,48 @@
 .towerMenu {
   position: absolute;
   display: none;
-  flex-direction: column;
   align-items: center;
+  gap: 30px;
   opacity: 0;
+  transition: opacity 0.3s;
+
+  button {
+    width: 60px;
+    background-color: transparent;
+    transition: transform 0.3s;
+
+    &:nth-child(1) {
+      transform: translate(30px, 30px);
+    }
+
+    &:nth-child(2) {
+      transform: translate(-30px, 30px);
+    }
+
+    img {
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
 
   &.active {
     display: flex;
+  }
+
+  &.show {
     opacity: 1;
+
+    & button {
+      &:nth-child(1) {
+        transform: translate(0px, 0px);
+      }
+
+      &:nth-child(2) {
+        transform: translate(0px, 0px);
+      }
+    }
   }
 }
