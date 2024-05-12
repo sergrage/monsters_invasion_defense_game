@@ -3,12 +3,19 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "@/App";
 import "@/assets/styles/main.scss";
-import { Providers } from "./store/provider";
+import { Provider } from "react-redux";
+import { Store } from "@reduxjs/toolkit";
+import { ApplicationStore, createApplicationStore } from "@/store";
+import ErrorBoundary from "@/components/errorBoundary";
+
+const store: Store<ApplicationStore> = createApplicationStore();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
-    <Providers>
-      <App />
-    </Providers>
+    <Provider store={store}>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </Provider>
   </BrowserRouter>,
 );
