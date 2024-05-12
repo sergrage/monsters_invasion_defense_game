@@ -3,7 +3,7 @@ import towersData from "@/game/mocks/towersData";
 import style from "./style.module.scss";
 import { ITowerParams } from "@/game/interfaces";
 
-export default class TowersSelector {
+export default class TowerSelector {
   previewRoot: HTMLElement | null = null;
   towers: ITowerParams[] | null = [];
   selectedTowerIndex: number | null = null;

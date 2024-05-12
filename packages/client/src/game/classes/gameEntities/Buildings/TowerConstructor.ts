@@ -24,7 +24,7 @@ class TowerConstructor extends Sprite {
       towerExtraParams: towerData.extraParams,
     });
 
-    this.towerData = towerData;
+    this.towerData = { ...towerData };
     this.center = {
       x: this.position.x + towerData.width / 2,
       y: this.position.y + towerData.height / 2,
@@ -69,6 +69,7 @@ class TowerConstructor extends Sprite {
         canvas: this.canvas,
         imageSrc: this.towerData.projectile.imageSrc,
         needRotation: this.towerData.projectile.needRotation,
+        damage: this.towerData.damage,
       }),
     );
 
@@ -83,7 +84,15 @@ class TowerConstructor extends Sprite {
   }
 
   public upgrade(): void {
+    if (this.towerLevel === 4) {
+      return;
+    }
     this.towerLevel += 1;
+
+    this.towerData.upgradePrice *= 1.5;
+    this.towerData.speed *= 1.1;
+    this.towerData.radius *= 1.1;
+    this.towerData.damage *= 1.5;
 
     // set the next level tower image (compound tower case)
     if (this.towerData.extraParams) {

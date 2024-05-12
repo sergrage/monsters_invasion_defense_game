@@ -12,6 +12,7 @@ const archerTower: ITowerParams = {
   height: 144,
   radius: 250,
   speed: 3,
+  damage: 20,
   price: 50,
   upgradePrice: 25,
   imgs: shooterImgs,

@@ -48,6 +48,7 @@ export interface ITowerParams {
   width: number;
   height: number;
   radius: number;
+  damage: number;
   speed: number;
   price: number;
   upgradePrice: number;
@@ -76,6 +77,7 @@ export interface IProjectileConstructor extends IContext {
   enemy: Enemy;
   imageSrc: string;
   needRotation: boolean;
+  damage: number;
 }
 
 export interface ISprite extends IContext {

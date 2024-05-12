@@ -8,7 +8,7 @@ import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
-import TowersSelector from "@/game/classes/gameEntities/Buildings/TowersSelector";
+import TowersSelector from "@/game/classes/gameEntities/Buildings/TowerSelector";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 
 import placementTilesData from "@/game/mocks/placementTilesData";

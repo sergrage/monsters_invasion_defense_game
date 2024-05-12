@@ -7,6 +7,7 @@ class ProjectileConstructor extends Sprite {
   angle: number | null = null;
   enemy;
   radius;
+  damage: number;
 
   constructor({
     position,
@@ -15,6 +16,7 @@ class ProjectileConstructor extends Sprite {
     canvas,
     imageSrc,
     needRotation,
+    damage,
   }: IProjectileConstructor) {
     super({
       position,
@@ -36,6 +38,7 @@ class ProjectileConstructor extends Sprite {
     };
     this.enemy = enemy;
     this.radius = 10;
+    this.damage = damage;
   }
 
   update(): void {

@@ -2,7 +2,7 @@ import EventSubject from "@/game/classes/behavioral/eventSubject";
 import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
-import TowersSelector from "@/game/classes/gameEntities/Buildings/TowersSelector";
+import TowersSelector from "@/game/classes/gameEntities/Buildings/TowerSelector";
 import TowerConstructor from "@/game/classes/gameEntities/Buildings/TowerConstructor";
 import Projectile from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
 import Sprite from "@/game/classes/gameEntities/Sprite";
@@ -260,13 +260,15 @@ class Game {
       projectile.position,
     );
     if (distance < projectile.radius + projectile.radius) {
-      this.handleEnemyHit(projectile.enemy);
+      this.handleEnemyHit(projectile);
       this.handleProjectileHit(projectile, building, i);
     }
   }
 
-  handleEnemyHit(enemy: Enemy) {
-    enemy.health -= 20;
+  handleEnemyHit(projectile: Projectile) {
+    const { enemy, damage } = projectile;
+
+    enemy.health -= damage;
     if (enemy.health <= 0) {
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
 
