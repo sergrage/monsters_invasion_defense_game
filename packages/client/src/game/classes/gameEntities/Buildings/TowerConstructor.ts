@@ -2,8 +2,6 @@ import Sprite from "../Sprite";
 import Enemy from "../Enemies/Enemy";
 import ProjectileConstructor from "@/game/classes/gameEntities/Projectiles/ProjectileConstructor";
 
-import towers from "@/game/mocks/towersData";
-
 import { IPosition, ITowerConstructor, ITowerParams } from "@/game/interfaces";
 
 class TowerConstructor extends Sprite {
@@ -13,6 +11,7 @@ class TowerConstructor extends Sprite {
   radius: number;
   projectiles: ProjectileConstructor[];
   target: Enemy | null = null;
+  towerLevel: number;
 
   constructor({ position, canvas, ctx, towerData }: ITowerConstructor) {
     super({
@@ -33,13 +32,10 @@ class TowerConstructor extends Sprite {
 
     this.radius = towerData.radius;
     this.projectiles = [];
+    this.towerLevel = 0;
   }
 
-  draw(): void {
-    super.draw();
-  }
-
-  update(): void {
+  public update(): void {
     // update the visual representation
     this.draw();
 
@@ -86,6 +82,21 @@ class TowerConstructor extends Sprite {
     this.projectiles = [];
   }
 
+  public upgrade(): void {
+    this.towerLevel += 1;
+
+    // set the next level tower image (compound tower case)
+    if (this.towerData.extraParams) {
+      const newSrc = this.towerData.extraParams.towerImgs[this.towerLevel];
+
+      this.extraImg!.src = newSrc;
+      return;
+    }
+
+    // set the next level tower image
+    this.changeImageView(this.towerData.imgs[this.towerLevel]);
+  }
+
   private getShootAngle(): void {
     // calculate the angle between the tower and the target
     const angle = Math.atan2(
@@ -99,11 +110,12 @@ class TowerConstructor extends Sprite {
       towerAngle += 360;
     }
 
-    this.updateTowerView(towerAngle);
+    this.updateShooterDirection(towerAngle);
   }
 
-  private updateTowerView(towerAngle: number): void {
-    const numImages = towers[0].imgs.length;
+  private updateShooterDirection(towerAngle: number): void {
+    // get the number of images
+    const numImages = this.towerData.imgs.length;
     // get the angle range for each image
     const imageRange = 360 / numImages;
 
@@ -116,30 +128,7 @@ class TowerConstructor extends Sprite {
     }
 
     // update the image source using the calculated index
-    this.image.src = towers[0].imgs[imageIndex];
-
-    // alt version, mb more accurate?
-    // let newSrc = "";
-
-    // if (337.5 < towerAngle || towerAngle <= 22.5) {
-    //   newSrc = archerImgs[0];
-    // } else if (22.5 < towerAngle && towerAngle <= 67.5) {
-    //   newSrc = archerImgs[1];
-    // } else if (67.5 < towerAngle && towerAngle <= 112.5) {
-    //   newSrc = archerImgs[2];
-    // } else if (112.5 < towerAngle && towerAngle <= 157.5) {
-    //   newSrc = archerImgs[3];
-    // } else if (157.5 < towerAngle && towerAngle <= 202.5) {
-    //   newSrc = archerImgs[4];
-    // } else if (202.5 < towerAngle && towerAngle <= 247.5) {
-    //   newSrc = archerImgs[5];
-    // } else if (247.5 < towerAngle && towerAngle <= 292.5) {
-    //   newSrc = archerImgs[6];
-    // } else if (292.5 < towerAngle && towerAngle <= 337.5) {
-    //   newSrc = archerImgs[7];
-    // }
-
-    // this.image.src = newSrc;
+    this.img.src = this.towerData.imgs[imageIndex];
   }
 }
 

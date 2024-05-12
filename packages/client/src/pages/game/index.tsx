@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useRef } from "react";
-// import Layout from "@/components/Layout";
+// import Layout from "@/components/layout";
 import Game from "@/game/game";
 import Coins from "@/components/game/coins/coins";
 import Hearts from "@/components/game/hearts/hearts";
@@ -17,6 +17,7 @@ import level from "@/game/mocks/level/index";
 
 import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
+import TowerMenu from "@/game/classes/gameEntities/Buildings/TowerMenu";
 
 const GamePage: FC = () => {
   const [coins, setCoins] = useState<number>(level.coins);
@@ -45,6 +46,7 @@ const GamePage: FC = () => {
     );
     const eventSubject = new EventSubject();
     const towerSelector = new TowersSelector(coins);
+    const towerMenu = new TowerMenu(coins);
 
     const game = new Game(
       coins,
@@ -55,6 +57,7 @@ const GamePage: FC = () => {
       eventSubject,
       level,
       towerSelector,
+      towerMenu,
     );
 
     const coinsChangedObserver = new EventObserver(handleCoinsChangedEvent);
@@ -83,7 +86,13 @@ const GamePage: FC = () => {
           <Coins coins={coins} />
           <Hearts hearts={hearts} />
         </div>
-        <article className={style.towerSelector} id="towerSelector"></article>
+        <article className={style.towerSelectorContainer} id="towerSelector">
+          {/* <div className={style.selector}></div> */}
+        </article>
+        <article className={style.towerMenu} id="towerMenu">
+          <button title="Upgrade">Upgrade</button>
+          <button title="Sell">Sell</button>
+        </article>
       </div>
     </>
   );

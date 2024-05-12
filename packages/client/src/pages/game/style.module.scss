@@ -42,9 +42,38 @@
   align-items: center;
 }
 
-.towerSelector {
+.towerSelectorContainer {
   position: relative;
-  width: 500px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  width: 450px;
   height: 150px;
-  border: 1px solid black;
+  padding-bottom: 37px;
+  background-image: url(/src/assets/img/titleBox.png);
+  background-size: 100% 100%;
+}
+
+// .selector {
+//   position: absolute;
+//   width: 84px;
+//   height: 84px;
+//   border-radius: 50%;
+//   background-color: var(--primary-light);
+//   z-index: 0;
+//   top: 50%;
+//   transform: translateY(-50%);
+// }
+
+.towerMenu {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+
+  &.active {
+    display: flex;
+    opacity: 1;
+  }
 }

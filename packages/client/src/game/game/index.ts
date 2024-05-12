@@ -8,6 +8,7 @@ import Projectile from "@/game/classes/gameEntities/Projectiles/ProjectileConstr
 import Sprite from "@/game/classes/gameEntities/Sprite";
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
+import TowerMenu from "@/game/classes/gameEntities/Buildings/TowerMenu";
 
 import myImageExplosion from "@/game/img/explosion.png";
 import { ILevel, IPosition } from "@/game/interfaces";
@@ -30,6 +31,7 @@ class Game {
   tilesGenerator;
   level;
   towersSelector;
+  towerMenu;
 
   constructor(
     coins: number,
@@ -40,6 +42,7 @@ class Game {
     eventSubject: EventSubject,
     level: ILevel,
     towersSelector: TowersSelector,
+    towerMenu: TowerMenu,
   ) {
     this.coins = coins;
     this.hearts = hearts;
@@ -61,11 +64,13 @@ class Game {
     this.enemiesGenerator = enemiesGenerator;
     this.tilesGenerator = tilesGenerator;
     this.towersSelector = towersSelector;
+    this.towerMenu = towerMenu;
   }
 
   // Метод для изменения количества монет
   setCoins(newCoins: number) {
     this.coins += newCoins;
+    this.towersSelector.updateCoins(this.coins);
     this.triggerCoinsChangeEvent();
   }
 
@@ -119,17 +124,16 @@ class Game {
 
   // generate next wave
   spawnEnemies() {
-    if (this.canvas) {
-      this.enemies = this.enemiesGenerator.generate(
-        this.level.waves[0],
-        this.canvas,
-      );
-
-      // remove generated wave
-      this.level.waves.splice(0, 1);
-    } else {
-      console.error("Canvas is null. Cannot spawn more enemies.");
+    if (!this.canvas || this.level.waves.length === 0) {
+      return;
     }
+    this.enemies = this.enemiesGenerator.generate(
+      this.level.waves[0],
+      this.canvas,
+    );
+
+    // remove generated wave
+    this.level.waves.splice(0, 1);
   }
 
   initGame() {
@@ -142,23 +146,22 @@ class Game {
   handleEnemyLogic(animationId: number) {
     // id for stopping the animation
     // let id = animationId;
+    // cancelAnimationFrame(animationId);
+    // this.buildings.forEach(building => building.clearProjectiles());
+    // id = requestAnimationFrame(this.animate);
 
     // fire next wave
     if (this.enemies.length === 0 && this.level.waves.length > 0) {
-      // need to add new wave approaching alert message
+      let timeout;
+      clearTimeout(timeout);
+
       console.log("new wave is approaching");
-      // stop animation before new wave starts
-      // cancelAnimationFrame(animationId);
-      // this.buildings.forEach(building => building.clearProjectiles());
 
-      // pause the game before new wave starts
-      // setTimeout(() => {
-      console.log("new wave!");
+      timeout = setTimeout(() => {
+        console.log("new wave!");
 
-      // resume the animation
-      // id = requestAnimationFrame(this.animate);
-      this.spawnEnemies();
-      // }, 3000);
+        this.spawnEnemies();
+      }, 3000);
     }
 
     // no enemies & no waves left -> level completed logic
@@ -281,18 +284,16 @@ class Game {
     building: TowerConstructor,
     i: number,
   ) {
-    // this.ctx && this.canvas type guard + добавил canvas т.к. его ожидает sprite
     if (this.ctx && this.canvas) {
-      this.explosions.push(
-        new Sprite({
-          position: { x: projectile.position.x, y: projectile.position.y },
-          canvas: this.canvas,
-          imageSrc: myImageExplosion,
-          frames: { max: 4 },
-          offset: { x: 0, y: 0 },
-          ctx: this.ctx,
-        }),
-      );
+      const explosion = new Sprite({
+        position: { x: projectile.position.x, y: projectile.position.y },
+        canvas: this.canvas,
+        imageSrc: myImageExplosion,
+        frames: { max: 4 },
+        offset: { x: 0, y: 0 },
+        ctx: this.ctx,
+      });
+      explosion.draw();
       building.projectiles.splice(i, 1);
     }
   }
@@ -304,33 +305,87 @@ class Game {
   }
 
   handleCanvasClick() {
+    if (!this.activeTile) {
+      return;
+    }
+
+    // if no tile is not occupied -> create tower
+    if (!this.activeTile.occupied) {
+      this.handleTowerCreation();
+      return;
+    }
+
+    // if tile is occupied -> show tower menu
+    this.handleTowerMenu();
+  }
+
+  handleTowerCreation() {
     const selectedTower = this.towersSelector.getSelectedTower();
 
     if (
-      this.activeTile &&
-      !this.activeTile.occupied &&
-      selectedTower &&
-      this.coins >= selectedTower.price
+      !this.ctx ||
+      !this.canvas ||
+      selectedTower === null ||
+      this.coins < selectedTower.price ||
+      !this.activeTile
     ) {
-      if (this.ctx && this.canvas) {
-        this.buildings.push(
-          new TowerConstructor({
-            position: {
-              x: this.activeTile.position.x,
-              y: this.activeTile.position.y,
-            },
-            canvas: this.canvas,
-            ctx: this.ctx,
-            towerData: selectedTower,
-          }),
-        );
-      }
-
-      this.setCoins(-selectedTower.price);
-      this.activeTile.occupied = true;
-      this.buildings.sort((a, b) => a.position.y - b.position.y);
-      console.log(this.buildings);
+      return;
     }
+
+    this.buildings.push(
+      new TowerConstructor({
+        position: {
+          x: this.activeTile.position.x,
+          y: this.activeTile.position.y,
+        },
+        canvas: this.canvas,
+        ctx: this.ctx,
+        towerData: selectedTower,
+      }),
+    );
+
+    this.setCoins(-selectedTower.price);
+    this.activeTile.occupied = true;
+    this.buildings.sort((a, b) => a.position.y - b.position.y);
+  }
+
+  handleTowerMenu() {
+    if (!this.activeTile) {
+      return;
+    }
+
+    // get coords to position tower menu and find selected tower
+    const tileCoords = this.activeTile.position;
+    const selectedTower = this.buildings.find(
+      building =>
+        building.position.x === tileCoords?.x &&
+        building.position.y === tileCoords?.y,
+    );
+
+    if (!selectedTower) {
+      return;
+    }
+
+    this.towerMenu.show(
+      tileCoords,
+      selectedTower,
+      this.handleBuildingRemoval.bind(this),
+      this.triggerCoinsChangeEvent.bind(this),
+    );
+  }
+
+  // remove selected tower after selling
+  handleBuildingRemoval(selectedTower: TowerConstructor) {
+    if (!selectedTower || !this.activeTile) {
+      return;
+    }
+
+    this.buildings = this.buildings.filter(
+      building =>
+        building.position.x !== selectedTower.position.x ||
+        building.position.y !== selectedTower.position.y,
+    );
+    this.activeTile.occupied = false;
   }
 
   handleMouseMove(event: MouseEvent): void {
