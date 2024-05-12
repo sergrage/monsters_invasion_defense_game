@@ -376,23 +376,23 @@ class Game {
     this.towerMenu.show(
       tileCoords,
       selectedTower,
+      this.activeTile,
       this.handleBuildingRemoval.bind(this),
-      this.triggerCoinsChangeEvent.bind(this),
+      this.setCoins.bind(this),
     );
   }
 
   // remove selected tower after selling
-  handleBuildingRemoval(selectedTower: TowerConstructor) {
-    if (!selectedTower || !this.activeTile) {
-      return;
-    }
-
+  handleBuildingRemoval(
+    selectedTower: TowerConstructor,
+    placementTile: PlacementTile,
+  ) {
     this.buildings = this.buildings.filter(
       building =>
         building.position.x !== selectedTower.position.x ||
         building.position.y !== selectedTower.position.y,
     );
-    this.activeTile.occupied = false;
+    placementTile.occupied = false;
   }
 
   handleMouseMove(event: MouseEvent): void {
