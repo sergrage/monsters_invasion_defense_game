@@ -38,7 +38,7 @@ export interface IEnemyParams {
 export interface ITowerExtraParams {
   width: number;
   height: number;
-  towerImg: string;
+  towerImgs: string[];
   offset: IPosition;
 }
 

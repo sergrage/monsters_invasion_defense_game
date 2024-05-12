@@ -1,3 +1,7 @@
+// need to maintain waypoints subsequence
+// one step - one coord (x - change, y - stay)
+// need for change zombies view logic
+
 const waypoints = [
   {
     x: -124,

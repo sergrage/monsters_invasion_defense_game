@@ -3,7 +3,7 @@ import { IPosition, ISprite, ITowerExtraParams } from "@/game/interfaces";
 class Sprite {
   position; // stores the x and y coordinates of the sprite on the canvas
   canvas; // reference to the HTML canvas element where the sprite will be drawn
-  image; // an Image object holding the sprite's image data
+  img; // an Image object holding the sprite's image data
   frames; // information about the animation frames
   offset; // offset for the sprite's position
   ctx; // canvas rendering context used for drawing
@@ -27,8 +27,8 @@ class Sprite {
     this.ctx = ctx;
     this.offset = offset;
 
-    this.image = new Image();
-    this.image.src = imageSrc;
+    this.img = new Image();
+    this.img.src = imageSrc;
 
     this.frames = {
       max: frames.max,
@@ -41,14 +41,14 @@ class Sprite {
 
     if (towerExtraParams) {
       this.extraImg = new Image();
-      this.extraImg.src = towerExtraParams.towerImg;
+      this.extraImg.src = towerExtraParams.towerImgs[0];
       this.towerExtraParams = towerExtraParams;
     }
   }
 
   public draw(): void {
     // calculate the width of a single frame
-    const cropWidth = this.image.width / this.frames.max;
+    const cropWidth = this.img.width / this.frames.max;
 
     // define the cropping region for the current frame
     const crop = {
@@ -58,10 +58,10 @@ class Sprite {
         y: 0, // assuming frames are arranged in a single row
       },
       width: cropWidth, // width of a single frame
-      height: this.image.height, // full height of the image
+      height: this.img.height, // full height of the image
     };
 
-    // if an angle is specified, rotate the sprite around its center
+    // if angle is specified, rotate the sprite around its center
     // before drawing it on the canvas
     if (this.needRotation && this.angle) {
       this.rotateImage(crop);
@@ -89,7 +89,7 @@ class Sprite {
   }
 
   protected changeImageView(newSrc: string): void {
-    this.image.src = newSrc;
+    this.img.src = newSrc;
   }
 
   protected rotateImage(crop: {
@@ -132,6 +132,7 @@ class Sprite {
     width: number;
     height: number;
   }): void {
+    // draw the tower extra image (compound tower case)
     if (this.extraImg) {
       this.ctx.drawImage(
         this.extraImg,
@@ -144,7 +145,7 @@ class Sprite {
 
     // draw the sprite on the canvas
     this.ctx.drawImage(
-      this.image,
+      this.img,
       crop.position.x,
       crop.position.y,
       crop.width,
