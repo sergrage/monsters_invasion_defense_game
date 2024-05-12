@@ -39,7 +39,6 @@ export default class TowerMenu {
   private upgradeHandler() {
     if (
       !this.selectedTower ||
-      this.coins ||
       this.selectedTower.towerData.upgradePrice > this.coins!
     ) {
       return;
