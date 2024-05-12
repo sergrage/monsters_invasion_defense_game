@@ -1,4 +1,4 @@
 import archer from "./archerT.png";
-import electro from "./electroT.png";
+import tesla from "./teslaT.png";
 
-export default { archer, electro };
+export default { archer, tesla };
