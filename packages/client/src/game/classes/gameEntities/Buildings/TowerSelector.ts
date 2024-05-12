@@ -5,6 +5,7 @@ import { ITowerParams } from "@/game/interfaces";
 
 export default class TowerSelector {
   previewRoot: HTMLElement | null = null;
+  selectCircle: HTMLElement | null = null;
   towers: ITowerParams[] | null = [];
   selectedTowerIndex: number | null = null;
   coins: number;
@@ -21,6 +22,11 @@ export default class TowerSelector {
 
     // select preview section
     this.previewRoot = document.getElementById("towerSelector");
+    if (!this.previewRoot) {
+      return;
+    }
+
+    this.selectCircle = this.previewRoot!.querySelector("div");
 
     // add tower preview images
     this.towers.forEach((tower, index) => {
@@ -31,11 +37,11 @@ export default class TowerSelector {
       towerImg.setAttribute("title", tower.title);
       towerImg.setAttribute("data-index", index.toString());
 
-      this.previewRoot?.appendChild(towerImg);
+      this.previewRoot!.appendChild(towerImg);
     });
 
     this.updateAvailableTowers();
-    this.previewRoot?.addEventListener(
+    this.previewRoot.addEventListener(
       "click",
       this.clickTowerHandler.bind(this),
     );
@@ -53,6 +59,7 @@ export default class TowerSelector {
     // if already selected => unselect
     if (towerIndex === this.selectedTowerIndex) {
       this.selectedTowerIndex = null;
+      this.selectCircle?.classList.remove(style.show);
     } else {
       this.selectedTowerIndex = towerIndex;
     }
@@ -97,7 +104,7 @@ export default class TowerSelector {
     }
 
     this.towers.forEach(tower => {
-      const towerImg = this.previewRoot!.querySelector(
+      const towerImg: HTMLElement | null = this.previewRoot!.querySelector(
         `img[title="${tower.title}"]`,
       );
 
@@ -105,9 +112,8 @@ export default class TowerSelector {
         this.selectedTowerIndex !== null &&
         this.towers![this.selectedTowerIndex].title === tower.title
       ) {
-        towerImg!.classList.add(style.selected);
-      } else {
-        towerImg!.classList.remove(style.selected);
+        this.selectCircle?.classList.add(style.show);
+        this.selectCircle!.style.left = `${towerImg!.offsetLeft - 10}px`;
       }
     });
   }

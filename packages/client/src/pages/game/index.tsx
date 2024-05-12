@@ -88,7 +88,7 @@ const GamePage: FC = () => {
           <Hearts hearts={hearts} />
         </div>
         <article className={style.towerSelectorContainer} id="towerSelector">
-          {/* <div className={style.selector}></div> */}
+          <div className={style.selector}></div>
         </article>
         <article className={style.towerMenu} id="towerMenu">
           <button title="Upgrade tower">

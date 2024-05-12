@@ -17,3 +17,9 @@
     border: 3px solid red;
   }
 }
+
+div {
+  &.show {
+    opacity: 1;
+  }
+}
