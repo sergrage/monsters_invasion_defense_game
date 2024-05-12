@@ -47,7 +47,7 @@ const GamePage: FC = () => {
     );
     const eventSubject = new EventSubject();
     const towerSelector = new TowersSelector(coins);
-    const towerMenu = new TowerMenu(coins);
+    const towerMenu = new TowerMenu();
 
     const game = new Game(
       coins,

@@ -10,7 +10,7 @@ export default class TowerMenu {
   menu: HTMLElement | null = null;
   upgradeBtn: HTMLButtonElement | null = null;
   sellBtn: HTMLButtonElement | null = null;
-  coins: number;
+  coins: number | null = null;
   isOpen: boolean = false;
   placementTile: PlacementTile | null = null;
   handleBuildingRemoval: (
@@ -19,9 +19,7 @@ export default class TowerMenu {
   ) => void = () => {};
   setCoins: (coins: number) => void = () => {};
 
-  constructor(coins: number) {
-    this.coins = coins;
-
+  constructor() {
     this.init();
   }
 
@@ -41,7 +39,8 @@ export default class TowerMenu {
   private upgradeHandler() {
     if (
       !this.selectedTower ||
-      this.selectedTower.towerData.upgradePrice > this.coins
+      this.coins ||
+      this.selectedTower.towerData.upgradePrice > this.coins!
     ) {
       return;
     }
@@ -69,6 +68,7 @@ export default class TowerMenu {
     tileCoords: IPosition,
     selectedTower: TowerConstructor,
     placementTile: PlacementTile,
+    coins: number,
     handleBuildingRemoval: (
       selectedTower: TowerConstructor,
       placementTile: PlacementTile,
@@ -84,6 +84,7 @@ export default class TowerMenu {
     this.handleBuildingRemoval = handleBuildingRemoval;
     this.setCoins = setCoins;
     this.placementTile = placementTile;
+    this.coins = coins;
 
     this.menu.style.top = `${this.tileCoords!.y - 40}px`;
     this.menu.style.left = `${this.tileCoords!.x - 40}px`;

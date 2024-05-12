@@ -318,7 +318,6 @@ class Game {
     }
 
     // if tile is occupied -> use tower menu
-
     if (!this.towerMenu.isOpen) {
       this.handleTowerMenu();
     } else {
@@ -377,6 +376,7 @@ class Game {
       tileCoords,
       selectedTower,
       this.activeTile,
+      this.coins,
       this.handleBuildingRemoval.bind(this),
       this.setCoins.bind(this),
     );
