@@ -37,7 +37,8 @@ export default class TowerSelector {
       towerImg.setAttribute("title", tower.title);
       towerImg.setAttribute("data-index", index.toString());
 
-      this.previewRoot!.appendChild(towerImg);
+      const imgEl = this.previewRoot!.appendChild(towerImg);
+      tower.previewEl = imgEl;
     });
 
     this.updateAvailableTowers();
@@ -86,14 +87,10 @@ export default class TowerSelector {
     if (!this.towers) return;
 
     this.towers.forEach(tower => {
-      const towerImg = this.previewRoot!.querySelector(
-        `img[title="${tower.title}"]`,
-      );
-
       if (this.coins < tower.price) {
-        towerImg!.classList.add(style.disabled);
+        tower.previewEl!.classList.add(style.disabled);
       } else {
-        towerImg!.classList.remove(style.disabled);
+        tower.previewEl!.classList.remove(style.disabled);
       }
     });
   }
@@ -104,16 +101,12 @@ export default class TowerSelector {
     }
 
     this.towers.forEach(tower => {
-      const towerImg: HTMLElement | null = this.previewRoot!.querySelector(
-        `img[title="${tower.title}"]`,
-      );
-
       if (
         this.selectedTowerIndex !== null &&
         this.towers![this.selectedTowerIndex].title === tower.title
       ) {
         this.selectCircle?.classList.add(style.show);
-        this.selectCircle!.style.left = `${towerImg!.offsetLeft - 10}px`;
+        this.selectCircle!.style.left = `${tower.previewEl!.offsetLeft - 10}px`;
       }
     });
   }

@@ -45,6 +45,7 @@ export interface ITowerExtraParams {
 export interface ITowerParams {
   title: string;
   preview: string;
+  previewEl?: HTMLImageElement;
   width: number;
   height: number;
   radius: number;
