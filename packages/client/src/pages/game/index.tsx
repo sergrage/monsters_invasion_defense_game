@@ -11,21 +11,39 @@ import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import TowersSelector from "@/game/classes/gameEntities/Buildings/TowerSelector";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import TowerMenu from "@/game/classes/gameEntities/Buildings/TowerMenu";
+import ScreenZombie from "@/ui/screenZombie";
+
+import useWindowSize from "@/hooks/useWindowSize";
 
 import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import level from "@/game/mocks/level/index";
 
+import {
+  SCREEN_ZOMBIE_MESSAGE_1,
+  SCREEN_ZOMBIE_MESSAGE_2,
+  SCREEN_ZOMBIE_MESSAGE_FINAL,
+} from "@/constants/index";
 import sellImg from "@/assets/img/towerMenu/sell.png";
 import upgrImg from "@/assets/img/towerMenu/upgr.png";
 import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
 
+let isInit = true;
+let isBadScreen = false;
+
 const GamePage = () => {
+  const canvasRef = useRef(null);
+
   const [coins, setCoins] = useState<number>(level.coins);
   const [hearts, setHearts] = useState<number>(level.hearts);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
-  const canvasRef = useRef(null);
+  const [showDisclaimer, setShowDisclaimer] = useState<boolean>(false);
+  const [disclaimerText, setDisclaimerText] = useState<string>(
+    SCREEN_ZOMBIE_MESSAGE_1,
+  );
+
+  const [windowWidth, windowHeight] = useWindowSize();
 
   const handleCoinsChangedEvent = (coins: number) => setCoins(coins);
   const handleHeartsChangedEvent = (hearts: number) => setHearts(hearts);
@@ -74,6 +92,30 @@ const GamePage = () => {
     game.initGame();
   }, []);
 
+  useEffect(() => {
+    if (isInit) {
+      isInit = false;
+      return;
+    }
+
+    if (windowWidth < 1250 || windowHeight < 900) {
+      setShowDisclaimer(true);
+      if (isBadScreen) {
+        setDisclaimerText(SCREEN_ZOMBIE_MESSAGE_2);
+      } else {
+        isBadScreen = true;
+      }
+    } else {
+      setDisclaimerText(SCREEN_ZOMBIE_MESSAGE_FINAL);
+
+      setTimeout(() => {
+        setShowDisclaimer(false);
+        setDisclaimerText(SCREEN_ZOMBIE_MESSAGE_1);
+        isBadScreen = false;
+      }, 1000);
+    }
+  }, [windowWidth, windowHeight]);
+
   return (
     <>
       <div className={style.game}>
@@ -100,6 +142,7 @@ const GamePage = () => {
           </button>
         </article>
       </div>
+      {showDisclaimer && <ScreenZombie text={disclaimerText} />}
     </>
   );
 };
