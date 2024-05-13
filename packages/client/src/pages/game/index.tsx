@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 // import Layout from "@/components/layout";
 import Game from "@/game/game";
 import Coins from "@/components/game/coins/coins";
@@ -21,7 +21,7 @@ import upgrImg from "@/assets/img/towerMenu/upgr.png";
 import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
 
-const GamePage: FC = () => {
+const GamePage = () => {
   const [coins, setCoins] = useState<number>(level.coins);
   const [hearts, setHearts] = useState<number>(level.hearts);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
