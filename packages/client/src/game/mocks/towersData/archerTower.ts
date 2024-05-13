@@ -1,13 +1,13 @@
-import towersPreview from "@/assets/img/towers/towersPreview";
+import previewImg from "@/assets/img/towers/towersPreview/archerT.png";
 import shooterImgs from "@/assets/img/towers/archerTower/archer/index";
 import towerImgs from "@/assets/img/towers/archerTower/tower/index";
-import projectileImgs from "@/assets/img/projectiles/index";
+import arrowImg from "@/assets/img/projectiles/Arrow.png";
 
 import { ITowerParams } from "@/game/interfaces";
 
 const archerTower: ITowerParams = {
   title: "Archer tower",
-  preview: towersPreview.archer,
+  preview: previewImg,
   width: 144,
   height: 144,
   radius: 250,
@@ -44,7 +44,7 @@ const archerTower: ITowerParams = {
       x: 23,
       y: 100,
     },
-    imageSrc: projectileImgs.arrow,
+    imageSrc: arrowImg,
     needRotation: true,
   },
 };

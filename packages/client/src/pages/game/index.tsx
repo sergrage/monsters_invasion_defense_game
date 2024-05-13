@@ -16,7 +16,8 @@ import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import level from "@/game/mocks/level/index";
 
-import towerMenuImgs from "@/assets/img/towerMenu";
+import sellImg from "@/assets/img/towerMenu/sell.png";
+import upgrImg from "@/assets/img/towerMenu/upgr.png";
 import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
 
@@ -92,10 +93,10 @@ const GamePage: FC = () => {
         </article>
         <article className={style.towerMenu} id="towerMenu">
           <button title="Upgrade tower">
-            <img src={towerMenuImgs.upgrade} alt="Upgrade tower" />
+            <img src={upgrImg} alt="Upgrade tower" />
           </button>
           <button title="Sell tower">
-            <img src={towerMenuImgs.sell} alt="Sell tower" />
+            <img src={sellImg} alt="Sell tower" />
           </button>
         </article>
       </div>

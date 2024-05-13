@@ -1,12 +1,12 @@
-import towersPreview from "@/assets/img/towers/towersPreview";
+import previewImg from "@/assets/img/towers/towersPreview/teslaT.png";
 import imgs from "@/assets/img/towers/teslaTower/index";
-import projectileImgs from "@/assets/img/projectiles/index";
+import lighterImg from "@/assets/img/projectiles/Lighter.png";
 
 import { ITowerParams } from "@/game/interfaces";
 
 const teslaTower: ITowerParams = {
   title: "Tesla tower",
-  preview: towersPreview.tesla,
+  preview: previewImg,
   width: 236,
   height: 335,
   radius: 250,
@@ -33,7 +33,7 @@ const teslaTower: ITowerParams = {
       x: 105,
       y: 310,
     },
-    imageSrc: projectileImgs.lighter,
+    imageSrc: lighterImg,
     needRotation: false,
   },
 };
