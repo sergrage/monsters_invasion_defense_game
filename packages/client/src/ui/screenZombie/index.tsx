@@ -42,16 +42,26 @@ const ScreenZombie = ({ text }: TProps) => {
   }, []);
 
   useEffect(() => {
-    if (text !== SCREEN_ZOMBIE_MESSAGE_FINAL) {
+    let explosionTimer: ReturnType<typeof setTimeout>;
+    let hideTimer: ReturnType<typeof setTimeout>;
+
+    if (text == SCREEN_ZOMBIE_MESSAGE_FINAL) {
+      explosionTimer = setTimeout(() => {
+        setShowExplosion(true);
+
+        hideTimer = setTimeout(() => {
+          sethideZombie(true);
+        }, 400);
+      }, 400);
+
       return;
     }
-    setTimeout(() => {
-      setShowExplosion(true);
+    sethideZombie(false);
 
-      setTimeout(() => {
-        sethideZombie(true);
-      }, 400);
-    }, 400);
+    return () => {
+      clearTimeout(explosionTimer);
+      clearTimeout(hideTimer);
+    };
   }, [text]);
 
   return (

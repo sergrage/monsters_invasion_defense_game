@@ -98,7 +98,7 @@ const GamePage = () => {
       return;
     }
 
-    if (windowWidth < 1250 || windowHeight < 900) {
+    if (windowWidth < 1300 || windowHeight < 950) {
       setShowDisclaimer(true);
       if (isBadScreen) {
         setDisclaimerText(SCREEN_ZOMBIE_MESSAGE_2);
