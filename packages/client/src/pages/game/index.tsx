@@ -92,6 +92,7 @@ const GamePage = () => {
     game.initGame();
   }, []);
 
+  // screen zombie disclaimer logic
   useEffect(() => {
     if (isInit) {
       isInit = false;

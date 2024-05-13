@@ -30,6 +30,7 @@ class Game {
   enemiesGenerator;
   tilesGenerator;
   level;
+  currentWave: number;
   towersSelector;
   towerMenu;
 
@@ -58,6 +59,7 @@ class Game {
     this.explosions = [];
     this.eventSubject = eventSubject;
     this.level = level;
+    this.currentWave = 0;
 
     // Injected dependencies
     this.mapGenerator = mapGenerator;
@@ -98,6 +100,10 @@ class Game {
     this.eventSubject.notify("gameOver");
   }
 
+  setNextWave() {
+    this.currentWave += 1;
+  }
+
   initialize() {
     this.initializeMap();
     this.initializeTiles();
@@ -124,16 +130,15 @@ class Game {
 
   // generate next wave
   spawnEnemies() {
-    if (!this.canvas || this.level.waves.length === 0) {
+    if (!this.canvas || this.currentWave > this.level.waves.length - 1) {
       return;
     }
     this.enemies = this.enemiesGenerator.generate(
-      this.level.waves[0],
+      this.level.waves[this.currentWave],
       this.canvas,
     );
 
-    // remove generated wave
-    this.level.waves.splice(0, 1);
+    this.setNextWave();
   }
 
   initGame() {
@@ -144,14 +149,11 @@ class Game {
   }
 
   handleEnemyLogic(animationId: number) {
-    // id for stopping the animation
-    // let id = animationId;
-    // cancelAnimationFrame(animationId);
-    // this.buildings.forEach(building => building.clearProjectiles());
-    // id = requestAnimationFrame(this.animate);
-
     // fire next wave
-    if (this.enemies.length === 0 && this.level.waves.length > 0) {
+    if (
+      this.enemies.length === 0 &&
+      this.currentWave <= this.level.waves.length - 1
+    ) {
       let timeout;
       clearTimeout(timeout);
 
@@ -161,11 +163,14 @@ class Game {
         console.log("new wave!");
 
         this.spawnEnemies();
-      }, 3000);
+      }, 5000);
     }
 
     // no enemies & no waves left -> level completed logic
-    if (this.enemies.length === 0 && this.level.waves.length === 0) {
+    if (
+      this.enemies.length === 0 &&
+      this.currentWave > this.level.waves.length - 1
+    ) {
       console.log("you won!");
       cancelAnimationFrame(animationId);
       return;
@@ -227,13 +232,6 @@ class Game {
       const distance = this.calculateDistance(enemy.center, building.center);
       return distance < enemy.radius + building.radius;
     });
-
-    // // sort by distance - mb don't need?
-    // validEnemies.sort(
-    //   (a, b) =>
-    //     this.calculateDistance(a.center, building.center) -
-    //     this.calculateDistance(b.center, building.center),
-    // );
 
     return validEnemies;
   }
