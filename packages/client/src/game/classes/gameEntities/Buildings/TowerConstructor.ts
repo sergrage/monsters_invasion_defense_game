@@ -85,9 +85,14 @@ class TowerConstructor extends Sprite {
 
   public upgrade(): void {
     // max level reached
-    if (this.towerLevel === 4) {
+    if (
+      this.towerLevel === this.towerData.imgs.length - 1 ||
+      (this.towerData.extraParams &&
+        this.towerLevel === this.towerData.extraParams.towerImgs.length - 1)
+    ) {
       return;
     }
+
     this.towerLevel += 1;
 
     this.towerData.upgradePrice *= 1.5;
