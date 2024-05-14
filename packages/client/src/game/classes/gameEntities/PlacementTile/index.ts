@@ -1,32 +1,47 @@
-import { Position } from "@/game/interfaces";
+import tileImg from "@/assets/img/towers/palcementTile.png";
+import { IPosition } from "@/game/interfaces";
 
 class PlacementTile {
-  position: Position;
+  position: IPosition;
+  ctx: CanvasRenderingContext2D;
   size: number;
-  color: string;
+  hoverColor: string;
   occupied: boolean;
-  c: CanvasRenderingContext2D;
+  img: HTMLImageElement;
 
   constructor({
     position = { x: 0, y: 0 },
-    c,
+    ctx,
   }: {
-    position?: Position;
-    c: CanvasRenderingContext2D;
+    position?: IPosition;
+    ctx: CanvasRenderingContext2D;
   }) {
     this.position = position;
+    this.ctx = ctx;
+
+    this.img = new Image();
+    this.img.src = tileImg;
     this.size = 64;
-    this.color = "rgba(255, 255, 255, 0.15)";
+    this.hoverColor = "rgba(255, 255, 255, 0.3)";
     this.occupied = false;
-    this.c = c; // Store the canvas context
+
+    this.draw();
   }
 
   draw() {
-    this.c.fillStyle = this.color;
-    this.c.fillRect(this.position.x + 0, this.position.y, this.size, this.size);
+    this.ctx.drawImage(
+      this.img,
+      this.position.x,
+      this.position.y,
+      this.size,
+      this.size,
+    );
   }
 
-  update(mouse: { x: number | undefined; y: number | undefined }) {
+  update(
+    mouse: { x: number | undefined; y: number | undefined },
+    offset: IPosition,
+  ) {
     // case for mouse from game class (can be undefined)
     if (mouse.x === undefined || mouse.y === undefined) {
       return;
@@ -34,13 +49,19 @@ class PlacementTile {
 
     this.draw();
     if (
-      mouse.x + 0 > this.position.x &&
-      mouse.x - 0 < this.position.x + this.size &&
-      mouse.y + 0 > this.position.y &&
-      mouse.y - 0 < this.position.y + this.size
+      mouse.x > this.position.x + offset.x &&
+      mouse.x < this.position.x + offset.x + this.size &&
+      mouse.y > this.position.y + offset.y &&
+      mouse.y < this.position.y + offset.y + this.size
     ) {
-      this.color = "white";
-    } else this.color = "rgba(255, 255, 255, 0.15)";
+      this.ctx.fillStyle = this.hoverColor;
+      this.ctx.fillRect(
+        this.position.x + 0,
+        this.position.y,
+        this.size,
+        this.size,
+      );
+    }
   }
 }
 

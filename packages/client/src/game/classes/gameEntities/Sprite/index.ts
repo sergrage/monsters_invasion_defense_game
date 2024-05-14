@@ -1,60 +1,151 @@
-import { Position, Frames, Offset } from "@/game/interfaces";
+import { IPosition, ISprite, ITowerExtraParams } from "@/game/interfaces";
 
 class Sprite {
-  position;
-  canvas;
-  image;
-  frames;
-  offset;
-  c;
+  position; // stores the x and y coordinates of the sprite on the canvas
+  canvas; // reference to the HTML canvas element where the sprite will be drawn
+  img; // an Image object holding the sprite's image data
+  frames; // information about the animation frames
+  offset; // offset for the sprite's position
+  ctx; // canvas rendering context used for drawing
+  angle: number | null = null;
+  extraImg: HTMLImageElement | null = null;
+  towerExtraParams: ITowerExtraParams | null = null;
+  needRotation: boolean | undefined = undefined;
 
   constructor({
-    position = { x: 0, y: 0 },
+    position,
     canvas,
+    ctx,
     imageSrc,
-    frames = {
-      max: 1,
-      current: 0,
-      elapsed: 0,
-      hold: 0,
-    },
+    frames,
     offset = { x: 0, y: 0 },
-    c,
-  }: {
-    position?: Position;
-    canvas: HTMLCanvasElement;
-    imageSrc: string;
-    frames?: Frames;
-    offset?: Offset;
-    c: CanvasRenderingContext2D;
-  }) {
+    towerExtraParams,
+    needRotation,
+  }: ISprite) {
     this.position = position;
     this.canvas = canvas;
-    this.image = new Image();
-    this.image.src = imageSrc;
+    this.ctx = ctx;
+    this.offset = offset;
+
+    this.img = new Image();
+    this.img.src = imageSrc;
+
     this.frames = {
       max: frames.max,
       current: 0,
       elapsed: 0,
       hold: 3,
     };
-    this.offset = offset;
-    this.c = c;
+
+    this.needRotation = needRotation;
+
+    if (towerExtraParams) {
+      this.extraImg = new Image();
+      this.extraImg.src = towerExtraParams.towerImgs[0];
+      this.towerExtraParams = towerExtraParams;
+    }
   }
 
-  draw(): void {
-    const cropWidth = this.image.width / this.frames.max;
+  public draw(): void {
+    // calculate the width of a single frame
+    const cropWidth = this.img.width / this.frames.max;
+
+    // define the cropping region for the current frame
     const crop = {
       position: {
         // возможно прописать условие на случай отсутсвия свойства или изменит интерфейс...
-        x: cropWidth * this.frames.current!,
-        y: 0,
+        x: cropWidth * this.frames.current!, // x-coordinate of the current frame within the image
+        y: 0, // assuming frames are arranged in a single row
       },
-      width: cropWidth,
-      height: this.image.height,
+      width: cropWidth, // width of a single frame
+      height: this.img.height, // full height of the image
     };
-    this.c.drawImage(
-      this.image,
+
+    // if angle is specified, rotate the sprite around its center
+    // before drawing it on the canvas
+    if (this.needRotation && this.angle) {
+      this.rotateImage(crop);
+      return;
+    }
+
+    // if no angle is specified, draw the sprite normally
+    this.drawImage(crop);
+  }
+
+  // update the animation frame
+  public update(): void {
+    // возможно прописать условие на случай отсутсвия свойств или изменит интерфейс...
+    this.frames.elapsed!++;
+
+    // check if it's time to advance to the next frame
+    if (this.frames.elapsed! % this.frames.hold! === 0) {
+      this.frames.current!++;
+
+      // check if the animation has ended => return to the first frame
+      if (this.frames.current! >= this.frames.max) {
+        this.frames.current = 0;
+      }
+    }
+  }
+
+  protected changeImageView(newSrc: string): void {
+    this.img.src = newSrc;
+  }
+
+  protected rotateImage(crop: {
+    position: IPosition;
+    width: number;
+    height: number;
+  }): void {
+    // save the current canvas state so that we can restore it after
+    // to ensure that rotation do not affect other drawings on the canvas
+    this.ctx.save();
+
+    // move the canvas origin to the center of the sprite
+    // to make the rotation occurs around the center of the sprite
+    this.ctx.translate(
+      this.position.x + this.offset.x + crop.width / 2,
+      this.position.y + this.offset.y + crop.height / 2,
+    );
+
+    // rotate the canvas around the center of the sprite
+    this.ctx.rotate(this.angle! + Math.PI / 2);
+
+    // move the origin back to the top left corner of the sprite
+    this.ctx.translate(
+      -this.position.x - this.offset.x - crop.width / 2,
+      -this.position.y - this.offset.y - crop.height / 2,
+    );
+
+    // draw the sprite on the canvas
+    this.drawImage(crop);
+
+    // restore the canvas state to the state before the rotation
+    this.ctx.restore();
+  }
+
+  protected drawImage(crop: {
+    position: {
+      x: number;
+      y: number;
+    };
+    width: number;
+    height: number;
+  }): void {
+    // draw the tower extra image (compound tower case)
+    if (this.extraImg) {
+      this.ctx.drawImage(
+        this.extraImg,
+        this.position.x + this.towerExtraParams!.offset.x,
+        this.position.y + this.towerExtraParams!.offset.y,
+        this.towerExtraParams!.width,
+        this.towerExtraParams!.height,
+      );
+    }
+
+    // draw the sprite on the canvas
+    this.ctx.drawImage(
+      this.img,
       crop.position.x,
       crop.position.y,
       crop.width,
@@ -64,18 +155,6 @@ class Sprite {
       crop.width,
       crop.height,
     );
-  }
-
-  update(): void {
-    // responsible for animation
-    // возможно прописать условие на случай отсутсвия свойств или изменит интерфейс...
-    this.frames.elapsed!++;
-    if (this.frames.elapsed! % this.frames.hold! === 0) {
-      this.frames.current!++;
-      if (this.frames.current! >= this.frames.max) {
-        this.frames.current = 0;
-      }
-    }
   }
 }
 

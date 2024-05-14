@@ -1,0 +1,109 @@
+.wrapper {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  transition:
+    top 150ms linear,
+    left 150ms linear;
+}
+
+.img {
+  position: relative;
+  width: 160px;
+  height: 162px;
+  background-image: url(./../../assets/img/screenZombie/fly.png);
+  background-repeat: no-repeat;
+  background-size: 2560px;
+  animation: fly 2s steps(16) infinite;
+}
+
+@keyframes fly {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -2560px;
+  }
+}
+
+.explosion {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 164px;
+  height: 155px;
+  background-image: url(./../../assets/img/screenZombie/explosion.png);
+  background-repeat: no-repeat;
+  background-size: 2460px;
+  animation: explosion 0.6s steps(15) forwards;
+}
+
+@keyframes explosion {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -2460px;
+  }
+}
+
+.text-wrapper {
+  position: absolute;
+  left: 121px;
+  top: 48px;
+  padding: 10px 15px;
+  border-radius: 2px;
+  background-color: #d1d3d4;
+  box-shadow:
+    0px -3px 0px 0px #e5e8e9,
+    0px 3px 0px 0px #c5c5c5;
+  opacity: 0;
+  transition: opacity 50ms linear;
+
+  ::before {
+    display: block;
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 10px;
+    left: -5px;
+    top: 27px;
+    transform: rotateZ(45deg);
+    background-color: #d1d3d4;
+  }
+}
+
+.text {
+  color: var(--text);
+}
+
+.move {
+  top: 30%;
+  left: 45%;
+}
+
+.shake {
+  animation: shake 0.2s forwards;
+}
+
+.show {
+  opacity: 1;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotateZ(0deg) translateY(2px);
+  }
+  30% {
+    transform: rotateZ(2deg) translateY(-1px);
+  }
+  60% {
+    transform: rotateZ(-1deg) translateY(3px);
+  }
+  90% {
+    transform: rotateZ(2deg) translateY(-2px);
+  }
+  100% {
+    transform: rotateZ(0deg) translateY(0px);
+  }
+}
