@@ -1,3 +1,7 @@
+.wrapper {
+  overflow: hidden;
+}
+
 .game {
   position: relative;
   display: inline-block;
@@ -40,4 +44,78 @@
   -webkit-text-stroke: 2px black;
   display: flex;
   align-items: center;
+}
+
+.towerSelectorContainer {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  width: 450px;
+  height: 150px;
+  padding-bottom: 37px;
+  background-image: url(/src/assets/img/titleBox.png);
+  background-size: 100% 100%;
+}
+
+.selector {
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  z-index: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: left 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.towerMenu {
+  position: absolute;
+  display: none;
+  align-items: center;
+  gap: 30px;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  button {
+    width: 60px;
+    background-color: transparent;
+    transition: transform 0.3s;
+
+    &:nth-child(1) {
+      transform: translate(30px, 30px);
+    }
+
+    &:nth-child(2) {
+      transform: translate(-30px, 30px);
+    }
+
+    img {
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &.active {
+    display: flex;
+  }
+
+  &.show {
+    opacity: 1;
+
+    & button {
+      &:nth-child(1) {
+        transform: translate(0px, 0px);
+      }
+
+      &:nth-child(2) {
+        transform: translate(0px, 0px);
+      }
+    }
+  }
 }
