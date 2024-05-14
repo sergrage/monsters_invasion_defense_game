@@ -5,12 +5,14 @@ import style from "./style.module.scss";
 import Layout from "@/components/layout";
 import GameMenu from "@/components/gameMenu";
 
+import Button from "@/ui/button/index";
+
 import { routes } from "@/pages/routes";
 
-const GameOverPage: FC = () => {
+const GameStartPage: FC = ({}) => {
   const gameMenu = [
     { title: "Start Game", route: routes.game },
-    { title: "Leader Board", route: routes.forum },
+    { title: "Leader Board", route: routes.leaderboard },
     { title: "Game Forum", route: routes.forum },
   ];
 
@@ -21,6 +23,8 @@ const GameOverPage: FC = () => {
   const [counter, setCounter] = useState<number>(3);
 
   const [showCounter, setShowCounter] = useState<boolean>(false);
+
+  const [isFullSCreen, setIsFullSCreen] = useState<boolean>(false);
 
   const fireIneterval = () => {
     setShowCounter(true);
@@ -37,6 +41,10 @@ const GameOverPage: FC = () => {
       navigate(routes.game);
     }
   }, [counter]);
+
+  const fullScreen = () => {
+    document.body.requestFullscreen();
+  };
 
   return (
     <Layout.Page>
@@ -58,10 +66,17 @@ const GameOverPage: FC = () => {
               ></GameMenu>
             )}
           </div>
+          <div className="" style={{ marginBottom: "15px" }}>
+            <Button.Flat
+              name={!isFullSCreen ? "Full Screen" : "Exit FullScreen"}
+              onClick={fullScreen}
+              deepRed={true}
+            />
+          </div>
         </div>
       </div>
     </Layout.Page>
   );
 };
 
-export default GameOverPage;
+export default GameStartPage;

@@ -13,6 +13,7 @@ import waypoints from "@/game/mocks/waypoints";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import myImage from "../../game/img/gameMap.png";
 import style from "./style.module.scss";
+import Layout from "@/components/layout";
 
 const GamePage: FC = () => {
   const [coins, setCoins] = useState<number>(100);
@@ -63,21 +64,19 @@ const GamePage: FC = () => {
   }, []);
 
   return (
-    <>
-      <div style={{ position: "relative", display: "inline-block" }}>
-        <canvas ref={canvasRef} id="gameCanvas"></canvas>
-        {isGameOver && (
-          <div id="gameOver" className={style.gameOver}>
-            GAME OVER
-          </div>
-        )}
-        <div className={style.gameStats}></div>
-        <div className={style.gameStatsContainer}>
-          <Coins coins={coins} />
-          <Hearts hearts={hearts} />
+    <div style={{ position: "relative", display: "inline-block" }}>
+      <canvas ref={canvasRef} id="gameCanvas"></canvas>
+      {isGameOver && (
+        <div id="gameOver" className={style.gameOver}>
+          GAME OVER
         </div>
+      )}
+      <div className={style.gameStats}></div>
+      <div className={style.gameStatsContainer}>
+        <Coins coins={coins} />
+        <Hearts hearts={hearts} />
       </div>
-    </>
+    </div>
   );
 };
 

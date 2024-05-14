@@ -9,6 +9,8 @@ import MapGenerator from "@/game/classes/creational/mapGenerator";
 import TilesGenerator from "@/game/classes/creational/tilesGenerator";
 import EnemiesGenerator from "@/game/classes/creational/EnemiesGenerator";
 
+import AudioCore from "@/audioCore/Core";
+
 import { Position } from "@/game/interfaces";
 
 class Game {
@@ -28,6 +30,7 @@ class Game {
   mapGenerator: MapGenerator;
   enemiesGenerator: EnemiesGenerator;
   tilesGenerator: TilesGenerator;
+  audioInterface: AudioCore;
 
   constructor(
     coins: number,
@@ -56,6 +59,9 @@ class Game {
     this.mapGenerator = mapGenerator;
     this.enemiesGenerator = enemiesGenerator;
     this.tilesGenerator = tilesGenerator;
+
+    // Game sounds
+    this.audioInterface = new AudioCore(["Coins", "OrcFall"]);
   }
 
   // Метод для изменения количества монет
@@ -239,8 +245,10 @@ class Game {
     if (enemy.health <= 0) {
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
       if (enemyIndex > -1) {
+        this.audioInterface.play("OrcFall");
         this.enemies.splice(enemyIndex, 1);
         this.setCoins(25);
+        this.audioInterface.play("Coins");
       }
     }
   }

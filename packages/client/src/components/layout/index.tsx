@@ -3,9 +3,13 @@ import cn from "classnames";
 
 import style from "./style.module.scss";
 
+import { toggleFullscreen } from "@/utils/fullscreenMode";
+
 export type TProps = {
   children: ReactNode | ReactNode[];
   className?: string;
+  id?: string;
+  fullScreen?: () => void;
 };
 
 const Main: FC<TProps> = ({ children }) => {
@@ -17,9 +21,18 @@ const Container: FC<TProps> = ({ children, className = "" }) => {
 };
 
 const Page: FC<TProps> = ({ children, className }) => {
+  const fullScreen = () => {
+    const wrapper = document.querySelector("#gameStartWrapper");
+    if (wrapper) {
+      toggleFullscreen(wrapper);
+    }
+  };
+
   return (
-    <div className={style.page}>
-      <Container className={className}>{children}</Container>
+    <div className={style.page} id="gameStartWrapper">
+      <Container className={className} fullScreen={fullScreen}>
+        {children}
+      </Container>
     </div>
   );
 };
