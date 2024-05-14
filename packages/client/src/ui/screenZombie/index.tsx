@@ -8,6 +8,8 @@ type TProps = {
   text: string;
 };
 
+let isInit = true;
+
 const ScreenZombie = ({ text }: TProps) => {
   const [isMoving, setIsMoving] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
@@ -42,13 +44,21 @@ const ScreenZombie = ({ text }: TProps) => {
   }, []);
 
   useEffect(() => {
+    // skip first render
+    if (isInit) {
+      isInit = false;
+      return;
+    }
+
     let explosionTimer: ReturnType<typeof setTimeout>;
     let hideTimer: ReturnType<typeof setTimeout>;
 
+    // if final message, show explosion
     if (text == SCREEN_ZOMBIE_MESSAGE_FINAL) {
       explosionTimer = setTimeout(() => {
         setShowExplosion(true);
 
+        // hide zombie not to overlap with explosion
         hideTimer = setTimeout(() => {
           sethideZombie(true);
         }, 400);
