@@ -16,7 +16,8 @@ class AudioCore {
     });
   }
 
-  play(sound: string) {
+  play(sound: string, loop: boolean = false) {
+    this.audioInterface[sound].loop = loop;
     this.audioInterface[sound].play();
   }
 

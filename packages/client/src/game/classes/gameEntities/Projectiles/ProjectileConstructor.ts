@@ -1,6 +1,7 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 
 import { IPosition, IProjectileConstructor } from "@/game/interfaces";
+import AudioCore from "@/audioCore/Core";
 
 class ProjectileConstructor extends Sprite {
   velocity: IPosition;
@@ -8,6 +9,8 @@ class ProjectileConstructor extends Sprite {
   enemy;
   radius;
   damage: number;
+  audioInterface: AudioCore;
+  towerTitle: string;
 
   constructor({
     position,
@@ -17,6 +20,7 @@ class ProjectileConstructor extends Sprite {
     imageSrc,
     needRotation,
     damage,
+    towerTitle,
   }: IProjectileConstructor) {
     super({
       position,
@@ -39,10 +43,20 @@ class ProjectileConstructor extends Sprite {
     this.enemy = enemy;
     this.radius = 10;
     this.damage = damage;
+    this.towerTitle = towerTitle;
+
+    // Game sounds
+    this.audioInterface = new AudioCore(["Laser", "Arrow"]);
   }
 
   update(): void {
     this.draw();
+
+    if (this.towerTitle === "Tesla tower") {
+      this.audioInterface.play("Laser");
+    } else {
+      this.audioInterface.play("Arrow");
+    }
 
     // calculates the angle between the projectile and the enemy
     // formula: tan(θ) = Opposite / Adjacent

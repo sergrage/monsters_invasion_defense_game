@@ -137,6 +137,10 @@ const GamePage = () => {
     };
   }, [windowWidth, windowHeight]);
 
+  const fullScreen = () => {
+    document.body.requestFullscreen();
+  };
+
   return (
     <Layout.Page pageClass={style.wrapper}>
       <div className={style.game}>
@@ -167,7 +171,9 @@ const GamePage = () => {
           </button>
         </article>
       </div>
-      {showDisclaimer && <ScreenZombie text={disclaimerText} />}
+      {showDisclaimer && (
+        <ScreenZombie action={fullScreen} text={disclaimerText} />
+      )}
     </Layout.Page>
   );
 };

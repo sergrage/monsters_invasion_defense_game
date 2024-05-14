@@ -26,7 +26,7 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
               AudioInterface.play("MenuClick");
 
               if (control && control.route === item.route.slice(1)) {
-                AudioInterface.play("MenuMusic");
+                AudioInterface.play("MenuMusic", true);
                 control.action();
               }
             }}

@@ -1,11 +1,15 @@
 import MenuClick from "@/assets/sound/Menu Selection Click.wav";
 import MenuMusic from "@/assets/sound/Menu Music.mp3";
-import OrcFall from "@/assets/sound/fall.wav";
+import ZombyFall from "@/assets/sound/fall.wav";
 import Coins from "@/assets/sound/coins.mp3";
+import Laser from "@/assets/sound/laser.mp3";
+import Arrow from "@/assets/sound/arrow.mp3";
 
 export default {
   MenuClick: MenuClick,
   MenuMusic: MenuMusic,
-  OrcFall: OrcFall,
+  ZombyFall: ZombyFall,
   Coins: Coins,
+  Laser: Laser,
+  Arrow: Arrow,
 };

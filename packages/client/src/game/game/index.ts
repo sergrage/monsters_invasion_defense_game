@@ -71,7 +71,7 @@ class Game {
     this.tilesGenerator = tilesGenerator;
 
     // Game sounds
-    this.audioInterface = new AudioCore(["Coins", "OrcFall"]);
+    this.audioInterface = new AudioCore(["Coins", "ZombyFall"]);
 
     this.towersSelector = towersSelector;
     this.towerMenu = towerMenu;
