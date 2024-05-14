@@ -16,6 +16,7 @@ import { ILevel, IPosition } from "@/game/interfaces";
 class Game {
   coins: number;
   hearts: number;
+  globalOffset: IPosition;
   enemies: Enemy[];
   buildings: TowerConstructor[];
   canvas: HTMLCanvasElement | null;
@@ -37,6 +38,7 @@ class Game {
   constructor(
     coins: number,
     hearts: number,
+    globalOffset: IPosition,
     mapGenerator: MapGenerator,
     enemiesGenerator: EnemiesGenerator,
     tilesGenerator: TilesGenerator,
@@ -47,6 +49,7 @@ class Game {
   ) {
     this.coins = coins;
     this.hearts = hearts;
+    this.globalOffset = globalOffset;
     this.enemies = [];
     this.buildings = [];
     this.canvas = null;
@@ -195,7 +198,7 @@ class Game {
   handleTilesLogic() {
     if (Array.isArray(this.placementTiles))
       this.placementTiles.forEach(tile => {
-        tile.update(this.mouse);
+        tile.update(this.mouse, this.globalOffset);
       });
   }
 
@@ -402,10 +405,10 @@ class Game {
       for (let i = 0; i < this.placementTiles.length; i++) {
         const tile = this.placementTiles[i];
         if (
-          this.mouse.x > tile.position.x &&
-          this.mouse.x < tile.position.x + tile.size &&
-          this.mouse.y > tile.position.y &&
-          this.mouse.y < tile.position.y + tile.size
+          this.mouse.x > tile.position.x + this.globalOffset.x &&
+          this.mouse.x < tile.position.x + this.globalOffset.x + tile.size &&
+          this.mouse.y > tile.position.y + this.globalOffset.y &&
+          this.mouse.y < tile.position.y + this.globalOffset.y + tile.size
         ) {
           this.activeTile = tile;
           break;

@@ -38,7 +38,10 @@ class PlacementTile {
     );
   }
 
-  update(mouse: { x: number | undefined; y: number | undefined }) {
+  update(
+    mouse: { x: number | undefined; y: number | undefined },
+    offset: IPosition,
+  ) {
     // case for mouse from game class (can be undefined)
     if (mouse.x === undefined || mouse.y === undefined) {
       return;
@@ -46,10 +49,10 @@ class PlacementTile {
 
     this.draw();
     if (
-      mouse.x + 0 > this.position.x &&
-      mouse.x - 0 < this.position.x + this.size &&
-      mouse.y + 0 > this.position.y &&
-      mouse.y - 0 < this.position.y + this.size
+      mouse.x > this.position.x + offset.x &&
+      mouse.x < this.position.x + offset.x + this.size &&
+      mouse.y > this.position.y + offset.y &&
+      mouse.y < this.position.y + offset.y + this.size
     ) {
       this.ctx.fillStyle = this.hoverColor;
       this.ctx.fillRect(

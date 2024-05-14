@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-// import Layout from "@/components/layout";
+import Layout from "@/components/layout";
 import Game from "@/game/game";
 import Coins from "@/components/game/coins/coins";
 import Hearts from "@/components/game/hearts/hearts";
@@ -33,7 +33,8 @@ let isInit = true;
 let isBadScreen = false;
 
 const GamePage = () => {
-  const canvasRef = useRef(null);
+  const canvasRef: React.MutableRefObject<HTMLCanvasElement | null> =
+    useRef(null);
 
   const [coins, setCoins] = useState<number>(level.coins);
   const [hearts, setHearts] = useState<number>(level.hearts);
@@ -51,7 +52,7 @@ const GamePage = () => {
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    // // Create instances of dependencies
+    // Create instances of dependencies
     const mapGenerator = new MapGenerator(
       1280,
       768,
@@ -68,9 +69,14 @@ const GamePage = () => {
     const towerSelector = new TowersSelector(coins);
     const towerMenu = new TowerMenu();
 
+    // get canvas offset
+    const coords = canvasRef.current.getBoundingClientRect();
+    const globalOffset = { x: coords.left, y: coords.top };
+
     const game = new Game(
       coins,
       hearts,
+      globalOffset,
       mapGenerator,
       enemiesGenerator,
       tilesGenerator,
@@ -94,46 +100,64 @@ const GamePage = () => {
 
   // screen zombie disclaimer logic
   useEffect(() => {
+    // skip first render
     if (isInit) {
       isInit = false;
       return;
     }
 
-    if (windowWidth < 1300 || windowHeight < 900) {
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (
+      (windowWidth < 1350 && disclaimerText !== SCREEN_ZOMBIE_MESSAGE_FINAL) ||
+      (windowHeight < 950 && disclaimerText !== SCREEN_ZOMBIE_MESSAGE_FINAL)
+    ) {
       setShowDisclaimer(true);
       if (isBadScreen) {
+        // if bad screen second time, show second message
         setDisclaimerText(SCREEN_ZOMBIE_MESSAGE_2);
       } else {
+        // if bad screen first time, show default message
         isBadScreen = true;
       }
     } else {
+      // if good screen, show final message
       setDisclaimerText(SCREEN_ZOMBIE_MESSAGE_FINAL);
 
-      setTimeout(() => {
+      timer = setTimeout(() => {
+        // reset zombie
         setShowDisclaimer(false);
         setDisclaimerText(SCREEN_ZOMBIE_MESSAGE_1);
         isBadScreen = false;
-      }, 1000);
+      }, 800);
     }
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [windowWidth, windowHeight]);
 
   return (
-    <>
+    <Layout.Page pageClass={style.wrapper}>
       <div className={style.game}>
         <canvas ref={canvasRef} id="gameCanvas"></canvas>
+
         {isGameOver && (
           <div id="gameOver" className={style.gameOver}>
             GAME OVER
           </div>
         )}
+
         <div className={style.gameStats}></div>
         <div className={style.gameStatsContainer}>
           <Coins coins={coins} />
           <Hearts hearts={hearts} />
         </div>
+
         <article className={style.towerSelectorContainer} id="towerSelector">
           <div className={style.selector}></div>
         </article>
+
         <article className={style.towerMenu} id="towerMenu">
           <button title="Upgrade tower">
             <img src={upgrImg} alt="Upgrade tower" />
@@ -144,7 +168,7 @@ const GamePage = () => {
         </article>
       </div>
       {showDisclaimer && <ScreenZombie text={disclaimerText} />}
-    </>
+    </Layout.Page>
   );
 };
 
