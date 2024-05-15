@@ -14,7 +14,7 @@ interface IHTMLElement {
 }
 
 export const toggleFullscreen = (
-  elem: Element & IHTMLElement & IDocument,
+  elem: Element & IHTMLElement & IDocument = document.body,
 ): void => {
   elem = elem || document.documentElement;
 

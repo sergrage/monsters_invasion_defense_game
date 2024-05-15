@@ -9,7 +9,9 @@ import Button from "@/ui/button/index";
 
 import { routes } from "@/pages/routes";
 
-const GameStartPage: FC = ({}) => {
+import { toggleFullscreen } from "@/utils/fullscreenMode";
+
+const GameStartPage: FC = () => {
   const gameMenu = [
     { title: "Start Game", route: routes.game },
     { title: "Leader Board", route: routes.leaderboard },
@@ -23,8 +25,6 @@ const GameStartPage: FC = ({}) => {
   const [counter, setCounter] = useState<number>(3);
 
   const [showCounter, setShowCounter] = useState<boolean>(false);
-
-  const [isFullSCreen, setIsFullSCreen] = useState<boolean>(false);
 
   const fireIneterval = () => {
     setShowCounter(true);
@@ -43,7 +43,7 @@ const GameStartPage: FC = ({}) => {
   }, [counter]);
 
   const fullScreen = () => {
-    document.body.requestFullscreen();
+    toggleFullscreen();
   };
 
   return (
@@ -68,7 +68,7 @@ const GameStartPage: FC = ({}) => {
           </div>
           <div className="" style={{ marginBottom: "15px" }}>
             <Button.Flat
-              name={!isFullSCreen ? "Full Screen" : "Exit FullScreen"}
+              name={"Full Screen"}
               onClick={fullScreen}
               deepRed={true}
             />

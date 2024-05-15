@@ -279,7 +279,7 @@ class Game {
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
 
       if (enemyIndex > -1) {
-        this.audioInterface.play("OrcFall");
+        this.audioInterface.play("ZombyFall");
         this.audioInterface.play("Coins");
 
         const deadEnemy = this.enemies.splice(enemyIndex, 1);

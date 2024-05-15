@@ -29,6 +29,8 @@ import upgrImg from "@/assets/img/towerMenu/upgr.png";
 import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
 
+import { toggleFullscreen } from "@/utils/fullscreenMode";
+
 let isInit = true;
 let isBadScreen = false;
 
@@ -138,7 +140,7 @@ const GamePage = () => {
   }, [windowWidth, windowHeight]);
 
   const fullScreen = () => {
-    document.body.requestFullscreen();
+    toggleFullscreen();
   };
 
   return (

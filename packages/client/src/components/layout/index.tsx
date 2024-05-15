@@ -6,8 +6,6 @@ import style from "./style.module.scss";
 export type TProps = {
   children: ReactNode | ReactNode[];
   className?: string;
-  id?: string;
-  fullScreen?: () => void;
   pageClass?: string;
 };
 
