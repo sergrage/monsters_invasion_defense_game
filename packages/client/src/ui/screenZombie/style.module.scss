@@ -3,8 +3,8 @@
   top: -10%;
   left: -10%;
   transition:
-    top 150ms linear,
-    left 150ms linear;
+    top 150ms ease-out,
+    left 150ms ease-out;
 }
 
 .img {
