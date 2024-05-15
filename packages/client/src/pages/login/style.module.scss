@@ -1,3 +1,22 @@
+.page {
+  background-image: url(./../../assets/img/background.png);
+  background-repeat: no-repeat;
+  background-size: 4797px;
+  animation: backMove 80s linear alternate infinite;
+}
+
+@keyframes backMove {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 50% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
 .wrapper {
   display: flex;
   align-items: center;
@@ -15,6 +34,7 @@
   padding: 30px;
   border-radius: 5px;
   box-shadow: 0px 0px 6px 0px var(--shadow-light);
+  background-color: white;
 }
 
 .title {

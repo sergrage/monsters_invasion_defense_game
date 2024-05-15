@@ -35,7 +35,7 @@ const ScreenZombie = ({ text }: TProps) => {
           setIsTexting(true);
         }, 100);
       }, 500);
-    }, 0);
+    }, 10);
 
     return () => {
       clearTimeout(shakeTimer);
