@@ -6,6 +6,7 @@ import style from "./style.module.scss";
 export type TProps = {
   children: ReactNode | ReactNode[];
   className?: string;
+  pageClass?: string;
 };
 
 const Main: FC<TProps> = ({ children }) => {
@@ -16,9 +17,9 @@ const Container: FC<TProps> = ({ children, className = "" }) => {
   return <div className={cn(style.container, className)}>{children}</div>;
 };
 
-const Page: FC<TProps> = ({ children, className }) => {
+const Page: FC<TProps> = ({ children, pageClass, className }) => {
   return (
-    <div className={style.page}>
+    <div className={cn(style.page, pageClass)}>
       <Container className={className}>{children}</Container>
     </div>
   );
