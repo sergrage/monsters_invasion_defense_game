@@ -91,7 +91,7 @@ const ScreenZombie = ({ text, action }: TProps) => {
           [style.show]: isTexting,
         })}
       >
-        <p>{text}</p>
+        <p dangerouslySetInnerHTML={{ __html: text }}></p>
       </div>
     </div>
   );

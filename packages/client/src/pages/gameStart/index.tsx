@@ -66,13 +66,14 @@ const GameStartPage: FC = () => {
               ></GameMenu>
             )}
           </div>
-          <div className="" style={{ marginBottom: "15px" }}>
-            <Button.Flat
-              name={"Full Screen"}
-              onClick={fullScreen}
-              deepRed={true}
-            />
-          </div>
+
+          <Button.Flat
+            name={"Full Screen"}
+            onClick={fullScreen}
+            formBtn={true}
+            formBtnBlue={true}
+            noAnimate={true}
+          />
         </div>
       </div>
     </Layout.Page>

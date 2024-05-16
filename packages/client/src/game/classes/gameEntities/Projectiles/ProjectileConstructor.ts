@@ -46,16 +46,25 @@ class ProjectileConstructor extends Sprite {
     this.towerTitle = towerTitle;
 
     // Game sounds
-    this.audioInterface = new AudioCore(["Laser", "Arrow"]);
+    this.audioInterface = new AudioCore(["Laser", "Arrow", "Bullet", "Cannon"]);
   }
 
   update(): void {
     this.draw();
 
-    if (this.towerTitle === "Tesla tower") {
-      this.audioInterface.play("Laser");
-    } else {
-      this.audioInterface.play("Arrow");
+    switch (this.towerTitle) {
+      case "Tesla tower":
+        this.audioInterface.play("Laser");
+        break;
+      case "Bullet tower":
+        this.audioInterface.play("Bullet");
+        break;
+      case "Cannon tower":
+        this.audioInterface.play("Cannon");
+        break;
+      default:
+        this.audioInterface.play("Arrow");
+        break;
     }
 
     // calculates the angle between the projectile and the enemy
