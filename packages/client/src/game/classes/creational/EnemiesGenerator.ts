@@ -1,5 +1,7 @@
-import { Position } from "@/game/interfaces";
-import Enemy from "@/game/classes/gameEntities/Enemy";
+import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
+import monsters from "@/game/classes/gameEntities/Enemies";
+
+import { IPosition } from "@/game/interfaces";
 
 interface Waypoint {
   x: number;
@@ -7,8 +9,8 @@ interface Waypoint {
 }
 
 interface EnemyOptions {
-  position: Position;
-  c: CanvasRenderingContext2D;
+  position: IPosition;
+  ctx: CanvasRenderingContext2D;
   canvas: HTMLCanvasElement;
 }
 
@@ -17,33 +19,40 @@ export interface EnemyType {
 }
 
 class EnemiesGenerator {
-  private c: CanvasRenderingContext2D;
+  private ctx: CanvasRenderingContext2D;
   private waypoints: Waypoint[];
 
-  constructor(c: CanvasRenderingContext2D, waypoints: Waypoint[]) {
-    this.c = c;
+  constructor(ctx: CanvasRenderingContext2D, waypoints: Waypoint[]) {
+    this.ctx = ctx;
     this.waypoints = waypoints;
   }
 
   generate(
-    amount: number,
-    EnemyType: EnemyType,
+    wave: { [key: string]: number },
     canvas: HTMLCanvasElement,
   ): Enemy[] {
     const enemies: Enemy[] = [];
 
-    for (let i = 1; i < amount + 1; i++) {
-      const xOffset = i * 150;
-      enemies.push(
-        new EnemyType({
-          position: {
-            x: this.waypoints[0].x - xOffset,
-            y: this.waypoints[0].y,
-          },
-          c: this.c,
-          canvas,
-        }),
-      );
+    // iterate through wave
+    for (const [key, amount] of Object.entries(wave)) {
+      // generate each zombie type
+      for (let i = 1; i < amount + 1; i++) {
+        const EnemyType = monsters[key as unknown as keyof typeof monsters];
+
+        // enemy size offset
+        const xOffset = i * 150;
+
+        enemies.push(
+          new EnemyType({
+            position: {
+              x: this.waypoints[0].x - xOffset,
+              y: this.waypoints[0].y,
+            },
+            ctx: this.ctx,
+            canvas,
+          }),
+        );
+      }
     }
 
     return enemies;
