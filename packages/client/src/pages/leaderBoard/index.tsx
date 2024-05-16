@@ -8,7 +8,7 @@ import toasty from "@/assets/img/leaderborad/toasty.png";
 import toasty_sound from "@/assets/sound/toasty.mp3";
 import cn from "classnames";
 import Title from "@/ui/title";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { getLeaderBoardState } from "@/store/leaderboard/reducer";
 
 const LeaderBoardPage: FC = () => {
