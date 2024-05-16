@@ -1,16 +1,16 @@
 interface IDocument {
-  mozCancelFullScreen?: () => Promise<void>;
-  msExitFullscreen?: () => Promise<void>;
-  webkitExitFullscreen?: () => Promise<void>;
+  mozCancelFullScreen?(): Promise<void>;
+  msExitFullscreen?(): Promise<void>;
+  webkitExitFullscreen?(): Promise<void>;
   mozFullscreenElement?: Element;
   msFullscreenElement?: Element;
   webkitFullscreenElement?: Element;
 }
 
 interface IHTMLElement {
-  msRequestFullscreen?: () => Promise<void>;
-  mozRequestFullscreen?: () => Promise<void>;
-  webkitRequestFullscreen?: () => Promise<void>;
+  msRequestFullscreen?(): Promise<void>;
+  mozRequestFullscreen?(): Promise<void>;
+  webkitRequestFullscreen?(): Promise<void>;
 }
 
 export const toggleFullscreen = (
@@ -24,14 +24,14 @@ export const toggleFullscreen = (
     !(document as IDocument).webkitFullscreenElement &&
     !(document as IDocument).msFullscreenElement
   ) {
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen();
-    } else if (elem.mozRequestFullscreen) {
-      elem.mozRequestFullscreen();
-    } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen();
+    let hasFullscreen =
+      elem.requestFullscreen ||
+      elem.msRequestFullscreen ||
+      elem.mozRequestFullscreen ||
+      elem.webkitRequestFullscreen ||
+      false;
+    if (hasFullscreen) {
+      hasFullscreen.call(elem);
     }
   } else {
     if (document.exitFullscreen) {
