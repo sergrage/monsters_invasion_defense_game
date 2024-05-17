@@ -27,13 +27,14 @@ const useFetch = () => {
         "Content-type": "application/json",
       },
       body: config.body && JSON.stringify(config.body),
+      credentials: "include",
     })
       .then(async response => {
         console.log(response);
         const data = (await response.json()) as responseType;
 
         if (!response.ok) {
-          throw new Error(`${response.status} ${data.reason}`);
+          throw new Error(`${response.status} ${data?.reason}`);
         }
 
         if (applyData) {
