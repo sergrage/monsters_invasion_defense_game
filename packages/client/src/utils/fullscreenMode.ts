@@ -34,17 +34,14 @@ export const toggleFullscreen = (
       hasFullscreen.call(elem);
     }
   } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if ((document as IDocument).msExitFullscreen) {
-      // @ts-ignore
-      document.msExitFullscreen();
-    } else if ((document as IDocument).mozCancelFullScreen) {
-      // @ts-ignore
-      document.mozCancelFullScreen();
-    } else if ((document as IDocument).webkitExitFullscreen) {
-      // @ts-ignore
-      document.webkitExitFullscreen();
+    let hasExitFullscreen =
+      document.exitFullscreen ||
+      (document as IDocument).msExitFullscreen ||
+      (document as IDocument).mozCancelFullScreen ||
+      (document as IDocument).webkitExitFullscreen ||
+      false;
+    if (hasExitFullscreen) {
+      hasExitFullscreen.call(document);
     }
   }
 };

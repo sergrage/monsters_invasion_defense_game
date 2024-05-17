@@ -42,10 +42,6 @@ const GameStartPage: FC = () => {
     }
   }, [counter]);
 
-  const fullScreen = () => {
-    toggleFullscreen();
-  };
-
   return (
     <Layout.Page>
       <div className={style.container}>
@@ -69,7 +65,7 @@ const GameStartPage: FC = () => {
 
           <Button.Flat
             name={"Full Screen"}
-            onClick={fullScreen}
+            onClick={() => toggleFullscreen()}
             formBtn={true}
             formBtnBlue={true}
             noAnimate={true}
