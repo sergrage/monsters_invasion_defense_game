@@ -11,6 +11,7 @@ type TProps = {
   formBtn?: boolean;
   formBtnRed?: boolean;
   formBtnBlue?: boolean;
+  noAnimate?: boolean;
   positive?: boolean;
   red?: boolean;
   yellow?: boolean;
@@ -28,6 +29,7 @@ const FlatButton = ({
   formBtn,
   formBtnRed,
   formBtnBlue,
+  noAnimate,
   positive,
   className,
   onClick,
@@ -42,6 +44,7 @@ const FlatButton = ({
         [style.formBtnRed]: formBtnRed,
         [style.formBtnBlue]: formBtnBlue,
         [style.positive]: positive,
+        [style.noAnimate]: noAnimate,
       })}
       type={type}
       disabled={disabled}

@@ -29,6 +29,8 @@ import upgrImg from "@/assets/img/towerMenu/upgr.png";
 import myImage from "@/game/img/gameMap.png";
 import style from "./style.module.scss";
 
+import { toggleFullscreen } from "@/utils/fullscreenMode";
+
 let isInit = true;
 let isBadScreen = false;
 
@@ -167,7 +169,9 @@ const GamePage = () => {
           </button>
         </article>
       </div>
-      {showDisclaimer && <ScreenZombie text={disclaimerText} />}
+      {showDisclaimer && (
+        <ScreenZombie action={() => toggleFullscreen()} text={disclaimerText} />
+      )}
     </Layout.Page>
   );
 };

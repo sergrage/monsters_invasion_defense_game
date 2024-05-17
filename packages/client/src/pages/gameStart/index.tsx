@@ -5,12 +5,16 @@ import style from "./style.module.scss";
 import Layout from "@/components/layout";
 import GameMenu from "@/components/gameMenu";
 
+import Button from "@/ui/button/index";
+
 import { routes } from "@/pages/routes";
 
-const GameOverPage: FC = () => {
+import { toggleFullscreen } from "@/utils/fullscreenMode";
+
+const GameStartPage: FC = () => {
   const gameMenu = [
     { title: "Start Game", route: routes.game },
-    { title: "Leader Board", route: routes.forum },
+    { title: "Leader Board", route: routes.leaderboard },
     { title: "Game Forum", route: routes.forum },
   ];
 
@@ -58,10 +62,18 @@ const GameOverPage: FC = () => {
               ></GameMenu>
             )}
           </div>
+
+          <Button.Flat
+            name={"Full Screen"}
+            onClick={() => toggleFullscreen()}
+            formBtn={true}
+            formBtnBlue={true}
+            noAnimate={true}
+          />
         </div>
       </div>
     </Layout.Page>
   );
 };
 
-export default GameOverPage;
+export default GameStartPage;

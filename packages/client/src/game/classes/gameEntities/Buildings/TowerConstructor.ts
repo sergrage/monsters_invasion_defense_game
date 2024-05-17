@@ -70,6 +70,7 @@ class TowerConstructor extends Sprite {
         imageSrc: this.towerData.projectile.imageSrc,
         needRotation: this.towerData.projectile.needRotation,
         damage: this.towerData.damage,
+        towerTitle: this.towerData.title,
       }),
     );
 

@@ -6,16 +6,14 @@ import Image from "@/ui/image";
 
 import menuItemBg from "@/assets/img/titleBox.png";
 
+import AudioCore from "@/audioCore/Core";
+
 export type TProps = {
   menu: { title: string; route: string }[];
   control?: { route: string; action: any };
 };
 const GameMenu: FC<TProps> = ({ menu, control }) => {
-  const handleLoginClick = (route: string) => {
-    if (control && control.route === route.slice(1)) {
-      control.action();
-    }
-  };
+  const AudioInterface = new AudioCore(["MenuClick", "MenuMusic"]);
 
   return (
     <div className={style.wrapper}>
@@ -25,7 +23,12 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
             className={style.menuItem}
             onClick={(event: React.MouseEvent<HTMLElement>) => {
               event.preventDefault();
-              handleLoginClick(item.route);
+              AudioInterface.play("MenuClick");
+
+              if (control && control.route === item.route.slice(1)) {
+                AudioInterface.play("MenuMusic", true);
+                control.action();
+              }
             }}
             to={item.route}
             key={index}
@@ -35,7 +38,14 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
             <p className={style.menuItemText}>{item.title}</p>
           </NavLink>
         ) : (
-          <NavLink className={style.menuItem} to={item.route} key={index}>
+          <NavLink
+            className={style.menuItem}
+            to={item.route}
+            key={index}
+            onClick={() => {
+              AudioInterface.play("MenuClick");
+            }}
+          >
             <Image className={style.menuItemBg} src={menuItemBg}></Image>
             <p className={style.menuItemText}>{item.title}</p>
           </NavLink>
