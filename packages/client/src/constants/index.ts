@@ -17,6 +17,6 @@ export const EMPTY_VALIDATION_MESSAGE =
   "Grr... Empty... no like empty... need brains... grrr... braaaains...";
 
 export const SCREEN_ZOMBIE_MESSAGE_1 =
-  "Brrraaiinsss! Mmmm, great zombie game requires mooooar screen! Zzzzooom out!";
+  "<span style='color:red;cursor:pointer;'>CLICK HERE FOR FULL SCREEN!!!!!</span>";
 export const SCREEN_ZOMBIE_MESSAGE_2 = "Grrrrrr, I said more!";
-export const SCREEN_ZOMBIE_MESSAGE_FINAL = "Yesss, perfection!";
+export const SCREEN_ZOMBIE_MESSAGE_FINAL = "Yesss, perfection! Good brainFood!";
