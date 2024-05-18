@@ -13,7 +13,7 @@ const useFetch = () => {
 
   const sendRequest = (
     config: configType,
-    applyData?: (data: responseType) => void,
+    applyData?: (data: responseType | string) => void,
   ) => {
     // включить индикатор загрузки
     // dispatch(notifyActions.applyLoading());
@@ -30,11 +30,17 @@ const useFetch = () => {
       credentials: "include",
     })
       .then(async response => {
-        console.log(response);
-        const data = (await response.json()) as responseType;
+        const contentType = response.headers.get("Content-type");
+        let data;
+
+        contentType?.includes("application/json")
+          ? (data = (await response.json()) as responseType)
+          : (data = await response.text());
 
         if (!response.ok) {
-          throw new Error(`${response.status} ${data?.reason}`);
+          throw new Error(
+            `${response.status} ${(typeof data === "object" && data?.reason) || data}`,
+          );
         }
 
         if (applyData) {
