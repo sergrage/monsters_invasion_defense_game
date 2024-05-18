@@ -2,8 +2,9 @@
   .title {
     position: absolute;
     width: 100%;
-    top: -40px;
+    top: -33px;
     text-align: center;
+    line-height: 1;
     color: var(--primary-strong);
     font-family: "Arco", sans-serif;
     -webkit-text-stroke: 2px var(--text);
@@ -17,7 +18,7 @@
   position: relative;
   width: 100px;
   height: 100px;
-  margin-top: 130px;
+  margin-top: 90px;
   border: 5px solid var(--border);
   border-radius: 50%;
 }
