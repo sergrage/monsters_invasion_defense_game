@@ -24,7 +24,7 @@ const Input = ({
   label,
   placeholder,
   type = "text",
-  value,
+  value = "",
   required,
   onChange,
   onError,
