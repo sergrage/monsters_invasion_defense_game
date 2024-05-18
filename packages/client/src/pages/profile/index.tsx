@@ -32,7 +32,7 @@ const Profile = () => {
   };
 
   return (
-    <Layout.Page className={style.wrapper}>
+    <Layout.Page className={style.wrapper} pageClass={style.page}>
       <section className={style.profile}>
         <Title.H1 className={style.title} title="Profile" />
 

@@ -69,7 +69,7 @@ const LoginPage: FC = () => {
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
       <form className={style.form} onSubmit={handleSubmit}>
-        <h1 className={style.title}>Please log in</h1>
+        <h1 className={style.title}>Log in</h1>
         <div className={style["inputs-wrapper"]}>
           <Input
             name="login"

@@ -4,10 +4,11 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 400px;
-  height: 400px;
-  padding: 50px 30px;
+  gap: 30px;
+  width: 450px;
+  padding: 90px 30px 30px;
   transform: scale(0.9);
+  border: 5px solid var(--border);
   border-radius: 5px;
   background-color: var(--white);
   z-index: 9000;

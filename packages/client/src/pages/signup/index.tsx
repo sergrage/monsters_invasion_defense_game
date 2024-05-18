@@ -72,7 +72,7 @@ const RegisterPage: FC = () => {
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
       <form className={style.form} onSubmit={handleSubmit}>
-        <h1 className={style.title}>Please sign up</h1>
+        <h1 className={style.title}>Sign up</h1>
         <div className={style["inputs-wrapper"]}>
           <Input
             name="email"
