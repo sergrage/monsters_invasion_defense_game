@@ -52,6 +52,7 @@ const FileModal = ({ closeModal }: TProps) => {
   };
 
   const applyData = () => {
+    // fire some store event
     closeModal();
   };
 

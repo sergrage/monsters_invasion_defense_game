@@ -21,13 +21,22 @@ const useFetch = () => {
     // очитсить сообщения об ошибке
     // dispatch(notifyActions.clearError());
 
+    const method = config.method || "GET";
+    const headers: HeadersInit =
+      config.body instanceof FormData
+        ? {}
+        : { "Content-type": "application/json" };
+
+    const body =
+      config.body instanceof FormData
+        ? config.body
+        : JSON.stringify(config.body);
+
     fetch(config.url, {
-      method: config.method ? config.method : "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: config.body && JSON.stringify(config.body),
-      credentials: "include",
+      method,
+      headers,
+      body,
+      credentials: "include", // handle httponly cookies
     })
       .then(async response => {
         const contentType = response.headers.get("Content-type");
