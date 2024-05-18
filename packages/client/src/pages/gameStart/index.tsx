@@ -47,10 +47,8 @@ const GameStartPage: FC = () => {
       <div className={style.container}>
         <div className={style.wrapper}>
           <div className={style.titleWrapp}>
-            <h1 className={style.title}>
-              Monsters Invasion{" "}
-              <span className={style.subtitle}>Defense Game</span>
-            </h1>
+            <h1 className={style.title}>Monsters Invasion</h1>
+            <span className={style.subtitle}>Defense Game</span>
           </div>
           <div className={style.contentWrapp}>
             {showCounter ? (
