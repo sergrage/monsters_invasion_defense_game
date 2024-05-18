@@ -76,3 +76,12 @@
   font-size: 150px;
   color: #e6e7e8;
 }
+
+.iconsWrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 20px;
+  right: 50px;
+  gap: 20px;
+}
