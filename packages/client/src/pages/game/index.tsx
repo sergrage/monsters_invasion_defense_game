@@ -155,12 +155,6 @@ const GamePage = () => {
       <div className={style.game}>
         <canvas ref={canvasRef} id="gameCanvas"></canvas>
 
-        {isGameOver && (
-          <div id="gameOver" className={style.gameOver}>
-            GAME OVER
-          </div>
-        )}
-
         <div className={style.gameStats}></div>
         <div className={style.gameStatsContainer}>
           <Coins coins={coins} />

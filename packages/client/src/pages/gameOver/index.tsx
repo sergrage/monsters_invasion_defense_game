@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import style from "./style.module.scss";
 import Layout from "@/components/layout";
@@ -8,6 +8,8 @@ import GameMenu from "@/components/gameMenu";
 
 import { routes } from "@/pages/routes";
 
+import AudioCore from "@/audioCore/Core";
+
 const GameOverPage: FC = () => {
   const gameMenu = [
     { title: "Main Page", route: routes.gameStart },
@@ -16,7 +18,13 @@ const GameOverPage: FC = () => {
   ];
 
   const levelScore = 100;
-  const userScore = 30;
+  const userScore = 100;
+
+  useEffect(() => {
+    if (window.audioGlobal) {
+      window.audioGlobal.destroy();
+    }
+  }, []);
 
   return (
     <Layout.Page>

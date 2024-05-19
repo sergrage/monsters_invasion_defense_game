@@ -8,6 +8,12 @@ import menuItemBg from "@/assets/img/titleBox.png";
 
 import AudioCore from "@/audioCore/Core";
 
+declare global {
+  interface Window {
+    audioGlobal: AudioCore;
+  }
+}
+
 export type TProps = {
   menu: { title: string; route: string }[];
   control?: { route: string; action: any };
@@ -26,6 +32,7 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
               AudioInterface.play("MenuClick");
 
               if (control && control.route === item.route.slice(1)) {
+                window.audioGlobal = AudioInterface;
                 AudioInterface.play("MenuMusic", true);
                 control.action();
               }
