@@ -181,6 +181,7 @@ class Game {
     ) {
       console.log("you won!");
       cancelAnimationFrame(animationId);
+      this.setGameOver();
       return;
     }
 

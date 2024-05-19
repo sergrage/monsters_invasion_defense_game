@@ -10,9 +10,9 @@ import { routes } from "@/pages/routes";
 
 const GameOverPage: FC = () => {
   const gameMenu = [
-    { title: "Main Page", route: routes.forum },
-    { title: "Leader Board", route: routes.forum },
-    { title: "Play Again?", route: routes.game },
+    { title: "Main Page", route: routes.gameStart },
+    { title: "Leader Board", route: routes.leaderboard },
+    { title: "Play Again?", route: routes.gameStart },
   ];
 
   const levelScore = 100;
@@ -22,13 +22,15 @@ const GameOverPage: FC = () => {
     <Layout.Page>
       <div className={style.container}>
         <div className={style.wrapper}>
-          <h1 className={style.title}>GAME OVER</h1>
-          <CoinsScore
-            levelScore={levelScore}
-            userScore={userScore}
-          ></CoinsScore>
-          <p className={style.score}>YOUR SCORE: {userScore}</p>
-          <GameMenu menu={gameMenu}></GameMenu>
+          <div className={style.wrapperResult}>
+            <h1 className={style.title}>GAME OVER</h1>
+            <CoinsScore
+              levelScore={levelScore}
+              userScore={userScore}
+            ></CoinsScore>
+            <p className={style.score}>YOUR SCORE: {userScore}</p>
+            <GameMenu menu={gameMenu}></GameMenu>
+          </div>
         </div>
       </div>
     </Layout.Page>
