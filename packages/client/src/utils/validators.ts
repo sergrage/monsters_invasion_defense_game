@@ -46,4 +46,8 @@ export const validationRules = {
       !!value.trim() && passwordValidator.test(value),
     errorMessage: PASSWORD_VALIDATION_MESSAGE,
   },
+  oldPassword: {
+    validator: (value: string) => !!value.trim(),
+    errorMessage: EMPTY_VALIDATION_MESSAGE,
+  },
 };

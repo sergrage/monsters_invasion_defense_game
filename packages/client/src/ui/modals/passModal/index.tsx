@@ -1,7 +1,5 @@
-import { ChangeEvent, useState } from "react";
-
 import useFetch from "@/hooks/useFetch";
-
+import { useValidate } from "@/hooks/useValidate";
 import { userUrl } from "@/endpoints/apiUrl";
 
 import FormModal from "../formModal";
@@ -15,85 +13,14 @@ type TProps = {
   closeModal: () => void;
 };
 
-interface IValues {
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
-
-interface IErrors {
-  oldPassword: boolean;
-  newPassword: boolean;
-  confirmPassword: boolean;
-}
-
-interface IMessages {
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
-
-// Временное решение, пока не закончен ValidationHook
-import {
-  EMPTY_VALIDATION_MESSAGE,
-  PASSWORD_VALIDATION_MESSAGE,
-} from "@/constants";
-
-const validationMessages = {
-  oldPassword: EMPTY_VALIDATION_MESSAGE,
-  newPassword: PASSWORD_VALIDATION_MESSAGE,
-  confirmPassword: PASSWORD_VALIDATION_MESSAGE,
-};
-const passwordValidator = new RegExp(/^(?=.*[A-Z])(?=.*\d).{8,40}$/);
-const validationRules = {
-  oldPassword: (value: string) => !!value.trim(),
-  newPassword: (value: string) =>
-    !!value.trim() && passwordValidator.test(value),
-  confirmPassword: (value: string) =>
-    !!value.trim() && passwordValidator.test(value),
-};
-
 const PasswordModal = ({ closeModal }: TProps) => {
   const sendRequest = useFetch();
 
-  const [values, setValues] = useState<IValues>({
+  const { values, errors, errorMessages, handleChange } = useValidate({
     oldPassword: "",
-    newPassword: "",
+    password: "",
     confirmPassword: "",
   });
-  const [errors, setErrors] = useState<IErrors>({
-    oldPassword: false,
-    newPassword: false,
-    confirmPassword: false,
-  });
-  const [errorMessages, setErrorMessages] = useState<IMessages>({
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
-  // временное решение пока не закончен ValidationHook
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-
-    setValues({ ...values, [name]: value });
-
-    // Если имя поля есть в объекте валидации - то выполняем валидацию
-    // и обновляем стэйт ошибок и стэйт сообщений об ошибках
-    if (name in validationRules) {
-      const newErrors: IErrors = {
-        ...errors,
-        [name]: !validationRules[name as keyof typeof validationRules](value),
-      };
-      setErrors(newErrors);
-
-      const newErrorMessages: IMessages = {
-        ...errorMessages,
-        [name]: validationMessages[name as keyof typeof validationMessages],
-      };
-      setErrorMessages(newErrorMessages);
-    }
-  };
 
   const handleSubmit = () => {
     // Если есть ошибка валидации или пустые значения - выход

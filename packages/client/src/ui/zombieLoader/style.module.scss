@@ -1,0 +1,45 @@
+.wrapper {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  right: 20px;
+  bottom: 20px;
+}
+
+.img {
+  position: relative;
+  width: 160px;
+  height: 164px;
+  background-image: url(./../../assets/img/zombieLoader/fly.png);
+  background-repeat: no-repeat;
+  background-size: 2560px;
+  animation: fly 1.7s steps(16) infinite;
+}
+
+@keyframes fly {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -2560px;
+  }
+}
+
+.text {
+  position: absolute;
+  top: 140px;
+  font-size: 18px;
+  letter-spacing: 1px;
+
+  color: var(--white);
+
+  animation: text 1s ease-in-out infinite;
+}
+
+@keyframes text {
+  50% {
+    color: var(--text);
+  }
+}

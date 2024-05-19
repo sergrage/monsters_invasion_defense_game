@@ -6,7 +6,7 @@ import style from "./style.module.scss";
 export type TProps = {
   title?: string;
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
 } & HTMLAttributes<HTMLElement>;
 
 const H1: FC<TProps> = ({ title, className, children, ...rest }) => {
