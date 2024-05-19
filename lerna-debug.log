@@ -1,0 +1,23 @@
+0 silly argv {
+0 silly argv   _: [ 'add' ],
+0 silly argv   scope: 'client',
+0 silly argv   globs: [],
+0 silly argv   lernaVersion: '5.4.3',
+0 silly argv   '$0': '/Users/nickitayushenko/WebstormProjects/monsters_invasion_defense_game/node_modules/.bin/lerna',
+0 silly argv   pkg: 'react-toastify@9.1.3'
+0 silly argv }
+1 notice cli v5.4.3
+2 verbose rootPath /Users/nickitayushenko/WebstormProjects/monsters_invasion_defense_game
+3 error JSONError: Expected double-quoted property name in JSON at position 550 while parsing '{  "name": "client",  "version": "0.0.' in packages/client/package.json
+3 error
+3 error [0m [90m 20 |[39m     [32m"react-dom"[39m[33m:[39m [32m"^18.2.0"[39m[33m,[39m[0m
+3 error [0m [90m 21 |[39m     [32m"react-redux"[39m[33m:[39m [32m"^9.1.2"[39m[33m,[39m[0m
+3 error [0m[31m[1m>[22m[39m[90m 22 |[39m   }[33m,[39m[0m
+3 error [0m [90m    |[39m   [31m[1m^[22m[39m[0m
+3 error [0m [90m 23 |[39m   [32m"devDependencies"[39m[33m:[39m {[0m
+3 error [0m [90m 24 |[39m     [32m"@testing-library/react"[39m[33m:[39m [32m"^13.3.0"[39m[33m,[39m[0m
+3 error [0m [90m 25 |[39m     [32m"@types/jest"[39m[33m:[39m [32m"^28.1.8"[39m[33m,[39m[0m
+3 error
+3 error     at parseJson (/Users/nickitayushenko/WebstormProjects/monsters_invasion_defense_game/node_modules/parse-json/index.js:29:21)
+3 error     at parse (/Users/nickitayushenko/WebstormProjects/monsters_invasion_defense_game/node_modules/load-json-file/index.js:15:9)
+3 error     at module.exports (/Users/nickitayushenko/WebstormProjects/monsters_invasion_defense_game/node_modules/load-json-file/index.js:18:47)
