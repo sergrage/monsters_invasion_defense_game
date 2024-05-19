@@ -1,7 +1,6 @@
 import Sprite from "@/game/classes/gameEntities/Sprite";
 
 import { IPosition, IProjectileConstructor } from "@/game/interfaces";
-import AudioCore from "@/audioCore/Core";
 
 class ProjectileConstructor extends Sprite {
   velocity: IPosition;
@@ -9,7 +8,6 @@ class ProjectileConstructor extends Sprite {
   enemy;
   radius;
   damage: number;
-  audioInterface: AudioCore;
   towerTitle: string;
 
   constructor({
@@ -44,9 +42,6 @@ class ProjectileConstructor extends Sprite {
     this.radius = 10;
     this.damage = damage;
     this.towerTitle = towerTitle;
-
-    // Game sounds
-    this.audioInterface = new AudioCore(["Laser", "Arrow", "Bullet", "Cannon"]);
   }
 
   update(): void {
@@ -54,16 +49,16 @@ class ProjectileConstructor extends Sprite {
 
     switch (this.towerTitle) {
       case "Tesla tower":
-        this.audioInterface.play("Laser");
+        window.audioGlobal.play("Laser");
         break;
       case "Bullet tower":
-        this.audioInterface.play("Bullet");
+        window.audioGlobal.play("Bullet");
         break;
       case "Cannon tower":
-        this.audioInterface.play("Cannon");
+        window.audioGlobal.play("Cannon");
         break;
       default:
-        this.audioInterface.play("Arrow");
+        window.audioGlobal.play("Arrow");
         break;
     }
 
