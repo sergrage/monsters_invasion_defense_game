@@ -1,8 +1,8 @@
 import { FC } from "react";
-
+import { useLocation } from "react-router-dom";
 import { routes } from "@/pages/routes";
 import { Navigate, Route, Routes } from "react-router";
-
+import * as React from "react";
 import Login from "@/pages/login";
 import Signup from "@/pages/signup";
 import Profile from "@/pages/profile";
@@ -15,7 +15,38 @@ import Leaderboard from "@/pages/leaderBoard";
 import ErrorPage from "@/pages/error";
 import Layout from "@/components/layout";
 
+import AudioCore from "@/audioCore/Core";
+
+declare global {
+  interface Window {
+    audioGlobal: AudioCore;
+    musicIsOn: boolean;
+  }
+}
+
 const App: FC = () => {
+  if (!window.audioGlobal) {
+    window.audioGlobal = new AudioCore([
+      "MenuClick",
+      "MenuMusic",
+      "Coins",
+      "ZombyFall",
+      "Laser",
+      "Arrow",
+      "Bullet",
+      "Cannon",
+    ]);
+  }
+
+  let location = useLocation();
+
+  React.useEffect(() => {
+    window.audioGlobal.pauseAll();
+    if (location.pathname == "/play") {
+      window.audioGlobal.play("MenuMusic");
+    }
+  }, [location]);
+
   return (
     <Layout.Main>
       <Routes>

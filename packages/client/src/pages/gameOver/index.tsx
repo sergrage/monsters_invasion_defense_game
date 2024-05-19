@@ -8,13 +8,11 @@ import GameMenu from "@/components/gameMenu";
 
 import { routes } from "@/pages/routes";
 
-import AudioCore from "@/audioCore/Core";
-
 const GameOverPage: FC = () => {
   const gameMenu = [
     { title: "Main Page", route: routes.gameStart },
     { title: "Leader Board", route: routes.leaderboard },
-    { title: "Play Again?", route: routes.gameStart },
+    { title: "Play Again?", route: routes.game },
   ];
 
   const levelScore = 100;
@@ -22,7 +20,7 @@ const GameOverPage: FC = () => {
 
   useEffect(() => {
     if (window.audioGlobal) {
-      window.audioGlobal.destroy();
+      window.audioGlobal.pauseAll();
     }
   }, []);
 

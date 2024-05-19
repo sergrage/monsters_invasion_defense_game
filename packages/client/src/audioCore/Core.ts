@@ -25,6 +25,12 @@ class AudioCore {
     this.audioInterface[sound].pause();
   }
 
+  pauseAll() {
+    this.sounds.forEach(sound => {
+      this.pause(sound);
+    });
+  }
+
   destroy() {
     this.sounds.forEach(sound => {
       this.pause(sound);

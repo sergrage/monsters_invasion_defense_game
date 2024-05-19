@@ -6,21 +6,11 @@ import Image from "@/ui/image";
 
 import menuItemBg from "@/assets/img/titleBox.png";
 
-import AudioCore from "@/audioCore/Core";
-
-declare global {
-  interface Window {
-    audioGlobal: AudioCore;
-  }
-}
-
 export type TProps = {
   menu: { title: string; route: string }[];
   control?: { route: string; action: any };
 };
 const GameMenu: FC<TProps> = ({ menu, control }) => {
-  const AudioInterface = new AudioCore(["MenuClick", "MenuMusic"]);
-
   return (
     <div className={style.wrapper}>
       {menu.map((item, index) =>
@@ -29,11 +19,11 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
             className={style.menuItem}
             onClick={(event: React.MouseEvent<HTMLElement>) => {
               event.preventDefault();
-              AudioInterface.play("MenuClick");
+              window.audioGlobal.play("MenuClick");
 
               if (control && control.route === item.route.slice(1)) {
-                window.audioGlobal = AudioInterface;
-                AudioInterface.play("MenuMusic", true);
+                window.audioGlobal.play("MenuMusic", true);
+                window.musicIsOn = true;
                 control.action();
               }
             }}
@@ -50,7 +40,7 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
             to={item.route}
             key={index}
             onClick={() => {
-              AudioInterface.play("MenuClick");
+              window.audioGlobal.play("MenuClick");
             }}
           >
             <Image className={style.menuItemBg} src={menuItemBg}></Image>
