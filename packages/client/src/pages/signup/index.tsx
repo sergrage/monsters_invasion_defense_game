@@ -3,21 +3,28 @@ import { useNavigate } from "react-router";
 
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
+import useFetch from "@/hooks/useFetch";
+import useAuth from "@/hooks/useAuth";
 
+import Layout from "@/components/layout";
 import Button from "@/ui/button";
 import Input from "@/ui/input";
 
+import { authUrl } from "@/endpoints/apiUrl";
 import style from "../login/style.module.scss";
-import Layout from "@/components/layout";
 
 const RegisterPage: FC = () => {
   const navigate = useNavigate();
+
+  const sendRequest = useFetch();
+  const { isAuth, updateAuth } = useAuth();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     email: "",
     login: "",
     firstName: "",
     lastName: "",
+    phone: "",
     password: "",
     confirmPassword: "",
   });
@@ -28,13 +35,44 @@ const RegisterPage: FC = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log("Register!");
+
+    // Если есть ошибка валидации или пустые значения - выход
+    if (
+      Object.values(errors).some(error => !!error) ||
+      Object.values(values).some(value => !value)
+    ) {
+      return;
+    }
+
+    sendRequest(
+      {
+        url: `${authUrl}/signup`,
+        method: "POST",
+        body: {
+          first_name: values.firstName,
+          second_name: values.lastName,
+          login: values.login,
+          email: values.email,
+          password: values.password,
+          phone: values.phone,
+        },
+      },
+      applyData,
+    );
+  };
+
+  const applyData = () => {
+    updateAuth();
+
+    if (isAuth) {
+      navigate(routes.gameStart);
+    }
   };
 
   return (
-    <Layout.Page className={style.wrapper}>
+    <Layout.Page className={style.wrapper} pageClass={style.page}>
       <form className={style.form} onSubmit={handleSubmit}>
-        <h1 className={style.title}>Please sign up</h1>
+        <h1 className={style.title}>Sign up</h1>
         <div className={style["inputs-wrapper"]}>
           <Input
             name="email"
@@ -72,6 +110,13 @@ const RegisterPage: FC = () => {
             value={values.lastName}
             onChange={handleChange}
             autocomplete="family-name"
+          />
+          <Input
+            name="phone"
+            label="Phone"
+            value={values.phone}
+            onChange={handleChange}
+            autocomplete="tel"
           />
           <Input
             name="password"

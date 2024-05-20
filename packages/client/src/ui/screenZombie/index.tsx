@@ -6,11 +6,12 @@ import style from "./style.module.scss";
 
 type TProps = {
   text: string;
+  action?: () => void;
 };
 
 let isInit = true;
 
-const ScreenZombie = ({ text }: TProps) => {
+const ScreenZombie = ({ text, action }: TProps) => {
   const [isMoving, setIsMoving] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   const [isTexting, setIsTexting] = useState(false);
@@ -80,6 +81,7 @@ const ScreenZombie = ({ text }: TProps) => {
         [style.move]: isMoving,
         [style.shake]: isShaking,
       })}
+      onClick={action}
     >
       {!hideZombie && <div className={style.img}></div>}
       {showExplosion && <div className={style.explosion}></div>}
@@ -89,7 +91,7 @@ const ScreenZombie = ({ text }: TProps) => {
           [style.show]: isTexting,
         })}
       >
-        <p>{text}</p>
+        <p dangerouslySetInnerHTML={{ __html: text }}></p>
       </div>
     </div>
   );

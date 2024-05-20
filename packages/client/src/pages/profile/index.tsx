@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
+
+import { routes } from "../routes";
 
 import Layout from "@/components/layout";
 import Title from "@/ui/title";
@@ -6,7 +9,9 @@ import Button from "@/ui/button";
 import ProfileField from "@/ui/profileField";
 import AvatarEl from "@/ui/avatarEl";
 import Modal from "@/ui//modals";
+import IconButton from "@/ui/button/iconBtn";
 
+import gameIcon from "@/assets/icons/game.svg";
 import style from "./style.module.scss";
 
 const userDummy = {
@@ -20,6 +25,8 @@ const userDummy = {
 };
 
 const Profile = () => {
+  const navigate = useNavigate();
+
   const [showPassModal, setShowPassModal] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
 
@@ -32,7 +39,7 @@ const Profile = () => {
   };
 
   return (
-    <Layout.Page className={style.wrapper}>
+    <Layout.Page className={style.wrapper} pageClass={style.page}>
       <section className={style.profile}>
         <Title.H1 className={style.title} title="Profile" />
 
@@ -52,6 +59,12 @@ const Profile = () => {
         {showAvatarModal && <Modal.File closeModal={toggleAvatarModal} />}
         {showPassModal && <Modal.Password closeModal={togglePassModal} />}
       </section>
+      <IconButton
+        className={style["game-btn"]}
+        name="game"
+        icon={gameIcon}
+        onClick={() => navigate(routes.gameStart)}
+      />
     </Layout.Page>
   );
 };

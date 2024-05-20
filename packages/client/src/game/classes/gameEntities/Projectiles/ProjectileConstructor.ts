@@ -8,6 +8,7 @@ class ProjectileConstructor extends Sprite {
   enemy;
   radius;
   damage: number;
+  towerTitle: string;
 
   constructor({
     position,
@@ -17,6 +18,7 @@ class ProjectileConstructor extends Sprite {
     imageSrc,
     needRotation,
     damage,
+    towerTitle,
   }: IProjectileConstructor) {
     super({
       position,
@@ -39,10 +41,26 @@ class ProjectileConstructor extends Sprite {
     this.enemy = enemy;
     this.radius = 10;
     this.damage = damage;
+    this.towerTitle = towerTitle;
   }
 
   update(): void {
     this.draw();
+
+    switch (this.towerTitle) {
+      case "Tesla tower":
+        window.audioGlobal.play("Laser");
+        break;
+      case "Bullet tower":
+        window.audioGlobal.play("Bullet");
+        break;
+      case "Cannon tower":
+        window.audioGlobal.play("Cannon");
+        break;
+      default:
+        window.audioGlobal.play("Arrow");
+        break;
+    }
 
     // calculates the angle between the projectile and the enemy
     // formula: tan(θ) = Opposite / Adjacent

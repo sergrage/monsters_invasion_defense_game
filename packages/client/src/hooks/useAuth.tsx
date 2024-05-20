@@ -18,6 +18,7 @@ const useAuth = () => {
       headers: {
         "Content-type": "application/json",
       },
+      credentials: "include",
     })
       .then(async response => {
         const data: responseType = await response.json();
