@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { notifyActions } from "@/store/notification/reducer";
+import { useAppDispatch } from "./useAppDispatch";
+
 import { authUrl } from "@/endpoints/apiUrl";
 
 type responseType = {
@@ -7,12 +10,15 @@ type responseType = {
 
 const useAuth = () => {
   const [isAuth, setIsAuth] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     updateAuth();
   }, []);
 
   const updateAuth = () => {
+    dispatch(notifyActions.startLoading());
+
     fetch(`${authUrl}/user`, {
       method: "GET",
       headers: {
@@ -31,14 +37,11 @@ const useAuth = () => {
       })
       .catch(error => {
         setIsAuth(false);
-        // добавляем сообщение об ошибке
-        // dispatch(
-        //   notifyActions.applyError(error.message || "Something went wrong"),
-        // );
+
+        console.log(error);
       })
       .finally(() => {
-        // выключить индикатор загрузки
-        // dispatch(notifyActions.clearLoading());
+        dispatch(notifyActions.stopLoading());
       });
   };
 

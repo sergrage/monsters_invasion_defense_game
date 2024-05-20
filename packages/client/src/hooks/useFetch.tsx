@@ -1,3 +1,6 @@
+import { notifyActions } from "@/store/notification/reducer";
+import { useAppDispatch } from "./useAppDispatch";
+
 type configType = {
   url: string;
   method?: string;
@@ -9,17 +12,13 @@ type responseType = {
 };
 
 const useFetch = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const sendRequest = (
     config: configType,
     applyData?: (data: responseType | string) => void,
   ) => {
-    // включить индикатор загрузки
-    // dispatch(notifyActions.applyLoading());
-
-    // очитсить сообщения об ошибке
-    // dispatch(notifyActions.clearError());
+    dispatch(notifyActions.startLoading());
 
     const method = config.method || "GET";
     const headers: HeadersInit =
@@ -58,14 +57,9 @@ const useFetch = () => {
       })
       .catch(error => {
         console.log(error);
-        // добавляем сообщение об ошибке
-        // dispatch(
-        //   notifyActions.applyError(error.message || "Something went wrong"),
-        // );
       })
       .finally(() => {
-        // выключить индикатор загрузки
-        // dispatch(notifyActions.clearLoading());
+        dispatch(notifyActions.stopLoading());
       });
   };
   return sendRequest;

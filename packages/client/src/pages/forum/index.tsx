@@ -1,7 +1,6 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 
 import style from "./style.module.scss";
-import Title from "@/ui/title";
 import Image from "@/ui/image";
 import Layout from "@/components/layout";
 import Button from "@/ui/button";
