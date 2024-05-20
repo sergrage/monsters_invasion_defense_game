@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import style from "./style.module.scss";
 import Image from "@/ui/image";
@@ -6,15 +6,28 @@ import Layout from "@/components/layout";
 import zombieAlarm from "@/assets/img/zombieAlarm.png";
 import toasty from "@/assets/img/leaderborad/toasty.png";
 import toasty_sound from "@/assets/sound/toasty.mp3";
-
-import tempData from "./temp_data";
-
 import cn from "classnames";
 import Title from "@/ui/title";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import {
+  loadLeaderboardData,
+  selectLeaderboardData,
+  selectLeaderboardLoading,
+} from "@/store/leaderboard/reducer";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import ZombieLoader from "@/ui/zombieLoader";
 
 const LeaderBoardPage: FC = () => {
   const [showToasty, setShowToasty] = useState(false);
   const [showBlood, setShowBlood] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectLeaderboardData);
+  const loading = useAppSelector(selectLeaderboardLoading);
+
+  useEffect(() => {
+    dispatch(loadLeaderboardData());
+  }, [dispatch]);
 
   const handleClick = () => {
     setShowToasty(true);
@@ -38,6 +51,10 @@ const LeaderBoardPage: FC = () => {
   const handleMouseLeave = () => {
     setShowBlood(false);
   };
+
+  if (loading) {
+    return <ZombieLoader />;
+  }
 
   return (
     <Layout.Page>
@@ -84,8 +101,8 @@ const LeaderBoardPage: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {tempData
-                .sort((a, b) => a.rank - b.rank)
+              {data
+                ?.toSorted((a, b) => a.rank - b.rank)
                 .map((item, index) => (
                   <tr key={item.id}>
                     {index === 0 ? (
