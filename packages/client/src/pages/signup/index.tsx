@@ -17,7 +17,7 @@ const RegisterPage: FC = () => {
   const navigate = useNavigate();
 
   const sendRequest = useFetch();
-  const { isAuth, updateAuth } = useAuth();
+  const { updateAuth } = useAuth();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     email: "",
@@ -63,10 +63,7 @@ const RegisterPage: FC = () => {
 
   const applyData = () => {
     updateAuth();
-
-    if (isAuth) {
-      navigate(routes.gameStart);
-    }
+    navigate(routes.gameStart);
   };
 
   return (
@@ -109,6 +106,8 @@ const RegisterPage: FC = () => {
             label="Last Name"
             value={values.lastName}
             onChange={handleChange}
+            onError={errors.lastName}
+            onErrorMessage={errorMessages.lastName}
             autocomplete="family-name"
           />
           <Input
@@ -116,6 +115,8 @@ const RegisterPage: FC = () => {
             label="Phone"
             value={values.phone}
             onChange={handleChange}
+            onError={errors.phone}
+            onErrorMessage={errorMessages.phone}
             autocomplete="tel"
           />
           <Input
