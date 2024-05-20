@@ -1,17 +1,19 @@
-export type LeaderboardState = {
+export interface LeaderboardState {
   data: LeaderboardResponse[] | null;
   loading: boolean;
-};
+}
 
-export type LeaderboardResponse = {
+export interface IUser {
+  name: string;
+  login: string;
+  avatar: string;
+}
+
+export interface LeaderboardResponse {
   id: number;
-  user: {
-    name: string;
-    login: string;
-    avatar: string;
-  };
+  user: IUser;
   rank: number;
   zombieKills: number;
   earnMoney: number;
   date: string;
-};
+}
