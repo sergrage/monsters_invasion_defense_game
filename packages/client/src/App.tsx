@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { useLocation } from "react-router-dom";
+import { useAppSelector } from "./hooks/useAppSelector";
+
 import { routes } from "@/pages/routes";
 import { Navigate, Route, Routes } from "react-router";
 import * as React from "react";
@@ -14,6 +16,7 @@ import GameOverPage from "@/pages/gameOver";
 import Leaderboard from "@/pages/leaderBoard";
 import ErrorPage from "@/pages/error";
 import Layout from "@/components/layout";
+import ZombieLoader from "./ui/zombieLoader";
 
 import AudioCore from "@/audioCore/Core";
 
@@ -37,6 +40,11 @@ const App: FC = () => {
       "Cannon",
     ]);
   }
+
+  // на будущее - показывает уведомления и ошибки
+  // const message = useAppSelector(state => state.notify.message);
+  // const error = useAppSelector(state => state.notify.error);
+  const isLoading = useAppSelector(state => state.notify.isLoading);
 
   let location = useLocation();
 
@@ -63,6 +71,8 @@ const App: FC = () => {
         <Route path={routes.error500} element={<ErrorPage.error500 />} />
         <Route path="*" element={<Navigate to={routes.login} replace />} />
       </Routes>
+
+      {isLoading && <ZombieLoader />}
     </Layout.Main>
   );
 };

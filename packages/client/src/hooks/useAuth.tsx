@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { authUrl } from "@/endpoints/apiUrl";
+import { notifyActions } from "@/store/notification/reducer";
+import { useAppDispatch } from "./useAppDispatch";
 
 type responseType = {
   [key: string]: Record<string, string | { [key: string]: string } | number>;
@@ -7,12 +9,16 @@ type responseType = {
 
 const useAuth = () => {
   const [isAuth, setIsAuth] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     updateAuth();
   }, []);
 
   const updateAuth = () => {
+    dispatch(notifyActions.startLoading());
+    dispatch(notifyActions.clearError());
+
     fetch(`${authUrl}/user`, {
       method: "GET",
       headers: {
@@ -27,18 +33,18 @@ const useAuth = () => {
           throw new Error(`${response.status} ${data.reason}`);
         }
 
+        dispatch(notifyActions.stopLoading());
         setIsAuth(true);
       })
       .catch(error => {
         setIsAuth(false);
-        // добавляем сообщение об ошибке
-        // dispatch(
-        //   notifyActions.applyError(error.message || "Something went wrong"),
-        // );
+
+        dispatch(
+          notifyActions.setError(error.message || "Something went wrong"),
+        );
       })
       .finally(() => {
-        // выключить индикатор загрузки
-        // dispatch(notifyActions.clearLoading());
+        dispatch(notifyActions.stopLoading());
       });
   };
 
