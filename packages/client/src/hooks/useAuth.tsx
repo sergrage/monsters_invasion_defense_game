@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { authUrl } from "@/endpoints/apiUrl";
 import { notifyActions } from "@/store/notification/reducer";
 import { useAppDispatch } from "./useAppDispatch";
+
+import { authUrl } from "@/endpoints/apiUrl";
 
 type responseType = {
   [key: string]: Record<string, string | { [key: string]: string } | number>;
@@ -17,7 +18,6 @@ const useAuth = () => {
 
   const updateAuth = () => {
     dispatch(notifyActions.startLoading());
-    dispatch(notifyActions.clearError());
 
     fetch(`${authUrl}/user`, {
       method: "GET",
@@ -33,15 +33,12 @@ const useAuth = () => {
           throw new Error(`${response.status} ${data.reason}`);
         }
 
-        dispatch(notifyActions.stopLoading());
         setIsAuth(true);
       })
       .catch(error => {
         setIsAuth(false);
 
-        dispatch(
-          notifyActions.setError(error.message || "Something went wrong"),
-        );
+        console.log(error);
       })
       .finally(() => {
         dispatch(notifyActions.stopLoading());

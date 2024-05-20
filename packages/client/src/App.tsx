@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "./hooks/useAppSelector";
 
 import { routes } from "@/pages/routes";
-import { Navigate, Route, Routes } from "react-router";
-import * as React from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router";
+import useAuth from "./hooks/useAuth";
+
 import Login from "@/pages/login";
 import Signup from "@/pages/signup";
 import Profile from "@/pages/profile";
@@ -41,14 +42,20 @@ const App: FC = () => {
     ]);
   }
 
-  // на будущее - показывает уведомления и ошибки
-  // const message = useAppSelector(state => state.notify.message);
-  // const error = useAppSelector(state => state.notify.error);
-  const isLoading = useAppSelector(state => state.notify.isLoading);
-
+  const navigate = useNavigate();
   let location = useLocation();
 
-  React.useEffect(() => {
+  const isLoading = useAppSelector(state => state.notify.isLoading);
+  const { isAuth } = useAuth();
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate(routes.login);
+      return;
+    }
+  }, [isAuth]);
+
+  useEffect(() => {
     window.audioGlobal.pauseAll();
     if (location.pathname == "/play") {
       window.audioGlobal.play("MenuMusic");

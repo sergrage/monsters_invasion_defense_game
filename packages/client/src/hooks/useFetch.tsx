@@ -19,7 +19,6 @@ const useFetch = () => {
     applyData?: (data: responseType | string) => void,
   ) => {
     dispatch(notifyActions.startLoading());
-    dispatch(notifyActions.clearError());
 
     const method = config.method || "GET";
     const headers: HeadersInit =
@@ -57,9 +56,7 @@ const useFetch = () => {
         }
       })
       .catch(error => {
-        dispatch(
-          notifyActions.setError(error.message || "Something went wrong"),
-        );
+        console.log(error);
       })
       .finally(() => {
         dispatch(notifyActions.stopLoading());
