@@ -14,22 +14,6 @@ export const errorSlice = createSlice({
 
       state.hasError = true;
     },
-    // addNotify: (state, action: PayloadAction<INotify | string>) => {
-    //   if (typeof action.payload === "string")
-    //     state.notifyError = [
-    //       ...(state.notifyError || []),
-    //       { message: action.payload, status: "warning" },
-    //     ];
-    //   else state.notifyError = [...(state.notifyError || []), action.payload];
-    //   state.hasError = true;
-    // },
-    // removeNotify: (state, action: PayloadAction<number>) => {
-    //   state.notifyError = state.notifyError?.filter(
-    //     (_, index) => index !== action.payload,
-    //   );
-    //   state.hasError = !!state.notifyError?.length || !!state.globalError;
-    // },
-
     addNotify: (state, action: PayloadAction<Omit<INotify, "id"> | string>) => {
       const newNotification: INotify =
         typeof action.payload === "string"
