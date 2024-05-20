@@ -9,7 +9,6 @@ import Sprite from "@/game/classes/gameEntities/Sprite";
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import TowerMenu from "@/game/classes/gameEntities/Buildings/TowerMenu";
-import AudioCore from "@/audioCore/Core";
 import myImageExplosion from "@/game/img/explosion.png";
 import { ILevel, IPosition } from "@/game/interfaces";
 
@@ -26,7 +25,6 @@ class Game {
   mouse: { x: number | undefined; y: number | undefined };
   activeTile: PlacementTile | null;
   explosions: Sprite[];
-  audioInterface: AudioCore;
   eventSubject;
   mapGenerator;
   enemiesGenerator;
@@ -69,10 +67,6 @@ class Game {
     this.mapGenerator = mapGenerator;
     this.enemiesGenerator = enemiesGenerator;
     this.tilesGenerator = tilesGenerator;
-
-    // Game sounds
-    this.audioInterface = new AudioCore(["Coins", "ZombyFall"]);
-
     this.towersSelector = towersSelector;
     this.towerMenu = towerMenu;
   }
@@ -181,6 +175,7 @@ class Game {
     ) {
       console.log("you won!");
       cancelAnimationFrame(animationId);
+      this.setGameOver();
       return;
     }
 
@@ -279,8 +274,8 @@ class Game {
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
 
       if (enemyIndex > -1) {
-        this.audioInterface.play("ZombyFall");
-        this.audioInterface.play("Coins");
+        window.audioGlobal.play("ZombyFall");
+        window.audioGlobal.play("Coins");
 
         const deadEnemy = this.enemies.splice(enemyIndex, 1);
         const reward = deadEnemy[0].reward;

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import style from "./style.module.scss";
 import Layout from "@/components/layout";
@@ -10,25 +10,33 @@ import { routes } from "@/pages/routes";
 
 const GameOverPage: FC = () => {
   const gameMenu = [
-    { title: "Main Page", route: routes.forum },
-    { title: "Leader Board", route: routes.forum },
+    { title: "Main Page", route: routes.gameStart },
+    { title: "Leader Board", route: routes.leaderboard },
     { title: "Play Again?", route: routes.game },
   ];
 
   const levelScore = 100;
-  const userScore = 30;
+  const userScore = 100;
+
+  useEffect(() => {
+    if (window.audioGlobal) {
+      window.audioGlobal.pauseAll();
+    }
+  }, []);
 
   return (
     <Layout.Page>
       <div className={style.container}>
         <div className={style.wrapper}>
-          <h1 className={style.title}>GAME OVER</h1>
-          <CoinsScore
-            levelScore={levelScore}
-            userScore={userScore}
-          ></CoinsScore>
-          <p className={style.score}>YOUR SCORE: {userScore}</p>
-          <GameMenu menu={gameMenu}></GameMenu>
+          <div className={style.wrapperResult}>
+            <h1 className={style.title}>GAME OVER</h1>
+            <CoinsScore
+              levelScore={levelScore}
+              userScore={userScore}
+            ></CoinsScore>
+            <p className={style.score}>YOUR SCORE: {userScore}</p>
+            <GameMenu menu={gameMenu}></GameMenu>
+          </div>
         </div>
       </div>
     </Layout.Page>

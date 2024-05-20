@@ -4,17 +4,20 @@ import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
 import useFetch from "@/hooks/useFetch";
-import { authUrl } from "@/endpoints/apiUrl";
+import useAuth from "@/hooks/useAuth";
 
+import Layout from "@/components/layout";
 import Button from "@/ui/button";
 import Input from "@/ui/input";
 
+import { authUrl } from "@/endpoints/apiUrl";
 import style from "./style.module.scss";
-import Layout from "@/components/layout";
 
 const LoginPage: FC = () => {
   const navigate = useNavigate();
+
   const sendRequest = useFetch();
+  const { isAuth, updateAuth } = useAuth();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     login: "",
@@ -23,8 +26,12 @@ const LoginPage: FC = () => {
 
   // при первой отрисовке если позволяют куки то получаем данные юзера с дальнейшим редиректом
   useEffect(() => {
-    applyData();
-  }, []);
+    if (isAuth) {
+      navigate(routes.gameStart);
+      return;
+    }
+    updateAuth();
+  }, [isAuth]);
 
   const onClickHandler = () => {
     navigate(routes.signup);
@@ -56,14 +63,13 @@ const LoginPage: FC = () => {
 
   // запросить данные пользователя с дальнейшим редиректом
   const applyData = () => {
-    sendRequest({ url: `${authUrl}/user` });
-    // navigate(routes.game) или navigate(routes.forum) ???
+    updateAuth();
   };
 
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
       <form className={style.form} onSubmit={handleSubmit}>
-        <h1 className={style.title}>Please log in</h1>
+        <h1 className={style.title}>Log in</h1>
         <div className={style["inputs-wrapper"]}>
           <Input
             name="login"

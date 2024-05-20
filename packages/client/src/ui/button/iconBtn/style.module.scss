@@ -1,0 +1,17 @@
+.button {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  scale: 1;
+  background-color: transparent;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  transition: scale 100ms linear;
+
+  &:hover {
+    scale: 1.1;
+  }
+}

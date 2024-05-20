@@ -37,7 +37,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
         method: "PUT",
         body: {
           oldPassword: values.oldPassword,
-          newPassword: values.newPassword,
+          newPassword: values.password,
         },
       },
       applyData,
@@ -45,6 +45,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
   };
 
   const applyData = () => {
+    // upd store user data
     closeModal();
   };
 
@@ -68,14 +69,14 @@ const PasswordModal = ({ closeModal }: TProps) => {
           onErrorMessage={errorMessages.oldPassword}
         />
         <Input
-          name="newPassword"
+          name="password"
           label="New password"
           type="password"
           required={true}
-          value={values.newPassword}
+          value={values.password}
           onChange={handleChange}
-          onError={errors.newPassword}
-          onErrorMessage={errorMessages.newPassword}
+          onError={errors.password}
+          onErrorMessage={errorMessages.password}
         />
         <Input
           name="confirmPassword"

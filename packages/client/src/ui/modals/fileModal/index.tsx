@@ -52,11 +52,16 @@ const FileModal = ({ closeModal }: TProps) => {
   };
 
   const applyData = () => {
+    // fire some store event
     closeModal();
   };
 
   return (
-    <FormModal onSubmit={handleSubmit} onClose={closeModal}>
+    <FormModal
+      modalClassName={style.modal}
+      onSubmit={handleSubmit}
+      onClose={closeModal}
+    >
       <Title.H2 className={style.title} title={headerText} />
       {!isInvalid && previewImg && (
         <img className={style.img} src={previewImg} alt="Preview image" />

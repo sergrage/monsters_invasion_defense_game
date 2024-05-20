@@ -19,6 +19,9 @@ import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import level from "@/game/mocks/level/index";
 
+import { useNavigate } from "react-router";
+import { routes } from "@/pages/routes";
+
 import {
   SCREEN_ZOMBIE_MESSAGE_1,
   SCREEN_ZOMBIE_MESSAGE_2,
@@ -51,6 +54,8 @@ const GamePage = () => {
   const handleCoinsChangedEvent = (coins: number) => setCoins(coins);
   const handleHeartsChangedEvent = (hearts: number) => setHearts(hearts);
   const handleGameOverEvent = () => setIsGameOver(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -139,16 +144,16 @@ const GamePage = () => {
     };
   }, [windowWidth, windowHeight]);
 
+  useEffect(() => {
+    if (isGameOver) {
+      navigate(routes.gameOver);
+    }
+  }, [isGameOver]);
+
   return (
     <Layout.Page pageClass={style.wrapper}>
       <div className={style.game}>
         <canvas ref={canvasRef} id="gameCanvas"></canvas>
-
-        {isGameOver && (
-          <div id="gameOver" className={style.gameOver}>
-            GAME OVER
-          </div>
-        )}
 
         <div className={style.gameStats}></div>
         <div className={style.gameStatsContainer}>
