@@ -75,6 +75,13 @@ const App: FC = () => {
           }
         />
         <Route
+          path="/"
+          element={
+            <Navigate to={isAuth ? routes.gameStart : routes.login} replace />
+          }
+        />
+
+        <Route
           path={routes.profile}
           element={
             <ProtectedRoute>
