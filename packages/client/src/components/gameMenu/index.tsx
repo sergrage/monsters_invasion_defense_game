@@ -11,12 +11,6 @@ export type TProps = {
   control?: { route: string; action: any };
 };
 const GameMenu: FC<TProps> = ({ menu, control }) => {
-  const handleLoginClick = (route: string) => {
-    if (control && control.route === route.slice(1)) {
-      control.action();
-    }
-  };
-
   return (
     <div className={style.wrapper}>
       {menu.map((item, index) =>
@@ -25,7 +19,13 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
             className={style.menuItem}
             onClick={(event: React.MouseEvent<HTMLElement>) => {
               event.preventDefault();
-              handleLoginClick(item.route);
+              window.audioGlobal.play("MenuClick");
+
+              if (control && control.route === item.route.slice(1)) {
+                window.audioGlobal.play("MenuMusic", true);
+                window.musicIsOn = true;
+                control.action();
+              }
             }}
             to={item.route}
             key={index}
@@ -35,7 +35,14 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
             <p className={style.menuItemText}>{item.title}</p>
           </NavLink>
         ) : (
-          <NavLink className={style.menuItem} to={item.route} key={index}>
+          <NavLink
+            className={style.menuItem}
+            to={item.route}
+            key={index}
+            onClick={() => {
+              window.audioGlobal.play("MenuClick");
+            }}
+          >
             <Image className={style.menuItemBg} src={menuItemBg}></Image>
             <p className={style.menuItemText}>{item.title}</p>
           </NavLink>

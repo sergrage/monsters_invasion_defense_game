@@ -79,6 +79,7 @@ export interface IProjectileConstructor extends IContext {
   imageSrc: string;
   needRotation: boolean;
   damage: number;
+  towerTitle: string;
 }
 
 export interface ISprite extends IContext {

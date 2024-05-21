@@ -1,7 +1,7 @@
 import { useId } from "react";
 import cn from "classnames";
 
-import ZombieError from "../zombie_error";
+import ZombieError from "../zombieError";
 
 import style from "./style.module.scss";
 
@@ -24,7 +24,7 @@ const Input = ({
   label,
   placeholder,
   type = "text",
-  value,
+  value = "",
   required,
   onChange,
   onError,

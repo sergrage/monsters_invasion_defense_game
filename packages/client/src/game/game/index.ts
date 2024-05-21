@@ -9,7 +9,6 @@ import Sprite from "@/game/classes/gameEntities/Sprite";
 import Enemy from "@/game/classes/gameEntities/Enemies/Enemy";
 import PlacementTile from "@/game/classes/gameEntities/PlacementTile";
 import TowerMenu from "@/game/classes/gameEntities/Buildings/TowerMenu";
-
 import myImageExplosion from "@/game/img/explosion.png";
 import { ILevel, IPosition } from "@/game/interfaces";
 
@@ -176,6 +175,7 @@ class Game {
     ) {
       console.log("you won!");
       cancelAnimationFrame(animationId);
+      this.setGameOver();
       return;
     }
 
@@ -274,6 +274,9 @@ class Game {
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
 
       if (enemyIndex > -1) {
+        window.audioGlobal.play("ZombyFall");
+        window.audioGlobal.play("Coins");
+
         const deadEnemy = this.enemies.splice(enemyIndex, 1);
         const reward = deadEnemy[0].reward;
 
