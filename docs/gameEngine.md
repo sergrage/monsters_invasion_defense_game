@@ -5,6 +5,12 @@
   - [MapGenerator](#mapgenerator)
   - [EnemiesGenerator](#enemiesgenerator)
   - [PlacementTile](#placementtile)
+  - [TilesGenerator](#tilesgenerator)
+  - [EventSubject](#eventsubject)
+  - [TowersSelector](#towersselector)
+  - [TowerMenu](#towermenu)
+  - [Game](#game)
+  - [Методы игры](#методы-игры)
 
 ## Базовые классы
 
