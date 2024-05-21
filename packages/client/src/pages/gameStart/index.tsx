@@ -12,7 +12,6 @@ import Button from "@/ui/button/index";
 import IconButton from "@/ui/button/iconBtn";
 
 import { routes } from "@/pages/routes";
-
 import { toggleFullscreen } from "@/utils/fullscreenMode";
 
 import logoutIcon from "@/assets/icons/logout.svg";
@@ -34,7 +33,6 @@ const GameStartPage: FC = () => {
   const navigate = useNavigate();
 
   const [counter, setCounter] = useState<number>(3);
-
   const [showCounter, setShowCounter] = useState<boolean>(false);
 
   const fireIneterval = () => {
@@ -65,7 +63,6 @@ const GameStartPage: FC = () => {
 
   const applyData = () => {
     updateAuth();
-    navigate(routes.login);
   };
 
   return (
