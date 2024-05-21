@@ -42,6 +42,7 @@ const ForumPage: FC = () => {
             onClick={showModalClick}
             formBtn={true}
             formBtnRed={true}
+            noAnimate={true}
           />
           <Image
             className={style.zombieAlarm}
