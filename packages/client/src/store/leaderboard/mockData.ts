@@ -1,4 +1,4 @@
-export default [
+export const mockLeaderboardData = [
   {
     id: 1,
     user: {
@@ -27,7 +27,7 @@ export default [
     id: 3,
     user: {
       name: "UserName3",
-      login: "-^ ^- sushilover ~(_8^(|)",
+      login: "-^_^- sushilover ~(_8^(|)",
       avatar: "/src/assets/img/user3.png",
     },
     rank: 2,

@@ -53,12 +53,14 @@ const AddTopicModal: FC<TProps> = ({ hideModalClick }) => {
           type="submit"
           formBtn={true}
           formBtnRed={true}
+          noAnimate={true}
         />
         <Button.Flat
           name="Close"
           onClick={closeModal}
           formBtn={true}
           formBtnBlue={true}
+          noAnimate={true}
         />
       </div>
     </form>

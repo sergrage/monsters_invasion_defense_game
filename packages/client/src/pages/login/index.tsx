@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router";
 
 import { routes } from "@/pages/routes";
@@ -17,21 +17,12 @@ const LoginPage: FC = () => {
   const navigate = useNavigate();
 
   const sendRequest = useFetch();
-  const { isAuth, updateAuth } = useAuth();
+  const { updateAuth } = useAuth();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     login: "",
     password: "",
   });
-
-  // при первой отрисовке если позволяют куки то получаем данные юзера с дальнейшим редиректом
-  useEffect(() => {
-    if (isAuth) {
-      navigate(routes.gameStart);
-      return;
-    }
-    updateAuth();
-  }, [isAuth]);
 
   const onClickHandler = () => {
     navigate(routes.signup);
