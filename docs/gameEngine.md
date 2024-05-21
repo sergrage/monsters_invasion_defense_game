@@ -120,8 +120,7 @@ game.initGame();
    const enemiesGenerator = new EnemiesGenerator(mapGenerator.ctx, waypoints);```
 4. Создание экземпляра TilesGenerator: ```
    const tilesGenerator = new TilesGenerator(mapGenerator.ctx, placementTilesData, PlacementTile);```
-5. Создание экземпляра EventSubject: ```
-   const eventSubject = new EventSubject();
+5. Создание экземпляра EventSubject: ```const eventSubject = new EventSubject();```
 6. Создание экземпляра TowersSelector:```
    const towerSelector = new TowersSelector(coins);```
 7. Создание экземпляра TowerMenu:```
