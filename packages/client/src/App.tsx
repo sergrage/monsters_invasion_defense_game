@@ -3,9 +3,10 @@ import { useLocation } from "react-router-dom";
 import { useAppSelector } from "./hooks/useAppSelector";
 
 import { routes } from "@/pages/routes";
-import { Navigate, Route, Routes, useNavigate } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import useAuth from "./hooks/useAuth";
 
+import ProtectedRoute from "@/components/protectedRoute";
 import Login from "@/pages/login";
 import Signup from "@/pages/signup";
 import Profile from "@/pages/profile";
@@ -42,18 +43,14 @@ const App: FC = () => {
     ]);
   }
 
-  const navigate = useNavigate();
   let location = useLocation();
-
   const isLoading = useAppSelector(state => state.notify.isLoading);
-  const { isAuth } = useAuth();
+  const isAuth = useAppSelector(state => state.auth.isAuth);
+  const { updateAuth } = useAuth();
 
   useEffect(() => {
-    if (!isAuth) {
-      navigate(routes.login);
-      return;
-    }
-  }, [isAuth]);
+    updateAuth();
+  }, []);
 
   useEffect(() => {
     window.audioGlobal.pauseAll();
@@ -65,15 +62,74 @@ const App: FC = () => {
   return (
     <Layout.Main>
       <Routes>
-        <Route path={routes.login} element={<Login />} />
-        <Route path={routes.signup} element={<Signup />} />
-        <Route path={routes.profile} element={<Profile />} />
-        <Route path={routes.game} element={<Game />} />
-        <Route path={routes.forum} element={<Forum />} />
-        <Route path={routes.forumTopics} element={<ForumTopic />} />
-        <Route path={routes.gameStart} element={<GameStartPage />} />
-        <Route path={routes.gameOver} element={<GameOverPage />} />
-        <Route path={routes.leaderboard} element={<Leaderboard />} />
+        <Route
+          path={routes.login}
+          element={
+            isAuth ? <Navigate to={routes.gameStart} replace /> : <Login />
+          }
+        />
+        <Route
+          path={routes.signup}
+          element={
+            isAuth ? <Navigate to={routes.gameStart} replace /> : <Signup />
+          }
+        />
+        <Route
+          path={routes.profile}
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.game}
+          element={
+            <ProtectedRoute>
+              <Game />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.forum}
+          element={
+            <ProtectedRoute>
+              <Forum />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.forumTopics}
+          element={
+            <ProtectedRoute>
+              <ForumTopic />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.gameStart}
+          element={
+            <ProtectedRoute>
+              <GameStartPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.gameOver}
+          element={
+            <ProtectedRoute>
+              <GameOverPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={routes.leaderboard}
+          element={
+            <ProtectedRoute>
+              <Leaderboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path={routes.error404} element={<ErrorPage.error404 />} />
         <Route path={routes.error500} element={<ErrorPage.error500 />} />
         <Route path="*" element={<Navigate to={routes.login} replace />} />

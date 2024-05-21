@@ -63,7 +63,7 @@ const RegisterPage: FC = () => {
 
   const applyData = () => {
     updateAuth();
-    navigate(routes.gameStart);
+    // navigate(routes.gameStart);
   };
 
   return (

@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { notifyActions } from "@/store/notification/reducer";
+import { useEffect } from "react";
+
 import { useAppDispatch } from "./useAppDispatch";
+import { notifyActions } from "@/store/notification/reducer";
+import { authActions } from "@/store/auth/reducer";
 
 import { authUrl } from "@/endpoints/apiUrl";
 
@@ -9,7 +11,6 @@ type responseType = {
 };
 
 const useAuth = () => {
-  const [isAuth, setIsAuth] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -33,10 +34,10 @@ const useAuth = () => {
           throw new Error(`${response.status} ${data.reason}`);
         }
 
-        setIsAuth(true);
+        dispatch(authActions.logIn());
       })
       .catch(error => {
-        setIsAuth(false);
+        dispatch(authActions.logOut());
 
         console.log(error);
       })
@@ -45,7 +46,7 @@ const useAuth = () => {
       });
   };
 
-  return { isAuth, updateAuth };
+  return { updateAuth };
 };
 
 export default useAuth;
