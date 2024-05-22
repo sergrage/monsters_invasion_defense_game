@@ -29,7 +29,7 @@ import {
 } from "@/constants/index";
 import sellImg from "@/assets/img/towerMenu/sell.png";
 import upgrImg from "@/assets/img/towerMenu/upgr.png";
-import myImage from "@/game/img/gameMap.png";
+import level_1Map from "@/assets/game/levels/Level-1.png";
 import style from "./style.module.scss";
 
 import { toggleFullscreen } from "@/utils/fullscreenMode";
@@ -64,7 +64,7 @@ const GamePage = () => {
       1280,
       768,
       canvasRef.current,
-      myImage,
+      level_1Map,
     );
     const enemiesGenerator = new EnemiesGenerator(mapGenerator.ctx, waypoints);
     const tilesGenerator = new TilesGenerator(
