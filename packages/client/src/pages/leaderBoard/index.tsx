@@ -16,6 +16,7 @@ import {
 } from "@/store/leaderboard/reducer";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import ZombieLoader from "@/ui/zombieLoader";
+import { LeaderboardResponse } from "@/store/leaderboard/type";
 
 const LeaderBoardPage: FC = () => {
   const [showToasty, setShowToasty] = useState(false);
@@ -102,8 +103,12 @@ const LeaderBoardPage: FC = () => {
             </thead>
             <tbody>
               {data
-                ?.toSorted((a, b) => a.rank - b.rank)
-                .map((item, index) => (
+                ?.slice()
+                .sort(
+                  (a: LeaderboardResponse, b: LeaderboardResponse) =>
+                    a.rank - b.rank,
+                )
+                .map((item: LeaderboardResponse, index: number) => (
                   <tr key={item.id}>
                     {index === 0 ? (
                       <td

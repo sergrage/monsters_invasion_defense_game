@@ -1,4 +1,4 @@
-import { mockLeaderboardData } from "./mockData";
+import { mockLeaderboardData } from "./mock";
 import { LeaderboardResponse } from "./type";
 
 export const fetchLeaderboardData = async (): Promise<
