@@ -103,7 +103,8 @@ const LeaderBoardPage: FC = () => {
             </thead>
             <tbody>
               {data
-                ?.sort(
+                ?.slice()
+                .sort(
                   (a: LeaderboardResponse, b: LeaderboardResponse) =>
                     a.rank - b.rank,
                 )
