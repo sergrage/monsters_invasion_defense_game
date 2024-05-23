@@ -1,4 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import { useAppDispatch } from "./useAppDispatch";
+import { notifyActions } from "@/store/notification/reducer";
+import { authActions } from "@/store/auth/reducer";
+
 import { authUrl } from "@/endpoints/apiUrl";
 
 type responseType = {
@@ -6,13 +11,15 @@ type responseType = {
 };
 
 const useAuth = () => {
-  const [isAuth, setIsAuth] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     updateAuth();
   }, []);
 
   const updateAuth = () => {
+    dispatch(notifyActions.startLoading());
+
     fetch(`${authUrl}/user`, {
       method: "GET",
       headers: {
@@ -27,22 +34,19 @@ const useAuth = () => {
           throw new Error(`${response.status} ${data.reason}`);
         }
 
-        setIsAuth(true);
+        dispatch(authActions.logIn());
       })
       .catch(error => {
-        setIsAuth(false);
-        // добавляем сообщение об ошибке
-        // dispatch(
-        //   notifyActions.applyError(error.message || "Something went wrong"),
-        // );
+        dispatch(authActions.logOut());
+
+        console.log(error);
       })
       .finally(() => {
-        // выключить индикатор загрузки
-        // dispatch(notifyActions.clearLoading());
+        dispatch(notifyActions.stopLoading());
       });
   };
 
-  return { isAuth, updateAuth };
+  return { updateAuth };
 };
 
 export default useAuth;

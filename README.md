@@ -1,3 +1,7 @@
+### Ссылка на видео с работоспособностью проекта
+
+https://www.youtube.com/watch?v=8iiCqeSzqQc
+
 ### Название веток при разработке
 
 `<тип>/<id>_name_of_branch` либо `<тип>/<id_1>-<id_2>_name_of_branch`
@@ -81,3 +85,5 @@
 
 Если вам понадобится только один сервис, просто уточните какой в команде
 `docker compose up {sevice_name}`, например `docker compose up server`
+
+[Документация](docs/README.md)

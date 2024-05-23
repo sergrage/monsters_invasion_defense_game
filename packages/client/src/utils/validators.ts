@@ -36,6 +36,10 @@ export const validationRules = {
     validator: (value: string) => !!value.trim() && nameValidator.test(value),
     errorMessage: NAME_VALIDATION_MESSAGE,
   },
+  lastName: {
+    validator: (value: string) => !!value.trim() && nameValidator.test(value),
+    errorMessage: NAME_VALIDATION_MESSAGE,
+  },
   password: {
     validator: (value: string) =>
       !!value.trim() && passwordValidator.test(value),
