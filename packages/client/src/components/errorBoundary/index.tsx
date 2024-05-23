@@ -17,8 +17,12 @@ const ErrorBoundary: FC<TProps> = ({ children }) => {
   const error = useAppSelector(getErrorState);
 
   useEffect(() => {
-    error.notifyError?.forEach(notify => {
-      toast[notify.status](notify.message, {
+    error.notifyError?.forEach((notify: any) => {
+      // toast[notify.status](notify.message, {
+      //   position: toast.POSITION.BOTTOM_RIGHT,
+      //   toastId: notify.id,
+      // });
+      toast.warning(notify.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
         toastId: notify.id,
       });

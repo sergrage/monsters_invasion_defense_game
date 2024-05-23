@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { routes } from "../routes";
 
 import Layout from "@/components/layout";
@@ -26,6 +27,7 @@ const userDummy = {
 
 const Profile = () => {
   const navigate = useNavigate();
+  const user = useAppSelector(state => state.user.user);
 
   const [showPassModal, setShowPassModal] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
@@ -45,14 +47,20 @@ const Profile = () => {
 
         <AvatarEl onClick={toggleAvatarModal} />
 
-        <div className={style["fields-wrapper"]}>
-          <ProfileField label="First name" value={userDummy.first_name} />
-          <ProfileField label="Second name" value={userDummy.second_name} />
-          <ProfileField label="User name" value={userDummy.display_name} />
-          <ProfileField label="Phone" value={userDummy.phone} />
-          <ProfileField label="Login" value={userDummy.login} />
-          <ProfileField label="Email" value={userDummy.email} />
-        </div>
+        {user ? (
+          <div className={style["fields-wrapper"]}>
+            <ProfileField label="First name" value={user.first_name} />
+            <ProfileField label="Second name" value={user.second_name} />
+            <ProfileField label="User name" value={user.display_name} />
+            <ProfileField label="Phone" value={user.phone} />
+            <ProfileField label="Login" value={user.login} />
+            <ProfileField label="Email" value={user.email} />
+          </div>
+        ) : (
+          <Title.H2>
+            Somehow user is missing!!! Have you seen this boy?
+          </Title.H2>
+        )}
 
         <Button.Flat name="Change password" onClick={togglePassModal} />
 
