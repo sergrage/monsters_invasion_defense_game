@@ -1,18 +1,23 @@
-import style from "./style.module.scss";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { baseYandexUrl } from "@/endpoints/apiUrl";
 
-const userDummy = {
-  avatar: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
-};
+import style from "./style.module.scss";
 
 type TProps = {
   onClick: (event: React.MouseEvent) => void;
 };
 
 const AvatarEl = ({ onClick }: TProps) => {
+  const user = useAppSelector(state => state.user.user);
+
   return (
     <div className={style.avatar} onClick={onClick}>
       <div className={style.wrapper}>
-        <img className={style.img} src={userDummy.avatar} alt="User avatar" />
+        <img
+          className={style.img}
+          src={`${baseYandexUrl}/resources${user!.avatar}`}
+          alt="User avatar"
+        />
         <div className={style.back}>
           <p>Change avatar</p>
         </div>

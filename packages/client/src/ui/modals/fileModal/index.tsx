@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { AsyncThunkAction } from "@reduxjs/toolkit";
 
-import useFetch from "@/hooks/useFetch";
-
-import { userUrl } from "@/endpoints/apiUrl";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { changeAvatarThunk } from "@/store/user/reducer";
 
 import FormModal from "../formModal";
 import Title from "@/ui/title";
@@ -16,7 +16,7 @@ type TProps = {
 };
 
 const FileModal = ({ closeModal }: TProps) => {
-  const sendRequest = useFetch();
+  const dispatch = useAppDispatch();
 
   const [formVal, setFormVal] = useState({});
   const [headerText, setHeaderText] = useState("Upload a file");
@@ -41,19 +41,13 @@ const FileModal = ({ closeModal }: TProps) => {
     const formData = new FormData();
     formData.append("avatar", formVal as Blob);
 
-    sendRequest(
-      {
-        url: `${userUrl}/profile/avatar`,
-        method: "PUT",
-        body: formData,
+    dispatch(changeAvatarThunk(formData)).then(
+      (resultAction: AsyncThunkAction<void, FormData, {}>) => {
+        if (changeAvatarThunk.fulfilled.match(resultAction)) {
+          closeModal();
+        }
       },
-      applyData,
     );
-  };
-
-  const applyData = () => {
-    // fire some store event
-    closeModal();
   };
 
   return (

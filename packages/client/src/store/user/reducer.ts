@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import apiFetch from "@/utils/apiFetch";
-import { authUrl } from "@/endpoints/apiUrl";
+import { authUrl, userUrl } from "@/endpoints/apiUrl";
 
 import { UserState } from "./types";
 
@@ -52,6 +52,10 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.isAuth = false;
         state.user = null;
+      })
+      .addCase(changeAvatarThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user!.avatar = action.payload.avatar;
       })
 
       .addMatcher(
@@ -130,6 +134,23 @@ export const signUpThunk: any = createAsyncThunk(
       });
 
       await dispatch(getUserThunk());
+    } catch (e: any) {
+      console.error(e);
+    }
+  },
+);
+
+export const changeAvatarThunk: any = createAsyncThunk(
+  "auth/profile/avatar",
+  async (body: FormData, { dispatch }) => {
+    try {
+      const response = await apiFetch({
+        url: `${userUrl}/profile/avatar`,
+        method: "PUT",
+        body,
+      });
+
+      return response;
     } catch (e: any) {
       console.error(e);
     }
