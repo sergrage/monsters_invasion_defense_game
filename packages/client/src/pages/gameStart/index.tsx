@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import style from "./style.module.scss";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { logOut } from "@/store/auth/reducer";
+import { logOutThunk } from "@/store/auth/reducer";
 
 import Layout from "@/components/layout";
 import GameMenu from "@/components/gameMenu";
@@ -50,7 +50,7 @@ const GameStartPage: FC = () => {
   }, [counter]);
 
   const handleLogOut = () => {
-    dispatch(logOut());
+    dispatch(logOutThunk());
   };
 
   return (
