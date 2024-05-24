@@ -24,15 +24,14 @@ const authSlice = createSlice({
 
   extraReducers: builder => {
     builder
-      .addCase(logIn.fulfilled, state => {
+      .addCase(getUserThunk.fulfilled, state => {
         state.isLoading = false;
         state.isAuth = true;
       })
-      .addCase(getUser.fulfilled, state => {
+      .addCase(logInThunk.fulfilled, state => {
         state.isLoading = false;
-        state.isAuth = true;
       })
-      .addCase(logOut.fulfilled, state => {
+      .addCase(logOutThunk.fulfilled, state => {
         state.isLoading = false;
         state.isAuth = false;
       })
@@ -51,7 +50,7 @@ const authSlice = createSlice({
   },
 });
 
-export const getUser: any = createAsyncThunk("auth/getUser", async () => {
+export const getUserThunk: any = createAsyncThunk("auth/getUser", async () => {
   try {
     const response = apiFetch({
       url: `${authUrl}/user`,
@@ -63,7 +62,7 @@ export const getUser: any = createAsyncThunk("auth/getUser", async () => {
   }
 });
 
-export const logIn: any = createAsyncThunk(
+export const logInThunk: any = createAsyncThunk(
   "auth/logIn",
   async (body: { login: string; password: string }) => {
     try {
@@ -73,14 +72,14 @@ export const logIn: any = createAsyncThunk(
         body,
       });
 
-      getUser();
+      getUserThunk();
     } catch (e: any) {
       console.error(e);
     }
   },
 );
 
-export const logOut: any = createAsyncThunk("auth/logOut", async () => {
+export const logOutThunk: any = createAsyncThunk("auth/logOut", async () => {
   try {
     apiFetch({
       url: `${authUrl}/logout`,
@@ -91,7 +90,7 @@ export const logOut: any = createAsyncThunk("auth/logOut", async () => {
   }
 });
 
-export const signUp: any = createAsyncThunk(
+export const signUpThunk: any = createAsyncThunk(
   "auth/signUp",
   async (body: {
     login: string;
@@ -108,7 +107,7 @@ export const signUp: any = createAsyncThunk(
         body,
       });
 
-      getUser();
+      getUserThunk();
     } catch (e: any) {
       console.error(e);
     }

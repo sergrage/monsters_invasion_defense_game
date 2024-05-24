@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { signUp } from "@/store/auth/reducer";
+import { signUpThunk } from "@/store/auth/reducer";
 
 import Layout from "@/components/layout";
 import Button from "@/ui/button";
@@ -42,7 +42,7 @@ const RegisterPage: FC = () => {
     }
 
     dispatch(
-      signUp({
+      signUpThunk({
         first_name: values.firstName,
         second_name: values.lastName,
         login: values.login,

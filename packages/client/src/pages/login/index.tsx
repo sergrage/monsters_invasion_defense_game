@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { logIn } from "@/store/auth/reducer";
+import { logInThunk } from "@/store/auth/reducer";
 
 import Layout from "@/components/layout";
 import Button from "@/ui/button";
@@ -37,7 +37,7 @@ const LoginPage: FC = () => {
     }
 
     dispatch(
-      logIn({
+      logInThunk({
         login: values.login,
         password: values.password,
       }),
