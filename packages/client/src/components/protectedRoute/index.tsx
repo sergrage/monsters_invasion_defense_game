@@ -8,7 +8,7 @@ const ProtectedRoute: FC<{ children: React.ReactNode }> = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const isAuth = useAppSelector(state => state.auth.isAuth);
+  const isAuth = useAppSelector(state => state.user.isAuth);
 
   if (!isAuth) {
     return <Navigate to="/login" replace />;

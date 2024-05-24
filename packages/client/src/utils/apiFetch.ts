@@ -18,27 +18,29 @@ function apiFetch(config: configType) {
   const body =
     config.body instanceof FormData ? config.body : JSON.stringify(config.body);
 
-  fetch(config.url, {
+  const data = fetch(config.url, {
     method,
     headers,
     body,
     credentials: "include", // handle httponly cookies
   }).then(async response => {
     const contentType = response.headers.get("Content-type");
-    let data;
+    let responseData;
 
     contentType?.includes("application/json")
-      ? (data = (await response.json()) as responseType)
-      : (data = await response.text());
+      ? (responseData = (await response.json()) as responseType)
+      : (responseData = await response.text());
 
     if (!response.ok) {
       throw new Error(
-        `${response.status} ${(typeof data === "object" && data?.reason) || data}`,
+        `${response.status} ${(typeof responseData === "object" && responseData?.reason) || responseData}`,
       );
     }
 
-    return data;
+    return responseData;
   });
+
+  return data;
 }
 
 export default apiFetch;

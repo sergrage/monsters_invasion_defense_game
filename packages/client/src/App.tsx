@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router";
 
 import { useAppSelector } from "./hooks/useAppSelector";
 import { routes } from "@/pages/routes";
-import { getUserThunk } from "@/store/auth/reducer";
+import { getUserThunk } from "@/store/user/reducer";
 
 import ProtectedRoute from "@/components/protectedRoute";
 import Login from "@/pages/login";
@@ -46,8 +46,8 @@ const App: FC = () => {
 
   let location = useLocation();
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(state => state.auth.isLoading);
-  const isAuth = useAppSelector(state => state.auth.isAuth);
+  const isLoading = useAppSelector(state => state.user.isLoading);
+  const isAuth = useAppSelector(state => state.user.isAuth);
 
   useEffect(() => {
     dispatch(getUserThunk());

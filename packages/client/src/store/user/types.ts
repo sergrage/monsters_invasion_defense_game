@@ -11,4 +11,6 @@ type userType = {
 
 export type UserState = {
   user: null | userType;
+  isLoading: boolean;
+  isAuth: boolean;
 };
