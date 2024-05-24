@@ -3,21 +3,18 @@ import { useNavigate } from "react-router";
 
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
-import useFetch from "@/hooks/useFetch";
-import useAuth from "@/hooks/useAuth";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { signUp } from "@/store/auth/reducer";
 
 import Layout from "@/components/layout";
 import Button from "@/ui/button";
 import Input from "@/ui/input";
 
-import { authUrl } from "@/endpoints/apiUrl";
 import style from "../login/style.module.scss";
 
 const RegisterPage: FC = () => {
   const navigate = useNavigate();
-
-  const sendRequest = useFetch();
-  const { updateAuth } = useAuth();
+  const dispatch = useAppDispatch();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     email: "",
@@ -44,26 +41,16 @@ const RegisterPage: FC = () => {
       return;
     }
 
-    sendRequest(
-      {
-        url: `${authUrl}/signup`,
-        method: "POST",
-        body: {
-          first_name: values.firstName,
-          second_name: values.lastName,
-          login: values.login,
-          email: values.email,
-          password: values.password,
-          phone: values.phone,
-        },
-      },
-      applyData,
+    dispatch(
+      signUp({
+        first_name: values.firstName,
+        second_name: values.lastName,
+        login: values.login,
+        email: values.email,
+        password: values.password,
+        phone: values.phone,
+      }),
     );
-  };
-
-  const applyData = () => {
-    updateAuth();
-    // navigate(routes.gameStart);
   };
 
   return (

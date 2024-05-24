@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import style from "./style.module.scss";
 
-import useFetch from "@/hooks/useFetch";
-import useAuth from "@/hooks/useAuth";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { logOut } from "@/store/auth/reducer";
 
 import Layout from "@/components/layout";
 import GameMenu from "@/components/gameMenu";
@@ -16,7 +16,6 @@ import { toggleFullscreen } from "@/utils/fullscreenMode";
 
 import logoutIcon from "@/assets/icons/logout.svg";
 import settingsIcon from "@/assets/icons/settings.svg";
-import { authUrl } from "@/endpoints/apiUrl";
 
 const GameStartPage: FC = () => {
   const gameMenu = [
@@ -27,8 +26,7 @@ const GameStartPage: FC = () => {
 
   let interval: NodeJS.Timer | undefined;
 
-  const sendRequest = useFetch();
-  const { updateAuth } = useAuth();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
@@ -52,17 +50,7 @@ const GameStartPage: FC = () => {
   }, [counter]);
 
   const handleLogOut = () => {
-    sendRequest(
-      {
-        url: `${authUrl}/logout`,
-        method: "POST",
-      },
-      applyData,
-    );
-  };
-
-  const applyData = () => {
-    updateAuth();
+    dispatch(logOut());
   };
 
   return (

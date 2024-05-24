@@ -1,10 +1,10 @@
 import { FC, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useAppSelector } from "./hooks/useAppSelector";
-
-import { routes } from "@/pages/routes";
 import { Navigate, Route, Routes } from "react-router";
-import useAuth from "./hooks/useAuth";
+
+import { useAppSelector } from "./hooks/useAppSelector";
+import { routes } from "@/pages/routes";
+import { getUser } from "@/store/auth/reducer";
 
 import ProtectedRoute from "@/components/protectedRoute";
 import Login from "@/pages/login";
@@ -21,6 +21,7 @@ import Layout from "@/components/layout";
 import ZombieLoader from "./ui/zombieLoader";
 
 import AudioCore from "@/audioCore/Core";
+import { useAppDispatch } from "./hooks/useAppDispatch";
 
 declare global {
   interface Window {
@@ -44,12 +45,12 @@ const App: FC = () => {
   }
 
   let location = useLocation();
-  const isLoading = useAppSelector(state => state.notify.isLoading);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(state => state.auth.isLoading);
   const isAuth = useAppSelector(state => state.auth.isAuth);
-  const { updateAuth } = useAuth();
 
   useEffect(() => {
-    updateAuth();
+    dispatch(getUser());
   }, []);
 
   useEffect(() => {
