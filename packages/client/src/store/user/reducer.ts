@@ -71,7 +71,7 @@ const userSlice = createSlice({
 
 export const getUserThunk: any = createAsyncThunk("auth/getUser", async () => {
   try {
-    const response = apiFetch({
+    const response = await apiFetch({
       url: `${authUrl}/user`,
     });
 
@@ -83,15 +83,15 @@ export const getUserThunk: any = createAsyncThunk("auth/getUser", async () => {
 
 export const logInThunk: any = createAsyncThunk(
   "auth/logIn",
-  async (body: { login: string; password: string }) => {
+  async (body: { login: string; password: string }, { dispatch }) => {
     try {
-      apiFetch({
+      await apiFetch({
         url: `${authUrl}/signin`,
         method: "POST",
         body,
       });
 
-      getUserThunk();
+      await dispatch(getUserThunk());
     } catch (e: any) {
       console.error(e);
     }
@@ -100,7 +100,7 @@ export const logInThunk: any = createAsyncThunk(
 
 export const logOutThunk: any = createAsyncThunk("auth/logOut", async () => {
   try {
-    apiFetch({
+    await apiFetch({
       url: `${authUrl}/logout`,
       method: "POST",
     });
@@ -111,22 +111,25 @@ export const logOutThunk: any = createAsyncThunk("auth/logOut", async () => {
 
 export const signUpThunk: any = createAsyncThunk(
   "auth/signUp",
-  async (body: {
-    login: string;
-    password: string;
-    first_name: string;
-    second_name: string;
-    email: string;
-    phone: string;
-  }) => {
+  async (
+    body: {
+      login: string;
+      password: string;
+      first_name: string;
+      second_name: string;
+      email: string;
+      phone: string;
+    },
+    { dispatch },
+  ) => {
     try {
-      apiFetch({
+      await apiFetch({
         url: `${authUrl}/signup`,
         method: "POST",
         body,
       });
 
-      getUserThunk();
+      await dispatch(getUserThunk());
     } catch (e: any) {
       console.error(e);
     }
