@@ -15,16 +15,6 @@ import IconButton from "@/ui/button/iconBtn";
 import gameIcon from "@/assets/icons/game.svg";
 import style from "./style.module.scss";
 
-const userDummy = {
-  id: 123,
-  first_name: "Petya",
-  second_name: "Pupkin",
-  display_name: "Petya Pupkin",
-  phone: "+79001001100",
-  login: "userLogin",
-  email: "string@ya.ru",
-};
-
 const Profile = () => {
   const navigate = useNavigate();
   const user = useAppSelector(state => state.user.user);
@@ -49,12 +39,12 @@ const Profile = () => {
 
         {user ? (
           <div className={style["fields-wrapper"]}>
-            <ProfileField label="First name" value={user.first_name} />
-            <ProfileField label="Second name" value={user.second_name} />
-            <ProfileField label="User name" value={user.display_name} />
-            <ProfileField label="Phone" value={user.phone} />
-            <ProfileField label="Login" value={user.login} />
-            <ProfileField label="Email" value={user.email} />
+            <ProfileField label="First name" value={user.first_name || "-"} />
+            <ProfileField label="Second name" value={user.second_name || "-"} />
+            <ProfileField label="User name" value={user.display_name || "-"} />
+            <ProfileField label="Phone" value={user.phone || "-"} />
+            <ProfileField label="Login" value={user.login || "-"} />
+            <ProfileField label="Email" value={user.email || "-"} />
           </div>
         ) : (
           <Title.H2>
