@@ -30,6 +30,7 @@ const authSlice = createSlice({
       })
       .addCase(logInThunk.fulfilled, state => {
         state.isLoading = false;
+        state.isAuth = true;
       })
       .addCase(logOutThunk.fulfilled, state => {
         state.isLoading = false;
