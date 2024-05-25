@@ -1,6 +1,9 @@
-import useFetch from "@/hooks/useFetch";
+import { AsyncThunkAction } from "@reduxjs/toolkit";
+
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { changePassThunk } from "@/store/user/reducer";
+
 import { useValidate } from "@/hooks/useValidate";
-import { userUrl } from "@/endpoints/apiUrl";
 
 import FormModal from "../formModal";
 import Title from "@/ui/title";
@@ -14,7 +17,7 @@ type TProps = {
 };
 
 const PasswordModal = ({ closeModal }: TProps) => {
-  const sendRequest = useFetch();
+  const dispatch = useAppDispatch();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     oldPassword: "",
@@ -31,22 +34,16 @@ const PasswordModal = ({ closeModal }: TProps) => {
       return;
     }
 
-    sendRequest(
-      {
-        url: `${userUrl}/password`,
-        method: "PUT",
-        body: {
-          oldPassword: values.oldPassword,
-          newPassword: values.password,
-        },
-      },
-      applyData,
-    );
-  };
-
-  const applyData = () => {
-    // upd store user data
-    closeModal();
+    dispatch(
+      changePassThunk({
+        oldPassword: values.oldPassword,
+        newPassword: values.password,
+      }),
+    ).then((resultAction: AsyncThunkAction<void, FormData, {}>) => {
+      if (changePassThunk.fulfilled.match(resultAction)) {
+        closeModal();
+      }
+    });
   };
 
   return (
