@@ -1,5 +1,6 @@
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { baseYandexUrl } from "@/endpoints/apiUrl";
+import { getUserState } from "@/store/user/selector";
 
 import style from "./style.module.scss";
 
@@ -8,7 +9,7 @@ type TProps = {
 };
 
 const AvatarEl = ({ onClick }: TProps) => {
-  const user = useAppSelector(state => state.user.user);
+  const user = useAppSelector(getUserState).user;
 
   return (
     <div className={style.avatar} onClick={onClick}>

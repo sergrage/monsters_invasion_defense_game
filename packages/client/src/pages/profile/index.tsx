@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { getUserState } from "@/store/user/selector";
 import { routes } from "../routes";
 
 import Layout from "@/components/layout";
@@ -17,7 +18,7 @@ import style from "./style.module.scss";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const user = useAppSelector(state => state.user.user);
+  const user = useAppSelector(getUserState).user;
 
   const [showPassModal, setShowPassModal] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);

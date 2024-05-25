@@ -5,6 +5,8 @@ import { Navigate, Route, Routes } from "react-router";
 import { useAppSelector } from "./hooks/useAppSelector";
 import { routes } from "@/pages/routes";
 import { getUserThunk } from "@/store/user/actions";
+import { useAppDispatch } from "./hooks/useAppDispatch";
+import { getUserState } from "./store/user/selector";
 
 import ProtectedRoute from "@/components/protectedRoute";
 import Login from "@/pages/login";
@@ -21,7 +23,6 @@ import Layout from "@/components/layout";
 import ZombieLoader from "./ui/zombieLoader";
 
 import AudioCore from "@/audioCore/Core";
-import { useAppDispatch } from "./hooks/useAppDispatch";
 
 declare global {
   interface Window {
@@ -46,8 +47,9 @@ const App: FC = () => {
 
   let location = useLocation();
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(state => state.user.isLoading);
-  const isAuth = useAppSelector(state => state.user.isAuth);
+
+  const isLoading = useAppSelector(getUserState).isLoading;
+  const isAuth = useAppSelector(getUserState).isAuth;
 
   useEffect(() => {
     dispatch(getUserThunk());
