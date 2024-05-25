@@ -3,21 +3,23 @@ import { useNavigate } from "react-router";
 
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
-import useFetch from "@/hooks/useFetch";
-import useAuth from "@/hooks/useAuth";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { logInThunk } from "@/store/user/actions";
 
 import Layout from "@/components/layout";
 import Button from "@/ui/button";
 import Input from "@/ui/input";
 
-import { authUrl } from "@/endpoints/apiUrl";
 import style from "./style.module.scss";
+
+type TLogin = {
+  login: string;
+  password: string;
+};
 
 const LoginPage: FC = () => {
   const navigate = useNavigate();
-
-  const sendRequest = useFetch();
-  const { updateAuth } = useAuth();
+  const dispatch = useAppDispatch();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     login: "",
@@ -39,22 +41,7 @@ const LoginPage: FC = () => {
       return;
     }
 
-    sendRequest(
-      {
-        url: `${authUrl}/signin`,
-        method: "POST",
-        body: {
-          login: values.login,
-          password: values.password,
-        },
-      },
-      applyData,
-    );
-  };
-
-  // запросить данные пользователя с дальнейшим редиректом
-  const applyData = () => {
-    updateAuth();
+    dispatch(logInThunk(values as TLogin));
   };
 
   return (

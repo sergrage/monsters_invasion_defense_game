@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import useFetch from "@/hooks/useFetch";
-
-import { userUrl } from "@/endpoints/apiUrl";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { changeAvatarThunk } from "@/store/user/actions";
+import { getUserState } from "@/store/user/selector";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 import FormModal from "../formModal";
 import Title from "@/ui/title";
@@ -16,12 +17,20 @@ type TProps = {
 };
 
 const FileModal = ({ closeModal }: TProps) => {
-  const sendRequest = useFetch();
+  const dispatch = useAppDispatch();
 
   const [formVal, setFormVal] = useState({});
   const [headerText, setHeaderText] = useState("Upload a file");
   const [previewImg, setPreviewImg] = useState("");
   const [isInvalid, setIsInvalid] = useState(true);
+
+  const userState = useAppSelector(getUserState);
+  const [currentAvatar] = useState(userState.user!.avatar);
+
+  useEffect(() => {
+    if (!userState.isLoading && currentAvatar !== userState.user!.avatar)
+      closeModal();
+  }, [userState.isLoading, userState.user!.avatar]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files![0].name) {
@@ -41,19 +50,7 @@ const FileModal = ({ closeModal }: TProps) => {
     const formData = new FormData();
     formData.append("avatar", formVal as Blob);
 
-    sendRequest(
-      {
-        url: `${userUrl}/profile/avatar`,
-        method: "PUT",
-        body: formData,
-      },
-      applyData,
-    );
-  };
-
-  const applyData = () => {
-    // fire some store event
-    closeModal();
+    dispatch(changeAvatarThunk(formData));
   };
 
   return (

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useAppDispatch } from "./useAppDispatch";
 import { notifyActions } from "@/store/notification/reducer";
-import { authActions } from "@/store/auth/reducer";
+import { authActions } from "@/store/user/reducer";
 
 import { authUrl } from "@/endpoints/apiUrl";
 

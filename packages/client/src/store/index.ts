@@ -1,18 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { userSlice } from "./user/reducer";
 import { leaderboardSlice } from "./leaderboard/reducer";
-import { errorSlice } from "@/store/error/reducer";
-
-import notifyReducer from "./notification/reducer";
-import authReducer from "./auth/reducer";
+import { errorSlice } from "./error/reducer";
+import userReducer from "./user/reducer";
 
 export const store = configureStore({
   reducer: combineReducers({
     error: errorSlice.reducer,
-    user: userSlice.reducer,
     leaderboard: leaderboardSlice.reducer,
-    notify: notifyReducer,
-    auth: authReducer,
+    user: userReducer,
   }),
 });
 

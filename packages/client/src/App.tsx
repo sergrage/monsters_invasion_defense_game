@@ -1,10 +1,12 @@
 import { FC, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useAppSelector } from "./hooks/useAppSelector";
-
-import { routes } from "@/pages/routes";
 import { Navigate, Route, Routes } from "react-router";
-import useAuth from "./hooks/useAuth";
+
+import { useAppSelector } from "./hooks/useAppSelector";
+import { routes } from "@/pages/routes";
+import { getUserThunk } from "@/store/user/actions";
+import { useAppDispatch } from "./hooks/useAppDispatch";
+import { getUserState } from "./store/user/selector";
 
 import ProtectedRoute from "@/components/protectedRoute";
 import Login from "@/pages/login";
@@ -44,12 +46,13 @@ const App: FC = () => {
   }
 
   let location = useLocation();
-  const isLoading = useAppSelector(state => state.notify.isLoading);
-  const isAuth = useAppSelector(state => state.auth.isAuth);
-  const { updateAuth } = useAuth();
+  const dispatch = useAppDispatch();
+
+  const isLoading = useAppSelector(getUserState).isLoading;
+  const isAuth = useAppSelector(getUserState).isAuth;
 
   useEffect(() => {
-    updateAuth();
+    dispatch(getUserThunk());
   }, []);
 
   useEffect(() => {
