@@ -8,7 +8,7 @@ type responseType = {
   [key: string]: Record<string, string | { [key: string]: string } | number>;
 };
 
-function apiFetch(config: configType) {
+async function apiFetch(config: configType) {
   const method = config.method || "GET";
   const headers: HeadersInit =
     config.body instanceof FormData
@@ -18,7 +18,7 @@ function apiFetch(config: configType) {
   const body =
     config.body instanceof FormData ? config.body : JSON.stringify(config.body);
 
-  const data = fetch(config.url, {
+  const data = await fetch(config.url, {
     method,
     headers,
     body,
