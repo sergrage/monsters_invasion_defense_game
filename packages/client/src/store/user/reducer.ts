@@ -12,49 +12,22 @@ const initialState: UserState = {
 };
 
 const userSlice = createSlice({
-  name: "auth",
+  name: "user",
   initialState,
 
-  reducers: {
-    logIn: state => {
-      state.isAuth = true;
-    },
-
-    logOut: state => {
-      state.isAuth = false;
-    },
-
-    setUser(state, action) {
-      state.user = action.payload;
-    },
-
-    changeAvatar(state, action) {
-      state.user!.avatar = action.payload;
-    },
-
-    clearUser(state) {
-      state.user = null;
-    },
-  },
+  reducers: {},
 
   extraReducers: builder => {
     builder
       .addCase(getUserThunk.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.isAuth = true;
         state.user = action.payload;
       })
-      .addCase(logInThunk.fulfilled, state => {
-        state.isLoading = false;
-        state.isAuth = true;
-      })
       .addCase(logOutThunk.fulfilled, state => {
-        state.isLoading = false;
         state.isAuth = false;
         state.user = null;
       })
       .addCase(changeAvatarThunk.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.user!.avatar = action.payload.avatar;
       })
 
@@ -62,6 +35,12 @@ const userSlice = createSlice({
         action => action.type.endsWith("/pending"),
         state => {
           state.isLoading = true;
+        },
+      )
+      .addMatcher(
+        action => action.type.endsWith("/fulfilled"),
+        state => {
+          state.isLoading = false;
         },
       )
       .addMatcher(
@@ -73,21 +52,27 @@ const userSlice = createSlice({
   },
 });
 
-export const getUserThunk: any = createAsyncThunk("auth/getUser", async () => {
-  try {
-    const response = await apiFetch({
-      url: `${authUrl}/user`,
-    });
+export const getUserThunk: any = createAsyncThunk(
+  "user/getUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await apiFetch({
+        url: `${authUrl}/user`,
+      });
 
-    return response;
-  } catch (e: any) {
-    console.error(e);
-  }
-});
+      return response;
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
+    }
+  },
+);
 
 export const logInThunk: any = createAsyncThunk(
-  "auth/logIn",
-  async (body: { login: string; password: string }, { dispatch }) => {
+  "user/logIn",
+  async (
+    body: { login: string; password: string },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       await apiFetch({
         url: `${authUrl}/signin`,
@@ -96,25 +81,28 @@ export const logInThunk: any = createAsyncThunk(
       });
 
       await dispatch(getUserThunk());
-    } catch (e: any) {
-      console.error(e);
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
     }
   },
 );
 
-export const logOutThunk: any = createAsyncThunk("auth/logOut", async () => {
-  try {
-    await apiFetch({
-      url: `${authUrl}/logout`,
-      method: "POST",
-    });
-  } catch (e: any) {
-    console.error(e);
-  }
-});
+export const logOutThunk: any = createAsyncThunk(
+  "user/logOut",
+  async (_, { rejectWithValue }) => {
+    try {
+      await apiFetch({
+        url: `${authUrl}/logout`,
+        method: "POST",
+      });
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
+    }
+  },
+);
 
 export const signUpThunk: any = createAsyncThunk(
-  "auth/signUp",
+  "user/signUp",
   async (
     body: {
       login: string;
@@ -124,7 +112,7 @@ export const signUpThunk: any = createAsyncThunk(
       email: string;
       phone: string;
     },
-    { dispatch },
+    { dispatch, rejectWithValue },
   ) => {
     try {
       await apiFetch({
@@ -134,15 +122,33 @@ export const signUpThunk: any = createAsyncThunk(
       });
 
       await dispatch(getUserThunk());
-    } catch (e: any) {
-      console.error(e);
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
+    }
+  },
+);
+
+export const changePassThunk: any = createAsyncThunk(
+  "user/password",
+  async (
+    body: { oldPassword: string; newPassword: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      await apiFetch({
+        url: `${userUrl}/password`,
+        method: "PUT",
+        body,
+      });
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
     }
   },
 );
 
 export const changeAvatarThunk: any = createAsyncThunk(
-  "auth/profile/avatar",
-  async (body: FormData, { dispatch }) => {
+  "user/avatar",
+  async (body: FormData, { rejectWithValue }) => {
     try {
       const response = await apiFetch({
         url: `${userUrl}/profile/avatar`,
@@ -151,8 +157,8 @@ export const changeAvatarThunk: any = createAsyncThunk(
       });
 
       return response;
-    } catch (e: any) {
-      console.error(e);
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
     }
   },
 );
