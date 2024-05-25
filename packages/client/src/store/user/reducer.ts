@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { TUserState } from "./type";
+import { TUser, TUserState } from "./type";
 import { changeAvatarThunk, getUserThunk, logOutThunk } from "./actions";
 
 const initialState: TUserState = {
@@ -17,22 +17,28 @@ const userSlice = createSlice({
 
   extraReducers: builder => {
     builder
-      .addCase(getUserThunk.fulfilled, (state, action) => {
-        state.isAuth = true;
+      .addCase(
+        getUserThunk.fulfilled,
+        (state, action: PayloadAction<TUser | null>) => {
+          state.isAuth = true;
 
-        if (typeof action.payload !== "string") {
-          state.user = action.payload;
-        }
-      })
+          if (action.payload) {
+            state.user = action.payload;
+          }
+        },
+      )
       .addCase(logOutThunk.fulfilled, state => {
         state.isAuth = false;
         state.user = null;
       })
-      .addCase(changeAvatarThunk.fulfilled, (state, action) => {
-        if (typeof action.payload !== "string") {
-          state.user!.avatar = action.payload.avatar;
-        }
-      })
+      .addCase(
+        changeAvatarThunk.fulfilled,
+        (state, action: PayloadAction<TUser | null>) => {
+          if (action.payload) {
+            state.user!.avatar = action.payload.avatar;
+          }
+        },
+      )
 
       .addMatcher(
         action => action.type.endsWith("/pending"),

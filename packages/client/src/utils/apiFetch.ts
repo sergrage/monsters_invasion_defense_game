@@ -26,21 +26,17 @@ async function apiFetch(config: TConfig) {
     body,
     credentials: "include", // handle httponly cookies
   }).then(async response => {
-    const contentType = response.headers.get("Content-type");
-    let responseData;
-
     if (!response.ok) {
-      const errorMessage = `${response.status} ${
-        contentType?.includes("application/json")
-          ? (responseData = (await response.json()) as TError)
-          : (responseData = await response.text())
-      }`;
+      const errorMessage = `Error ${response.status} ${((await response.json()) as TError).reason}`;
       throw new Error(errorMessage);
     }
 
+    const contentType = response.headers.get("Content-type");
+    let responseData;
+
     contentType?.includes("application/json")
       ? (responseData = (await response.json()) as TUser)
-      : (responseData = await response.text());
+      : (responseData = null);
 
     return responseData;
   });

@@ -1,5 +1,3 @@
-import { AsyncThunkAction } from "@reduxjs/toolkit";
-
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { changePassThunk } from "@/store/user/actions";
 
