@@ -29,76 +29,94 @@ export const getUserThunk: AsyncThunk<
   },
 );
 
-export const logInThunk: AsyncThunk<undefined, TLogIn, AsyncThunkConfig> =
-  createAsyncThunk(
-    "user/logIn",
-    async (body, { dispatch, rejectWithValue }) => {
-      try {
-        await apiFetch({
-          url: `${authUrl}/signin`,
-          method: "POST",
-          body,
-        });
-
-        await dispatch(getUserThunk());
-      } catch (error) {
-        const errorMessage = (error as Error).message;
-
-        dispatch(errorSlice.actions.addNotify(errorMessage));
-        return rejectWithValue(errorMessage);
-      }
-    },
-  );
-
-export const logOutThunk: AsyncThunk<undefined, void, AsyncThunkConfig> =
-  createAsyncThunk("user/logOut", async (_, { dispatch, rejectWithValue }) => {
+export const logInThunk: AsyncThunk<
+  TResponse | string,
+  TLogIn,
+  AsyncThunkConfig
+> = createAsyncThunk(
+  "user/logIn",
+  async (body, { dispatch, rejectWithValue }) => {
     try {
-      await apiFetch({
-        url: `${authUrl}/logout`,
+      const response = await apiFetch({
+        url: `${authUrl}/signin`,
         method: "POST",
+        body,
       });
+
+      await dispatch(getUserThunk());
+      return response;
     } catch (error) {
       const errorMessage = (error as Error).message;
 
       dispatch(errorSlice.actions.addNotify(errorMessage));
       return rejectWithValue(errorMessage);
     }
-  });
+  },
+);
 
-export const signUpThunk: AsyncThunk<undefined, TSignUp, AsyncThunkConfig> =
-  createAsyncThunk(
-    "user/signUp",
-    async (body, { dispatch, rejectWithValue }) => {
-      try {
-        await apiFetch({
-          url: `${authUrl}/signup`,
-          method: "POST",
-          body,
-        });
+export const logOutThunk: AsyncThunk<
+  TResponse | string,
+  void,
+  AsyncThunkConfig
+> = createAsyncThunk(
+  "user/logOut",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await apiFetch({
+        url: `${authUrl}/logout`,
+        method: "POST",
+      });
 
-        await dispatch(getUserThunk());
-      } catch (error) {
-        const errorMessage = (error as Error).message;
+      return response;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
 
-        dispatch(errorSlice.actions.addNotify(errorMessage));
-        return rejectWithValue(errorMessage);
-      }
-    },
-  );
+      dispatch(errorSlice.actions.addNotify(errorMessage));
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
+
+export const signUpThunk: AsyncThunk<
+  TResponse | string,
+  TSignUp,
+  AsyncThunkConfig
+> = createAsyncThunk(
+  "user/signUp",
+  async (body, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await apiFetch({
+        url: `${authUrl}/signup`,
+        method: "POST",
+        body,
+      });
+
+      await dispatch(getUserThunk());
+      return response;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+
+      dispatch(errorSlice.actions.addNotify(errorMessage));
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
 
 export const changePassThunk: AsyncThunk<
-  undefined,
+  TResponse | string,
   TPassword,
   AsyncThunkConfig
 > = createAsyncThunk(
   "user/password",
   async (body, { dispatch, rejectWithValue }) => {
     try {
-      await apiFetch({
+      const response = await apiFetch({
         url: `${userUrl}/password`,
         method: "PUT",
         body,
       });
+
+      return response;
     } catch (error) {
       const errorMessage = (error as Error).message;
 
