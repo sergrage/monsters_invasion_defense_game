@@ -5,7 +5,7 @@ type configType = {
 };
 
 type responseType = {
-  [key: string]: Record<string, string | { [key: string]: string } | number>;
+  [key: string]: string;
 };
 
 async function apiFetch(config: configType) {
