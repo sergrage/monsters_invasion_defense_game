@@ -5,7 +5,7 @@ import apiFetch from "@/utils/apiFetch";
 import { authUrl, userUrl } from "@/endpoints/apiUrl";
 import { errorSlice } from "../error/reducer";
 
-import { TLogIn, TPassword, TResponse, TSignUp } from "./types";
+import { TLogIn, TPassword, TResponse, TSignUp } from "./type";
 
 export const getUserThunk: AsyncThunk<
   TResponse | string,

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { TResponse, TUser, TUserState } from "./types";
+import { TResponse, TUser, TUserState } from "./type";
 import { changeAvatarThunk, getUserThunk, logOutThunk } from "./actions";
 
 const initialState: TUserState = {
