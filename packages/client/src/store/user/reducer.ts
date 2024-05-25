@@ -1,5 +1,7 @@
 import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AsyncThunkConfig } from "@reduxjs/toolkit/dist/createAsyncThunk";
 
+import { errorSlice } from "../error/reducer";
 import apiFetch from "@/utils/apiFetch";
 import { authUrl, userUrl } from "@/endpoints/apiUrl";
 
@@ -11,11 +13,10 @@ import {
   TUser,
   TUserState,
 } from "./types";
-import { AsyncThunkConfig } from "@reduxjs/toolkit/dist/createAsyncThunk";
 
 const initialState: TUserState = {
-  isAuth: false,
   user: null,
+  isAuth: false,
   isLoading: false,
 };
 
@@ -64,17 +65,23 @@ export const getUserThunk: AsyncThunk<
   TResponse | string,
   void,
   AsyncThunkConfig
-> = createAsyncThunk("user/getUser", async (_, { rejectWithValue }) => {
-  try {
-    const response = await apiFetch({
-      url: `${authUrl}/user`,
-    });
+> = createAsyncThunk(
+  "user/getUser",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await apiFetch({
+        url: `${authUrl}/user`,
+      });
 
-    return response;
-  } catch (error) {
-    return rejectWithValue((error as Error).message);
-  }
-});
+      return response;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+
+      dispatch(errorSlice.actions.addNotify(errorMessage));
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
 
 export const logInThunk: AsyncThunk<undefined, TLogIn, AsyncThunkConfig> =
   createAsyncThunk(
@@ -89,20 +96,26 @@ export const logInThunk: AsyncThunk<undefined, TLogIn, AsyncThunkConfig> =
 
         await dispatch(getUserThunk());
       } catch (error) {
-        return rejectWithValue((error as Error).message);
+        const errorMessage = (error as Error).message;
+
+        dispatch(errorSlice.actions.addNotify(errorMessage));
+        return rejectWithValue(errorMessage);
       }
     },
   );
 
 export const logOutThunk: AsyncThunk<undefined, void, AsyncThunkConfig> =
-  createAsyncThunk("user/logOut", async (_, { rejectWithValue }) => {
+  createAsyncThunk("user/logOut", async (_, { dispatch, rejectWithValue }) => {
     try {
       await apiFetch({
         url: `${authUrl}/logout`,
         method: "POST",
       });
     } catch (error) {
-      return rejectWithValue((error as Error).message);
+      const errorMessage = (error as Error).message;
+
+      dispatch(errorSlice.actions.addNotify(errorMessage));
+      return rejectWithValue(errorMessage);
     }
   });
 
@@ -119,7 +132,10 @@ export const signUpThunk: AsyncThunk<undefined, TSignUp, AsyncThunkConfig> =
 
         await dispatch(getUserThunk());
       } catch (error) {
-        return rejectWithValue((error as Error).message);
+        const errorMessage = (error as Error).message;
+
+        dispatch(errorSlice.actions.addNotify(errorMessage));
+        return rejectWithValue(errorMessage);
       }
     },
   );
@@ -128,35 +144,47 @@ export const changePassThunk: AsyncThunk<
   undefined,
   TPassword,
   AsyncThunkConfig
-> = createAsyncThunk("user/password", async (body, { rejectWithValue }) => {
-  try {
-    await apiFetch({
-      url: `${userUrl}/password`,
-      method: "PUT",
-      body,
-    });
-  } catch (error) {
-    return rejectWithValue((error as Error).message);
-  }
-});
+> = createAsyncThunk(
+  "user/password",
+  async (body, { dispatch, rejectWithValue }) => {
+    try {
+      await apiFetch({
+        url: `${userUrl}/password`,
+        method: "PUT",
+        body,
+      });
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+
+      dispatch(errorSlice.actions.addNotify(errorMessage));
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
 
 export const changeAvatarThunk: AsyncThunk<
   TResponse | string,
   FormData,
   AsyncThunkConfig
-> = createAsyncThunk("user/avatar", async (body, { rejectWithValue }) => {
-  try {
-    const response = await apiFetch({
-      url: `${userUrl}/profile/avatar`,
-      method: "PUT",
-      body,
-    });
+> = createAsyncThunk(
+  "user/avatar",
+  async (body, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await apiFetch({
+        url: `${userUrl}/profile/avatar`,
+        method: "PUT",
+        body,
+      });
 
-    return response;
-  } catch (error) {
-    return rejectWithValue((error as Error).message);
-  }
-});
+      return response;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+
+      dispatch(errorSlice.actions.addNotify(errorMessage));
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
 
 export const authActions = userSlice.actions;
 export default userSlice.reducer;

@@ -32,9 +32,8 @@ async function apiFetch(config: configType) {
       : (responseData = await response.text());
 
     if (!response.ok) {
-      throw new Error(
-        `${response.status} ${(typeof responseData === "object" && responseData?.reason) || responseData}`,
-      );
+      const errorMessage = `${response.status} ${(typeof responseData === "object" && responseData?.reason) || responseData}`;
+      throw new Error(errorMessage);
     }
 
     return responseData;
