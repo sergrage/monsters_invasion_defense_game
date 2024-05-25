@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { AsyncThunkAction } from "@reduxjs/toolkit";
+import { useEffect, useState } from "react";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { changeAvatarThunk } from "@/store/user/actions";
+import { getUserState } from "@/store/user/selector";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 import FormModal from "../formModal";
 import Title from "@/ui/title";
@@ -23,6 +24,14 @@ const FileModal = ({ closeModal }: TProps) => {
   const [previewImg, setPreviewImg] = useState("");
   const [isInvalid, setIsInvalid] = useState(true);
 
+  const userState = useAppSelector(getUserState);
+  const [currentAvatar] = useState(userState.user!.avatar);
+
+  useEffect(() => {
+    if (!userState.isLoading && currentAvatar !== userState.user!.avatar)
+      closeModal();
+  }, [userState.isLoading, userState.user!.avatar]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files![0].name) {
       setIsInvalid(true);
@@ -41,11 +50,7 @@ const FileModal = ({ closeModal }: TProps) => {
     const formData = new FormData();
     formData.append("avatar", formVal as Blob);
 
-    dispatch(changeAvatarThunk(formData)).then(resultAction => {
-      if (changeAvatarThunk.fulfilled.match(resultAction)) {
-        closeModal();
-      }
-    });
+    dispatch(changeAvatarThunk(formData));
   };
 
   return (
