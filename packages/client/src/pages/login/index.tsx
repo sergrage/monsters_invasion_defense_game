@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { logInThunk } from "@/store/user/reducer";
+import { logInThunk } from "@/store/user/actions";
 
 import Layout from "@/components/layout";
 import Button from "@/ui/button";

@@ -1,7 +1,7 @@
 import { AsyncThunkAction } from "@reduxjs/toolkit";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { changePassThunk } from "@/store/user/reducer";
+import { changePassThunk } from "@/store/user/actions";
 
 import { useValidate } from "@/hooks/useValidate";
 
@@ -39,11 +39,19 @@ const PasswordModal = ({ closeModal }: TProps) => {
         oldPassword: values.oldPassword,
         newPassword: values.password,
       }),
-    ).then((resultAction: AsyncThunkAction<void, FormData, {}>) => {
-      if (changePassThunk.fulfilled.match(resultAction)) {
-        closeModal();
-      }
-    });
+    ).then(
+      (
+        resultAction: AsyncThunkAction<
+          undefined,
+          { oldPassword: string; newPassword: string },
+          {}
+        >,
+      ) => {
+        if (changePassThunk.fulfilled.match(resultAction)) {
+          closeModal();
+        }
+      },
+    );
   };
 
   return (

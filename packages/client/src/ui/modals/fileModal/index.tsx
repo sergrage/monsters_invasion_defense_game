@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AsyncThunkAction } from "@reduxjs/toolkit";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { changeAvatarThunk } from "@/store/user/reducer";
+import { changeAvatarThunk } from "@/store/user/actions";
 
 import FormModal from "../formModal";
 import Title from "@/ui/title";

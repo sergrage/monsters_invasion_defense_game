@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router";
 
 import { useAppSelector } from "./hooks/useAppSelector";
 import { routes } from "@/pages/routes";
-import { getUserThunk } from "@/store/user/reducer";
+import { getUserThunk } from "@/store/user/actions";
 
 import ProtectedRoute from "@/components/protectedRoute";
 import Login from "@/pages/login";

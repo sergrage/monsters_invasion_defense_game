@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import style from "./style.module.scss";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { logOutThunk } from "@/store/user/reducer";
+import { logOutThunk } from "@/store/user/actions";
 
 import Layout from "@/components/layout";
 import GameMenu from "@/components/gameMenu";
