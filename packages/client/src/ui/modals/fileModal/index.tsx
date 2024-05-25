@@ -41,13 +41,11 @@ const FileModal = ({ closeModal }: TProps) => {
     const formData = new FormData();
     formData.append("avatar", formVal as Blob);
 
-    dispatch(changeAvatarThunk(formData)).then(
-      (resultAction: AsyncThunkAction<void, FormData, {}>) => {
-        if (changeAvatarThunk.fulfilled.match(resultAction)) {
-          closeModal();
-        }
-      },
-    );
+    dispatch(changeAvatarThunk(formData)).then(resultAction => {
+      if (changeAvatarThunk.fulfilled.match(resultAction)) {
+        closeModal();
+      }
+    });
   };
 
   return (

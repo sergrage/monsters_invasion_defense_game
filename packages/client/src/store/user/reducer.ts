@@ -1,13 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { TResponse, TUser, TUserState } from "./types";
-import {
-  changeAvatarThunk,
-  getUserThunk,
-  logOutThunk,
-  signUpThunk,
-  logInThunk,
-} from "./actions";
+import { changeAvatarThunk, getUserThunk, logOutThunk } from "./actions";
 
 const initialState: TUserState = {
   user: null,
@@ -34,12 +28,6 @@ const userSlice = createSlice({
       .addCase(changeAvatarThunk.fulfilled, (state, action) => {
         state.user!.avatar = (action.payload as TResponse).avatar;
       })
-      // .addCase(logInThunk.fulfilled, state => {
-      //   state.isLoading = true;
-      // })
-      // .addCase(signUpThunk.fulfilled, state => {
-      //   state.isLoading = true;
-      // })
 
       .addMatcher(
         action => action.type.endsWith("/pending"),

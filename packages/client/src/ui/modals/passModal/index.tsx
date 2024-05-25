@@ -16,6 +16,11 @@ type TProps = {
   closeModal: () => void;
 };
 
+type TPassword = {
+  oldPassword: string;
+  newPassword: string;
+};
+
 const PasswordModal = ({ closeModal }: TProps) => {
   const dispatch = useAppDispatch();
 
@@ -38,20 +43,12 @@ const PasswordModal = ({ closeModal }: TProps) => {
       changePassThunk({
         oldPassword: values.oldPassword,
         newPassword: values.password,
-      }),
-    ).then(
-      (
-        resultAction: AsyncThunkAction<
-          undefined,
-          { oldPassword: string; newPassword: string },
-          {}
-        >,
-      ) => {
-        if (changePassThunk.fulfilled.match(resultAction)) {
-          closeModal();
-        }
-      },
-    );
+      } as TPassword),
+    ).then(resultAction => {
+      if (changePassThunk.fulfilled.match(resultAction)) {
+        closeModal();
+      }
+    });
   };
 
   return (

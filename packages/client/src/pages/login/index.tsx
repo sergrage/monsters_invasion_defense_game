@@ -12,6 +12,11 @@ import Input from "@/ui/input";
 
 import style from "./style.module.scss";
 
+type TLogin = {
+  login: string;
+  password: string;
+};
+
 const LoginPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -36,12 +41,7 @@ const LoginPage: FC = () => {
       return;
     }
 
-    dispatch(
-      logInThunk({
-        login: values.login,
-        password: values.password,
-      }),
-    );
+    dispatch(logInThunk(values as TLogin));
   };
 
   return (

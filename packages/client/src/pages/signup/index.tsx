@@ -12,6 +12,15 @@ import Input from "@/ui/input";
 
 import style from "../login/style.module.scss";
 
+type TSignUp = {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+};
+
 const RegisterPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -49,7 +58,7 @@ const RegisterPage: FC = () => {
         email: values.email,
         password: values.password,
         phone: values.phone,
-      }),
+      } as TSignUp),
     );
   };
 
