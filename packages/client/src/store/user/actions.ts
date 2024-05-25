@@ -5,15 +5,10 @@ import apiFetch from "@/utils/apiFetch";
 import { authUrl, userUrl } from "@/endpoints/apiUrl";
 import { errorSlice } from "../error/reducer";
 
-import { TLogIn, TPassword, TResponse, TSignUp } from "./type";
+import { TLogIn, TPassword, TSignUp, TUser } from "./type";
 
-export const getUserThunk: AsyncThunk<
-  TResponse | string,
-  void,
-  AsyncThunkConfig
-> = createAsyncThunk(
-  "user/getUser",
-  async (_, { dispatch, rejectWithValue }) => {
+export const getUserThunk: AsyncThunk<TUser | string, void, AsyncThunkConfig> =
+  createAsyncThunk("user/getUser", async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await apiFetch({
         url: `${authUrl}/user`,
@@ -26,41 +21,32 @@ export const getUserThunk: AsyncThunk<
       dispatch(errorSlice.actions.addNotify(errorMessage));
       return rejectWithValue(errorMessage);
     }
-  },
-);
+  });
 
-export const logInThunk: AsyncThunk<
-  TResponse | string,
-  TLogIn,
-  AsyncThunkConfig
-> = createAsyncThunk(
-  "user/logIn",
-  async (body, { dispatch, rejectWithValue }) => {
-    try {
-      const response = await apiFetch({
-        url: `${authUrl}/signin`,
-        method: "POST",
-        body,
-      });
+export const logInThunk: AsyncThunk<TUser | string, TLogIn, AsyncThunkConfig> =
+  createAsyncThunk(
+    "user/logIn",
+    async (body, { dispatch, rejectWithValue }) => {
+      try {
+        const response = await apiFetch({
+          url: `${authUrl}/signin`,
+          method: "POST",
+          body,
+        });
 
-      await dispatch(getUserThunk());
-      return response;
-    } catch (error) {
-      const errorMessage = (error as Error).message;
+        await dispatch(getUserThunk());
+        return response;
+      } catch (error) {
+        const errorMessage = (error as Error).message;
 
-      dispatch(errorSlice.actions.addNotify(errorMessage));
-      return rejectWithValue(errorMessage);
-    }
-  },
-);
+        dispatch(errorSlice.actions.addNotify(errorMessage));
+        return rejectWithValue(errorMessage);
+      }
+    },
+  );
 
-export const logOutThunk: AsyncThunk<
-  TResponse | string,
-  void,
-  AsyncThunkConfig
-> = createAsyncThunk(
-  "user/logOut",
-  async (_, { dispatch, rejectWithValue }) => {
+export const logOutThunk: AsyncThunk<TUser | string, void, AsyncThunkConfig> =
+  createAsyncThunk("user/logOut", async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await apiFetch({
         url: `${authUrl}/logout`,
@@ -74,11 +60,10 @@ export const logOutThunk: AsyncThunk<
       dispatch(errorSlice.actions.addNotify(errorMessage));
       return rejectWithValue(errorMessage);
     }
-  },
-);
+  });
 
 export const signUpThunk: AsyncThunk<
-  TResponse | string,
+  TUser | string,
   TSignUp,
   AsyncThunkConfig
 > = createAsyncThunk(
@@ -103,7 +88,7 @@ export const signUpThunk: AsyncThunk<
 );
 
 export const changePassThunk: AsyncThunk<
-  TResponse | string,
+  TUser | string,
   TPassword,
   AsyncThunkConfig
 > = createAsyncThunk(
@@ -127,7 +112,7 @@ export const changePassThunk: AsyncThunk<
 );
 
 export const changeAvatarThunk: AsyncThunk<
-  TResponse | string,
+  TUser | string,
   FormData,
   AsyncThunkConfig
 > = createAsyncThunk(

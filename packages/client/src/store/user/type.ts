@@ -33,7 +33,3 @@ export type TPassword = {
   oldPassword: string;
   newPassword: string;
 };
-
-export type TResponse = {
-  [key: string]: string;
-};

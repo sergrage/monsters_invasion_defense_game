@@ -1,14 +1,16 @@
-type configType = {
+type TConfig = {
   url: string;
   method?: string;
   body?: object;
 };
 
-type responseType = {
-  [key: string]: string;
+type TError = {
+  reason: string;
 };
 
-async function apiFetch(config: configType) {
+import { TUser } from "@/store/user/type";
+
+async function apiFetch(config: TConfig) {
   const method = config.method || "GET";
   const headers: HeadersInit =
     config.body instanceof FormData
@@ -27,14 +29,18 @@ async function apiFetch(config: configType) {
     const contentType = response.headers.get("Content-type");
     let responseData;
 
-    contentType?.includes("application/json")
-      ? (responseData = (await response.json()) as responseType)
-      : (responseData = await response.text());
-
     if (!response.ok) {
-      const errorMessage = `${response.status} ${(typeof responseData === "object" && responseData?.reason) || responseData}`;
+      const errorMessage = `${response.status} ${
+        contentType?.includes("application/json")
+          ? (responseData = (await response.json()) as TError)
+          : (responseData = await response.text())
+      }`;
       throw new Error(errorMessage);
     }
+
+    contentType?.includes("application/json")
+      ? (responseData = (await response.json()) as TUser)
+      : (responseData = await response.text());
 
     return responseData;
   });

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { TResponse, TUser, TUserState } from "./type";
+import { TUserState } from "./type";
 import { changeAvatarThunk, getUserThunk, logOutThunk } from "./actions";
 
 const initialState: TUserState = {
@@ -19,14 +19,19 @@ const userSlice = createSlice({
     builder
       .addCase(getUserThunk.fulfilled, (state, action) => {
         state.isAuth = true;
-        state.user = action.payload as TUser;
+
+        if (typeof action.payload !== "string") {
+          state.user = action.payload;
+        }
       })
       .addCase(logOutThunk.fulfilled, state => {
         state.isAuth = false;
         state.user = null;
       })
       .addCase(changeAvatarThunk.fulfilled, (state, action) => {
-        state.user!.avatar = (action.payload as TResponse).avatar;
+        if (typeof action.payload !== "string") {
+          state.user!.avatar = action.payload.avatar;
+        }
       })
 
       .addMatcher(
