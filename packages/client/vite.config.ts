@@ -16,5 +16,6 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  base: "./",
   plugins: [react()],
 });
