@@ -23,9 +23,6 @@ const ErrorBoundary: FC<TProps> = ({ children }) => {
         toastId: notify.id,
       });
 
-      toast.success("руддщ", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
       toast.onChange((payload: ToastItem) => {
         if (payload.status === "removed" && payload.id === notify.id)
           dispatch(errorSlice.actions.removeNotify(notify.id));
