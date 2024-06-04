@@ -1,6 +1,19 @@
-// Для обновления кеша изменить версию кеша в названии
-const CACHE_NAME = "cache-v2";
-const urlsToCache = ["/index.html", "/assets/", "/vite.svg"];
+const CACHE_NAME = "cache-v3";
+let urlsToCache = ["/index.html", "/vite.svg"];
+
+const fetchAssetsList = async () => {
+  try {
+    const response = await fetch("/assets-list.json");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    urlsToCache = [...urlsToCache, ...data.assets];
+    console.log("Assets to cache:", urlsToCache);
+  } catch (error) {
+    console.error("Service Worker: Unable to fetch assets list", error);
+  }
+};
 
 const tryNetwork = (req, timeout) => {
   return new Promise((resolve, reject) => {
@@ -20,6 +33,7 @@ const tryNetwork = (req, timeout) => {
     }, reject);
   });
 };
+
 const getFromCache = req => {
   console.error("Service Worker: Нет соединения, данные взяты из кеша");
   return caches.open(CACHE_NAME).then(cache => {
@@ -36,15 +50,31 @@ const getFromCache = req => {
 self.addEventListener("install", event => {
   console.log("install");
   event.waitUntil(
-    caches.open(CACHE_NAME).then(
-      cache => {
-        return cache.addAll(urlsToCache);
-      },
-      e => {
-        console.log("Service Worker: не удалось получить кеш приложения");
-        console.error(e);
-      },
-    ),
+    fetchAssetsList().then(() => {
+      return caches.open(CACHE_NAME).then(
+        cache => {
+          const cachePromises = urlsToCache.map(url => {
+            return fetch(url)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(
+                    `Request for ${url} failed with status ${response.status}`,
+                  );
+                }
+                return cache.put(url, response);
+              })
+              .catch(error => {
+                console.error(`Failed to cache ${url}:`, error);
+              });
+          });
+          return Promise.all(cachePromises);
+        },
+        e => {
+          console.log("Service Worker: не удалось получить кеш приложения");
+          console.error(e);
+        },
+      );
+    }),
   );
 });
 
@@ -73,6 +103,6 @@ self.addEventListener("fetch", event => {
   console.log("fetch");
 
   event.respondWith(
-    tryNetwork(event.request, 400).catch(() => getFromCache(event.request)),
+    tryNetwork(event.request, 800).catch(() => getFromCache(event.request)),
   );
 });
