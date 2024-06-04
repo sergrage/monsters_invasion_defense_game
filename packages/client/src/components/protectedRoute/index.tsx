@@ -12,7 +12,7 @@ const ProtectedRoute: FC<{ children: React.ReactNode }> = ({
   const isAuth = useAppSelector(getUserState).isAuth;
 
   if (!isAuth) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
