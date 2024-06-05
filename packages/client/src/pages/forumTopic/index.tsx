@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 
 import style from "./style.module.scss";
-import Layout from "@/components/Layout";
 import Title from "@/ui/title";
 
 import { useParams } from "react-router";
 
 import temp_data from "@/pages/forumTopic/temp_data";
 import Button from "@/ui/button";
+import Layout from "@/components/layout";
 
 const ForumTopics: FC = () => {
   const params = useParams();
