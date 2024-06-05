@@ -1,20 +1,25 @@
 import { FC } from "react";
 import { useNavigate } from "react-router";
-
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { logInThunk } from "@/store/user/actions";
-
+import { logOutThunk } from "@/store/user/actions";
+import { oAuthYandex } from "@/utils/oAuth";
+import IconButton from "@/ui/button/iconBtn";
 import Layout from "@/components/layout";
 import Button from "@/ui/button";
 import Input from "@/ui/input";
-
+import yandexIcon from "@/assets/icons/yandex.svg";
 import style from "./style.module.scss";
 
 type TLogin = {
   login: string;
   password: string;
+};
+
+type TServiceInfo = {
+  service_id: string;
 };
 
 const LoginPage: FC = () => {
@@ -42,6 +47,12 @@ const LoginPage: FC = () => {
     }
 
     dispatch(logInThunk(values as TLogin));
+  };
+
+  const oAuthYandexHandler = () => {
+    dispatch(logOutThunk()).finally(() => {
+      oAuthYandex();
+    });
   };
 
   return (
@@ -83,6 +94,12 @@ const LoginPage: FC = () => {
             name="Signup"
             onClick={onClickHandler}
             transparent={true}
+          />
+          <IconButton
+            name={"OAuth"}
+            icon={yandexIcon}
+            onClick={oAuthYandexHandler}
+            className={style.yandexBtn}
           />
         </div>
       </form>
