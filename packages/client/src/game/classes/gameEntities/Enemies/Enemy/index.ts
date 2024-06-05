@@ -2,6 +2,7 @@ import Sprite from "@/game/classes/gameEntities/Sprite";
 import waypoints from "@/game/mocks/waypoints";
 
 import { IPosition, IEnemyConstructor, IEnemyImg } from "@/game/interfaces";
+import { roundRect } from "@/polyfill/roundRect";
 
 class Enemy extends Sprite {
   position: IPosition;
@@ -64,14 +65,16 @@ class Enemy extends Sprite {
     this.ctx.strokeStyle = "red";
     this.ctx.fillStyle = "red";
     this.ctx.beginPath();
-    this.ctx.roundRect(posX, posY, redBarWidth, 10, [5]);
+    // this.ctx.roundRect(posX, posY, redBarWidth, 10, [5]);
+    roundRect(this.ctx, posX, posY, redBarWidth, 10, 5);
     this.ctx.stroke();
     this.ctx.fill();
 
     this.ctx.strokeStyle = "green";
     this.ctx.fillStyle = "green";
     this.ctx.beginPath();
-    this.ctx.roundRect(posX, posY, greenBarWidth, 10, [5]);
+    // this.ctx.roundRect(posX, posY, greenBarWidth, 10, [5]);
+    roundRect(this.ctx, posX, posY, greenBarWidth, 10, 5);
     this.ctx.stroke();
     this.ctx.fill();
   }
