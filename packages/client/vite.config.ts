@@ -17,8 +17,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  build: {
+    outDir: path.join(__dirname, "dist/client"),
+  },
   ssr: {
-    target: "node",
+    //@ts-ignore
+    format: "cjs",
   },
   plugins: [react()],
 });
