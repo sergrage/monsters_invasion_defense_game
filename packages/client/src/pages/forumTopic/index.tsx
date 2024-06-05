@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 import style from "./style.module.scss";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout";
 import Title from "@/ui/title";
 
 import { useParams } from "react-router";

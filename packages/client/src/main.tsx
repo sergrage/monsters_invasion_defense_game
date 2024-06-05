@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,7 +9,8 @@ import { store } from "./store";
 import ErrorBoundary from "@/components/errorBoundary";
 import { Toast } from "@/ui/toast";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+hydrateRoot(
+  document.getElementById("root") as HTMLElement,
   <BrowserRouter>
     <Provider store={store}>
       <Toast />
