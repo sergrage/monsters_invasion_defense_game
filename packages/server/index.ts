@@ -1,57 +1,89 @@
 import dotenv from "dotenv";
 import cors from "cors";
-import path from "path";
-import fs from "fs";
+import { createServer as createViteServer } from "vite";
+import type { ViteDevServer } from "vite";
+
 dotenv.config();
 
-// @ts-ignore
-import { render } from "../client/dist/ssr/entry-server.cjs";
-
 import express from "express";
-import { createClientAndConnect } from "./db";
+import * as fs from "fs";
+import * as path from "path";
 
-const app = express();
-app.use(cors());
+const isDev = () => process.env.NODE_ENV === "development";
 
-const port = Number(process.env.SERVER_PORT) || 3001;
+async function startServer() {
+  const app = express();
+  app.use(cors());
+  const port = Number(process.env.SERVER_PORT) || 3001;
 
-createClientAndConnect();
+  let vite: ViteDevServer | undefined;
+  const distPath = path.dirname(require.resolve("client/dist/index.html"));
+  const srcPath = path.dirname(require.resolve("client"));
+  const ssrClientPath = require.resolve("client/dist-ssr/client.cjs");
 
-app.get("/", (_, res) => {
-  res.json("👋 Howdy from the server :)");
-});
+  if (isDev()) {
+    vite = await createViteServer({
+      server: { middlewareMode: true },
+      root: srcPath,
+      appType: "custom",
+    });
 
-app.get("/ssr-example", (_, res) => {
-  const result = render();
-  const template = path.resolve(__dirname, "../client/dist/client/index.html");
-  const htmlString = fs.readFileSync(template, "utf-8");
-  const newString = htmlString.replace("<!--ssr-outlet-->", result);
-  res.send(newString);
-});
+    app.use(vite.middlewares);
+  }
 
-app.use(express.static(path.resolve(__dirname, "../client/dist/client")));
+  app.get("/api", (_, res) => {
+    res.json("👋 Howdy from the server :)");
+  });
 
-app.listen(port, () => {
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
-});
+  if (!isDev()) {
+    app.use("/assets", express.static(path.resolve(distPath, "assets")));
+  }
 
-// import dotenv from "dotenv";
-// import cors from "cors";
-// dotenv.config();
+  app.use("*", async (req, res, next) => {
+    const url = req.originalUrl;
 
-// import express from "express";
-// import { createClientAndConnect } from "./db";
+    try {
+      let template: string;
 
-// const app = express();
-// app.use(cors());
-// const port = Number(process.env.SERVER_PORT) || 3001;
+      if (!isDev()) {
+        template = fs.readFileSync(
+          path.resolve(distPath, "index.html"),
+          "utf-8",
+        );
+      } else {
+        template = fs.readFileSync(
+          path.resolve(srcPath, "index.html"),
+          "utf-8",
+        );
 
-// createClientAndConnect();
+        template = await vite!.transformIndexHtml(url, template);
+      }
 
-// app.get("/", (_, res) => {
-//   res.json("👋 Howdy from the server :)");
-// });
+      let render: () => Promise<string>;
 
-// app.listen(port, () => {
-//   console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
-// });
+      if (!isDev()) {
+        render = (await import(ssrClientPath)).render;
+      } else {
+        render = (await vite!.ssrLoadModule(path.resolve(srcPath, "ssr.tsx")))
+          .render;
+      }
+
+      const appHtml = await render();
+
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+
+      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+    } catch (e) {
+      if (isDev()) {
+        vite!.ssrFixStacktrace(e as Error);
+      }
+      next(e);
+    }
+  });
+
+  app.listen(port, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+  });
+}
+
+startServer();
