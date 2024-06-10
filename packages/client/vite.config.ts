@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
-import path from "path";
+
 dotenv.config();
 
 // https://vitejs.dev/config/
@@ -12,17 +12,25 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
+  build: {
+    rollupOptions: {
+      input: {
+        app: "./index.html",
+      },
+      output: {
+        entryFileNames: assetInfo => {
+          return assetInfo.name === "service-worker"
+            ? "[name].js"
+            : "assets/[name].[hash].js";
+        },
+      },
     },
   },
-  build: {
-    outDir: path.join(__dirname, "dist/client"),
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
   },
-  ssr: {
-    //@ts-ignore
-    format: "cjs",
-  },
+  base: "./",
   plugins: [react()],
 });
