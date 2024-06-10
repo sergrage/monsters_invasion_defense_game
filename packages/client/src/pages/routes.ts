@@ -10,4 +10,5 @@ export enum routes {
   leaderboard = "/leaderboard",
   error404 = "/404",
   error500 = "/500",
+  auth = "/",
 }

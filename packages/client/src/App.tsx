@@ -19,6 +19,7 @@ import GameStartPage from "@/pages/gameStart";
 import GameOverPage from "@/pages/gameOver";
 import Leaderboard from "@/pages/leaderBoard";
 import ErrorPage from "@/pages/error";
+import OAuthPage from "@/pages/OAuth";
 import Layout from "@/components/layout";
 import ZombieLoader from "./ui/zombieLoader";
 
@@ -77,12 +78,7 @@ const App: FC = () => {
             isAuth ? <Navigate to={routes.gameStart} replace /> : <Signup />
           }
         />
-        <Route
-          path="/"
-          element={
-            <Navigate to={isAuth ? routes.gameStart : routes.login} replace />
-          }
-        />
+        <Route path={routes.auth} element={<OAuthPage />} />
 
         <Route
           path={routes.profile}
