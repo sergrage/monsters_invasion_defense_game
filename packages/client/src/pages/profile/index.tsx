@@ -15,6 +15,7 @@ import IconButton from "@/ui/button/iconBtn";
 
 import gameIcon from "@/assets/icons/game.svg";
 import style from "./style.module.scss";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ const Profile = () => {
     setShowAvatarModal(state => !state);
   };
 
+  const { t } = useTranslation();
+
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
       <section className={style.profile}>
@@ -40,12 +43,21 @@ const Profile = () => {
 
         {user ? (
           <div className={style["fields-wrapper"]}>
-            <ProfileField label="First name" value={user.first_name || "-"} />
-            <ProfileField label="Second name" value={user.second_name || "-"} />
-            <ProfileField label="User name" value={user.display_name || "-"} />
-            <ProfileField label="Phone" value={user.phone || "-"} />
-            <ProfileField label="Login" value={user.login || "-"} />
-            <ProfileField label="Email" value={user.email || "-"} />
+            <ProfileField
+              label={t("FirstName")}
+              value={user.first_name || "-"}
+            />
+            <ProfileField
+              label={t("SecondName")}
+              value={user.second_name || "-"}
+            />
+            <ProfileField
+              label={t("UserName")}
+              value={user.display_name || "-"}
+            />
+            <ProfileField label={t("Phone")} value={user.phone || "-"} />
+            <ProfileField label={t("Login")} value={user.login || "-"} />
+            <ProfileField label={t("Email")} value={user.email || "-"} />
           </div>
         ) : (
           <Title.H2>
@@ -53,7 +65,7 @@ const Profile = () => {
           </Title.H2>
         )}
 
-        <Button.Flat name="Change password" onClick={togglePassModal} />
+        <Button.Flat name={t("ChangePassword")} onClick={togglePassModal} />
 
         {showAvatarModal && <Modal.File closeModal={toggleAvatarModal} />}
         {showPassModal && <Modal.Password closeModal={togglePassModal} />}

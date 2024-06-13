@@ -8,6 +8,7 @@ import { useParams } from "react-router";
 import temp_data from "@/pages/forumTopic/temp_data";
 import Button from "@/ui/button";
 import Layout from "@/components/layout";
+import { useTranslation } from "react-i18next";
 
 const ForumTopics: FC = () => {
   const params = useParams();
@@ -19,6 +20,8 @@ const ForumTopics: FC = () => {
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
   };
+
+  const { t } = useTranslation();
 
   return (
     <Layout.Page>
@@ -56,7 +59,7 @@ const ForumTopics: FC = () => {
             name="message"
             defaultValue="I really enjoyed killing Zomby yesterday!"
           />
-          <Button.Flat name="Send Message" type="submit" deepRed={true} />
+          <Button.Flat name={t("SendMessage")} type="submit" deepRed={true} />
         </div>
       </form>
     </Layout.Page>

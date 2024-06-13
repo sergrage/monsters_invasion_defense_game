@@ -7,8 +7,11 @@ import CoinsScore from "./components/coinsScore";
 import GameMenu from "@/components/gameMenu";
 
 import { routes } from "@/pages/routes";
+import { useTranslation } from "react-i18next";
 
 const GameOverPage: FC = () => {
+  const { t } = useTranslation();
+
   const gameMenu = [
     { title: "Main Page", route: routes.gameStart },
     { title: "Leader Board", route: routes.leaderboard },

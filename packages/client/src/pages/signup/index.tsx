@@ -11,6 +11,7 @@ import Button from "@/ui/button";
 import Input from "@/ui/input";
 
 import style from "../login/style.module.scss";
+import { useTranslation } from "react-i18next";
 
 type TSignUp = {
   first_name: string;
@@ -62,6 +63,8 @@ const RegisterPage: FC = () => {
     );
   };
 
+  const { t } = useTranslation();
+
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
       <form className={style.form} onSubmit={handleSubmit}>
@@ -69,7 +72,7 @@ const RegisterPage: FC = () => {
         <div className={style["inputs-wrapper"]}>
           <Input
             name="email"
-            label="Email"
+            label={t("Email")}
             value={values.email}
             onChange={handleChange}
             onError={errors.email}
@@ -79,7 +82,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="login"
-            label="Login"
+            label={t("Login")}
             value={values.login}
             onChange={handleChange}
             onError={errors.login}
@@ -89,7 +92,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="firstName"
-            label="First Name"
+            label={t("FirstName")}
             value={values.firstName}
             onChange={handleChange}
             onError={errors.firstName}
@@ -99,7 +102,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="lastName"
-            label="Last Name"
+            label={t("LastName")}
             value={values.lastName}
             onChange={handleChange}
             onError={errors.lastName}
@@ -108,7 +111,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="phone"
-            label="Phone"
+            label={t("Phone")}
             value={values.phone}
             onChange={handleChange}
             onError={errors.phone}
@@ -117,7 +120,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="password"
-            label="Password"
+            label={t("Password")}
             type="password"
             value={values.password}
             onChange={handleChange}
@@ -128,7 +131,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="confirmPassword"
-            label="Confirm Password"
+            label={t("ConfirmPassword")}
             type="password"
             value={values.confirmPassword}
             onChange={handleChange}
