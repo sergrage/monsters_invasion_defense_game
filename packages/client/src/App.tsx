@@ -24,8 +24,7 @@ import Layout from "@/components/layout";
 import ZombieLoader from "./ui/zombieLoader";
 
 import AudioCore from "@/audioCore/Core";
-import "../src/assets/internationalization/i18n.js";
-import LanguageSwitcher from "@/assets/internationalization/languageSwitcher";
+import "./assets/internationalization/i18n.js";
 
 declare global {
   interface Window {
@@ -67,7 +66,6 @@ const App: FC = () => {
 
   return (
     <Layout.Main>
-      <LanguageSwitcher />
       <Routes>
         <Route
           path={routes.login}

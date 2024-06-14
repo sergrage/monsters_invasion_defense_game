@@ -1,6 +1,7 @@
+// src/LanguageSwitcher.module.scss
 .nav {
   width: 160px;
-  margin: 0 0 0 50px;
+  margin: 0 0 0 0px;
   display: flex;
   justify-content: space-between;
 }
@@ -48,39 +49,39 @@
   background-repeat: no-repeat;
 }
 
-.langMenu ul {
+.dropdownMenu {
   margin: 0;
   padding: 0;
-  display: none;
   background-color: #fff;
   border: 1px solid #f8f8f8;
   position: absolute;
-  top: 45px;
+  top: 30px;
   right: 0px;
   width: 125px;
   border-radius: 5px;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  display: block;
 }
 
-.langMenu ul li {
+.dropdownMenu li {
   list-style: none;
   text-align: left;
   display: flex;
   justify-content: space-between;
 }
 
-.langMenu ul li a {
+.dropdownMenu li a {
   text-decoration: none;
   width: 125px;
   padding: 5px 10px;
   display: block;
 }
 
-.langMenu ul li:hover {
+.dropdownMenu li:hover {
   background-color: #f2f2f2;
 }
 
-.langMenu ul li a::before {
+.dropdownMenu li a::before {
   content: "";
   display: inline-block;
   width: 25px;
@@ -97,8 +98,4 @@
 
 .ru::before {
   background-image: url(../../icons/ru.svg);
-}
-
-.langMenu:hover ul {
-  display: block;
 }
