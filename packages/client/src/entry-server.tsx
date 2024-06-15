@@ -14,12 +14,12 @@ import { matchRoutes } from "react-router-dom";
 import { createFetchRequest, createUrl } from "./entry-server.utils";
 
 // import { reducer } from "./store";
-import Routes from "./routes";
+import routes from "./routes";
 // import "./index.css";
 // import { setPageHasBeenInitializedOnServer } from "./slices/ssrSlice";
 
 export const render = async (req: ExpressRequest) => {
-  const { query, dataRoutes } = createStaticHandler(Routes);
+  const { query, dataRoutes } = createStaticHandler(routes);
   const fetchRequest = createFetchRequest(req);
   const context = await query(fetchRequest);
 
@@ -33,7 +33,7 @@ export const render = async (req: ExpressRequest) => {
 
   const url = createUrl(req);
 
-  const foundRoutes = matchRoutes(Routes, url);
+  const foundRoutes = matchRoutes(routes, url);
   if (!foundRoutes) {
     throw new Error("Страница не найдена!");
   }
