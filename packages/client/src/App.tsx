@@ -52,9 +52,9 @@ const App: FC = () => {
   const isLoading = useAppSelector(getUserState).isLoading;
   const isAuth = useAppSelector(getUserState).isAuth;
 
-  useEffect(() => {
-    dispatch(getUserThunk());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getUserThunk());
+  // }, []);
 
   useEffect(() => {
     window.audioGlobal.pauseAll();

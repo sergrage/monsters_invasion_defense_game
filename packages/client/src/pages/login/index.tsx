@@ -24,7 +24,7 @@ type TServiceInfo = {
 
 const LoginPage: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     login: "",
@@ -46,13 +46,13 @@ const LoginPage: FC = () => {
       return;
     }
 
-    dispatch(logInThunk(values as TLogin));
+    // dispatch(logInThunk(values as TLogin));
   };
 
   const oAuthYandexHandler = () => {
-    dispatch(logOutThunk()).finally(() => {
-      oAuthYandex();
-    });
+    // dispatch(logOutThunk()).finally(() => {
+    //   oAuthYandex();
+    // });
   };
 
   return (

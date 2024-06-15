@@ -34,6 +34,8 @@ export const render = async (req: ExpressRequest) => {
   const url = createUrl(req);
 
   const foundRoutes = matchRoutes(routes, url);
+  console.log("🚀 ~ render ~ routes:", routes);
+  console.log("🚀 ~ render ~ foundRoutes:", foundRoutes);
   if (!foundRoutes) {
     throw new Error("Страница не найдена!");
   }
