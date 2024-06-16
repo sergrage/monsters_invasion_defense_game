@@ -12,3 +12,5 @@ test("spell casting", () => {
   const result = cast(magic, "🐸");
   expect(result).toBe("🐷");
 });
+
+export {};
