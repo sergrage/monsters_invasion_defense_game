@@ -3,8 +3,6 @@ import cors from "cors";
 
 import routes from "./routes";
 
-// import ForumThread from "./models/ForumThread";
-
 dotenv.config();
 
 import express from "express";
