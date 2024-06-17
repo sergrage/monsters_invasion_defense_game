@@ -18,6 +18,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import ZombieLoader from "@/ui/zombieLoader";
 import { LeaderboardResponse } from "@/store/leaderboard/type";
 import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 const LeaderBoardPage: FC = () => {
   const { t } = useTranslation();
@@ -96,11 +97,11 @@ const LeaderBoardPage: FC = () => {
           <table className={style.table}>
             <thead>
               <tr>
-                <th scope="col">{t("Rank")}</th>
-                <th scope="col">{t("Kills")}</th>
-                <th scope="col">{t("User")}</th>
-                <th scope="col">{t("TotalMoney")}</th>
-                <th scope="col">{t("Date")}</th>
+                <th scope="col">{t(TRANSLATIONS.RANK)}</th>
+                <th scope="col">{t(TRANSLATIONS.KILLS)}</th>
+                <th scope="col">{t(TRANSLATIONS.USER)}</th>
+                <th scope="col">{t(TRANSLATIONS.TOTAL_MONEY)}</th>
+                <th scope="col">{t(TRANSLATIONS.DATE)}</th>
               </tr>
             </thead>
             <tbody>

@@ -9,6 +9,7 @@ import TopicsTable from "./components/topicsTable";
 import AddTopicModal from "./components/addTopicModal";
 import cn from "classnames";
 import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 const ForumPage: FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -36,12 +37,12 @@ const ForumPage: FC = () => {
 
       <div className={style.hero}>
         <div className={cn(style.wrapper)}>
-          <h2 className={cn(style.title)}>{t("GameForum")}</h2>
+          <h2 className={cn(style.title)}>{t(TRANSLATIONS.GAME_FORUM)}</h2>
           <h3 className={cn(style.gametitle)}>
             Monsters Invasion Defense Game
           </h3>
           <Button.Flat
-            name={t("AskQuestion")}
+            name={t(TRANSLATIONS.ASK_QUESTION)}
             onClick={showModalClick}
             formBtn={true}
             formBtnRed={true}

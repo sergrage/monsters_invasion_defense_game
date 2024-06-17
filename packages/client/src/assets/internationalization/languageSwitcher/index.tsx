@@ -2,18 +2,30 @@ import React, { useState, useEffect, useRef } from "react";
 import i18n from "i18next";
 import style from "./LanguageSwitcher.module.scss";
 
+const LANGUAGES = {
+  RUSSIAN: "Russian",
+  ENGLISH: "English",
+} as const;
+
+type LanguageKeys = keyof typeof LANGUAGES;
+
 const changeLanguage = (lng: string) => {
   i18n.changeLanguage(lng);
 };
 
 const LanguageSwitcher = () => {
-  const [selectedLang, setSelectedLang] = useState("English");
+  const [selectedLang, setSelectedLang] = useState<LanguageKeys>("ENGLISH");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
-  const menuRef = useRef(null);
-  const options = ["Russian", "English"];
+  const menuRef = useRef<HTMLDivElement>(null);
+  const options = Object.values(LANGUAGES);
 
-  const handleLanguageChange = (lng: string, langName: string) => {
+  const langStyles = {
+    RUSSIAN: style.selectedLangRussian,
+    ENGLISH: style.selectedLangEnglish,
+  };
+
+  const handleLanguageChange = (lng: string, langName: LanguageKeys) => {
     changeLanguage(lng);
     setSelectedLang(langName);
     setIsMenuOpen(false);
@@ -25,7 +37,7 @@ const LanguageSwitcher = () => {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setIsMenuOpen(false);
     }
   };
@@ -47,7 +59,10 @@ const LanguageSwitcher = () => {
       case "Enter":
         if (focusedIndex !== -1) {
           const lang = options[focusedIndex];
-          handleLanguageChange(lang === "Russian" ? "ru" : "en", lang);
+          handleLanguageChange(
+            lang === LANGUAGES.RUSSIAN ? "ru" : "en",
+            lang as LanguageKeys,
+          );
         }
         break;
       case "Escape":
@@ -68,9 +83,7 @@ const LanguageSwitcher = () => {
   }, [isMenuOpen, focusedIndex]);
 
   const selectedLangClass =
-    selectedLang === "Russian"
-      ? style.selectedLangRussian
-      : style.selectedLangEnglish;
+    langStyles[selectedLang] || style.selectedLangEnglish;
 
   return (
     <nav className={style.nav}>
@@ -78,9 +91,9 @@ const LanguageSwitcher = () => {
         <div
           className={`${style.selectedLang} ${selectedLangClass}`}
           onClick={toggleMenu}
-          tabIndex="0"
+          tabIndex={0}
         >
-          {selectedLang}
+          {LANGUAGES[selectedLang]}
         </div>
         {isMenuOpen && (
           <ul className={style.dropdownMenu}>
@@ -88,15 +101,15 @@ const LanguageSwitcher = () => {
               <li key={lang}>
                 <a
                   href="#"
-                  className={style[lang === "Russian" ? "ru" : "en"]}
+                  className={style[lang === LANGUAGES.RUSSIAN ? "ru" : "en"]}
                   onClick={e => {
                     e.preventDefault();
                     handleLanguageChange(
-                      lang === "Russian" ? "ru" : "en",
-                      lang,
+                      lang === LANGUAGES.RUSSIAN ? "ru" : "en",
+                      lang as LanguageKeys,
                     );
                   }}
-                  tabIndex="-1"
+                  tabIndex={-1}
                   style={{
                     backgroundColor:
                       focusedIndex === index ? "#f2f2f2" : "transparent",

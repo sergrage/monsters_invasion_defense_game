@@ -13,6 +13,7 @@ import Input from "@/ui/input";
 import yandexIcon from "@/assets/icons/yandex.svg";
 import style from "./style.module.scss";
 import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 type TLogin = {
   login: string;
@@ -65,7 +66,7 @@ const LoginPage: FC = () => {
         <div className={style["inputs-wrapper"]}>
           <Input
             name="login"
-            label={t("Login")}
+            label={t(TRANSLATIONS.LOGIN)}
             required={true}
             value={values.login}
             onChange={handleChange}
@@ -74,7 +75,7 @@ const LoginPage: FC = () => {
           />
           <Input
             name="password"
-            label={t("Password")}
+            label={t(TRANSLATIONS.PASSWORD)}
             type="password"
             required={true}
             value={values.password}
@@ -85,7 +86,7 @@ const LoginPage: FC = () => {
         </div>
         <div className={style["btns-wrapper"]}>
           <Button.Flat
-            name={t("Signin")}
+            name={t(TRANSLATIONS.SIGN_IN)}
             type="submit"
             positive={true}
             disabled={
@@ -94,7 +95,7 @@ const LoginPage: FC = () => {
             }
           />
           <Button.Flat
-            name={t("Signup")}
+            name={t(TRANSLATIONS.SIGN_UP)}
             onClick={onClickHandler}
             transparent={true}
           />

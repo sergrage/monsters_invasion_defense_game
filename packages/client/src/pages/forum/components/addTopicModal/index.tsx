@@ -4,6 +4,7 @@ import style from "./style.module.scss";
 import Button from "@/ui/button";
 import cn from "classnames";
 import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 export type TProps = {
   hideModalClick: () => void;
@@ -29,7 +30,7 @@ const AddTopicModal: FC<TProps> = ({ hideModalClick }) => {
           className={cn(style.addTopic, style.label)}
           htmlFor="forum_topic"
         >
-          {t("TopicTitle")}
+          {t(TRANSLATIONS.TOPIC_TITLE)}
         </label>
         <input
           className={cn(style.addTopic, style.input)}
@@ -43,7 +44,7 @@ const AddTopicModal: FC<TProps> = ({ hideModalClick }) => {
           className={cn(style.addTopic, style.label)}
           htmlFor="forum_topic"
         >
-          {t("FirstMessage")}
+          {t(TRANSLATIONS.FIRST_MESSAGE)}
         </label>
         <textarea
           className={cn(style.addTopic, style.textarea)}
@@ -53,14 +54,14 @@ const AddTopicModal: FC<TProps> = ({ hideModalClick }) => {
       </div>
       <div className={cn(style.addTopic, style.horizontal)}>
         <Button.Flat
-          name={t("AddNewTopic")}
+          name={t(TRANSLATIONS.ADD_NEW_TOPIC)}
           type="submit"
           formBtn={true}
           formBtnRed={true}
           noAnimate={true}
         />
         <Button.Flat
-          name={t("Close")}
+          name={t(TRANSLATIONS.CLOSE)}
           onClick={closeModal}
           formBtn={true}
           formBtnBlue={true}

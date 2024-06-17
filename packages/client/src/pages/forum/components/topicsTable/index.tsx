@@ -5,6 +5,7 @@ import { routes } from "@/pages/routes";
 
 import tempData from "./temp_data";
 import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 const TopicsTable: FC = () => {
   let showData = tempData.length > 0;
@@ -21,11 +22,11 @@ const TopicsTable: FC = () => {
         <table className={style.topicsTable}>
           <thead>
             <tr>
-              <th>{t("Topics")}</th>
-              <th>{t("Messages")}</th>
-              <th>{t("User")}</th>
-              <th>{t("Views")}</th>
-              <th>{t("Date")}</th>
+              <th>{t(TRANSLATIONS.TOPICS)}</th>
+              <th>{t(TRANSLATIONS.MESSAGES)}</th>
+              <th>{t(TRANSLATIONS.USER)}</th>
+              <th>{t(TRANSLATIONS.VIEWS)}</th>
+              <th>{t(TRANSLATIONS.DATE)}</th>
             </tr>
           </thead>
           <tbody>
