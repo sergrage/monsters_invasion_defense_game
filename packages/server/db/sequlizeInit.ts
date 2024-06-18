@@ -1,6 +1,9 @@
 import { Sequelize, SequelizeOptions } from "sequelize-typescript";
 import os from "os";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env;
 
