@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { Navigate } from "react-router-dom";
 
 import { useAppSelector } from "@/hooks/useAppSelector";
