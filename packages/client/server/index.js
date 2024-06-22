@@ -61,7 +61,7 @@ const isDev = process.env.NODE_ENV === "development";
 async function createServer() {
   const app = (0, express_1.default)();
   let vite;
-  if (true) {
+  if (isDev) {
     vite = await (0, vite_1.createServer)({
       server: { middlewareMode: true },
       root: clientPath,
