@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "path";
 import dotenv from "dotenv";
-import generateFileListPlugin from "./vite-plugin-generate-file-list";
 dotenv.config();
 
 // https://vitejs.dev/config/
@@ -13,6 +13,7 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   build: {
+    outDir: path.join(__dirname, "dist/client"),
     rollupOptions: {
       input: {
         app: "./index.html",
