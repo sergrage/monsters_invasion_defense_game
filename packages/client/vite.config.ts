@@ -2,13 +2,12 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import path from "path";
-import generateFileListPlugin from "./vite-plugin-generate-file-list";
 dotenv.config();
 
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: Number(process.env.CLIENT_PORT) || 3000,
+    port: Number(process.env.CLIENT_PORT) || 3125,
   },
   define: {
     __EXTERNAL_SERVER_URL__: JSON.stringify(process.env.EXTERNAL_SERVER_URL),
@@ -20,13 +19,6 @@ export default defineConfig({
       input: {
         app: "./index.html",
       },
-      // output: {
-      //   entryFileNames: assetInfo => {
-      //     return assetInfo.name === "service-worker"
-      //       ? "[name].js"
-      //       : "assets/[name].[hash].js";
-      //   },
-      // },
     },
   },
   resolve: {
@@ -38,5 +30,5 @@ export default defineConfig({
     //@ts-ignore
     format: "cjs",
   },
-  plugins: [react(), generateFileListPlugin()],
+  plugins: [react()],
 });

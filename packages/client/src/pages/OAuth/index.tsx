@@ -16,6 +16,7 @@ const OAuthPage: FC = () => {
   const REDIRECT_URI = window.location.origin + "/";
 
   useEffect(() => {
+    console.log("fire");
     const code = queryParams.get("code");
     let postData = {
       code: code,
