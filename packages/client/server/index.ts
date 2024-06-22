@@ -21,6 +21,7 @@ async function createServer() {
       root: clientPath,
       appType: "custom",
     });
+
     app.use(vite.middlewares);
   } else {
     app.use(
