@@ -20,13 +20,13 @@ export default defineConfig({
       input: {
         app: "./index.html",
       },
-      output: {
-        entryFileNames: assetInfo => {
-          return assetInfo.name === "service-worker"
-            ? "[name].js"
-            : "assets/[name].[hash].js";
-        },
-      },
+      // output: {
+      //   entryFileNames: assetInfo => {
+      //     return assetInfo.name === "service-worker"
+      //       ? "[name].js"
+      //       : "assets/[name].[hash].js";
+      //   },
+      // },
     },
   },
   resolve: {
