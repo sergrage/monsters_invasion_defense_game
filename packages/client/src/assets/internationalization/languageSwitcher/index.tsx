@@ -3,8 +3,8 @@ import i18n from "i18next";
 import style from "./LanguageSwitcher.module.scss";
 
 const LANGUAGES = {
-  RUSSIAN: "Russian",
-  ENGLISH: "English",
+  RUSSIAN: { name: "Russian", code: "ru" },
+  ENGLISH: { name: "English", code: "en" },
 } as const;
 
 type LanguageKeys = keyof typeof LANGUAGES;
@@ -18,16 +18,15 @@ const LanguageSwitcher = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const menuRef = useRef<HTMLDivElement>(null);
-  const options = Object.values(LANGUAGES);
+  const options = Object.keys(LANGUAGES) as LanguageKeys[];
 
-  const langStyles = {
-    RUSSIAN: style.selectedLangRussian,
-    ENGLISH: style.selectedLangEnglish,
-  };
+  const langStyles = Object.fromEntries(
+    Object.keys(LANGUAGES).map(key => [key, style[`selectedLang${key}`]]),
+  );
 
-  const handleLanguageChange = (lng: string, langName: LanguageKeys) => {
-    changeLanguage(lng);
-    setSelectedLang(langName);
+  const handleLanguageChange = (langKey: LanguageKeys) => {
+    changeLanguage(LANGUAGES[langKey].code);
+    setSelectedLang(langKey);
     setIsMenuOpen(false);
   };
 
@@ -58,11 +57,8 @@ const LanguageSwitcher = () => {
         break;
       case "Enter":
         if (focusedIndex !== -1) {
-          const lang = options[focusedIndex];
-          handleLanguageChange(
-            lang === LANGUAGES.RUSSIAN ? "ru" : "en",
-            lang as LanguageKeys,
-          );
+          const langKey = options[focusedIndex];
+          handleLanguageChange(langKey);
         }
         break;
       case "Escape":
@@ -93,21 +89,18 @@ const LanguageSwitcher = () => {
           onClick={toggleMenu}
           tabIndex={0}
         >
-          {LANGUAGES[selectedLang]}
+          {LANGUAGES[selectedLang].name}
         </div>
         {isMenuOpen && (
           <ul className={style.dropdownMenu}>
-            {options.map((lang, index) => (
-              <li key={lang}>
+            {options.map((langKey, index) => (
+              <li key={langKey}>
                 <a
                   href="#"
-                  className={style[lang === LANGUAGES.RUSSIAN ? "ru" : "en"]}
+                  className={style[LANGUAGES[langKey].code]}
                   onClick={e => {
                     e.preventDefault();
-                    handleLanguageChange(
-                      lang === LANGUAGES.RUSSIAN ? "ru" : "en",
-                      lang as LanguageKeys,
-                    );
+                    handleLanguageChange(langKey);
                   }}
                   tabIndex={-1}
                   style={{
@@ -115,7 +108,7 @@ const LanguageSwitcher = () => {
                       focusedIndex === index ? "#f2f2f2" : "transparent",
                   }}
                 >
-                  {lang}
+                  {LANGUAGES[langKey].name}
                 </a>
               </li>
             ))}
