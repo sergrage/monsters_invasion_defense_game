@@ -25,6 +25,30 @@
   display: flex;
   border: 1px solid var(--gray);
   flex-direction: column;
+  position: relative;
+
+  .emojiPicker {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .emojiButton {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-image: url("../../assets/img/smile.svg");
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-size: 100% 100%;
+  }
+
+  .emojiContainer {
+    position: absolute;
+    left: 92px;
+    bottom: 0;
+  }
 
   .date {
     display: flex;
