@@ -12,6 +12,8 @@ import Button from "@/ui/button";
 import Input from "@/ui/input";
 import yandexIcon from "@/assets/icons/yandex.svg";
 import style from "./style.module.scss";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 type TLogin = {
   login: string;
@@ -55,6 +57,8 @@ const LoginPage: FC = () => {
     });
   };
 
+  const { t } = useTranslation();
+
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
       <form className={style.form} onSubmit={handleSubmit}>
@@ -62,7 +66,7 @@ const LoginPage: FC = () => {
         <div className={style["inputs-wrapper"]}>
           <Input
             name="login"
-            label="Login"
+            label={t(TRANSLATIONS.LOGIN)}
             required={true}
             value={values.login}
             onChange={handleChange}
@@ -71,7 +75,7 @@ const LoginPage: FC = () => {
           />
           <Input
             name="password"
-            label="Password"
+            label={t(TRANSLATIONS.PASSWORD)}
             type="password"
             required={true}
             value={values.password}
@@ -82,7 +86,7 @@ const LoginPage: FC = () => {
         </div>
         <div className={style["btns-wrapper"]}>
           <Button.Flat
-            name="Login"
+            name={t(TRANSLATIONS.SIGN_IN)}
             type="submit"
             positive={true}
             disabled={
@@ -91,7 +95,7 @@ const LoginPage: FC = () => {
             }
           />
           <Button.Flat
-            name="Signup"
+            name={t(TRANSLATIONS.SIGN_UP)}
             onClick={onClickHandler}
             transparent={true}
           />

@@ -1,0 +1,101 @@
+.nav {
+  width: 160px;
+  margin: 0 0 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 100px;
+}
+
+.logo img {
+  width: 100px;
+}
+
+.langMenu {
+  width: 100px;
+  text-align: right;
+  font-weight: bold;
+  margin-top: 25px;
+  position: relative;
+}
+
+.selectedLang {
+  display: flex;
+  justify-content: space-between;
+  line-height: 2;
+  cursor: pointer;
+  user-select: none;
+}
+
+.selectedLangEnglish::before {
+  content: "";
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url(../../icons/us.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.selectedLangRussian::before {
+  content: "";
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url(../../icons/ru.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.dropdownMenu {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  border: 1px solid #f8f8f8;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 125px;
+  border-radius: 5px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  display: block;
+}
+
+.dropdownMenu li {
+  list-style: none;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdownMenu li a {
+  text-decoration: none;
+  width: 125px;
+  padding: 5px 10px;
+  display: block;
+}
+
+.dropdownMenu li:hover {
+  background-color: #f2f2f2;
+}
+
+.dropdownMenu li a::before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  margin-right: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.en::before {
+  background-image: url(../../icons/us.svg);
+}
+
+.ru::before {
+  background-image: url(../../icons/ru.svg);
+}
