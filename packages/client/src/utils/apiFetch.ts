@@ -8,7 +8,7 @@ type TError = {
   reason: string;
 };
 
-import { TUser } from "@/store/user/type";
+//import { TUser } from "@/store/user/type";
 
 async function apiFetch(config: TConfig) {
   const method = config.method || "GET";
@@ -35,7 +35,7 @@ async function apiFetch(config: TConfig) {
     let responseData;
 
     contentType?.includes("application/json")
-      ? (responseData = (await response.json()) as TUser)
+      ? (responseData = (await response.json()) as any)
       : (responseData = null);
 
     return responseData;

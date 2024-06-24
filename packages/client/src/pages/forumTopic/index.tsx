@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import style from "./style.module.scss";
 import Title from "@/ui/title";
@@ -8,6 +8,10 @@ import { useParams } from "react-router";
 import temp_data from "@/pages/forumTopic/temp_data";
 import Button from "@/ui/button";
 import Layout from "@/components/layout";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { getforumAllThreadsThunk } from "@/store/forum/actions";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { getThreadState } from "@/store/forum/selector";
 
 const ForumTopics: FC = () => {
   const params = useParams();
@@ -20,6 +24,13 @@ const ForumTopics: FC = () => {
     const formJson = Object.fromEntries(formData.entries());
   };
 
+  const dispatch = useAppDispatch();
+  const threads = useAppSelector(getThreadState).forumThreads;
+
+  useEffect(() => {
+    dispatch(getforumAllThreadsThunk());
+  }, [dispatch]);
+
   return (
     <Layout.Page>
       <div className={style.titleBox}>
@@ -29,7 +40,7 @@ const ForumTopics: FC = () => {
         />
       </div>
 
-      {temp_data.map(item => (
+      {threads?.map(item => (
         <div className={style.message} key={item.id}>
           <div className={style.date}>
             <span>{item.date}</span>
