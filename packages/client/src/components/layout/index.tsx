@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import cn from "classnames";
 
 import style from "./style.module.scss";
+import LanguageSwitcher from "@/assets/internationalization/languageSwitcher";
 
 export type TProps = {
   children: ReactNode | ReactNode[];
@@ -10,18 +11,31 @@ export type TProps = {
 };
 
 const Main: FC<TProps> = ({ children }) => {
-  return <main className={style.main}>{children}</main>;
+  return (
+    <>
+      <main className={style.main}>{children}</main>;
+    </>
+  );
 };
 
 const Container: FC<TProps> = ({ children, className = "" }) => {
-  return <div className={cn(style.container, className)}>{children}</div>;
+  return (
+    <>
+      <div className={cn(style.container, className)}>{children}</div>
+    </>
+  );
 };
 
 const Page: FC<TProps> = ({ children, pageClass, className }) => {
   return (
-    <div className={cn(style.page, pageClass)}>
-      <Container className={className}>{children}</Container>
-    </div>
+    <>
+      <div className={cn(style.page, pageClass)}>
+        <Container className={className}>
+          <LanguageSwitcher />
+          {children}
+        </Container>
+      </div>
+    </>
   );
 };
 

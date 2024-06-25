@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
 
 import tempData from "./temp_data";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 const TopicsTable: FC = () => {
   let showData = tempData.length > 0;
@@ -12,17 +14,19 @@ const TopicsTable: FC = () => {
     navigate(routes.forum + "/" + topic);
   };
 
+  const { t } = useTranslation();
+
   return (
     <>
       {showData ? (
         <table className={style.topicsTable}>
           <thead>
             <tr>
-              <th>Topics</th>
-              <th>Messages</th>
-              <th>User</th>
-              <th>Views</th>
-              <th>Date</th>
+              <th>{t(TRANSLATIONS.TOPICS)}</th>
+              <th>{t(TRANSLATIONS.MESSAGES)}</th>
+              <th>{t(TRANSLATIONS.USER)}</th>
+              <th>{t(TRANSLATIONS.VIEWS)}</th>
+              <th>{t(TRANSLATIONS.DATE)}</th>
             </tr>
           </thead>
           <tbody>

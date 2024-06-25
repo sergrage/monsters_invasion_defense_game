@@ -16,6 +16,8 @@ interface EmojiInterface {
   unified: string;
   keywords: string[];
 }
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
   const [showPicker, setShowPicker] = useState(false);
@@ -51,6 +53,8 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showPicker]);
+
+  const { t } = useTranslation();
 
   return (
     <div className={style.message} key={item.id}>
@@ -117,7 +121,11 @@ const ForumTopics: FC = () => {
             name="message"
             defaultValue="I really enjoyed killing Zomby yesterday!"
           />
-          <Button.Flat name="Send Message" type="submit" deepRed={true} />
+          <Button.Flat
+            name={t(TRANSLATIONS.SEND_MESSAGE)}
+            type="submit"
+            deepRed={true}
+          />
         </div>
       </form>
     </Layout.Page>

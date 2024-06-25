@@ -16,12 +16,16 @@ import { toggleFullscreen } from "@/utils/fullscreenMode";
 
 import logoutIcon from "@/assets/icons/logout.svg";
 import settingsIcon from "@/assets/icons/settings.svg";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 const GameStartPage: FC = () => {
+  const { t } = useTranslation();
+
   const gameMenu = [
-    { title: "Start Game", route: routes.game },
-    { title: "Leader Board", route: routes.leaderboard },
-    { title: "Game Forum", route: routes.forum },
+    { title: t(TRANSLATIONS.START_GAME), route: routes.game },
+    { title: t(TRANSLATIONS.LEADERBOARD), route: routes.leaderboard },
+    { title: t(TRANSLATIONS.GAME_FORUM), route: routes.forum },
   ];
 
   let interval: NodeJS.Timer | undefined;
@@ -73,7 +77,7 @@ const GameStartPage: FC = () => {
           </div>
 
           <Button.Flat
-            name={"Full Screen"}
+            name={t(TRANSLATIONS.FULL_SCREEN)}
             onClick={() => toggleFullscreen()}
             formBtn={true}
             formBtnBlue={true}
