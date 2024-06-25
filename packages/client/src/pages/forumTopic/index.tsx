@@ -7,19 +7,14 @@ import Button from "@/ui/button";
 import Layout from "@/components/layout";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import { ForumTopicMessageProps } from "@/store/forum/forumTopic/type";
 
-interface User {
+interface EmojiInterface {
+  id: number;
   name: string;
-  avatar: string;
-}
-
-interface ForumTopicMessageProps {
-  item: {
-    id: number;
-    date: string;
-    user: User;
-    message: string;
-  };
+  native: string;
+  unified: string;
+  keywords: string[];
 }
 
 const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
@@ -31,7 +26,7 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
     setShowPicker(!showPicker);
   };
 
-  const handleEmojiSelect = (emoji: any) => {
+  const handleEmojiSelect = (emoji: EmojiInterface) => {
     setSelectedEmojis([...selectedEmojis, emoji.native]);
     setShowPicker(false);
   };
