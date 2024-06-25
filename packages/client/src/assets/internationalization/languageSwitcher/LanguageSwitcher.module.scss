@@ -81,6 +81,10 @@
   background-color: var(--languageSwitcherHoverBg);
 }
 
+.dropdownItemFocused {
+  background-color: var(--languageSwitcherHoverBg);
+}
+
 .dropdownMenu li a::before {
   content: "";
   display: inline-block;

@@ -98,16 +98,14 @@ const LanguageSwitcher = () => {
               <li key={langKey}>
                 <a
                   href="#"
-                  className={style[LANGUAGES[langKey].code]}
+                  className={`${style[LANGUAGES[langKey].code]} ${
+                    style.dropdownItem
+                  } ${focusedIndex === index ? style.dropdownItemFocused : ""}`}
                   onClick={e => {
                     e.preventDefault();
                     handleLanguageChange(langKey);
                   }}
                   tabIndex={-1}
-                  style={{
-                    backgroundColor:
-                      focusedIndex === index ? "#f2f2f2" : "transparent",
-                  }}
                 >
                   {LANGUAGES[langKey].name}
                 </a>
