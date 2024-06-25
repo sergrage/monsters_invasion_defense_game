@@ -23,19 +23,6 @@ const ForumTopics: FC = () => {
     const formJson = Object.fromEntries(formData.entries());
   };
 
-  // temporary, for proxy testing purposes
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await apiFetch({
-        url: allThreadsUrl,
-      });
-
-      console.log(data);
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <Layout.Page>
       <div className={style.titleBox}>
