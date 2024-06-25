@@ -78,7 +78,7 @@
 }
 
 .dropdownMenu li:hover {
-  background-color: #f2f2f2;
+  background-color: var(--languageSwitcherHoverBg);
 }
 
 .dropdownMenu li a::before {
