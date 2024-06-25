@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import style from "./style.module.scss";
 import Title from "@/ui/title";
 import { useParams } from "react-router";
@@ -8,8 +8,6 @@ import Layout from "@/components/layout";
 import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
 import ForumTopicMessage from "@/pages/forumTopic/forumMessage";
-import apiFetch from "@/utils/apiFetch";
-import { allThreadsUrl } from "@/endpoints/apiUrl";
 
 const ForumTopics: FC = () => {
   const params = useParams();
