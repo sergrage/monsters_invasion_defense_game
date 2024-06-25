@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import style from "./style.module.scss";
 import Title from "@/ui/title";
 import { useParams } from "react-router";
@@ -8,6 +8,8 @@ import Layout from "@/components/layout";
 import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
 import ForumTopicMessage from "@/pages/forumTopic/forumMessage";
+import apiFetch from "@/utils/apiFetch";
+import { allThreadsUrl } from "@/endpoints/apiUrl";
 
 const ForumTopics: FC = () => {
   const params = useParams();
@@ -20,6 +22,19 @@ const ForumTopics: FC = () => {
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
   };
+
+  // temporary, for proxy testing purposes
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await apiFetch({
+        url: allThreadsUrl,
+      });
+
+      console.log(data);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Layout.Page>
