@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { baseYandexUrl } from "@/endpoints/apiUrl";
+import { baseApiUrl } from "@/endpoints/apiUrl";
 import { getUserState } from "@/store/user/selector";
 
 import style from "./style.module.scss";
@@ -16,7 +16,7 @@ const AvatarEl = ({ onClick }: TProps) => {
       <div className={style.wrapper}>
         <img
           className={style.img}
-          src={`${baseYandexUrl}/resources${user!.avatar}`}
+          src={`${baseApiUrl}/v2/resources${user!.avatar}`}
           alt="User avatar"
         />
         <div className={style.back}>

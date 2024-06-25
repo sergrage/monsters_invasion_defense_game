@@ -1,7 +1,7 @@
-export const baseYandexUrl: string = "http://localhost:3001/api/v2";
-export const authUrl: string = `${baseYandexUrl}/auth`;
-export const userUrl: string = `${baseYandexUrl}/user`;
-export const oAuthUrl: string = `${baseYandexUrl}/oauth/yandex`;
+export const baseApiUrl: string = "http://localhost:3001/api";
 
-export const forumApiUrl: string = "http://localhost:3001/api";
-export const allThreadsUrl: string = `${forumApiUrl}/forum_thread`;
+export const authUrl: string = `${baseApiUrl}/v2/auth`;
+export const userUrl: string = `${baseApiUrl}/v2/user`;
+export const oAuthUrl: string = `${baseApiUrl}/v2/oauth/yandex`;
+
+export const allThreadsUrl: string = `${baseApiUrl}/forum_thread`;

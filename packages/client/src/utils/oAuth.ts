@@ -1,4 +1,4 @@
-import { baseYandexUrl } from "@/endpoints/apiUrl";
+import { baseApiUrl } from "@/endpoints/apiUrl";
 
 export const oAuthYandex = async () => {
   const REDIRECT_URI = window.location.origin + "/";
@@ -12,7 +12,7 @@ export const oAuthYandex = async () => {
 
   try {
     let response = await fetch(
-      baseYandexUrl + GET_SERVICE_ID_URI + "?" + getServiceIdparams,
+      baseApiUrl + "/v2" + GET_SERVICE_ID_URI + "?" + getServiceIdparams,
     );
 
     let json = await response.json();
