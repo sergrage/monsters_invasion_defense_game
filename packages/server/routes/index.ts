@@ -17,6 +17,12 @@ import {
   deleteMessageReply,
 } from "./../controllers/ForumMessageReplyController";
 
+import {
+  getUserThemeType,
+  storeThemeType,
+  updateThemeType,
+} from "./../controllers/ThemeTypeController";
+
 import { auth } from "./../middleware/auth";
 
 const router = Router();
@@ -36,5 +42,9 @@ router.delete("/forum_message/:messageId", auth, deleteMessage);
 router.post("/forum_message_reply", auth, storeMessageReply);
 router.put("/forum_message_reply/:messageReplyId", auth, updateMessageReply);
 router.delete("/forum_message_reply/:messageReplyId", auth, deleteMessageReply);
+
+router.get("/theme_type/:user_id", auth, getUserThemeType);
+router.post("/theme_type", auth, storeThemeType);
+router.put("/theme_type/:user_id", auth, updateThemeType);
 
 export default router;
