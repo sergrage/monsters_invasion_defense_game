@@ -1,6 +1,8 @@
 import ForumThread from "./models/ForumThread";
 import ForumMessage from "./models/ForumMessage";
 import ForumMessageReply from "./models/ForumMessageReply";
+import ThemeType from "./models/ThemeType";
+
 import sequelize from "./db/sequlizeInit";
 
 export const dbInit = async () => {
@@ -16,6 +18,8 @@ export const dbInit = async () => {
     await ForumThread.sync();
     await ForumMessage.sync();
     await ForumMessageReply.sync();
+
+    await ThemeType.sync();
 
     console.log("All models were synchronized successfully.");
   } catch (e) {
