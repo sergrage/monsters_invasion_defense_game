@@ -5,25 +5,31 @@ import {
   storeThread,
   updateThread,
   deleteThread,
-} from "./../controllers/ForumThreadController";
+} from "../controllers/ForumThreadController";
 import {
   storeMessage,
   updateMessage,
   deleteMessage,
-} from "./../controllers/ForumMessageController";
+} from "../controllers/ForumMessageController";
 import {
   storeMessageReply,
   updateMessageReply,
   deleteMessageReply,
-} from "./../controllers/ForumMessageReplyController";
+} from "../controllers/ForumMessageReplyController";
+
+import {
+  storeMessageReaction,
+  updateMessageReaction,
+  deleteMessageReaction,
+} from "../controllers/ForumMessageReactionController";
 
 import {
   getUserThemeType,
   storeThemeType,
   updateThemeType,
-} from "./../controllers/ThemeTypeController";
+} from "../controllers/ThemeTypeController";
 
-import { auth } from "./../middleware/auth";
+import { auth } from "../middleware/auth";
 
 const router = Router();
 
@@ -42,6 +48,18 @@ router.delete("/forum_message/:messageId", auth, deleteMessage);
 router.post("/forum_message_reply", auth, storeMessageReply);
 router.put("/forum_message_reply/:messageReplyId", auth, updateMessageReply);
 router.delete("/forum_message_reply/:messageReplyId", auth, deleteMessageReply);
+
+router.post("/forum_message_reaction", auth, storeMessageReaction);
+router.put(
+  "/forum_message_reaction/:messageReactionId",
+  auth,
+  updateMessageReaction,
+);
+router.delete(
+  "/forum_message_reaction/:messageReactionId",
+  auth,
+  deleteMessageReaction,
+);
 
 router.get("/theme_type/:user_id", auth, getUserThemeType);
 router.post("/theme_type", auth, storeThemeType);

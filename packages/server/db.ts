@@ -1,6 +1,7 @@
 import ForumThread from "./models/ForumThread";
 import ForumMessage from "./models/ForumMessage";
 import ForumMessageReply from "./models/ForumMessageReply";
+import ForumMessageReaction from "./models/ForumMessageReaction";
 import ThemeType from "./models/ThemeType";
 
 import sequelize from "./db/sequlizeInit";
@@ -15,9 +16,14 @@ export const dbInit = async () => {
       foreignKey: "message_id",
     });
 
+    ForumMessage.hasMany(ForumMessageReaction, {
+      foreignKey: "message_id",
+    });
+
     await ForumThread.sync();
     await ForumMessage.sync();
     await ForumMessageReply.sync();
+    await ForumMessageReaction.sync();
 
     await ThemeType.sync();
 
