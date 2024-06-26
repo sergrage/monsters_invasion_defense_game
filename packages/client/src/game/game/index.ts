@@ -266,11 +266,16 @@ class Game {
     }
   }
 
+  increaseKills(): void {
+    this.eventSubject.notify("kill", this.coins);
+  }
   handleEnemyHit(projectile: Projectile) {
     const { enemy, damage } = projectile;
 
     enemy.health -= damage;
     if (enemy.health <= 0) {
+      this.increaseKills();
+
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
 
       if (enemyIndex > -1) {

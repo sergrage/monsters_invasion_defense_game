@@ -1,19 +1,18 @@
 export interface LeaderboardState {
-  data: LeaderboardResponse[] | null;
+  data: ILeader[];
   loading: boolean;
 }
 
-export interface IUser {
-  name: string;
-  login: string;
-  avatar: string;
-}
+export interface IUser {}
 
-export interface LeaderboardResponse {
-  id: number;
-  user: IUser;
-  rank: number;
-  zombieKills: number;
-  earnMoney: number;
-  date: string;
+export interface ILeader {
+  data: {
+    name: string;
+    login: string;
+    avatar: string;
+
+    kills: number;
+    earnMoney: number;
+    date: string;
+  };
 }

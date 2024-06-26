@@ -3,9 +3,8 @@ import { AsyncThunkConfig } from "@reduxjs/toolkit/dist/createAsyncThunk";
 
 import apiFetch from "@/utils/apiFetch";
 import { authUrl, userUrl } from "@/endpoints/apiUrl";
-import { errorSlice } from "../error/reducer";
-
-import { TLogIn, TPassword, TSignUp, TUser } from "./type";
+import { TLogIn, TPassword, TSignUp, TUser } from "@/store/user/type";
+import { errorSlice } from "@/store/error/reducer";
 
 export const getUserThunk: AsyncThunk<TUser | null, void, AsyncThunkConfig> =
   createAsyncThunk("user/getUser", async (_, { dispatch, rejectWithValue }) => {
