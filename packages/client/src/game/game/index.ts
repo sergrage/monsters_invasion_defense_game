@@ -15,6 +15,7 @@ import { ILevel, IPosition } from "@/game/interfaces";
 class Game {
   coins: number;
   hearts: number;
+  kills: number = 0;
   globalOffset: IPosition;
   enemies: Enemy[];
   buildings: TowerConstructor[];
@@ -266,11 +267,18 @@ class Game {
     }
   }
 
+  increaseKills(): void {
+    this.kills += 1;
+
+    this.eventSubject.notify("kill", this.kills);
+  }
   handleEnemyHit(projectile: Projectile) {
     const { enemy, damage } = projectile;
 
     enemy.health -= damage;
     if (enemy.health <= 0) {
+      this.increaseKills();
+
       const enemyIndex = this.enemies.findIndex(e => e === enemy);
 
       if (enemyIndex > -1) {

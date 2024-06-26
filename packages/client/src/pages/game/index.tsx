@@ -33,15 +33,22 @@ import level_1Map from "@/assets/game/levels/Level-1.png";
 import style from "./style.module.scss";
 
 import { toggleFullscreen } from "@/utils/fullscreenMode";
+import { addLeaderThunk } from "@/store/leaderboard/actions";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useSelector } from "react-redux";
+import { getUserState } from "@/store/user/selector";
 
 let isInit = true;
 let isBadScreen = false;
 
 const GamePage = () => {
+  const dispatch = useAppDispatch();
+  const user = useSelector(getUserState).user;
   const canvasRef: React.MutableRefObject<HTMLCanvasElement | null> =
     useRef(null);
 
   const [coins, setCoins] = useState<number>(level.coins);
+  const [kills, setKills] = useState<number>(0);
   const [hearts, setHearts] = useState<number>(level.hearts);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const [showDisclaimer, setShowDisclaimer] = useState<boolean>(false);
@@ -52,6 +59,7 @@ const GamePage = () => {
   const [windowWidth, windowHeight] = useWindowSize();
 
   const handleCoinsChangedEvent = (coins: number) => setCoins(coins);
+  const handleKillsChangedEvent = (kills: number) => setKills(kills);
   const handleHeartsChangedEvent = (hearts: number) => setHearts(hearts);
   const handleGameOverEvent = () => setIsGameOver(true);
 
@@ -94,10 +102,12 @@ const GamePage = () => {
     );
 
     const coinsChangedObserver = new EventObserver(handleCoinsChangedEvent);
+    const killsChangedObserver = new EventObserver(handleKillsChangedEvent);
     const heartsChangedObserver = new EventObserver(handleHeartsChangedEvent);
     const gameOverObserver = new EventObserver(handleGameOverEvent);
 
     game.eventSubject.attach("coinsChanged", coinsChangedObserver);
+    game.eventSubject.attach("kill", killsChangedObserver);
     game.eventSubject.attach("heartsChanged", heartsChangedObserver);
     game.eventSubject.attach("gameOver", gameOverObserver);
 
@@ -146,6 +156,18 @@ const GamePage = () => {
 
   useEffect(() => {
     if (isGameOver) {
+      dispatch(
+        addLeaderThunk({
+          name:
+            `${user?.first_name} ${user?.second_name}` ??
+            "Не виданный ранее убивец",
+          login: user?.login ?? "Нет данных",
+          avatar: user?.avatar ?? "",
+          kills: kills,
+          earnMoney: coins,
+          date: Date.now().toString(),
+        }),
+      );
       navigate(routes.gameOver);
     }
   }, [isGameOver]);
