@@ -1,7 +1,7 @@
-import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
-import { LeaderboardState } from "./type";
-import { AppDispatch, RootState } from "..";
-import { fetchLeaderboardData } from "./mockFetch";
+import { createSlice } from "@reduxjs/toolkit";
+import { ILeader, LeaderboardState } from "./type";
+import { RootState } from "..";
+import { getLeadersThunk } from "@/store/leaderboard/actions";
 
 const initialState: LeaderboardState = {
   data: [],
@@ -11,38 +11,22 @@ const initialState: LeaderboardState = {
 export const leaderboardSlice = createSlice({
   initialState,
   name: "leaderboard",
-  reducers: {
-    startLoading(state) {
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(getLeadersThunk.pending, state => {
       state.loading = true;
-    },
-    setData(state, action: PayloadAction<typeof initialState.data>) {
-      state.data = action.payload;
+    });
+
+    builder.addCase(getLeadersThunk.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.data = action.payload;
+      }
       state.loading = false;
-    },
-    setError(state) {
+    });
+    builder.addCase(getLeadersThunk.rejected, state => {
       state.loading = false;
-    },
+    });
   },
 });
 
-export const { startLoading, setData, setError } = leaderboardSlice.actions;
-
-export const loadLeaderboardData = () => async (dispatch: AppDispatch) => {
-  dispatch(startLoading());
-  try {
-    const data = await fetchLeaderboardData();
-    dispatch(setData(data));
-  } catch (error) {
-    dispatch(setError());
-  }
-};
-
 export const getLeaderBoardState = (state: RootState) => state.leaderboard;
-export const selectLeaderboardData = createSelector(
-  getLeaderBoardState,
-  leaderboardState => leaderboardState.data,
-);
-export const selectLeaderboardLoading = createSelector(
-  getLeaderBoardState,
-  leaderboardState => leaderboardState.loading,
-);

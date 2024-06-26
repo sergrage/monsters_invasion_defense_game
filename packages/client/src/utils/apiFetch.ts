@@ -35,7 +35,7 @@ async function apiFetch(config: TConfig) {
     let responseData;
 
     contentType?.includes("application/json")
-      ? (responseData = (await response.json()) as TUser)
+      ? (responseData = await response.json())
       : (responseData = null);
 
     return responseData;
