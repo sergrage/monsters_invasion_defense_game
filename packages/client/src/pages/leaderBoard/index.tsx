@@ -20,7 +20,6 @@ import { getLeadersThunk } from "@/store/leaderboard/actions";
 const getDate = (date: string) => {
   const t = Number(date);
   const d = new Date(t);
-  console.log(d);
 
   return `${d.getDate()}.${d.getMonth()}.${d.getFullYear()}`;
 };
@@ -60,14 +59,9 @@ const LeaderBoardPage: FC = () => {
     setShowBlood(false);
   };
 
-  useEffect(() => {
-    // console.log(leaderBoard);
-  }, [leaderBoard]);
-
   if (leaderBoard.loading) {
     return <ZombieLoader />;
   }
-  console.log(leaderBoard);
 
   return (
     <Layout.Page>

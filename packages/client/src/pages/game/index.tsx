@@ -59,7 +59,7 @@ const GamePage = () => {
   const [windowWidth, windowHeight] = useWindowSize();
 
   const handleCoinsChangedEvent = (coins: number) => setCoins(coins);
-  const handleKillsChangedEvent = () => setKills(kills + 1);
+  const handleKillsChangedEvent = (kills: number) => setKills(kills);
   const handleHeartsChangedEvent = (hearts: number) => setHearts(hearts);
   const handleGameOverEvent = () => setIsGameOver(true);
 
