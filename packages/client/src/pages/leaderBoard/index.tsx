@@ -135,8 +135,6 @@ const LeaderBoardPage: FC = () => {
                   </td>
                   <td>{item.data.earnMoney}</td>
                   <td>{getDate(item.data.date)}</td>
-                  {/*<td>{item.earnMoney}</td>*/}
-                  {/*<td>{getDate(item.date)}</td>*/}
                 </tr>
               ))}
             </tbody>
