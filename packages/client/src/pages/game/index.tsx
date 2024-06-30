@@ -33,6 +33,8 @@ import level_1Map from "@/assets/game/levels/Level-1.png";
 import style from "./style.module.scss";
 
 import { toggleFullscreen } from "@/utils/fullscreenMode";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { getUserState } from "@/store/user/selector";
 
 let isInit = true;
 let isBadScreen = false;
@@ -149,6 +151,14 @@ const GamePage = () => {
       navigate(routes.gameOver);
     }
   }, [isGameOver]);
+
+  const isAuth = useAppSelector(getUserState).isAuth;
+
+  useEffect(() => {
+    if (isAuth) return;
+
+    navigate(routes.login);
+  }, [isAuth]);
 
   return (
     <Layout.Page pageClass={style.wrapper}>

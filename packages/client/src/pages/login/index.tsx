@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { logInThunk } from "@/store/user/actions";
+import { getUserThunk, logInThunk } from "@/store/user/actions";
 import { logOutThunk } from "@/store/user/actions";
 import { oAuthYandex } from "@/utils/oAuth";
 import IconButton from "@/ui/button/iconBtn";
@@ -12,6 +12,8 @@ import Button from "@/ui/button";
 import Input from "@/ui/input";
 import yandexIcon from "@/assets/icons/yandex.svg";
 import style from "./style.module.scss";
+import { getUserState } from "@/store/user/selector";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 type TLogin = {
   login: string;
@@ -25,6 +27,14 @@ type TServiceInfo = {
 const LoginPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const isAuth = useAppSelector(getUserState).isAuth;
+
+  useEffect(() => {
+    if (!isAuth) return;
+
+    navigate(routes.gameStart);
+  }, [isAuth]);
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     login: "",
@@ -48,6 +58,14 @@ const LoginPage: FC = () => {
 
     dispatch(logInThunk(values as TLogin));
   };
+
+  useEffect(() => {
+    async function getUser() {
+      const user = await dispatch(getUserThunk());
+    }
+
+    getUser();
+  }, []);
 
   const oAuthYandexHandler = () => {
     dispatch(logOutThunk()).finally(() => {

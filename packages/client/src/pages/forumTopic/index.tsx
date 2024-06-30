@@ -1,13 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import style from "./style.module.scss";
 import Title from "@/ui/title";
 
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import temp_data from "@/pages/forumTopic/temp_data";
 import Button from "@/ui/button";
 import Layout from "@/components/layout";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { getUserState } from "@/store/user/selector";
+import { routes } from "../routes";
+
+let isInit = true;
 
 const ForumTopics: FC = () => {
   const params = useParams();
@@ -19,6 +24,20 @@ const ForumTopics: FC = () => {
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
   };
+
+  const navigate = useNavigate();
+
+  const isAuth = useAppSelector(getUserState).isAuth;
+
+  useEffect(() => {
+    if (isInit) {
+      isInit = false;
+      return;
+    }
+    if (isAuth) return;
+
+    navigate(routes.login);
+  }, [isAuth]);
 
   return (
     <Layout.Page>

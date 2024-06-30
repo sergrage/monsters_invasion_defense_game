@@ -17,14 +17,32 @@ import {
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import ZombieLoader from "@/ui/zombieLoader";
 import { LeaderboardResponse } from "@/store/leaderboard/type";
+import { getUserState } from "@/store/user/selector";
+import { routes } from "../routes";
+import { useNavigate } from "react-router";
+
+let isInit = true;
 
 const LeaderBoardPage: FC = () => {
   const [showToasty, setShowToasty] = useState(false);
   const [showBlood, setShowBlood] = useState(false);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const data = useAppSelector(selectLeaderboardData);
   const loading = useAppSelector(selectLeaderboardLoading);
+  const isAuth = useAppSelector(getUserState).isAuth;
+
+  useEffect(() => {
+    if (isInit) {
+      isInit = false;
+      return;
+    }
+    if (isAuth) return;
+
+    navigate(routes.login);
+  }, [isAuth]);
 
   useEffect(() => {
     dispatch(loadLeaderboardData());

@@ -10,3 +10,5 @@ vite.config.ts.timestamp-1714056871657.mjs
 .DS_Store
 packages/.DS_Store
 lerna-debug.log
+packages/client/tsconfig.server.tsbuildinfo
+packages/client/server/index.js

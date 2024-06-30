@@ -5,6 +5,9 @@ import style from "./style.module.scss";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { logOutThunk } from "@/store/user/actions";
 
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { getUserState } from "@/store/user/selector";
+
 import Layout from "@/components/layout";
 import GameMenu from "@/components/gameMenu";
 
@@ -17,6 +20,8 @@ import { toggleFullscreen } from "@/utils/fullscreenMode";
 import logoutIcon from "@/assets/icons/logout.svg";
 import settingsIcon from "@/assets/icons/settings.svg";
 
+type Timeout = ReturnType<typeof setTimeout>;
+
 const GameStartPage: FC = () => {
   const gameMenu = [
     { title: "Start Game", route: routes.game },
@@ -24,11 +29,12 @@ const GameStartPage: FC = () => {
     { title: "Game Forum", route: routes.forum },
   ];
 
-  let interval: NodeJS.Timer | undefined;
+  let interval: Timeout | undefined;
 
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
+
+  const isAuth = useAppSelector(getUserState).isAuth;
 
   const [counter, setCounter] = useState<number>(3);
   const [showCounter, setShowCounter] = useState<boolean>(false);
@@ -44,10 +50,16 @@ const GameStartPage: FC = () => {
 
   useEffect(() => {
     if (counter <= 0) {
-      clearInterval(interval);
+      clearInterval(interval!);
       navigate(routes.game);
     }
   }, [counter]);
+
+  useEffect(() => {
+    if (isAuth) return;
+
+    navigate(routes.login);
+  }, [isAuth]);
 
   const handleLogOut = () => {
     dispatch(logOutThunk());
