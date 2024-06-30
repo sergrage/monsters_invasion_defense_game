@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
 
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
@@ -64,6 +65,12 @@ const RegisterPage: FC = () => {
 
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Sign up towers &#x1F611;</title>
+        <meta name="description" content="Sign up" />
+      </Helmet>
+
       <form className={style.form} onSubmit={handleSubmit}>
         <h1 className={style.title}>Sign up</h1>
         <div className={style["inputs-wrapper"]}>

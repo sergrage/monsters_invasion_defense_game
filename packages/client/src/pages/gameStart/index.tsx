@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import style from "./style.module.scss";
+import { Helmet } from "react-helmet";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { logOutThunk } from "@/store/user/actions";
@@ -19,6 +19,7 @@ import { toggleFullscreen } from "@/utils/fullscreenMode";
 
 import logoutIcon from "@/assets/icons/logout.svg";
 import settingsIcon from "@/assets/icons/settings.svg";
+import style from "./style.module.scss";
 
 type Timeout = ReturnType<typeof setTimeout>;
 
@@ -67,6 +68,12 @@ const GameStartPage: FC = () => {
 
   return (
     <Layout.Page>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Best game menu &#128541;</title>
+        <meta name="description" content="Game menu" />
+      </Helmet>
+
       <div className={style.container}>
         <div className={style.wrapper}>
           <div className={style.titleWrapp}>

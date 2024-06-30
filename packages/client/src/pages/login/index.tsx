@@ -1,5 +1,7 @@
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
+
 import { routes } from "@/pages/routes";
 import { useValidate } from "@/hooks/useValidate";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -75,6 +77,12 @@ const LoginPage: FC = () => {
 
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Log in towers &#x1F611;</title>
+        <meta name="description" content="Log in" />
+      </Helmet>
+
       <form className={style.form} onSubmit={handleSubmit}>
         <h1 className={style.title}>Log in</h1>
         <div className={style["inputs-wrapper"]}>

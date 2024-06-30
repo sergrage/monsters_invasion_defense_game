@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
+
 import Layout from "@/components/layout";
 import Game from "@/game/game";
 import Coins from "@/components/game/coins/coins";
@@ -19,7 +22,6 @@ import placementTilesData from "@/game/mocks/placementTilesData";
 import waypoints from "@/game/mocks/waypoints";
 import level from "@/game/mocks/level/index";
 
-import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
 
 import {
@@ -162,6 +164,12 @@ const GamePage = () => {
 
   return (
     <Layout.Page pageClass={style.wrapper}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>&#128561; TOWERS GAAAAME!!!11 &#128561;</title>
+        <meta name="description" content="Game" />
+      </Helmet>
+
       <div className={style.game}>
         <canvas ref={canvasRef} id="gameCanvas"></canvas>
 

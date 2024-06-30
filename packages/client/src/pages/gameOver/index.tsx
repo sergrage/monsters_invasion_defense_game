@@ -1,12 +1,12 @@
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
+import { Helmet } from "react-helmet";
 
-import style from "./style.module.scss";
 import Layout from "@/components/layout";
-
 import CoinsScore from "./components/coinsScore";
 import GameMenu from "@/components/gameMenu";
-
 import { routes } from "@/pages/routes";
+
+import style from "./style.module.scss";
 
 const GameOverPage: FC = () => {
   const gameMenu = [
@@ -26,6 +26,12 @@ const GameOverPage: FC = () => {
 
   return (
     <Layout.Page>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>RIP</title>
+        <meta name="description" content="Gameover" />
+      </Helmet>
+
       <div className={style.container}>
         <div className={style.wrapper}>
           <div className={style.wrapperResult}>

@@ -16,6 +16,7 @@ import { createFetchRequest, createUrl } from "./entry-server.utils";
 import routes from "./routes";
 import { reducer } from "./store";
 import { setPageHasBeenInitializedOnServer } from "./store/ssrSlice";
+import { Helmet } from "react-helmet";
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routes);
@@ -49,9 +50,12 @@ export const render = async (req: ExpressRequest) => {
     );
     // const styleTags = sheet.getStyleTags();
 
+    const helmet = Helmet.renderStatic();
+
     return {
       html,
       initialState: store.getState(),
+      helmet,
     };
   } finally {
     // sheet.seal();

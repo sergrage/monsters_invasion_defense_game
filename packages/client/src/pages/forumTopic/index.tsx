@@ -1,16 +1,16 @@
 import React, { FC, useEffect } from "react";
-
-import style from "./style.module.scss";
-import Title from "@/ui/title";
-
 import { useNavigate, useParams } from "react-router";
+import { Helmet } from "react-helmet";
 
+import Title from "@/ui/title";
 import temp_data from "@/pages/forumTopic/temp_data";
 import Button from "@/ui/button";
 import Layout from "@/components/layout";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getUserState } from "@/store/user/selector";
 import { routes } from "../routes";
+
+import style from "./style.module.scss";
 
 let isInit = true;
 
@@ -41,6 +41,12 @@ const ForumTopics: FC = () => {
 
   return (
     <Layout.Page>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Hot topic</title>
+        <meta name="description" content="Forum topic" />
+      </Helmet>
+
       <div className={style.titleBox}>
         <Title.H2
           title={"Lorem ipsum dolor sit amet, consectetur adipisicing elit"}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
 
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getUserState } from "@/store/user/selector";
@@ -33,6 +34,12 @@ const Profile = () => {
 
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Some guy profile</title>
+        <meta name="description" content="Profile" />
+      </Helmet>
+
       <section className={style.profile}>
         <Title.H1 className={style.title} title="Profile" />
 

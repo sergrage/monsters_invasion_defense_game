@@ -1,12 +1,10 @@
 import { FC, useEffect, useState } from "react";
-
-import style from "./style.module.scss";
-import Image from "@/ui/image";
-import Layout from "@/components/layout";
-import zombieAlarm from "@/assets/img/zombieAlarm.png";
-import toasty from "@/assets/img/leaderborad/toasty.png";
-import toasty_sound from "@/assets/sound/toasty.mp3";
+import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
 import cn from "classnames";
+
+import Layout from "@/components/layout";
+
 import Title from "@/ui/title";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import {
@@ -19,7 +17,12 @@ import ZombieLoader from "@/ui/zombieLoader";
 import { LeaderboardResponse } from "@/store/leaderboard/type";
 import { getUserState } from "@/store/user/selector";
 import { routes } from "../routes";
-import { useNavigate } from "react-router";
+
+import toasty_sound from "@/assets/sound/toasty.mp3";
+import zombieAlarm from "@/assets/img/zombieAlarm.png";
+import toasty from "@/assets/img/leaderborad/toasty.png";
+import Image from "@/ui/image";
+import style from "./style.module.scss";
 
 let isInit = true;
 
@@ -77,6 +80,12 @@ const LeaderBoardPage: FC = () => {
 
   return (
     <Layout.Page>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Best of the best &#128128;</title>
+        <meta name="description" content="Leaders" />
+      </Helmet>
+
       <section className={style.leaderboard}>
         {showToasty && (
           <Image

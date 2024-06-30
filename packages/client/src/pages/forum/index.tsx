@@ -1,17 +1,19 @@
 import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
+import cn from "classnames";
 
-import style from "./style.module.scss";
 import Image from "@/ui/image";
 import Layout from "@/components/layout";
 import Button from "@/ui/button";
 import zombieAlarm from "@/assets/img/zombieAlarm.png";
 import TopicsTable from "./components/topicsTable";
 import AddTopicModal from "./components/addTopicModal";
-import cn from "classnames";
-import { useNavigate } from "react-router";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getUserState } from "@/store/user/selector";
 import { routes } from "../routes";
+
+import style from "./style.module.scss";
 
 let isInit = true;
 
@@ -42,6 +44,12 @@ const ForumPage: FC = () => {
 
   return (
     <Layout.Page>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Temple of wisdom</title>
+        <meta name="description" content="Forum" />
+      </Helmet>
+
       <div
         className={cn(
           style.addTopicModal,
