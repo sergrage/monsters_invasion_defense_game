@@ -1,22 +1,28 @@
 import ReactDOM from "react-dom/server";
-// import { Provider } from "react-redux";
-// import { ServerStyleSheet } from "styled-components";
-import { Helmet } from "react-helmet";
+
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+
 import { Request as ExpressRequest } from "express";
+
 import {
   createStaticHandler,
   createStaticRouter,
   StaticRouterProvider,
 } from "react-router-dom/server";
 import { matchRoutes } from "react-router-dom";
-// import { configureStore } from "@reduxjs/toolkit";
 
-import { createFetchRequest, createUrl } from "./entry-server.utils";
+import {
+  createContext,
+  createFetchRequest,
+  createUrl,
+} from "./entry-server.utils";
 
-// import { reducer } from "./store";
+import { reducer } from "./store";
+import { getUserThunk } from "@/store/user/actions";
+import { setPageHasBeenInitializedOnServer } from "./store/ssrSlice";
+
 import routes from "./routes";
-// import "./index.css";
-// import { setPageHasBeenInitializedOnServer } from "./slices/ssrSlice";
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routes);
@@ -27,9 +33,10 @@ export const render = async (req: ExpressRequest) => {
     throw context;
   }
 
-  // const store = configureStore({
-  //   reducer,
-  // });
+  const store = configureStore({
+    reducer,
+  });
+  await store.dispatch(getUserThunk());
 
   const url = createUrl(req);
 
@@ -40,40 +47,37 @@ export const render = async (req: ExpressRequest) => {
     throw new Error("Страница не найдена!");
   }
 
-  // const [
-  //   {
-  //     route: { fetchData },
-  //   },
-  // ] = foundRoutes;
+  const [
+    {
+      route: { fetchData },
+    },
+  ] = foundRoutes;
 
-  // try {
-  //   await fetchData({
-  //     dispatch: store.dispatch,
-  //     state: store.getState(),
-  //     ctx: createContext(req),
-  //   });
-  // } catch (e) {
-  //   console.log("Инициализация страницы произошла с ошибкой", e);
-  // }
+  try {
+    await fetchData({
+      dispatch: store.dispatch,
+      state: store.getState(),
+      ctx: createContext(req),
+    });
+  } catch (e) {
+    console.log("Инициализация страницы произошла с ошибкой", e);
+  }
 
-  // store.dispatch(setPageHasBeenInitializedOnServer(true));
+  store.dispatch(setPageHasBeenInitializedOnServer(true));
 
   const router = createStaticRouter(dataRoutes, context);
-  // const sheet = new ServerStyleSheet();
+
   try {
     const html = ReactDOM.renderToString(
-      // sheet.collectStyles(
-      <StaticRouterProvider router={router} context={context} />,
-      // ),
+      <Provider store={store}>
+        <StaticRouterProvider router={router} context={context} />,
+      </Provider>,
     );
     // const styleTags = sheet.getStyleTags();
 
-    const helmet = Helmet.renderStatic();
-
     return {
       html,
-      helmet,
-      // styleTags,
+      initialState: store.getState(),
     };
   } finally {
     // sheet.seal();

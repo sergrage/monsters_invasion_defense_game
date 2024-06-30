@@ -23,7 +23,7 @@ type TSignUp = {
 
 const RegisterPage: FC = () => {
   const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     email: "",
@@ -50,16 +50,16 @@ const RegisterPage: FC = () => {
       return;
     }
 
-    // dispatch(
-    //   signUpThunk({
-    //     first_name: values.firstName,
-    //     second_name: values.lastName,
-    //     login: values.login,
-    //     email: values.email,
-    //     password: values.password,
-    //     phone: values.phone,
-    //   } as TSignUp),
-    // );
+    dispatch(
+      signUpThunk({
+        first_name: values.firstName,
+        second_name: values.lastName,
+        login: values.login,
+        email: values.email,
+        password: values.password,
+        phone: values.phone,
+      } as TSignUp),
+    );
   };
 
   return (

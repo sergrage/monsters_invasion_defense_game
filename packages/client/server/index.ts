@@ -7,12 +7,18 @@ import express, { Request as ExpressRequest } from "express";
 import path from "path";
 import { HelmetData } from "react-helmet";
 
+import serialize from "serialize-javascript";
+import cookieParser from "cookie-parser";
+import { createProxyMiddleware } from "http-proxy-middleware";
+
 const port = process.env.PORT || 80;
 const clientPath = path.join(__dirname, "..");
 const isDev = process.env.NODE_ENV === "development";
 
 async function createServer() {
   const app = express();
+
+  app.use(cookieParser());
 
   let vite: ViteDevServer | undefined;
   if (isDev) {
@@ -29,15 +35,25 @@ async function createServer() {
     );
   }
 
+  const backendProxy = createProxyMiddleware({
+    target: isDev
+      ? process.env.EXTERNAL_SERVER_URL
+      : process.env.INTERNAL_SERVER_URL,
+    changeOrigin: true,
+  });
+
+  app.all("/api/v2/*", backendProxy);
+
   app.get("*", async (req, res, next) => {
     const url = req.originalUrl;
 
     try {
       // Получаем файл client/index.html который мы правили ранее
       // Создаём переменные
-      let render: (
-        req: ExpressRequest,
-      ) => Promise<{ html: string; emotionCss: string; helmet: HelmetData }>;
+      let render: (req: ExpressRequest) => Promise<{
+        html: string;
+        initialState: unknown;
+      }>;
       let template: string;
       if (vite) {
         template = await fs.readFile(
@@ -71,16 +87,15 @@ async function createServer() {
       }
 
       // Получаем HTML-строку из JSX
-      const { html: appHtml, emotionCss, helmet } = await render(req);
+      const { html: appHtml, initialState } = await render(req);
 
       // Заменяем комментарий на сгенерированную HTML-строку
-      const html = template
-        .replace(
-          `<!--ssr-helmet-->`,
-          `${helmet.meta.toString()} ${helmet.title.toString()} ${helmet.link.toString()}`,
-        )
-        .replace(`<!--ssr-outlet-->`, appHtml)
-        .replace(`<!--ssr-css-->`, emotionCss);
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(
+        `<!--ssr-initial-state-->`,
+        `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
+          isJSON: true,
+        })}</script>`,
+      );
 
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
