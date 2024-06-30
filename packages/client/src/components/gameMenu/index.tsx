@@ -10,6 +10,7 @@ export type TProps = {
   menu: { title: string; route: string }[];
   control?: { route: string; action: any };
 };
+
 const GameMenu: FC<TProps> = ({ menu, control }) => {
   return (
     <div className={style.wrapper}>
@@ -18,14 +19,13 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
           <NavLink
             className={style.menuItem}
             onClick={(event: React.MouseEvent<HTMLElement>) => {
-              event.preventDefault();
-              window.audioGlobal.play("MenuClick");
-
-              if (control && control.route === item.route.slice(1)) {
-                window.audioGlobal.play("MenuMusic", true);
-                window.musicIsOn = true;
-                control.action();
-              }
+              // event.preventDefault();
+              // window.audioGlobal.play("MenuClick");
+              // if (control && control.route === item.route.slice(1)) {
+              //   window.audioGlobal.play("MenuMusic", true);
+              //   window.musicIsOn = true;
+              //   control.action();
+              // }
             }}
             to={item.route}
             key={index}
@@ -40,7 +40,7 @@ const GameMenu: FC<TProps> = ({ menu, control }) => {
             to={item.route}
             key={index}
             onClick={() => {
-              window.audioGlobal.play("MenuClick");
+              // window.audioGlobal.play("MenuClick");
             }}
           >
             <Image className={style.menuItemBg} src={menuItemBg}></Image>

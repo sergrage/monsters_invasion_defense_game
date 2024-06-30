@@ -12,17 +12,10 @@ import {
 } from "react-router-dom/server";
 import { matchRoutes } from "react-router-dom";
 
-import {
-  createContext,
-  createFetchRequest,
-  createUrl,
-} from "./entry-server.utils";
-
-import { reducer } from "./store";
-import { getUserThunk } from "@/store/user/actions";
-import { setPageHasBeenInitializedOnServer } from "./store/ssrSlice";
-
+import { createFetchRequest, createUrl } from "./entry-server.utils";
 import routes from "./routes";
+import { reducer } from "./store";
+import { setPageHasBeenInitializedOnServer } from "./store/ssrSlice";
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routes);
@@ -36,31 +29,12 @@ export const render = async (req: ExpressRequest) => {
   const store = configureStore({
     reducer,
   });
-  await store.dispatch(getUserThunk());
 
   const url = createUrl(req);
 
   const foundRoutes = matchRoutes(routes, url);
-  console.log("🚀 ~ render ~ routes:", routes);
-  console.log("🚀 ~ render ~ foundRoutes:", foundRoutes);
   if (!foundRoutes) {
     throw new Error("Страница не найдена!");
-  }
-
-  const [
-    {
-      route: { fetchData },
-    },
-  ] = foundRoutes;
-
-  try {
-    await fetchData({
-      dispatch: store.dispatch,
-      state: store.getState(),
-      ctx: createContext(req),
-    });
-  } catch (e) {
-    console.log("Инициализация страницы произошла с ошибкой", e);
   }
 
   store.dispatch(setPageHasBeenInitializedOnServer(true));
