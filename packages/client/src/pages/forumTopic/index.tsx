@@ -40,7 +40,7 @@ const ForumTopics: FC = () => {
         />
       </div>
 
-      {threads?.map(item => (
+      {temp_data?.map(item => (
         <div className={style.message} key={item.id}>
           <div className={style.date}>
             <span>{item.date}</span>
