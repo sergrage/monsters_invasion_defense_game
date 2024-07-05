@@ -7,12 +7,20 @@ import CoinsScore from "./components/coinsScore";
 import GameMenu from "@/components/gameMenu";
 
 import { routes } from "@/pages/routes";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useSelector } from "react-redux";
+import { getUserState } from "@/store/user/selector";
+import { addLeaderThunk } from "@/store/leaderboard/actions";
 
 const GameOverPage: FC = () => {
+  const { t } = useTranslation();
+
   const gameMenu = [
-    { title: "Main Page", route: routes.gameStart },
-    { title: "Leader Board", route: routes.leaderboard },
-    { title: "Play Again?", route: routes.game },
+    { title: t(TRANSLATIONS.MAIN_PAGE), route: routes.gameStart },
+    { title: t(TRANSLATIONS.LEADERBOARD), route: routes.leaderboard },
+    { title: `${t(TRANSLATIONS.PLAY_AGAIN)}?`, route: routes.game },
   ];
 
   const levelScore = 100;

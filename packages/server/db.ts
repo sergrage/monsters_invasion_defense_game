@@ -1,28 +1,30 @@
-import { Client } from "pg";
+import ForumThread from "./models/ForumThread";
+import ForumMessage from "./models/ForumMessage";
+import ForumMessageReply from "./models/ForumMessageReply";
+import ThemeType from "./models/ThemeType";
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-  process.env;
+import sequelize from "./db/sequlizeInit";
 
-export const createClientAndConnect = async (): Promise<Client | null> => {
+export const dbInit = async () => {
   try {
-    const client = new Client({
-      user: POSTGRES_USER,
-      host: "localhost",
-      database: POSTGRES_DB,
-      password: POSTGRES_PASSWORD,
-      port: Number(POSTGRES_PORT),
+    ForumThread.hasMany(ForumMessage, {
+      foreignKey: "thread_id",
     });
 
-    await client.connect();
+    ForumMessage.hasMany(ForumMessageReply, {
+      foreignKey: "message_id",
+    });
 
-    const res = await client.query("SELECT NOW()");
-    console.log("  ➜ 🎸 Connected to the database at:", res?.rows?.[0].now);
-    client.end();
+    await ForumThread.sync();
+    await ForumMessage.sync();
+    await ForumMessageReply.sync();
 
-    return client;
+    await ThemeType.sync();
+
+    console.log("All models were synchronized successfully.");
   } catch (e) {
-    console.error(e);
+    console.log("Init DB error", e);
   }
 
-  return null;
+  return sequelize;
 };

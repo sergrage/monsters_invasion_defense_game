@@ -9,26 +9,32 @@ import toasty_sound from "@/assets/sound/toasty.mp3";
 import cn from "classnames";
 import Title from "@/ui/title";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import {
-  loadLeaderboardData,
-  selectLeaderboardData,
-  selectLeaderboardLoading,
-} from "@/store/leaderboard/reducer";
+import { getLeaderBoardState } from "@/store/leaderboard/reducer";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import ZombieLoader from "@/ui/zombieLoader";
-import { LeaderboardResponse } from "@/store/leaderboard/type";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
+import { ILeader } from "@/store/leaderboard/type";
+import { getLeadersThunk } from "@/store/leaderboard/actions";
+
+const getDate = (date: string) => {
+  const t = Number(date);
+  const d = new Date(t);
+
+  return `${d.getDate()}.${d.getMonth()}.${d.getFullYear()}`;
+};
 
 const LeaderBoardPage: FC = () => {
+  const { t } = useTranslation();
   const [showToasty, setShowToasty] = useState(false);
   const [showBlood, setShowBlood] = useState(false);
 
   const dispatch = useAppDispatch();
-  const data = useAppSelector(selectLeaderboardData);
-  const loading = useAppSelector(selectLeaderboardLoading);
+  const leaderBoard = useAppSelector(getLeaderBoardState);
 
   useEffect(() => {
-    dispatch(loadLeaderboardData());
-  }, [dispatch]);
+    dispatch(getLeadersThunk());
+  }, []);
 
   const handleClick = () => {
     setShowToasty(true);
@@ -53,7 +59,7 @@ const LeaderBoardPage: FC = () => {
     setShowBlood(false);
   };
 
-  if (loading) {
+  if (leaderBoard.loading) {
     return <ZombieLoader />;
   }
 
@@ -94,47 +100,43 @@ const LeaderBoardPage: FC = () => {
           <table className={style.table}>
             <thead>
               <tr>
-                <th scope="col">Rank</th>
-                <th scope="col">Kills</th>
-                <th scope="col">User</th>
-                <th scope="col">Total money</th>
-                <th scope="col">Date</th>
+                <th scope="col">{t(TRANSLATIONS.RANK)}</th>
+                <th scope="col">{t(TRANSLATIONS.KILLS)}</th>
+                <th scope="col">{t(TRANSLATIONS.USER)}</th>
+                <th scope="col">{t(TRANSLATIONS.TOTAL_MONEY)}</th>
+                <th scope="col">{t(TRANSLATIONS.DATE)}</th>
               </tr>
             </thead>
             <tbody>
-              {data
-                ?.slice()
-                .sort(
-                  (a: LeaderboardResponse, b: LeaderboardResponse) =>
-                    a.rank - b.rank,
-                )
-                .map((item: LeaderboardResponse, index: number) => (
-                  <tr key={item.id}>
-                    {index === 0 ? (
-                      <td
-                        className={cn(style.boldText, style.twinkling)}
-                        onClick={handleClick}
-                      >
-                        {item.rank}
-                      </td>
-                    ) : (
-                      <td className={style.boldText}>{item.rank}</td>
+              {leaderBoard.data.map((item: ILeader, index: number) => (
+                <tr key={`leader_${index}`}>
+                  <td
+                    className={cn(
+                      style.boldText,
+                      index === 0 && style.twinkling,
                     )}
-                    <td>{item.zombieKills}</td>
-                    <td>
-                      <div className={style.user}>
+                    onClick={handleClick}
+                  >
+                    {index + 1}
+                  </td>
+                  <td>{item.data.kills}</td>
+                  <td>
+                    <div className={style.user}>
+                      {item.data.avatar && (
                         <Image
                           className={style.avatar}
-                          src={item.user.avatar}
+                          src={item.data.avatar}
                           alt="RRR! AVATAR!"
                         />
-                        <p>{item.user.login}</p>
-                      </div>
-                    </td>
-                    <td>{item.earnMoney}</td>
-                    <td>{item.date}</td>
-                  </tr>
-                ))}
+                      )}
+
+                      <p>{item.data.login}</p>
+                    </div>
+                  </td>
+                  <td>{item.data.earnMoney}</td>
+                  <td>{getDate(item.data.date)}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

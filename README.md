@@ -2,6 +2,9 @@
 
 https://www.youtube.com/watch?v=8iiCqeSzqQc
 
+Задачи 7-8 спринта
+https://youtu.be/raKoRRNbFpY
+
 ### Название веток при разработке
 
 `<тип>/<id>_name_of_branch` либо `<тип>/<id_1>-<id_2>_name_of_branch`

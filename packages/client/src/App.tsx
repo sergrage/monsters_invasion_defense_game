@@ -24,6 +24,7 @@ import Layout from "@/components/layout";
 import ZombieLoader from "./ui/zombieLoader";
 
 import AudioCore from "@/audioCore/Core";
+import "./assets/internationalization/i18n.js";
 
 declare global {
   interface Window {

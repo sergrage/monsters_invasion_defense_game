@@ -8,6 +8,8 @@ import zombieAlarm from "@/assets/img/zombieAlarm.png";
 import TopicsTable from "./components/topicsTable";
 import AddTopicModal from "./components/addTopicModal";
 import cn from "classnames";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 const ForumPage: FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -19,6 +21,8 @@ const ForumPage: FC = () => {
   const hideModalClick = () => {
     setShowModal(false);
   };
+
+  const { t } = useTranslation();
 
   return (
     <Layout.Page>
@@ -33,12 +37,12 @@ const ForumPage: FC = () => {
 
       <div className={style.hero}>
         <div className={cn(style.wrapper)}>
-          <h2 className={cn(style.title)}>Game Forum</h2>
+          <h2 className={cn(style.title)}>{t(TRANSLATIONS.GAME_FORUM)}</h2>
           <h3 className={cn(style.gametitle)}>
             Monsters Invasion Defense Game
           </h3>
           <Button.Flat
-            name="Ask question"
+            name={t(TRANSLATIONS.ASK_QUESTION)}
             onClick={showModalClick}
             formBtn={true}
             formBtnRed={true}

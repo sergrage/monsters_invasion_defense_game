@@ -11,6 +11,8 @@ import Button from "@/ui/button";
 import Input from "@/ui/input";
 
 import style from "../login/style.module.scss";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 type TSignUp = {
   first_name: string;
@@ -62,6 +64,8 @@ const RegisterPage: FC = () => {
     );
   };
 
+  const { t } = useTranslation();
+
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
       <form className={style.form} onSubmit={handleSubmit}>
@@ -69,7 +73,7 @@ const RegisterPage: FC = () => {
         <div className={style["inputs-wrapper"]}>
           <Input
             name="email"
-            label="Email"
+            label={t(TRANSLATIONS.EMAIL)}
             value={values.email}
             onChange={handleChange}
             onError={errors.email}
@@ -79,7 +83,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="login"
-            label="Login"
+            label={t(TRANSLATIONS.LOGIN)}
             value={values.login}
             onChange={handleChange}
             onError={errors.login}
@@ -89,7 +93,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="firstName"
-            label="First Name"
+            label={t(TRANSLATIONS.FIRST_NAME)}
             value={values.firstName}
             onChange={handleChange}
             onError={errors.firstName}
@@ -99,7 +103,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="lastName"
-            label="Last Name"
+            label={t(TRANSLATIONS.LAST_NAME)}
             value={values.lastName}
             onChange={handleChange}
             onError={errors.lastName}
@@ -108,7 +112,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="phone"
-            label="Phone"
+            label={t(TRANSLATIONS.PHONE)}
             value={values.phone}
             onChange={handleChange}
             onError={errors.phone}
@@ -117,7 +121,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="password"
-            label="Password"
+            label={t(TRANSLATIONS.PASSWORD)}
             type="password"
             value={values.password}
             onChange={handleChange}
@@ -128,7 +132,7 @@ const RegisterPage: FC = () => {
           />
           <Input
             name="confirmPassword"
-            label="Confirm Password"
+            label={t(TRANSLATIONS.CONFIRM_PASSWORD)}
             type="password"
             value={values.confirmPassword}
             onChange={handleChange}
