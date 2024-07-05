@@ -42,14 +42,14 @@ const forumSlice = createSlice({
           }
         },
       )
-      .addCase(
-        getforumMessageReplyThunk.fulfilled,
-        (state, action: PayloadAction<TForumMessageReply | null>) => {
-          if (action.payload) {
-            state.forumMessageReply = action.payload;
-          }
-        },
-      )
+      // .addCase(
+      //   getforumMessageReplyThunk.fulfilled,
+      //   (state, action: PayloadAction<TForumMessageReply | null>) => {
+      //     if (action.payload) {
+      //       state.forumMessageReply = action.payload;
+      //     }
+      //   },
+      // )
 
       .addMatcher(
         action => action.type.endsWith("/pending"),

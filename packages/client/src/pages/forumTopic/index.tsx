@@ -1,23 +1,22 @@
-import React, { FC, useEffect } from "react";
-
+import React, { FC } from "react";
 import style from "./style.module.scss";
 import Title from "@/ui/title";
 import { useParams } from "react-router";
-import temp_data from "@/pages/forumTopic/temp_data";
+import temp_data from "@/pages/forumTopic/temp_data"; /////////////////////////Удалить
 import Button from "@/ui/button";
 import Layout from "@/components/layout";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { getforumAllThreadsThunk } from "@/store/forum/actions";
-import { useAppSelector } from "@/hooks/useAppSelector";
-import { getThreadState } from "@/store/forum/selector";
 import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
 import ForumTopicMessage from "@/pages/forumTopic/forumMessage";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { getThreadState } from "@/store/forum/selector";
 
 const ForumTopics: FC = () => {
   const params = useParams();
   const page = params.topicId;
   const { t } = useTranslation();
+
+  const threads = useAppSelector(getThreadState).forumThreads;
 
   const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -25,13 +24,6 @@ const ForumTopics: FC = () => {
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
   };
-
-  const dispatch = useAppDispatch();
-  const threads = useAppSelector(getThreadState).forumThreads;
-
-  useEffect(() => {
-    dispatch(getforumAllThreadsThunk());
-  }, [dispatch]);
 
   return (
     <Layout.Page>
@@ -42,9 +34,7 @@ const ForumTopics: FC = () => {
         />
       </div>
 
-      {temp_data.map(item => (
-        <ForumTopicMessage item={item} key={item.id} />
-      ))}
+      {threads?.map(item => <ForumTopicMessage item={item} key={item.id} />)}
 
       <form onSubmit={onSubmitHandler}>
         <div className={style.footer}>

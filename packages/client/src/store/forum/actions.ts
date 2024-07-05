@@ -2,7 +2,7 @@ import { AsyncThunk, createAsyncThunk } from "@reduxjs/toolkit";
 import { AsyncThunkConfig } from "@reduxjs/toolkit/dist/createAsyncThunk";
 
 import apiFetch from "@/utils/apiFetch";
-import { forumMessageUrl, forumThreadUrl } from "@/endpoints/apiUrl";
+import { allThreadsUrl } from "@/endpoints/apiUrl";
 import { errorSlice } from "../error/reducer";
 import { TForumMessage, TForumMessageReply, TForumThread } from "./type";
 
@@ -15,7 +15,7 @@ export const getforumAllThreadsThunk: AsyncThunk<
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await apiFetch({
-        url: forumThreadUrl,
+        url: allThreadsUrl,
       });
 
       return response;
@@ -37,7 +37,7 @@ export const postforumMessageThunk: AsyncThunk<
   async (body, { dispatch, rejectWithValue }) => {
     try {
       const response = await apiFetch({
-        url: forumMessageUrl,
+        url: allThreadsUrl,
         method: "POST",
         body,
       });
@@ -61,7 +61,7 @@ export const getforumMessageReplyThunk: AsyncThunk<
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await apiFetch({
-        url: forumMessageUrl,
+        url: allThreadsUrl,
       });
 
       return response;

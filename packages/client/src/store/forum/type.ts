@@ -7,9 +7,12 @@ export type TForumState = {
 
 export type TForumThread = {
   id: number;
+  login: string;
   title: string;
   views: number;
-  created_by: number;
+  createdAt: string;
+  updatedAt: string;
+  forum_messages: TForumMessage[];
 };
 
 export type TForumMessage = {

@@ -5,6 +5,8 @@ import style from "@/pages/forumTopic/style.module.scss";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 
+import useFormattedDate from "@/hooks/useDate";
+
 interface EmojiInterface {
   id: number;
   name: string;
@@ -14,6 +16,8 @@ interface EmojiInterface {
 }
 
 const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
+  console.log("🚀 ~ item:", item);
+
   const [showPicker, setShowPicker] = useState(false);
   const [selectedEmojis, setSelectedEmojis] = useState<string[]>([]);
   const pickerRef = useRef<HTMLDivElement>(null);
@@ -51,18 +55,18 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
   return (
     <div className={style.message} key={item.id}>
       <div className={style.date}>
-        <span>{item.date}</span>
+        <span>{`useFormattedDate(item.date)`}</span>
         <span>#{item.id}</span>
       </div>
       <div className={style.body}>
         <div className={style.user}>
-          <div className={style.name}>{item.user.name}</div>
+          <div className={style.name}>{`item.user.name`}</div>
           <div className={style.avatar}>
-            <img src={item.user.avatar} alt="avatar" />
+            <img src={`item.user.avatar`} alt="avatar" />
           </div>
         </div>
         <div className={style.text}>
-          <p>{item.message}</p>
+          <p>{`item.message`}</p>
           <div className={style.emojiContainer}>
             <div className={style.selectedEmojis}>
               {selectedEmojis.map((emoji, index) => (
