@@ -1,11 +1,13 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { ForumTopicMessageProps } from "@/store/forum/forumTopic/type";
-import { useTranslation } from "react-i18next";
 import style from "@/pages/forumTopic/style.module.scss";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
-
 import useFormattedDate from "@/hooks/useDate";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { getUserState } from "@/store/user/selector";
+import randomInteger from "@/utils/randomInteger";
+import { baseYandexUrl } from "@/endpoints/apiUrl";
 
 interface EmojiInterface {
   id: number;
@@ -17,6 +19,7 @@ interface EmojiInterface {
 
 const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
   console.log("🚀 ~ item:", item);
+  const user = useAppSelector(getUserState).user;
 
   const [showPicker, setShowPicker] = useState(false);
   const [selectedEmojis, setSelectedEmojis] = useState<string[]>([]);
@@ -55,18 +58,29 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
   return (
     <div className={style.message} key={item.id}>
       <div className={style.date}>
-        <span>{`useFormattedDate(item.date)`}</span>
+        <span>{useFormattedDate(item.createdAt)}</span>
         <span>#{item.id}</span>
       </div>
       <div className={style.body}>
         <div className={style.user}>
-          <div className={style.name}>{`item.user.name`}</div>
+          <div className={style.name}>{item.login}</div>
           <div className={style.avatar}>
-            <img src={`item.user.avatar`} alt="avatar" />
+            <img
+              src={
+                item.login === user?.login && user.avatar
+                  ? `${baseYandexUrl}/resources${user.avatar}`
+                  : `/src/assets/img/user${randomInteger(1, 2)}.png`
+              }
+              alt="Автар пользователя"
+            />
           </div>
         </div>
         <div className={style.text}>
-          <p>{`item.message`}</p>
+          <p>
+            {item.forum_messages.length == 0
+              ? "Сообщений нет"
+              : "item.forum_messages"}
+          </p>
           <div className={style.emojiContainer}>
             <div className={style.selectedEmojis}>
               {selectedEmojis.map((emoji, index) => (

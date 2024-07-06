@@ -6,14 +6,19 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { getforumAllThreadsThunk } from "@/store/forum/actions";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getThreadState } from "@/store/forum/selector";
-import tempData from "./temp_data"; /////////////////////////Удалить
 import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
 import useFormattedDate from "@/hooks/useDate";
+import { getUserState } from "@/store/user/selector";
+import { baseYandexUrl } from "@/endpoints/apiUrl";
+import randomInteger from "@/utils/randomInteger";
 
 const TopicsTable: FC = () => {
   const dispatch = useAppDispatch();
   const threads = useAppSelector(getThreadState).forumThreads;
+  const user = useAppSelector(getUserState).user;
+  console.log("🚀 ~ user:", user);
+  console.log("🚀 ~ threads:", threads);
 
   useEffect(() => {
     dispatch(getforumAllThreadsThunk());
@@ -43,14 +48,22 @@ const TopicsTable: FC = () => {
             {threads?.map(item => (
               <tr onClick={() => showTopic(item.id)} key={item.id}>
                 <th>{item.title}</th>
-                <td>{`item.forum_messages[forum_messages.lenght - 1]`}</td>
+                <td>
+                  {item.forum_messages.length == 0
+                    ? "Сообщений нет"
+                    : "item.forum_messages"}
+                </td>
                 <td>
                   <div className={style.userWrapper}>
                     <div>
                       <img
-                        src="#" //добавить аву
+                        src={
+                          item.login === user?.login && user.avatar
+                            ? `${baseYandexUrl}/resources${user.avatar}`
+                            : `/src/assets/img/user${randomInteger(1, 2)}.png`
+                        }
                         className={style.userAvatar}
-                        alt="user1"
+                        alt="Автар пользователя"
                       />
                     </div>
                     <div>by {item.login}</div>
