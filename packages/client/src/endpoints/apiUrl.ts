@@ -1,4 +1,6 @@
-export const baseApiUrl: string = "http://localhost:3001/api";
+const serverPort = __SERVER_PORT__;
+
+export const baseApiUrl: string = `http://localhost:${serverPort}/api`;
 export const baseYandexUrl: string = `${baseApiUrl}/v2`;
 
 export const authUrl: string = `${baseYandexUrl}/auth`;

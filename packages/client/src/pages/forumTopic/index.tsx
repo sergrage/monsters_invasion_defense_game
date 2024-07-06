@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import style from "./style.module.scss";
 import Title from "@/ui/title";
 import { useParams } from "react-router";
-import temp_data from "@/pages/forumTopic/temp_data"; /////////////////////////Удалить
 import Button from "@/ui/button";
 import Layout from "@/components/layout";
 import { useTranslation } from "react-i18next";
