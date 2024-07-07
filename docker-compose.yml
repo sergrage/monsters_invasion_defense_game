@@ -15,6 +15,9 @@ services:
     environment:
       - CLIENT_PORT=${CLIENT_PORT}
       - SERVER_PORT=${SERVER_PORT}
+    networks:
+      - mynet
+
   server:
     container_name: prakticum-server
     env_file:
@@ -67,6 +70,8 @@ services:
       - client
       - server
       - postgres
+    networks:
+      - mynet
 
   certbot:
     image: certbot/certbot:latest
@@ -75,6 +80,8 @@ services:
       - ./data/certbot/www:/var/www/certbot/:rw
     # Команда для запуска в контейнере Certbot, которая обновляет сертификаты каждые 12 часов
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
+    networks:
+      - mynet
 
 networks:
   mynet:
