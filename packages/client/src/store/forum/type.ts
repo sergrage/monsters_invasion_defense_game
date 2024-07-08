@@ -28,3 +28,7 @@ export type TForumMessageReply = {
   message_id: number;
   created_by: number;
 };
+
+export interface ForumTopicMessageProps {
+  item: TForumThread;
+}

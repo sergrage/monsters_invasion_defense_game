@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { ForumTopicMessageProps } from "@/store/forum/forumTopic/type";
+import { ForumTopicMessageProps } from "@/store/forum/type";
 import style from "@/pages/forumTopic/style.module.scss";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
@@ -77,7 +77,7 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
         </div>
         <div className={style.text}>
           <p>
-            {item.forum_messages.length == 0
+            {item.forum_messages?.length == 0
               ? "Сообщений нет"
               : "item.forum_messages"}
           </p>
