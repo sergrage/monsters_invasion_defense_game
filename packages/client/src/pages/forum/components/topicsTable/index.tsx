@@ -49,7 +49,7 @@ const TopicsTable: FC = () => {
               <tr onClick={() => showTopic(item.id)} key={item.id}>
                 <th>{item.title}</th>
                 <td>
-                  {item.forum_messages.length == 0
+                  {item.forum_messages?.length == 0
                     ? "Сообщений нет"
                     : "item.forum_messages"}
                 </td>

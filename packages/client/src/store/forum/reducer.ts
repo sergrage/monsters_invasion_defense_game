@@ -7,7 +7,7 @@ import {
 } from "./type";
 import {
   getforumMessageReplyThunk,
-  postforumMessageThunk,
+  postforumThreadThunk,
   getforumAllThreadsThunk,
 } from "./actions";
 
@@ -35,22 +35,13 @@ const forumSlice = createSlice({
         },
       )
       .addCase(
-        postforumMessageThunk.fulfilled,
-        (state, action: PayloadAction<TForumMessage | null>) => {
+        postforumThreadThunk.fulfilled,
+        (state, action: PayloadAction<TForumThread | null>) => {
           if (action.payload) {
-            state.forumMessage = action.payload;
+            state.forumThreads?.push(action.payload);
           }
         },
       )
-      // .addCase(
-      //   getforumMessageReplyThunk.fulfilled,
-      //   (state, action: PayloadAction<TForumMessageReply | null>) => {
-      //     if (action.payload) {
-      //       state.forumMessageReply = action.payload;
-      //     }
-      //   },
-      // )
-
       .addMatcher(
         action => action.type.endsWith("/pending"),
         state => {

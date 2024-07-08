@@ -28,12 +28,12 @@ export const getforumAllThreadsThunk: AsyncThunk<
   },
 );
 
-export const postforumMessageThunk: AsyncThunk<
-  TForumMessage,
-  { message: string },
+export const postforumThreadThunk: AsyncThunk<
+  TForumThread,
+  { title: string; login: string },
   AsyncThunkConfig
 > = createAsyncThunk(
-  "forum/getforumMessage",
+  "forum/postforumThread",
   async (body, { dispatch, rejectWithValue }) => {
     try {
       const response = await apiFetch({
