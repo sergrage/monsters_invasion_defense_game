@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { ForumTopicMessageProps } from "@/store/forum/type";
+import { TForumMessage } from "@/store/forum/type";
 import style from "@/pages/forumTopic/style.module.scss";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
@@ -17,8 +17,12 @@ interface EmojiInterface {
   keywords: string[];
 }
 
-const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
-  console.log("🚀 ~ item:", item);
+const ForumTopicMessage: FC<TForumMessage> = ({
+  id,
+  login,
+  createdAt,
+  text,
+}) => {
   const user = useAppSelector(getUserState).user;
 
   const [showPicker, setShowPicker] = useState(false);
@@ -30,7 +34,7 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
   };
 
   const handleEmojiSelect = (emoji: EmojiInterface) => {
-    setSelectedEmojis([...selectedEmojis, emoji.native]);
+    setSelectedEmojis(prevEmojis => [...prevEmojis, emoji.native]);
     setShowPicker(false);
   };
 
@@ -56,18 +60,18 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
   }, [showPicker]);
 
   return (
-    <div className={style.message} key={item.id}>
+    <div className={style.message} key={id}>
       <div className={style.date}>
-        <span>{useFormattedDate(item.createdAt)}</span>
-        <span>#{item.id}</span>
+        <span>{useFormattedDate(createdAt)}</span>
+        <span>#{id}</span>
       </div>
       <div className={style.body}>
         <div className={style.user}>
-          <div className={style.name}>{item.login}</div>
+          <div className={style.name}>{login}</div>
           <div className={style.avatar}>
             <img
               src={
-                item.login === user?.login && user.avatar
+                login === user?.login && user.avatar
                   ? `${baseYandexUrl}/resources${user.avatar}`
                   : `/src/assets/img/user${randomInteger(1, 2)}.png`
               }
@@ -76,11 +80,7 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
           </div>
         </div>
         <div className={style.text}>
-          <p>
-            {item.forum_messages?.length == 0
-              ? "Сообщений нет"
-              : "item.forum_messages"}
-          </p>
+          <p>{text}</p>
           <div className={style.emojiContainer}>
             <div className={style.selectedEmojis}>
               {selectedEmojis.map((emoji, index) => (

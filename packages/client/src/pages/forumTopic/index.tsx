@@ -9,31 +9,38 @@ import { TRANSLATIONS } from "@/constants/translations";
 import ForumTopicMessage from "@/pages/forumTopic/forumMessage";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getThreadState } from "@/store/forum/selector";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { getUserState } from "@/store/user/selector";
 
 const ForumTopics: FC = () => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUserState).user;
   const params = useParams();
-  const page = params.topicId;
+  const page = Number(params.topicId);
   const { t } = useTranslation();
 
   const threads = useAppSelector(getThreadState).forumThreads;
+  const forumItem = threads?.find(item => item.id == page);
 
   const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
-    const formJson = Object.fromEntries(formData.entries());
+    const message = formData.get("message") as string;
+    console.log("🚀 ~ onSubmitHandler ~ message:", message);
+    const userLogin = user?.login || "";
+    console.log("🚀 ~ onSubmitHandler ~ userLogin:", userLogin);
   };
 
   return (
     <Layout.Page>
       <div className={style.titleBox}>
-        <Title.H2
-          title={"Lorem ipsum dolor sit amet, consectetur adipisicing elit"}
-          className={style.topic}
-        />
+        <Title.H2 title={forumItem?.title} className={style.topic} />
       </div>
 
-      {threads?.map(item => <ForumTopicMessage item={item} key={item.id} />)}
+      {forumItem?.forum_messages.map(message => (
+        <ForumTopicMessage key={message.id} {...message} />
+      ))}
 
       <form onSubmit={onSubmitHandler}>
         <div className={style.footer}>

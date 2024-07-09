@@ -16,10 +16,13 @@ export type TForumThread = {
 };
 
 export type TForumMessage = {
+  createdAt: string;
+  forum_message_replies: TForumMessage[];
   id: number;
+  login: string;
   text: string;
   thread_id: number;
-  created_by: number;
+  updatedAt: string;
 };
 
 export type TForumMessageReply = {
@@ -30,5 +33,7 @@ export type TForumMessageReply = {
 };
 
 export interface ForumTopicMessageProps {
-  item: TForumThread;
+  item: {
+    forum_messages: TForumMessage[];
+  };
 }

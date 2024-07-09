@@ -17,8 +17,6 @@ const TopicsTable: FC = () => {
   const dispatch = useAppDispatch();
   const threads = useAppSelector(getThreadState).forumThreads;
   const user = useAppSelector(getUserState).user;
-  console.log("🚀 ~ user:", user);
-  console.log("🚀 ~ threads:", threads);
 
   useEffect(() => {
     dispatch(getforumAllThreadsThunk());
@@ -51,7 +49,7 @@ const TopicsTable: FC = () => {
                 <td>
                   {item.forum_messages?.length == 0
                     ? "Сообщений нет"
-                    : "item.forum_messages"}
+                    : `${item.forum_messages[item.forum_messages?.length - 1].text}`}
                 </td>
                 <td>
                   <div className={style.userWrapper}>
