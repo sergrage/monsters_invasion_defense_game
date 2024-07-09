@@ -7,6 +7,7 @@ import {
 } from "./type";
 import {
   getforumMessageReplyThunk,
+  postforumMessageThunk,
   postforumThreadThunk,
   getforumAllThreadsThunk,
 } from "./actions";
@@ -39,6 +40,21 @@ const forumSlice = createSlice({
         (state, action: PayloadAction<TForumThread | null>) => {
           if (action.payload) {
             state.forumThreads?.push(action.payload);
+          }
+        },
+      )
+      .addCase(
+        postforumMessageThunk.fulfilled,
+        (state, action: PayloadAction<TForumMessage | null>) => {
+          if (action.payload) {
+            const forumItem = state.forumThreads?.find(
+              item => item.id === action.payload?.thread_id,
+            );
+            if (forumItem) {
+              forumItem.forum_messages.push(action.payload);
+            } else {
+              console.error("Нет треда с таким id:", action.payload.thread_id);
+            }
           }
         },
       )

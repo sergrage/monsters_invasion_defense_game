@@ -9,5 +9,6 @@ export const oAuthUrl: string = `${baseYandexUrl}/oauth/yandex`;
 
 export const getLeadersUrl: string = `${baseYandexUrl}/leaderboard/all`;
 export const addLeadersUrl: string = `${baseYandexUrl}/leaderboard`;
-
+//Forum
 export const allThreadsUrl: string = `${baseApiUrl}/forum_thread`;
+export const messagesUrl: string = `${baseApiUrl}/forum_message`;

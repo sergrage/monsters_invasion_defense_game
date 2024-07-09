@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import style from "./style.module.scss";
 import Title from "@/ui/title";
 import { useParams } from "react-router";
@@ -11,8 +11,10 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { getThreadState } from "@/store/forum/selector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { getUserState } from "@/store/user/selector";
+import { postforumMessageThunk } from "@/store/forum/actions";
 
 const ForumTopics: FC = () => {
+  const [message, setMessage] = useState("");
   const dispatch = useAppDispatch();
   const user = useAppSelector(getUserState).user;
   const params = useParams();
@@ -27,9 +29,18 @@ const ForumTopics: FC = () => {
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
     const message = formData.get("message") as string;
-    console.log("🚀 ~ onSubmitHandler ~ message:", message);
     const userLogin = user?.login || "";
-    console.log("🚀 ~ onSubmitHandler ~ userLogin:", userLogin);
+    dispatch(
+      postforumMessageThunk({
+        thread_id: page,
+        login: userLogin,
+        text: message,
+      }),
+    );
+    setMessage("");
+  };
+  const onMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(event.target.value);
   };
 
   return (
@@ -47,12 +58,14 @@ const ForumTopics: FC = () => {
           <textarea
             className={style.textarea}
             name="message"
-            defaultValue="I really enjoyed killing Zomby yesterday!"
+            onChange={onMessageChange}
+            placeholder="I really enjoyed killing Zomby yesterday!"
           />
           <Button.Flat
             name={t(TRANSLATIONS.SEND_MESSAGE)}
             type="submit"
             deepRed={true}
+            disabled={!message.trim()}
           />
         </div>
       </form>
