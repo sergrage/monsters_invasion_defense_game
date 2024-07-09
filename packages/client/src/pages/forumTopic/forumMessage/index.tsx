@@ -8,6 +8,9 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { getUserState } from "@/store/user/selector";
 import randomInteger from "@/utils/randomInteger";
 import { baseYandexUrl } from "@/endpoints/apiUrl";
+import Button from "@/ui/button";
+import { deleteforumMessageThunk } from "@/store/forum/actions";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 
 interface EmojiInterface {
   id: number;
@@ -24,6 +27,7 @@ const ForumTopicMessage: FC<TForumMessage> = ({
   text,
 }) => {
   const user = useAppSelector(getUserState).user;
+  const dispatch = useAppDispatch();
 
   const [showPicker, setShowPicker] = useState(false);
   const [selectedEmojis, setSelectedEmojis] = useState<string[]>([]);
@@ -59,6 +63,10 @@ const ForumTopicMessage: FC<TForumMessage> = ({
     };
   }, [showPicker]);
 
+  const deleteMessage = () => {
+    dispatch(deleteforumMessageThunk({ id }));
+  };
+
   return (
     <div className={style.message} key={id}>
       <div className={style.date}>
@@ -78,6 +86,11 @@ const ForumTopicMessage: FC<TForumMessage> = ({
               alt="Автар пользователя"
             />
           </div>
+          <Button.Flat
+            name="Съесть мозги"
+            deepRed={true}
+            onClick={deleteMessage}
+          />
         </div>
         <div className={style.text}>
           <p>{text}</p>

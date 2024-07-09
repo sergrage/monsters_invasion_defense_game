@@ -1,21 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { TForumMessage, TForumState, TForumThread } from "./type";
 import {
-  TForumMessage,
-  TForumMessageReply,
-  TForumState,
-  TForumThread,
-} from "./type";
-import {
-  getforumMessageReplyThunk,
   postforumMessageThunk,
   postforumThreadThunk,
   getforumAllThreadsThunk,
+  deleteforumMessageThunk,
 } from "./actions";
 
 const initialState: TForumState = {
   forumThreads: [],
-  forumMessage: null,
-  forumMessageReply: null,
   isLoading: false,
 };
 
@@ -56,6 +49,16 @@ const forumSlice = createSlice({
               console.error("Нет треда с таким id:", action.payload.thread_id);
             }
           }
+        },
+      )
+      .addCase(
+        deleteforumMessageThunk.fulfilled,
+        (state, action: PayloadAction<{ message_id: number }>) => {
+          state.forumThreads?.forEach(thread => {
+            thread.forum_messages = thread.forum_messages.filter(
+              message => message.id !== action.payload.message_id,
+            );
+          });
         },
       )
       .addMatcher(

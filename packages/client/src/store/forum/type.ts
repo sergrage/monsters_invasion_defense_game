@@ -1,7 +1,5 @@
 export type TForumState = {
   forumThreads: null | TForumThread[];
-  forumMessage: null | TForumMessage;
-  forumMessageReply: null | TForumMessageReply;
   isLoading: boolean;
 };
 

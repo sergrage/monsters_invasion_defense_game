@@ -98,50 +98,25 @@ export const postforumMessageThunk: AsyncThunk<
   },
 );
 
-// export const changePassThunk: AsyncThunk<
-//   TUser | null,
-//   TPassword,
-//   AsyncThunkConfig
-// > = createAsyncThunk(
-//   "user/password",
-//   async (body, { dispatch, rejectWithValue }) => {
-//     try {
-//       const response = await apiFetch({
-//         url: `${userUrl}/password`,
-//         method: "PUT",
-//         body,
-//       });
+export const deleteforumMessageThunk: AsyncThunk<
+  { message_id: number },
+  { id: number },
+  AsyncThunkConfig
+> = createAsyncThunk(
+  "forum/deleteforumMessage",
+  async (body, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await apiFetch({
+        url: `${messagesUrl}/${body.id}`,
+        method: "DELETE",
+      });
 
-//       return response;
-//     } catch (error) {
-//       const errorMessage = (error as Error).message;
+      return { message_id: body.id };
+    } catch (error) {
+      const errorMessage = (error as Error).message;
 
-//       dispatch(errorSlice.actions.addNotify(errorMessage));
-//       return rejectWithValue(errorMessage);
-//     }
-//   },
-// );
-
-// export const changeAvatarThunk: AsyncThunk<
-//   TUser | null,
-//   FormData,
-//   AsyncThunkConfig
-// > = createAsyncThunk(
-//   "user/avatar",
-//   async (body, { dispatch, rejectWithValue }) => {
-//     try {
-//       const response = await apiFetch({
-//         url: `${userUrl}/profile/avatar`,
-//         method: "PUT",
-//         body,
-//       });
-
-//       return response;
-//     } catch (error) {
-//       const errorMessage = (error as Error).message;
-
-//       dispatch(errorSlice.actions.addNotify(errorMessage));
-//       return rejectWithValue(errorMessage);
-//     }
-//   },
-// );
+      dispatch(errorSlice.actions.addNotify(errorMessage));
+      return rejectWithValue(errorMessage);
+    }
+  },
+);

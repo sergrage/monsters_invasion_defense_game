@@ -58,6 +58,7 @@ const ForumTopics: FC = () => {
           <textarea
             className={style.textarea}
             name="message"
+            value={message}
             onChange={onMessageChange}
             placeholder="I really enjoyed killing Zomby yesterday!"
           />
