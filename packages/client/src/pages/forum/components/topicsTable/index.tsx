@@ -45,8 +45,8 @@ const TopicsTable: FC = () => {
           <tbody>
             {threads?.map(item => (
               <tr onClick={() => showTopic(item.id)} key={item.id}>
-                <th>{item.title}</th>
-                <td>
+                <th className={style.topic}>{item.title}</th>
+                <td className={style.messages}>
                   {item.forum_messages?.length == 0
                     ? "Сообщений нет"
                     : `${item.forum_messages[item.forum_messages?.length - 1].text}`}
