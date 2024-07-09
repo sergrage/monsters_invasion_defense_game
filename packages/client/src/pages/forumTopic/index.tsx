@@ -19,10 +19,14 @@ const ForumTopics: FC = () => {
   const user = useAppSelector(getUserState).user;
   const params = useParams();
   const page = Number(params.topicId);
+  console.log("🚀 ~ page:", page);
   const { t } = useTranslation();
 
   const threads = useAppSelector(getThreadState).forumThreads;
+  console.log("🚀 ~ threads:", threads);
   const forumItem = threads?.find(item => item.id == page);
+  const forumMessages = forumItem?.forum_messages;
+  console.log("🚀 ~ forumMessages:", forumMessages);
 
   const onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -49,7 +53,7 @@ const ForumTopics: FC = () => {
         <Title.H2 title={forumItem?.title} className={style.topic} />
       </div>
 
-      {forumItem?.forum_messages.map(message => (
+      {forumMessages?.map(message => (
         <ForumTopicMessage key={message.id} {...message} />
       ))}
 

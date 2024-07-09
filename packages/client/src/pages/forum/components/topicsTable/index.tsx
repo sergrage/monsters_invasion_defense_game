@@ -47,9 +47,9 @@ const TopicsTable: FC = () => {
               <tr onClick={() => showTopic(item.id)} key={item.id}>
                 <th className={style.topic}>{item.title}</th>
                 <td className={style.messages}>
-                  {item.forum_messages?.length == 0
-                    ? "Сообщений нет"
-                    : `${item.forum_messages[item.forum_messages?.length - 1].text}`}
+                  {item.forum_messages && item.forum_messages.length > 0
+                    ? `${item.forum_messages[item.forum_messages.length - 1].text}`
+                    : "Сообщений нет"}
                 </td>
                 <td>
                   <div className={style.userWrapper}>

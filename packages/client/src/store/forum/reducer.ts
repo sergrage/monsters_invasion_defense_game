@@ -44,6 +44,9 @@ const forumSlice = createSlice({
               item => item.id === action.payload?.thread_id,
             );
             if (forumItem) {
+              if (!forumItem.forum_messages) {
+                forumItem.forum_messages = [];
+              }
               forumItem.forum_messages.push(action.payload);
             } else {
               console.error("Нет треда с таким id:", action.payload.thread_id);
