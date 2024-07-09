@@ -63,8 +63,11 @@ services:
     volumes:
       - ./nginx/conf/:/etc/nginx/conf.d/:ro
       - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
+      - ./certbot/conf:/etc/letsencrypt/:ro
       - ./certbot/www:/var/www/certbot/:ro
-      - ./certbot/conf/:/etc/nginx/ssl/:ro
+
+      # - ./certbot/conf/:/etc/nginx/ssl/:ro
+
     depends_on:
       - certbot
       - client
@@ -73,13 +76,12 @@ services:
       - mynet
 
   certbot:
-    image: certbot/certbot:latest
+    image: certbot/certbot
     volumes:
       - ./certbot/conf:/etc/letsencrypt/:rw
       - ./certbot/www:/var/www/certbot/:rw
-    # Команда для запуска в контейнере Certbot, которая обновляет сертификаты каждые 12 часов
-    entrypoint: certbot certonly --webroot -w /var/www/certbot -d 51.250.29.150 --agree-tos --email juliusgerba@yandex.ru
-
+    entrypoint: certbot certonly --webroot -w /var/www/certbot -d example.com --agree-tos --email juliusgerba@yandex.ru
+    # entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
     networks:
       - mynet
 
