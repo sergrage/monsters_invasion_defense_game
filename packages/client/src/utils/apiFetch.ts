@@ -8,7 +8,7 @@ type TError = {
   reason: string;
 };
 
-import { TUser } from "@/store/user/type";
+//import { TUser } from "@/store/user/type";
 
 async function apiFetch(config: TConfig) {
   const method = config.method || "GET";

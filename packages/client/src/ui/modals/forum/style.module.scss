@@ -1,0 +1,26 @@
+.modal {
+  .title {
+    position: absolute;
+    width: 100%;
+    top: -83px;
+    text-align: center;
+    line-height: 1;
+    color: var(--primary-strong);
+    font-family: "Arco", sans-serif;
+    -webkit-text-stroke: 2px var(--text);
+    font-weight: bold;
+    font-size: 50px;
+    user-select: none;
+  }
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.show {
+  opacity: 1;
+}

@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
 import { ILeader } from "@/store/leaderboard/type";
 import { getLeadersThunk } from "@/store/leaderboard/actions";
+import { baseYandexUrl } from "@/endpoints/apiUrl";
 
 const getDate = (date: string) => {
   const t = Number(date);
@@ -125,7 +126,7 @@ const LeaderBoardPage: FC = () => {
                       {item.data.avatar && (
                         <Image
                           className={style.avatar}
-                          src={item.data.avatar}
+                          src={`${baseYandexUrl}/resources${item.data.avatar}`}
                           alt="RRR! AVATAR!"
                         />
                       )}

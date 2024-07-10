@@ -17,21 +17,17 @@ import gameIcon from "@/assets/icons/game.svg";
 import style from "./style.module.scss";
 import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
+import useOpenModal from "@/hooks/useOpenModal";
 
 const Profile = () => {
   const navigate = useNavigate();
   const user = useAppSelector(getUserState).user;
 
-  const [showPassModal, setShowPassModal] = useState(false);
-  const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const { isOpen: showPassModal, toggleModal: togglePassModal } =
+    useOpenModal();
 
-  const togglePassModal = () => {
-    setShowPassModal(state => !state);
-  };
-
-  const toggleAvatarModal = () => {
-    setShowAvatarModal(state => !state);
-  };
+  const { isOpen: showAvatarModal, toggleModal: toggleAvatarModal } =
+    useOpenModal();
 
   const { t } = useTranslation();
 
