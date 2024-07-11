@@ -21,7 +21,7 @@ const app = express();
 app.use(
   cors({
     // Разрешение запросов только с этого домена
-    origin: "http://localhost:3000",
+    origin: "https://your-local-domain.test",
     // Разрешение передачи cookies и авторизационных заголовков
     credentials: true,
   }),

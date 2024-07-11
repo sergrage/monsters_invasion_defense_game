@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   client:
-    container_name: prakticum-client
+    container_name: client
     image: prakticum-client
     build:
       context: .
@@ -11,15 +11,17 @@ services:
         CLIENT_PORT: ${CLIENT_PORT}
     restart: always
     ports:
-      - "${CLIENT_PORT}:80"
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
     environment:
       - CLIENT_PORT=${CLIENT_PORT}
       - SERVER_PORT=${SERVER_PORT}
+    depends_on:
+      - server
     networks:
       - mynet
 
   server:
-    container_name: prakticum-server
+    container_name: server
     env_file:
       - "./.env"
     build:
@@ -38,6 +40,7 @@ services:
 
   postgres:
     image: postgres:14
+    container_name: postgres
     env_file:
       - "./.env"
     ports:
@@ -54,6 +57,7 @@ services:
 
   nginx:
     image: nginx:latest
+    container_name: nginx
     ports:
       # Проброс порта 80 для HTTP
       - "80:80"
@@ -61,13 +65,15 @@ services:
       - "443:443"
     restart: always
     volumes:
-      - ./nginx/conf/:/etc/nginx/conf.d/:ro
-      - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
-      - ./certbot/conf:/etc/letsencrypt/:ro
-      - ./certbot/www:/var/www/certbot/:ro
-
-      # - ./certbot/conf/:/etc/nginx/ssl/:ro
-
+      - ./nginx/conf/:/etc/nginx/conf.d/:rw
+      - ./nginx/conf/conf.d/:/etc/nginx/conf.d/:rw
+      - ./data/certbot/www:/var/www/certbot/:rw
+      - ./data/certbot/conf/:/etc/nginx/ssl/:rw
+      - ./data/ssl/:/etc/nginx/localkeys/:rw
+      # - ./certbot/conf:/etc/letsencrypt/:rw
+    links:
+      - client:client
+      - server:server
     depends_on:
       - certbot
       - client
@@ -77,11 +83,12 @@ services:
 
   certbot:
     image: certbot/certbot
+    container_name: certbot
     volumes:
-      - ./certbot/conf:/etc/letsencrypt/:rw
-      - ./certbot/www:/var/www/certbot/:rw
-    entrypoint: certbot certonly --webroot -w /var/www/certbot -d example.com --agree-tos --email juliusgerba@yandex.ru
-    # entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
+      - ./data/certbot/conf:/etc/letsencrypt/:rw
+      - ./data/certbot/www:/var/www/certbot/:rw
+    # entrypoint: certbot certonly --webroot -w /var/www/certbot -d example.com --agree-tos --email juliusgerba@yandex.ru
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
     networks:
       - mynet
 
