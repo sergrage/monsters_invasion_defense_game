@@ -1,9 +1,16 @@
-import React, { FC, useEffect, useRef, useState } from "react";
-import { ForumTopicMessageProps } from "@/store/forum/forumTopic/type";
-import { useTranslation } from "react-i18next";
+import { FC, useEffect, useRef, useState } from "react";
+import { TForumMessage } from "@/store/forum/type";
 import style from "@/pages/forumTopic/style.module.scss";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
+import useFormattedDate from "@/hooks/useDate";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { getUserState } from "@/store/user/selector";
+import randomInteger from "@/utils/randomInteger";
+import { baseYandexUrl } from "@/endpoints/apiUrl";
+import Button from "@/ui/button";
+import { deleteforumMessageThunk } from "@/store/forum/actions";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 
 interface EmojiInterface {
   id: number;
@@ -13,7 +20,15 @@ interface EmojiInterface {
   keywords: string[];
 }
 
-const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
+const ForumTopicMessage: FC<TForumMessage> = ({
+  id,
+  login,
+  createdAt,
+  text,
+}) => {
+  const user = useAppSelector(getUserState).user;
+  const dispatch = useAppDispatch();
+
   const [showPicker, setShowPicker] = useState(false);
   const [selectedEmojis, setSelectedEmojis] = useState<string[]>([]);
   const pickerRef = useRef<HTMLDivElement>(null);
@@ -23,7 +38,7 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
   };
 
   const handleEmojiSelect = (emoji: EmojiInterface) => {
-    setSelectedEmojis([...selectedEmojis, emoji.native]);
+    setSelectedEmojis(prevEmojis => [...prevEmojis, emoji.native]);
     setShowPicker(false);
   };
 
@@ -48,21 +63,37 @@ const ForumTopicMessage: FC<ForumTopicMessageProps> = ({ item }) => {
     };
   }, [showPicker]);
 
+  const deleteMessage = () => {
+    dispatch(deleteforumMessageThunk({ id }));
+  };
+
   return (
-    <div className={style.message} key={item.id}>
+    <div className={style.message} key={id}>
       <div className={style.date}>
-        <span>{item.date}</span>
-        <span>#{item.id}</span>
+        <span>{useFormattedDate(createdAt)}</span>
+        <span>#{id}</span>
       </div>
       <div className={style.body}>
         <div className={style.user}>
-          <div className={style.name}>{item.user.name}</div>
+          <div className={style.name}>{login}</div>
           <div className={style.avatar}>
-            <img src={item.user.avatar} alt="avatar" />
+            <img
+              src={
+                login === user?.login && user.avatar
+                  ? `${baseYandexUrl}/resources${user.avatar}`
+                  : `/src/assets/img/user${randomInteger(1, 2)}.png`
+              }
+              alt="Автар пользователя"
+            />
           </div>
+          <Button.Flat
+            name="Съесть мозги"
+            deepRed={true}
+            onClick={deleteMessage}
+          />
         </div>
         <div className={style.text}>
-          <p>{item.message}</p>
+          <p>{text}</p>
           <div className={style.emojiContainer}>
             <div className={style.selectedEmojis}>
               {selectedEmojis.map((emoji, index) => (

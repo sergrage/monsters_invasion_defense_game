@@ -20,10 +20,6 @@ type TLogin = {
   password: string;
 };
 
-type TServiceInfo = {
-  service_id: string;
-};
-
 const LoginPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

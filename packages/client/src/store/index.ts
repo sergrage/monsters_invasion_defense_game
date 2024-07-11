@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { leaderboardSlice } from "./leaderboard/reducer";
 import { errorSlice } from "./error/reducer";
+import forumReducer from "./forum/reducer";
 import userReducer from "./user/reducer";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     error: errorSlice.reducer,
     leaderboard: leaderboardSlice.reducer,
     user: userReducer,
+    forum: forumReducer,
   }),
 });
 

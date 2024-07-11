@@ -18,7 +18,9 @@ export function useValidate(inputValues: IValues<string> = {}) {
   const [errors, setErrors] = useState<IErrors>({});
   const [errorMessages, setErrorMessages] = useState<IMessages>({});
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { value, name } = e.target;
     setValues({ ...values, [name]: value });
     if (name in validationRules) {

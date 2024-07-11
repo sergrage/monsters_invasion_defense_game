@@ -1,0 +1,46 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 15px 15px;
+  border: 2px solid var(--shadow-light);
+  border-radius: 5px;
+  background-color: var(--white);
+  transition: border-color 0.2s ease-in-out;
+
+  &.error {
+    border-color: var(--danger);
+  }
+
+  &:hover .label {
+    letter-spacing: 2px;
+  }
+}
+
+.label {
+  position: absolute;
+  top: -12px;
+  left: 25px;
+  padding: 0px 5px;
+  font-family: "Spinnaker";
+  font-size: 20px;
+  color: var(--primary-strong);
+  text-align: center;
+  background-color: var(--white);
+  transition: letter-spacing 200ms ease-in-out;
+  user-select: none;
+}
+
+.input {
+  padding: 10px 15px;
+  border-radius: 5px;
+  color: var(--text);
+  background-color: var(--input-field);
+
+  &::placeholder {
+    color: var(--border);
+  }
+}

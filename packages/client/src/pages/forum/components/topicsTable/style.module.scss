@@ -23,9 +23,9 @@
     border-color: inherit;
     border-style: solid;
     border-width: 0;
+    text-align: center;
   }
   th {
-    text-align: inherit;
     text-align: -webkit-match-parent;
     font-family: "Spinnaker", sans-serif;
   }
@@ -43,6 +43,18 @@
       background-color: var(--grayHover);
       color: var(--white);
     }
+  }
+  .topic {
+    max-width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .messages {
+    max-width: 250px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
   thead {
     background: var(--gray);
