@@ -59,19 +59,14 @@ services:
     image: nginx:latest
     container_name: nginx
     ports:
+      # Проброс порта 80 для HTTP
       - "80:80"
+      # Проброс порта 443 для HTTPS
       - "443:443"
     restart: always
-    volumes:
-      - ./nginx/conf/:/etc/nginx/conf.d/:rw
-      - ./nginx/conf/conf.d/:/etc/nginx/conf.d/:rw
-      - ./data/certbot/www:/var/www/certbot/:rw
-      - ./data/certbot/conf/:/etc/nginx/ssl/:rw
-      # - ./data/ssl/:/etc/nginx/localkeys/:rw
-      # - ./data/certbot/conf:/etc/letsencrypt/:rw
-    links:
-      - client:client
-      - server:server
+   volumes:
+      - ./data/certbot/www:/var/www/certbot/:ro
+      - ./data/certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
       - certbot
       - client
@@ -80,15 +75,15 @@ services:
       - mynet
 
   certbot:
-    image: certbot/certbot
-    container_name: certbot
+    image: certbot/certbot:latest
+    # container_name: certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt/:rw
       - ./data/certbot/www:/var/www/certbot/:rw
-    entrypoint: certbot certonly --webroot -w /var/www/certbot -d defense-game-crew.ya-praktikum.tech --agree-tos --email juliusgerba@yandex.ru
-    # entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
-    networks:
-      - mynet
+    # entrypoint: certbot certonly --webroot -w /var/www/certbot -d defense-game-crew.ya-praktikum.tech --agree-tos --email juliusgerba@yandex.ru 1
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
+    # networks:
+    #   - mynet
 
 networks:
   mynet:
