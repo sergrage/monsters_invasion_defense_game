@@ -64,7 +64,7 @@ services:
       # Проброс порта 443 для HTTPS
       - "443:443"
     restart: always
-   volumes:
+    volumes:
       - ./data/certbot/www:/var/www/certbot/:ro
       - ./data/certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
