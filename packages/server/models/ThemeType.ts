@@ -29,7 +29,7 @@ const ThemeType = sequelize.define<ThemeTypeModel>(
     theme_type: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "ligth",
+      defaultValue: "light",
       validate: {
         notEmpty: true,
       },

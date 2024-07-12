@@ -32,6 +32,7 @@ export let TRANSLATIONS: {
   CONFIRM_PASSWORD: string;
   MAIN_PAGE: string;
   PLAY_AGAIN: string;
+  USE_DARK_MODE: string;
 };
 TRANSLATIONS = {
   LOGIN: "login",
@@ -67,4 +68,5 @@ TRANSLATIONS = {
   SEND_MESSAGE: "SendMessage",
   MAIN_PAGE: "Main Page",
   PLAY_AGAIN: "PlayAgain",
+  USE_DARK_MODE: "Use dark mode?",
 };
