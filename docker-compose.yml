@@ -68,9 +68,9 @@ services:
       - ./nginx/conf/:/etc/nginx/conf.d/:rw
       - ./nginx/conf/conf.d/:/etc/nginx/conf.d/:rw
       - ./data/certbot/www:/var/www/certbot/:rw
-      - ./data/certbot/conf/:/etc/nginx/ssl/:rw
+      # - ./data/certbot/conf/:/etc/nginx/ssl/:rw
       # - ./data/ssl/:/etc/nginx/localkeys/:rw
-      # - ./certbot/conf:/etc/letsencrypt/:rw
+      - ./certbot/conf:/etc/letsencrypt/:rw
     links:
       - client:client
       - server:server
