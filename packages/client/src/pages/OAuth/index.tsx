@@ -22,14 +22,17 @@ const OAuthPage: FC = () => {
       redirect_uri: REDIRECT_URI,
     };
     const yandexAuth = async () => {
-      const data = await fetch("ya-praktikum.tech/api/v2/oauth/yandex", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
+      const data = await fetch(
+        "https://ya-praktikum.tech/api/v2/oauth/yandex",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
+          body: JSON.stringify(postData),
         },
-        body: JSON.stringify(postData),
-      });
+      );
       const text = await data.text();
       return text;
     };
@@ -38,12 +41,14 @@ const OAuthPage: FC = () => {
       yandexAuth()
         .then(res => {
           if (res === "OK") {
-            dispatch(getUserThunk()).then(() => {
-              navigate(routes.gameStart);
-            });
+            dispatch(getUserThunk())
+              .then(() => {
+                navigate(routes.gameStart);
+              })
+              .catch(err => console.log("dispatch(getUserThunk())", err));
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log("yandexAuth", err));
     } else {
       navigate(routes.login);
     }
