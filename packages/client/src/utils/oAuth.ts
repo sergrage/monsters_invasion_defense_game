@@ -1,7 +1,7 @@
 import { baseYandexUrl } from "@/endpoints/apiUrl";
 
 export const oAuthYandex = async () => {
-  const REDIRECT_URI = window.location.origin + "/";
+  const REDIRECT_URI = window.location.origin;
   // const GET_SERVICE_ID_URI = "/oauth/yandex/service-id";
 
   const AUTH_AUTHORIZE_URI = "https://oauth.yandex.ru/authorize";
