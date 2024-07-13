@@ -88,7 +88,7 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt/:rw
       - ./data/certbot/www:/var/www/certbot/:rw
     # entrypoint: certbot certonly --webroot -w /var/www/certbot -d defense-game-crew.ya-praktikum.tech --agree-tos --email juliusgerba@yandex.ru
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
+    # entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
     networks:
       - mynet
 
