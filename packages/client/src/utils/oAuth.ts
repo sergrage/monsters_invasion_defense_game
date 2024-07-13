@@ -27,6 +27,8 @@ export const oAuthYandex = async () => {
       client_id: serviceId,
     });
 
+    console.log("authparams", authparams);
+
     window.location.replace(AUTH_AUTHORIZE_URI + "?" + authparams);
   } catch (err) {
     console.log(err);
