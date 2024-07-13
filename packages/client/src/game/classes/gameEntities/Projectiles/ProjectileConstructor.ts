@@ -51,7 +51,7 @@ class ProjectileConstructor extends Sprite {
       case "Tesla tower":
         window.audioGlobal.play("Laser");
         break;
-      case "Bullet tower":
+      case "Sniper tower":
         window.audioGlobal.play("Bullet");
         break;
       case "Cannon tower":
