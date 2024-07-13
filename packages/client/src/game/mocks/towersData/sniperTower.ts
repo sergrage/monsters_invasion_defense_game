@@ -8,7 +8,7 @@ import { ITowerParams } from "@/game/interfaces";
 const sniperTower: ITowerParams = {
   title: "Sniper tower",
   preview: previewImg,
-  width: 72,
+  width: 143,
   height: 144,
   radius: 300,
   speed: 1,
@@ -18,12 +18,12 @@ const sniperTower: ITowerParams = {
   imgs: shooterImgs,
 
   offset: {
-    x: 5,
-    y: -60,
+    x: -36,
+    y: -78,
   },
 
   frames: {
-    max: 20,
+    max: 16,
     current: 0,
     elapsed: 0,
     hold: 10,
