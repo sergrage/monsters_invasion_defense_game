@@ -22,7 +22,7 @@ const OAuthPage: FC = () => {
       redirect_uri: REDIRECT_URI,
     };
     const yandexAuth = async () => {
-      const data = await fetch(oAuthUrl, {
+      const data = await fetch("ya-praktikum.tech/api/v2/oauth/yandex", {
         method: "POST",
         credentials: "include",
         headers: {
