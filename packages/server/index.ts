@@ -21,7 +21,8 @@ const app = express();
 app.use(
   cors({
     // Разрешение запросов только с этого домена
-    origin: "http://localhost:3000",
+    origin: "https://defense-game-crew.ya-praktikum.tech",
+    // origin: "https://your-local-domain.test",
     // Разрешение передачи cookies и авторизационных заголовков
     credentials: true,
   }),
@@ -39,20 +40,19 @@ app.use(
     // Переписывает домен в cookies, чтобы они подходили для вашего домена
     cookieDomainRewrite: { "*": "" },
 
-    // Выполняется для каждого запроса
-    onProxyReq: proxyReq => {
-      // Устанавливает заголовок Origin, чтобы он соответствовал локальному серверу
-      proxyReq.setHeader("Origin", "http://localhost:3000");
-    },
+    // // Выполняется для каждого запроса
+    // onProxyReq: proxyReq => {
+    //   // // Устанавливает заголовок Origin, чтобы он соответствовал локальному серверу
+    //   proxyReq.setHeader("Origin", "http://localhost:3000");
+    // },
 
-    // Выполняется для каждого ответа
-    onProxyRes: function (proxyRes) {
-      // Разрешает доступ к ресурсу с вашего локального сервера
-      proxyRes.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
-
-      // Разрешает отправку cookies и авторизационных заголовков с запросом
-      proxyRes.headers["Access-Control-Allow-Credentials"] = "true";
-    },
+    // // Выполняется для каждого ответа
+    // onProxyRes: function (proxyRes) {
+    //   // // Разрешает доступ к ресурсу с вашего локального сервера
+    //   // proxyRes.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
+    //   // // Разрешает отправку cookies и авторизационных заголовков с запросом
+    //   // proxyRes.headers["Access-Control-Allow-Credentials"] = "true";
+    // },
 
     onError: (err, req, res) => {
       console.error("Proxy error:", err.message);
@@ -62,7 +62,7 @@ app.use(
     },
 
     // Логирует сообщения
-    logger: console,
+    // logger: console,
   } as IOptions),
 );
 
