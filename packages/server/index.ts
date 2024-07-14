@@ -33,7 +33,7 @@ app.use(
   "/api/v2",
   createProxyMiddleware({
     // Целевой сервер, к которому будут перенаправляться запросы
-    target: "https://ya-praktikum.tech",
+    target: "https://ya-praktikum.tech/api/v2",
 
     // Изменяет origin заголовок запроса на target URL
     changeOrigin: true,
@@ -42,17 +42,16 @@ app.use(
 
     // // Выполняется для каждого запроса
     // onProxyReq: proxyReq => {
-    //   // Устанавливает заголовок Origin, чтобы он соответствовал локальному серверу
+    //   // // Устанавливает заголовок Origin, чтобы он соответствовал локальному серверу
     //   proxyReq.setHeader("Origin", "http://localhost:3000");
     // },
 
     // // Выполняется для каждого ответа
     // onProxyRes: function (proxyRes) {
-    //   // Разрешает доступ к ресурсу с вашего локального сервера
-    //   proxyRes.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
-
-    //   // Разрешает отправку cookies и авторизационных заголовков с запросом
-    //   proxyRes.headers["Access-Control-Allow-Credentials"] = "true";
+    //   // // Разрешает доступ к ресурсу с вашего локального сервера
+    //   // proxyRes.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
+    //   // // Разрешает отправку cookies и авторизационных заголовков с запросом
+    //   // proxyRes.headers["Access-Control-Allow-Credentials"] = "true";
     // },
 
     onError: (err, req, res) => {
@@ -63,7 +62,7 @@ app.use(
     },
 
     // Логирует сообщения
-    logger: console,
+    // logger: console,
   } as IOptions),
 );
 
