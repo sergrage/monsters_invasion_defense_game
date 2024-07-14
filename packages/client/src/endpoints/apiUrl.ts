@@ -1,7 +1,7 @@
 const serverPort = __SERVER_PORT__;
 
 export const baseApiUrl: string = `${window.location.origin}/api`;
-export const baseYandexUrl: string = `${baseApiUrl}/v2`;
+export const baseYandexUrl: string = `https://ya-praktikum.tech/api/v2`;
 
 export const authUrl: string = `${baseYandexUrl}/auth`;
 export const userUrl: string = `${baseYandexUrl}/user`;
