@@ -65,11 +65,11 @@ services:
       - "443:443"
     restart: always
     volumes:
-      - ./ssl:/ssl
-      - ./ssl/certbot/conf:/etc/letsencrypt
-      - ./ssl/certbot/www:/var/www/certbot
-      #- ./nginx/conf/:/etc/nginx/conf.d/:rw
-      #- ./nginx/conf/conf.d/:/etc/nginx/conf.d/:rw
+      #- ./ssl:/ssl
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+      - ./nginx/conf/:/etc/nginx/conf.d/:rw
+      - ./nginx/conf/conf.d/:/etc/nginx/conf.d/:rw
       #- ./data/certbot/www:/var/www/certbot/:rw
       # - ./data/ssl/:/etc/nginx/localkeys/:rw
       #- ./data/certbot/conf:/etc/letsencrypt/:rw
@@ -87,11 +87,11 @@ services:
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - ./ssl/certbot/conf:/etc/letsencrypt/:rw
-      - ./ssl/certbot/www:/var/www/certbot/:rw
+      - ./data/certbot/conf:/etc/letsencrypt/:rw
+      - ./data/certbot/www:/var/www/certbot/:rw
     #entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    entrypoint: certbot certonly --webroot -w /var/www/certbot -d defense-game-crew.ya-praktikum.tech --agree-tos --email juliusgerba@yandex.ru
-    # entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
+    #entrypoint: certbot certonly --webroot -w /var/www/certbot -d defense-game-crew.ya-praktikum.tech --agree-tos --email juliusgerba@yandex.ru
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
     networks:
       - mynet
 
