@@ -10,3 +10,4 @@ export const addLeadersUrl: string = `${baseYandexUrl}/leaderboard`;
 //Forum
 export const allThreadsUrl: string = `${baseApiUrl}/forum_thread`;
 export const messagesUrl: string = `${baseApiUrl}/forum_message`;
+export const getThemeUrl: string = `${baseApiUrl}/theme_type`;

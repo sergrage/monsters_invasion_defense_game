@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import ErrorBoundary from "@/components/errorBoundary";
 import { Toast } from "@/ui/toast";
+import ThemeContainer from "@/components/themeContainer";
 
 // if ("serviceWorker" in navigator) {
 //   window.addEventListener("load", () => {
@@ -29,9 +30,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <Provider store={store}>
       <Toast />
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
+      <ThemeContainer>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </ThemeContainer>
     </Provider>
   </BrowserRouter>,
 );
