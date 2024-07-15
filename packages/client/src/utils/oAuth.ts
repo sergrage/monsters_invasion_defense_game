@@ -2,7 +2,7 @@ import { baseYandexUrl } from "@/endpoints/apiUrl";
 
 export const oAuthYandex = async () => {
   const REDIRECT_URI = window.location.origin + "/";
-  const GET_SERVICE_ID_URI = "/oauth/yandex/service-id";
+  // const GET_SERVICE_ID_URI = "/oauth/yandex/service-id";
 
   const AUTH_AUTHORIZE_URI = "https://oauth.yandex.ru/authorize";
 
@@ -12,7 +12,9 @@ export const oAuthYandex = async () => {
 
   try {
     let response = await fetch(
-      baseYandexUrl + GET_SERVICE_ID_URI + "?" + getServiceIdparams,
+      "https://ya-praktikum.tech/api/v2/oauth/yandex/service-id" +
+        "?" +
+        getServiceIdparams,
     );
 
     let json = await response.json();

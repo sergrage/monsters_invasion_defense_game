@@ -18,10 +18,17 @@ import style from "./style.module.scss";
 import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
 import useOpenModal from "@/hooks/useOpenModal";
+import { Toggle } from "@/ui/toggle";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { setThemeThunk } from "@/store/theme/actions";
+import { TTheme } from "@/store/theme/type";
+import { getThemeState } from "@/store/theme/reducer";
 
 const Profile = () => {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const user = useAppSelector(getUserState).user;
+  const theme = useAppSelector(getThemeState).data.theme_type;
+  const navigate = useNavigate();
 
   const { isOpen: showPassModal, toggleModal: togglePassModal } =
     useOpenModal();
@@ -31,6 +38,19 @@ const Profile = () => {
 
   const { t } = useTranslation();
 
+  const setTheme = (isDark: boolean) => {
+    if (user?.id) {
+      const theme: TTheme = isDark ? "dark" : "light";
+
+      dispatch(
+        setThemeThunk({
+          user_id: user.id,
+          theme_type: theme,
+        }),
+      );
+    }
+  };
+
   return (
     <Layout.Page className={style.wrapper} pageClass={style.page}>
       <section className={style.profile}>
@@ -38,8 +58,19 @@ const Profile = () => {
 
         <AvatarEl onClick={toggleAvatarModal} />
 
+        {user?.id && (
+          <div className={style.theme_toggle}>
+            <span>{t(TRANSLATIONS.USE_DARK_MODE)}</span>
+            <Toggle
+              className={style.switch}
+              onChange={(val: boolean) => setTheme(val)}
+              checked={theme === "dark"}
+            />
+          </div>
+        )}
+
         {user ? (
-          <div className={style["fields-wrapper"]}>
+          <div className={style.fields_wrapper}>
             <ProfileField
               label={t(TRANSLATIONS.FIRST_NAME)}
               value={user.first_name || "-"}
