@@ -15,7 +15,7 @@ class SaucepanZombie extends Enemy {
       radius: 50,
       health: 410,
       speed: 1,
-      reward: 55,
+      reward: 40,
     };
 
     const frames: IFrames = {

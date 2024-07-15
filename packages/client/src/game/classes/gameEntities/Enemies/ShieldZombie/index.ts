@@ -13,7 +13,7 @@ class ShieldZombie extends Enemy {
       height: 162,
       waypointIndex: 0,
       radius: 50,
-      health: 150,
+      health: 250,
       speed: 2,
       reward: 75,
     };

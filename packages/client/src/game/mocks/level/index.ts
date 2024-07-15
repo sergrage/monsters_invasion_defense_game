@@ -1,7 +1,7 @@
 import { ILevel } from "@/game/interfaces";
 
 const level_1: ILevel = {
-  coins: 100,
+  coins: 150,
   hearts: 10,
   waves: [
     // Wave 1
