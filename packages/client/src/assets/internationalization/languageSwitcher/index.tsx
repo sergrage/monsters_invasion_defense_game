@@ -89,9 +89,7 @@ const LanguageSwitcher = () => {
           className={`${style.selectedLang} ${selectedLangClass}`}
           onClick={toggleMenu}
           tabIndex={0}
-        >
-          {LANGUAGES[selectedLang].name}
-        </div>
+        ></div>
         {isMenuOpen && (
           <ul className={style.dropdownMenu}>
             {options.map((langKey, index) => (

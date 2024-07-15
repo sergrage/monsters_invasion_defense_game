@@ -30,5 +30,6 @@
   "SendMessage": "Send Message",
   "ConfirmPassword": "Confirm Password",
   "PlayAgain": "Play Again",
-  "MAIN_PAGE": "Main Page"
+  "MAIN_PAGE": "Main Page",
+  "USE_DARK_MODE": "Use dark mode?"
 }

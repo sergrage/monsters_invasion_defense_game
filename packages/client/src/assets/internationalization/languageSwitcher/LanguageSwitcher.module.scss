@@ -1,5 +1,6 @@
 .nav {
-  width: 160px;
+  position: relative;
+  left: 7px;
   margin: 0 0 0 0;
   display: flex;
   justify-content: space-between;
@@ -14,10 +15,9 @@
 }
 
 .langMenu {
-  width: 100px;
   text-align: right;
   font-weight: bold;
-  margin-top: 25px;
+  margin-top: 10px;
   position: relative;
   color: var(--black);
 }
@@ -28,6 +28,11 @@
   line-height: 2;
   cursor: pointer;
   user-select: none;
+  transition: scale 100ms linear;
+
+  &:hover {
+    scale: 1.1;
+  }
 }
 
 .selectedLangEnglish::before {
@@ -56,8 +61,8 @@
   background-color: #fff;
   border: 1px solid #f8f8f8;
   position: absolute;
-  top: 30px;
-  right: 0;
+  top: 33px;
+  right: -45px;
   width: 125px;
   border-radius: 5px;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);

@@ -18,6 +18,7 @@ import logoutIcon from "@/assets/icons/logout.svg";
 import settingsIcon from "@/assets/icons/settings.svg";
 import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
+import LanguageSwitcher from "@/assets/internationalization/languageSwitcher";
 
 const GameStartPage: FC = () => {
   const { t } = useTranslation();
@@ -99,6 +100,7 @@ const GameStartPage: FC = () => {
           onClick={handleLogOut}
           className={style.exitBtn}
         />
+        <LanguageSwitcher />
       </div>
     </Layout.Page>
   );
