@@ -1,4 +1,6 @@
-const level_1 = {
+import { ILevel } from "@/game/interfaces";
+
+const level_1: ILevel = {
   coins: 100,
   hearts: 10,
   waves: [
@@ -6,21 +8,28 @@ const level_1 = {
     {
       ShieldZombie: 5,
       ConeZombie: 4,
-      // HelmetZombie: 10,
     },
 
     // Wave 2
     {
       ShieldZombie: 8,
       ConeZombie: 5,
-      // SaucepanZombie: 8,
+      SaucepanZombie: 8,
     },
 
     // Wave 3ˇ
     {
       ShieldZombie: 12,
       ConeZombie: 8,
-      // SaucepanZombie: 8,
+      HelmetZombie: 10,
+    },
+
+    // Wave 4ˇ
+    {
+      ShieldZombie: 12,
+      ConeZombie: 8,
+      HelmetZombie: 20,
+      SaucepanZombie: 18,
     },
   ],
 };

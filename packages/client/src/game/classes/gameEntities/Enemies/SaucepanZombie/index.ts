@@ -13,7 +13,7 @@ class SaucepanZombie extends Enemy {
       height: 152,
       waypointIndex: 0,
       radius: 50,
-      health: 190,
+      health: 410,
       speed: 1,
       reward: 55,
     };

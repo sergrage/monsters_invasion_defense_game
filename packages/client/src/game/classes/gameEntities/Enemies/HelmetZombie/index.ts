@@ -13,8 +13,8 @@ class HelmetZombie extends Enemy {
       height: 182,
       waypointIndex: 0,
       radius: 40,
-      health: 220,
-      speed: 2,
+      health: 310,
+      speed: 3.5,
       reward: 70,
     };
 
