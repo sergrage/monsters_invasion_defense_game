@@ -3,6 +3,7 @@ import { leaderboardSlice } from "./leaderboard/reducer";
 import { errorSlice } from "./error/reducer";
 import forumReducer from "./forum/reducer";
 import userReducer from "./user/reducer";
+import { themeSlice } from "@/store/theme/reducer";
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -10,6 +11,7 @@ export const store = configureStore({
     leaderboard: leaderboardSlice.reducer,
     user: userReducer,
     forum: forumReducer,
+    theme: themeSlice.reducer,
   }),
 });
 
