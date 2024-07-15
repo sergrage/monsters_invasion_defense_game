@@ -1,4 +1,4 @@
-const dummyLevel = {
+const level_1 = {
   coins: 100,
   hearts: 10,
   waves: [
@@ -20,8 +20,9 @@ const dummyLevel = {
     {
       ShieldZombie: 12,
       ConeZombie: 8,
+      // SaucepanZombie: 8,
     },
   ],
 };
 
-export default dummyLevel;
+export default level_1;
