@@ -8,8 +8,8 @@ import { ITowerParams } from "@/game/interfaces";
 const archerTower: ITowerParams = {
   title: "Archer tower",
   preview: previewImg,
-  width: 144,
-  height: 144,
+  width: 110,
+  height: 110,
   radius: 250,
   speed: 3,
   damage: 20,
@@ -18,8 +18,8 @@ const archerTower: ITowerParams = {
   imgs: shooterImgs,
 
   offset: {
-    x: -40,
-    y: -85,
+    x: -30,
+    y: -65,
   },
 
   frames: {
@@ -30,12 +30,12 @@ const archerTower: ITowerParams = {
   },
 
   extraParams: {
-    width: 131,
-    height: 153,
+    width: 80,
+    height: 86,
     towerImgs: towerImgs,
     offset: {
-      x: -33,
-      y: -68,
+      x: -2,
+      y: -5,
     },
   },
 
