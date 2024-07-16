@@ -90,8 +90,15 @@ export interface ISprite extends IContext {
   needRotation?: boolean;
 }
 
+export interface IWave {
+  [key: string]: {
+    amount: number;
+    delay: number;
+  };
+}
+
 export interface ILevel {
   coins: number;
   hearts: number;
-  waves: { [key: string]: number }[];
+  waves: IWave[];
 }

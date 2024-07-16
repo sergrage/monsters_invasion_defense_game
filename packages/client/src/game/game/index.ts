@@ -144,10 +144,9 @@ class Game {
     if (!this.canvas || this.currentWave > this.level.waves.length - 1) {
       return;
     }
-    this.enemies = this.enemiesGenerator.generate(
-      this.level.waves[this.currentWave],
-      this.canvas,
-    );
+
+    const currentWave = this.level.waves[this.currentWave];
+    this.enemies = this.enemiesGenerator.generate(currentWave, this.canvas);
 
     this.setNextWave();
   }

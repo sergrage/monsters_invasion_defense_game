@@ -6,31 +6,32 @@ const level_1: ILevel = {
   waves: [
     // Wave 1
     {
-      ShieldZombie: 5,
-      ConeZombie: 4,
+      ShieldZombie: { amount: 8, delay: 0 },
+      ConeZombie: { amount: 6, delay: 10000 },
     },
 
     // Wave 2
     {
-      ShieldZombie: 8,
-      ConeZombie: 5,
-      SaucepanZombie: 8,
+      ShieldZombie: { amount: 18, delay: 10000 },
+      ConeZombie: { amount: 5, delay: 5000 },
+      SaucepanZombie: { amount: 8, delay: 0 },
     },
 
-    // Wave 3ˇ
+    // Wave 3
     {
-      ShieldZombie: 12,
-      ConeZombie: 8,
-      HelmetZombie: 10,
+      ShieldZombie: { amount: 12, delay: 0 },
+      ConeZombie: { amount: 8, delay: 0 },
+      SaucepanZombie: { amount: 8, delay: 3000 },
+      HelmetZombie: { amount: 10, delay: 10000 },
     },
 
-    // Wave 4ˇ
+    // Wave 4
     {
-      ShieldZombie: 12,
-      ConeZombie: 8,
-      HelmetZombie: 20,
-      SaucepanZombie: 18,
-      BossHelmetZombie: 1,
+      ShieldZombie: { amount: 12, delay: 0 },
+      ConeZombie: { amount: 8, delay: 0 },
+      HelmetZombie: { amount: 20, delay: 10000 },
+      SaucepanZombie: { amount: 18, delay: 10000 },
+      BossHelmetZombie: { amount: 1, delay: 20000 },
     },
   ],
 };
