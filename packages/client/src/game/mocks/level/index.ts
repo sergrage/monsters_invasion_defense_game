@@ -30,6 +30,7 @@ const level_1: ILevel = {
       ConeZombie: 8,
       HelmetZombie: 20,
       SaucepanZombie: 18,
+      BossHelmetZombie: 1,
     },
   ],
 };

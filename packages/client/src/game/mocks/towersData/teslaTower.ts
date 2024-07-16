@@ -7,8 +7,8 @@ import { ITowerParams } from "@/game/interfaces";
 const teslaTower: ITowerParams = {
   title: "Tesla tower",
   preview: previewImg,
-  width: 236,
-  height: 335,
+  width: 186,
+  height: 265,
   radius: 250,
   damage: 25,
   speed: 3.5,
@@ -17,8 +17,8 @@ const teslaTower: ITowerParams = {
   imgs: imgs,
 
   offset: {
-    x: -80,
-    y: -220,
+    x: -60,
+    y: -150,
   },
 
   frames: {
@@ -30,8 +30,8 @@ const teslaTower: ITowerParams = {
 
   projectile: {
     offset: {
-      x: 105,
-      y: 310,
+      x: 85,
+      y: 250,
     },
     imageSrc: lighterImg,
     needRotation: false,
