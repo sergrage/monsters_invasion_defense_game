@@ -13,7 +13,7 @@ class BossHelmetZombie extends Enemy {
       height: 223,
       waypointIndex: 0,
       radius: 40,
-      health: 3000,
+      health: 10000,
       speed: 1.5,
       reward: 120,
     };

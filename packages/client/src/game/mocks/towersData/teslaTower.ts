@@ -12,7 +12,7 @@ const teslaTower: ITowerParams = {
   radius: 250,
   damage: 25,
   speed: 3.5,
-  price: 120,
+  price: 170,
   upgradePrice: 45,
   imgs: imgs,
 

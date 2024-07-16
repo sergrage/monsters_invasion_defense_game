@@ -13,7 +13,7 @@ const sniperTower: ITowerParams = {
   radius: 300,
   speed: 1,
   damage: 55,
-  price: 105,
+  price: 155,
   upgradePrice: 95,
   imgs: shooterImgs,
 
