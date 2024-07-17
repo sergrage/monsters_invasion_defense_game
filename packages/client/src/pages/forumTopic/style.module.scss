@@ -120,3 +120,12 @@
     padding: 10px;
   }
 }
+
+.iconsWrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 20px;
+  right: 50px;
+  gap: 20px;
+}

@@ -22,21 +22,23 @@ import level from "@/game/mocks/level/index";
 import { useNavigate } from "react-router";
 import { routes } from "@/pages/routes";
 
-import {
-  SCREEN_ZOMBIE_MESSAGE_1,
-  SCREEN_ZOMBIE_MESSAGE_2,
-  SCREEN_ZOMBIE_MESSAGE_FINAL,
-} from "@/constants/index";
-import sellImg from "@/assets/img/towerMenu/sell.png";
-import upgrImg from "@/assets/img/towerMenu/upgr.png";
-import level_1Map from "@/assets/game/levels/Level-1.png";
-import style from "./style.module.scss";
-
 import { toggleFullscreen } from "@/utils/fullscreenMode";
 import { addLeaderThunk } from "@/store/leaderboard/actions";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useSelector } from "react-redux";
 import { getUserState } from "@/store/user/selector";
+import IconButton from "@/ui/button/iconBtn";
+
+import {
+  SCREEN_ZOMBIE_MESSAGE_1,
+  SCREEN_ZOMBIE_MESSAGE_2,
+  SCREEN_ZOMBIE_MESSAGE_FINAL,
+} from "@/constants/index";
+import gameIcon from "@/assets/icons/game.svg";
+import sellImg from "@/assets/img/towerMenu/sell.png";
+import upgrImg from "@/assets/img/towerMenu/upgr.png";
+import level_1Map from "@/assets/game/levels/Level-1.png";
+import style from "./style.module.scss";
 
 let isInit = true;
 let isBadScreen = false;
@@ -208,6 +210,13 @@ const GamePage = () => {
       {showDisclaimer && (
         <ScreenZombie action={() => toggleFullscreen()} text={disclaimerText} />
       )}
+
+      <IconButton
+        className={style["game-btn"]}
+        name="game"
+        icon={gameIcon}
+        onClick={() => navigate(routes.gameStart)}
+      />
     </Layout.Page>
   );
 };

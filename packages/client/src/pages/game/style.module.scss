@@ -1,5 +1,11 @@
 .wrapper {
   overflow: hidden;
+
+  .game-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
 }
 
 .game {

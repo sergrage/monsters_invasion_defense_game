@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import cn from "classnames";
 
-import style from "./style.module.scss";
+import { routes } from "@/pages/routes";
+
 import Image from "@/ui/image";
 import Layout from "@/components/layout";
-import zombieAlarm from "@/assets/img/zombieAlarm.png";
-import toasty from "@/assets/img/leaderborad/toasty.png";
-import toasty_sound from "@/assets/sound/toasty.mp3";
-import cn from "classnames";
+
 import Title from "@/ui/title";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getLeaderBoardState } from "@/store/leaderboard/reducer";
@@ -18,6 +18,13 @@ import { ILeader } from "@/store/leaderboard/type";
 import { getLeadersThunk } from "@/store/leaderboard/actions";
 import { baseYandexUrl } from "@/endpoints/apiUrl";
 
+import zombieAlarm from "@/assets/img/zombieAlarm.png";
+import toasty from "@/assets/img/leaderborad/toasty.png";
+import toasty_sound from "@/assets/sound/toasty.mp3";
+import IconButton from "@/ui/button/iconBtn";
+import gameIcon from "@/assets/icons/game.svg";
+import style from "./style.module.scss";
+
 const getDate = (date: string) => {
   const t = Number(date);
   const d = new Date(t);
@@ -26,6 +33,8 @@ const getDate = (date: string) => {
 };
 
 const LeaderBoardPage: FC = () => {
+  const navigate = useNavigate();
+
   const { t } = useTranslation();
   const [showToasty, setShowToasty] = useState(false);
   const [showBlood, setShowBlood] = useState(false);
@@ -142,6 +151,13 @@ const LeaderBoardPage: FC = () => {
           </table>
         </div>
       </section>
+
+      <IconButton
+        className={style["game-btn"]}
+        name="game"
+        icon={gameIcon}
+        onClick={() => navigate(routes.gameStart)}
+      />
     </Layout.Page>
   );
 };

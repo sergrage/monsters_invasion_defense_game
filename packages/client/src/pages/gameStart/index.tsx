@@ -1,24 +1,23 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import style from "./style.module.scss";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { logOutThunk } from "@/store/user/actions";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
+import { toggleFullscreen } from "@/utils/fullscreenMode";
+import LanguageSwitcher from "@/assets/internationalization/languageSwitcher";
+
+import { routes } from "@/pages/routes";
 
 import Layout from "@/components/layout";
 import GameMenu from "@/components/gameMenu";
-
 import Button from "@/ui/button/index";
 import IconButton from "@/ui/button/iconBtn";
 
-import { routes } from "@/pages/routes";
-import { toggleFullscreen } from "@/utils/fullscreenMode";
-
 import logoutIcon from "@/assets/icons/logout.svg";
 import settingsIcon from "@/assets/icons/settings.svg";
-import { useTranslation } from "react-i18next";
-import { TRANSLATIONS } from "@/constants/translations";
-import LanguageSwitcher from "@/assets/internationalization/languageSwitcher";
+import style from "./style.module.scss";
 
 const GameStartPage: FC = () => {
   const { t } = useTranslation();

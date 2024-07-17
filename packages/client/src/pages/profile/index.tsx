@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getUserState } from "@/store/user/selector";
 import { routes } from "../routes";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 
 import Layout from "@/components/layout";
 import Title from "@/ui/title";
@@ -12,17 +12,17 @@ import ProfileField from "@/ui/profileField";
 import AvatarEl from "@/ui/avatarEl";
 import Modal from "@/ui//modals";
 import IconButton from "@/ui/button/iconBtn";
+import { Toggle } from "@/ui/toggle";
 
-import gameIcon from "@/assets/icons/game.svg";
-import style from "./style.module.scss";
 import { useTranslation } from "react-i18next";
 import { TRANSLATIONS } from "@/constants/translations";
 import useOpenModal from "@/hooks/useOpenModal";
-import { Toggle } from "@/ui/toggle";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { setThemeThunk } from "@/store/theme/actions";
 import { TTheme } from "@/store/theme/type";
 import { getThemeState } from "@/store/theme/reducer";
+
+import gameIcon from "@/assets/icons/game.svg";
+import style from "./style.module.scss";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
