@@ -3,6 +3,7 @@ import { baseYandexUrl } from "@/endpoints/apiUrl";
 import { getUserState } from "@/store/user/selector";
 
 import style from "./style.module.scss";
+import randomInteger from "@/utils/randomInteger";
 
 type TProps = {
   onClick: (event: React.MouseEvent) => void;
@@ -16,7 +17,11 @@ const AvatarEl = ({ onClick }: TProps) => {
       <div className={style.wrapper}>
         <img
           className={style.img}
-          src={`${baseYandexUrl}/resources${user!.avatar}`}
+          src={
+            user?.avatar
+              ? `${baseYandexUrl}/resources${user?.avatar}`
+              : `/src/assets/img/user${randomInteger(1, 2)}.png`
+          }
           alt="User avatar"
         />
         <div className={style.back}>

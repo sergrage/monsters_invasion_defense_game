@@ -34,6 +34,9 @@ class Game {
   currentWave: number;
   towersSelector;
   towerMenu;
+  isWaveInProgress: boolean;
+  showWaveMessage: () => void;
+  hideWaveMessage: () => void;
 
   constructor(
     coins: number,
@@ -46,6 +49,8 @@ class Game {
     level: ILevel,
     towersSelector: TowersSelector,
     towerMenu: TowerMenu,
+    showWaveMessage: () => void,
+    hideWaveMessage: () => void,
   ) {
     this.coins = coins;
     this.hearts = hearts;
@@ -63,6 +68,9 @@ class Game {
     this.eventSubject = eventSubject;
     this.level = level;
     this.currentWave = 0;
+    this.isWaveInProgress = false;
+    this.showWaveMessage = showWaveMessage;
+    this.hideWaveMessage = hideWaveMessage;
 
     // Injected dependencies
     this.mapGenerator = mapGenerator;
@@ -136,10 +144,9 @@ class Game {
     if (!this.canvas || this.currentWave > this.level.waves.length - 1) {
       return;
     }
-    this.enemies = this.enemiesGenerator.generate(
-      this.level.waves[this.currentWave],
-      this.canvas,
-    );
+
+    const currentWave = this.level.waves[this.currentWave];
+    this.enemies = this.enemiesGenerator.generate(currentWave, this.canvas);
 
     this.setNextWave();
   }
@@ -152,24 +159,25 @@ class Game {
   }
 
   handleEnemyLogic(animationId: number) {
-    // fire next wave
     if (
       this.enemies.length === 0 &&
       this.currentWave <= this.level.waves.length - 1
     ) {
-      let timeout;
-      clearTimeout(timeout);
+      if (!this.isWaveInProgress) {
+        console.log("new wave is approaching");
+        this.isWaveInProgress = true;
 
-      console.log("new wave is approaching");
+        this.showWaveMessage();
 
-      timeout = setTimeout(() => {
-        console.log("new wave!");
-
-        this.spawnEnemies();
-      }, 5000);
+        setTimeout(() => {
+          console.log("new wave!");
+          this.hideWaveMessage();
+          this.spawnEnemies();
+          this.isWaveInProgress = false;
+        }, 5000);
+      }
     }
 
-    // no enemies & no waves left -> level completed logic
     if (
       this.enemies.length === 0 &&
       this.currentWave > this.level.waves.length - 1
