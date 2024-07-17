@@ -34,7 +34,6 @@ class EnemiesGenerator {
       for (let i = 0; i < amount; i++) {
         const EnemyType = monsters[key as unknown as keyof typeof monsters];
         const xOffset = (i + 1) * 150;
-
         enemies.push(
           new EnemyType({
             position: {
@@ -47,7 +46,6 @@ class EnemiesGenerator {
         );
       }
     }
-
     return enemies;
   }
 }
