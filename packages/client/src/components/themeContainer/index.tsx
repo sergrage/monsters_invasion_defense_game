@@ -20,10 +20,6 @@ const ThemeContainer: FC<TProps> = ({ children }) => {
     user?.id && dispatch(getThemeThunk(user.id));
   }, [user]);
 
-  useEffect(() => {
-    console.log(theme);
-  }, [theme]);
-
   return (
     <div className={cn(style.theme, style[theme.data.theme_type])}>
       {children}
