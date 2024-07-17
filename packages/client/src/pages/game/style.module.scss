@@ -39,6 +39,8 @@
   justify-content: space-evenly;
   width: 450px;
   height: 150px;
+  left: 50%;
+  transform: translateX(-50%);
   padding-bottom: 37px;
   background-image: url(/src/assets/img/titleBox.png);
   background-size: 100% 100%;
