@@ -58,6 +58,10 @@ const GamePage = () => {
 
   const [windowWidth, windowHeight] = useWindowSize();
 
+  const [isShowWaveMessage, setIsShowWaveMessage] = useState<boolean>(false);
+  const showWaveMessage = () => setIsShowWaveMessage(true);
+  const hideWaveMessage = () => setIsShowWaveMessage(false);
+
   const handleCoinsChangedEvent = (coins: number) => setCoins(coins);
   const handleKillsChangedEvent = (kills: number) => setKills(kills);
   const handleHeartsChangedEvent = (hearts: number) => setHearts(hearts);
@@ -99,6 +103,8 @@ const GamePage = () => {
       level,
       towerSelector,
       towerMenu,
+      showWaveMessage,
+      hideWaveMessage,
     );
 
     const coinsChangedObserver = new EventObserver(handleCoinsChangedEvent);
@@ -196,6 +202,9 @@ const GamePage = () => {
           </button>
         </article>
       </div>
+      {isShowWaveMessage && (
+        <div className={style.waveMessage}>Они наступают!</div>
+      )}
       {showDisclaimer && (
         <ScreenZombie action={() => toggleFullscreen()} text={disclaimerText} />
       )}

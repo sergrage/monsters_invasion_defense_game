@@ -105,3 +105,21 @@
     }
   }
 }
+
+.waveMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  font-family: "Squada One", sans-serif;
+  font-weight: bold;
+  font-size: 50px;
+  color: var(--primary-strong);
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
