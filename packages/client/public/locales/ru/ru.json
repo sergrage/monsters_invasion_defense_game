@@ -27,10 +27,22 @@
   "TopicTitle": "Тема обсуждения",
   "FirstMessage": "Сообщение",
   "AddNewTopic": "Добавить новую тему",
+  "NewTopic": "Новая тема",
   "Close": "Закрыть",
   "SendMessage": "Отправить сообщение",
   "ConfirmPassword": "Подтвердите пароль",
   "PlayAgain": "Играть заново",
   "MAIN_PAGE": "Главная страница",
-  "USE_DARK_MODE": "Использовать темную тему?"
+  "UseDarkMode": "Использовать темную тему?",
+  "UploadFile": "Загрузить файл",
+  "WrongFile": "Неправильный файл",
+  "FileUploaded": "Файл успешно загружен",
+  "ContinueUpload": "Продолжить загрузку",
+  "Profile": "Профиль",
+  "ChooseFile": "Выберите файл",
+  "ConfirmNewPassword": "Подтвердите новый пароль",
+  "newPassword": "Новый пароль",
+  "oldPassword": "Старый пароль",
+  "Change": "Изменить",
+  "ChangeAvatar": "Изменить аватар"
 }

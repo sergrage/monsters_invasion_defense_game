@@ -4,11 +4,13 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { changeAvatarThunk } from "@/store/user/actions";
 import { getUserState } from "@/store/user/selector";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { useTranslation } from "react-i18next";
 
 import FormModal from "../formModal";
 import Title from "@/ui/title";
 import Button from "@/ui/button";
 import FileInput from "@/ui/fileInput";
+import { TRANSLATIONS } from "@/constants/translations";
 
 import style from "./style.module.scss";
 
@@ -18,9 +20,11 @@ type TProps = {
 
 const FileModal = ({ closeModal }: TProps) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [formVal, setFormVal] = useState({});
-  const [headerText, setHeaderText] = useState("Upload a file");
+  const [headerText, setHeaderText] = useState(t(TRANSLATIONS.UPLOAD_FILE));
+
   const [previewImg, setPreviewImg] = useState("");
   const [isInvalid, setIsInvalid] = useState(true);
 
@@ -35,7 +39,7 @@ const FileModal = ({ closeModal }: TProps) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files![0].name) {
       setIsInvalid(true);
-      setHeaderText("Wrong file");
+      setHeaderText(t(TRANSLATIONS.WRONG_FILE));
       return;
     }
 
@@ -43,7 +47,7 @@ const FileModal = ({ closeModal }: TProps) => {
 
     setFormVal(event.target.files![0]);
     setIsInvalid(false);
-    setHeaderText("File has been successfully selected");
+    setHeaderText(t(TRANSLATIONS.UPLOAD_SUCCESS));
   };
 
   const handleSubmit = () => {
@@ -65,7 +69,7 @@ const FileModal = ({ closeModal }: TProps) => {
       )}
       <FileInput name="file" onChange={handleInputChange} />
       <Button.Flat
-        name="Continue upload"
+        name={t(TRANSLATIONS.CONTINUE_UPLOAD)}
         type="submit"
         positive={true}
         disabled={isInvalid}
