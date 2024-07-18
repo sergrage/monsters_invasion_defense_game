@@ -2,6 +2,8 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { changePassThunk } from "@/store/user/actions";
 
 import { useValidate } from "@/hooks/useValidate";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 import FormModal from "../formModal";
 import Title from "@/ui/title";
@@ -21,6 +23,7 @@ type TPassword = {
 
 const PasswordModal = ({ closeModal }: TProps) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const { values, errors, errorMessages, handleChange } = useValidate({
     oldPassword: "",
@@ -55,12 +58,15 @@ const PasswordModal = ({ closeModal }: TProps) => {
       onSubmit={handleSubmit}
       onClose={closeModal}
     >
-      <Title.H2 className={style.title} title="Change password" />
+      <Title.H2
+        className={style.title}
+        title={t(TRANSLATIONS.CHANGE_PASSWORD)}
+      />
 
       <div className={style["input-wrapper"]}>
         <Input
           name="oldPassword"
-          label="Old password"
+          label={t(TRANSLATIONS.OLD_PASSWORD)}
           type="password"
           required={true}
           value={values.oldPassword}
@@ -70,7 +76,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
         />
         <Input
           name="password"
-          label="New password"
+          label={t(TRANSLATIONS.NEW_PASSWORD)}
           type="password"
           required={true}
           value={values.password}
@@ -80,7 +86,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
         />
         <Input
           name="confirmPassword"
-          label="Confirm new password"
+          label={t(TRANSLATIONS.CONFIRM_NEW_PASSWORD)}
           type="password"
           required={true}
           value={values.confirmPassword}
@@ -91,7 +97,7 @@ const PasswordModal = ({ closeModal }: TProps) => {
       </div>
 
       <Button.Flat
-        name="Change"
+        name={t(TRANSLATIONS.CHANGE)}
         type="submit"
         positive={true}
         disabled={

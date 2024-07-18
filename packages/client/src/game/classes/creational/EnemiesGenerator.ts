@@ -30,26 +30,22 @@ class EnemiesGenerator {
   generate(wave: IWave, canvas: HTMLCanvasElement): Enemy[] {
     const enemies: Enemy[] = [];
 
-    for (const [key, { amount, delay }] of Object.entries(wave)) {
+    for (const [key, { amount }] of Object.entries(wave)) {
       for (let i = 0; i < amount; i++) {
-        setTimeout(() => {
-          const EnemyType = monsters[key as unknown as keyof typeof monsters];
-          const xOffset = (i + 1) * 150;
-
-          enemies.push(
-            new EnemyType({
-              position: {
-                x: this.waypoints[0].x - xOffset,
-                y: this.waypoints[0].y,
-              },
-              ctx: this.ctx,
-              canvas,
-            }),
-          );
-        }, delay);
+        const EnemyType = monsters[key as unknown as keyof typeof monsters];
+        const xOffset = (i + 1) * 150;
+        enemies.push(
+          new EnemyType({
+            position: {
+              x: this.waypoints[0].x - xOffset,
+              y: this.waypoints[0].y,
+            },
+            ctx: this.ctx,
+            canvas,
+          }),
+        );
       }
     }
-
     return enemies;
   }
 }

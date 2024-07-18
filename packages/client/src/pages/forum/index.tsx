@@ -1,18 +1,26 @@
 import { FC } from "react";
+import { useNavigate } from "react-router";
+import cn from "classnames";
 
-import style from "./style.module.scss";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
+import { routes } from "@/pages/routes";
+
 import Image from "@/ui/image";
 import Layout from "@/components/layout";
 import Button from "@/ui/button";
 import zombieAlarm from "@/assets/img/zombieAlarm.png";
 import TopicsTable from "./components/topicsTable";
-import cn from "classnames";
-import { useTranslation } from "react-i18next";
-import { TRANSLATIONS } from "@/constants/translations";
 import useOpenModal from "@/hooks/useOpenModal";
 import Modal from "@/ui/modals";
+import IconButton from "@/ui/button/iconBtn";
+
+import gameIcon from "@/assets/icons/game.svg";
+import style from "./style.module.scss";
 
 const ForumPage: FC = () => {
+  const navigate = useNavigate();
+
   const { isOpen: showForumThreadModal, toggleModal: toggleforumThreadModal } =
     useOpenModal();
 
@@ -44,6 +52,13 @@ const ForumPage: FC = () => {
       {showForumThreadModal && (
         <Modal.ForumThread closeModal={toggleforumThreadModal} />
       )}
+
+      <IconButton
+        className={style["game-btn"]}
+        name="game"
+        icon={gameIcon}
+        onClick={() => navigate(routes.gameStart)}
+      />
     </Layout.Page>
   );
 };

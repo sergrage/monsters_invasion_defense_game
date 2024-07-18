@@ -1,5 +1,7 @@
 import { useId, useRef, useState } from "react";
 import cn from "classnames";
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
 
 import ZombieError from "../zombieError";
 import style from "./style.module.scss";
@@ -14,9 +16,10 @@ const FileInput = ({ name, isInvalid, onChange }: TProps) => {
   const id = useId();
   const inputRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
+  const { t } = useTranslation();
 
   const [isSelected, setIsSelected] = useState(false);
-  const [labelText, setLabelText] = useState("Select file");
+  const [labelText, setLabelText] = useState(t(TRANSLATIONS.CHOOSE_FILE));
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.value) {

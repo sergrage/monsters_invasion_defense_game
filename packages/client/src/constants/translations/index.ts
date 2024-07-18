@@ -6,6 +6,7 @@ export let TRANSLATIONS: {
   LAST_NAME: string;
   EMAIL: string;
   ADD_NEW_TOPIC: string;
+  NEW_TOPIC: string;
   FIRST_NAME: string;
   VIEWS: string;
   SECOND_NAME: string;
@@ -26,18 +27,32 @@ export let TRANSLATIONS: {
   DATE: string;
   TOPICS: string;
   PASSWORD: string;
+  OLD_PASSWORD: string;
+  NEW_PASSWORD: string;
   KILLS: string;
   LEADERBOARD: string;
   FIRST_MESSAGE: string;
   CONFIRM_PASSWORD: string;
+  CONFIRM_NEW_PASSWORD: string;
   MAIN_PAGE: string;
   PLAY_AGAIN: string;
   USE_DARK_MODE: string;
+  UPLOAD_FILE: string;
+  WRONG_FILE: string;
+  UPLOAD_SUCCESS: string;
+  CONTINUE_UPLOAD: string;
+  PROFILE: string;
+  CHOOSE_FILE: string;
+  CHANGE: string;
+  CHANGE_AVATAR: string;
 };
 TRANSLATIONS = {
   LOGIN: "login",
   PASSWORD: "password",
+  OLD_PASSWORD: "oldPassword",
+  NEW_PASSWORD: "newPassword",
   CONFIRM_PASSWORD: "ConfirmPassword",
+  CONFIRM_NEW_PASSWORD: "ConfirmNewPassword",
   SIGN_IN: "Signin",
   SIGN_UP: "Signup",
   START_GAME: "StartGame",
@@ -64,9 +79,18 @@ TRANSLATIONS = {
   TOPIC_TITLE: "TopicTitle",
   FIRST_MESSAGE: "FirstMessage",
   ADD_NEW_TOPIC: "AddNewTopic",
+  NEW_TOPIC: "NewTopic",
   CLOSE: "Close",
   SEND_MESSAGE: "SendMessage",
   MAIN_PAGE: "Main Page",
   PLAY_AGAIN: "PlayAgain",
-  USE_DARK_MODE: "Use dark mode?",
+  USE_DARK_MODE: "UseDarkMode",
+  UPLOAD_FILE: "UploadFile",
+  WRONG_FILE: "WrongFile",
+  UPLOAD_SUCCESS: "FileUploaded",
+  CONTINUE_UPLOAD: "ContinueUpload",
+  PROFILE: "Profile",
+  CHOOSE_FILE: "ChooseFile",
+  CHANGE: "Change",
+  CHANGE_AVATAR: "ChangeAvatar",
 };

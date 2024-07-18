@@ -65,11 +65,11 @@ services:
       - "443:443"
     restart: always
     volumes:
+      - ./data/certbot/conf:/etc/letsencrypt/:rw
+      - ./data/certbot/www:/var/www/certbot/:rw
       - ./nginx/conf/:/etc/nginx/conf.d/:rw
       - ./nginx/conf/conf.d/:/etc/nginx/conf.d/:rw
-      - ./data/certbot/www:/var/www/certbot/:rw
       # - ./data/ssl/:/etc/nginx/localkeys/:rw
-      - ./data/certbot/conf:/etc/letsencrypt/:rw
     links:
       - client:client
       - server:server
@@ -86,8 +86,9 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt/:rw
       - ./data/certbot/www:/var/www/certbot/:rw
-    # entrypoint: certbot certonly --webroot -w /var/www/certbot -d defense-game-crew.ya-praktikum.tech --agree-tos --email juliusgerba@yandex.ru
-    # entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
+    #entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    entrypoint: certbot certonly --webroot -w /var/www/certbot -d defense-game-crew.ya-praktikum.tech --agree-tos --email elenergetica87@yandex.ru
+    #entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
     networks:
       - mynet
 

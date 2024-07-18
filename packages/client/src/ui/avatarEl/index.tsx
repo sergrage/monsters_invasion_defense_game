@@ -2,6 +2,9 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { baseYandexUrl } from "@/endpoints/apiUrl";
 import { getUserState } from "@/store/user/selector";
 
+import { useTranslation } from "react-i18next";
+import { TRANSLATIONS } from "@/constants/translations";
+
 import style from "./style.module.scss";
 import randomInteger from "@/utils/randomInteger";
 
@@ -11,6 +14,7 @@ type TProps = {
 
 const AvatarEl = ({ onClick }: TProps) => {
   const user = useAppSelector(getUserState).user;
+  const { t } = useTranslation();
 
   return (
     <div className={style.avatar} onClick={onClick}>
@@ -25,7 +29,7 @@ const AvatarEl = ({ onClick }: TProps) => {
           alt="User avatar"
         />
         <div className={style.back}>
-          <p>Change avatar</p>
+          <p>{t(TRANSLATIONS.CHANGE_AVATAR)}</p>
         </div>
       </div>
     </div>

@@ -26,9 +26,22 @@
   "TopicTitle": "Topic Title",
   "FirstMessage": "First Message",
   "AddNewTopic": "Add New Topic",
+  "NewTopic": "New Topic",
   "Close": "Close",
   "SendMessage": "Send Message",
   "ConfirmPassword": "Confirm Password",
   "PlayAgain": "Play Again",
-  "MAIN_PAGE": "Main Page"
+  "MAIN_PAGE": "Main Page",
+  "UseDarkMode": "Use dark mode?",
+  "UploadFile": "Upload a file",
+  "WrongFile": "Wrong file",
+  "FileUploaded": "File has been successfully selected",
+  "ContinueUpload": "Continue upload",
+  "Profile": "Profile",
+  "ChooseFile": "Select file",
+  "ConfirmNewPassword": "Confirm new password",
+  "newPassword": "New password",
+  "oldPassword": "Old password",
+  "Change": "Change",
+  "ChangeAvatar": "Change avatar"
 }

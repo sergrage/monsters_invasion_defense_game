@@ -2,7 +2,6 @@ import { FC, ReactNode } from "react";
 import cn from "classnames";
 
 import style from "./style.module.scss";
-import LanguageSwitcher from "@/assets/internationalization/languageSwitcher";
 
 export type TProps = {
   children: ReactNode | ReactNode[];
@@ -30,10 +29,7 @@ const Page: FC<TProps> = ({ children, pageClass, className }) => {
   return (
     <>
       <div className={cn(style.page, pageClass)}>
-        <Container className={className}>
-          <LanguageSwitcher />
-          {children}
-        </Container>
+        <Container className={className}>{children}</Container>
       </div>
     </>
   );

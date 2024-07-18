@@ -56,7 +56,7 @@ const ForumThreadModal = ({ closeModal }: TProps) => {
       onSubmit={handleSubmit}
       onClose={closeModal}
     >
-      <Title.H2 className={style.title} title="New Thread" />
+      <Title.H2 className={style.title} title={t(TRANSLATIONS.NEW_TOPIC)} />
 
       <div className={style["input-wrapper"]}>
         <Input
